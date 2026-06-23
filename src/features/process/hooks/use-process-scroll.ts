@@ -64,6 +64,7 @@ export function useProcessScroll({
       }
 
       const stageElement = stageRef.current;
+      const pinStartElement = pinStartRef.current;
       const matchMedia = gsap.matchMedia();
 
       matchMedia.add(DESKTOP_MEDIA_QUERY, () => {
@@ -113,7 +114,7 @@ export function useProcessScroll({
             : null;
 
         resizeObserver?.observe(stageElement);
-        resizeObserver?.observe(pinStartRef.current);
+  resizeObserver?.observe(pinStartElement);
 
         requestAnimationFrame(syncPinTrigger);
 
