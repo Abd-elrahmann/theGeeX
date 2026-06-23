@@ -1,0 +1,1 @@
+export { OurTeamSection } from "./components/our-team-section";

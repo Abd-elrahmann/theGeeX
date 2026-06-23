@@ -1,0 +1,49 @@
+"use client";
+
+import Image from "next/image";
+
+import { cn } from "@/lib/cn";
+
+import { type Service, servicesImagePlaceholder } from "@/features/services/constants/services";
+import { servicesImageContainerClassName } from "@/features/services/constants/services-layout";
+
+interface ServiceImageProps {
+  service: Service;
+  variant?: "desktop" | "mobile";
+  eager?: boolean;
+}
+
+export function ServiceImage({
+  service,
+  variant = "desktop",
+  eager = false,
+}: ServiceImageProps) {
+  const isDesktop = variant === "desktop";
+  const isPlaceholder = service.image === servicesImagePlaceholder;
+  const imageClassName = cn("object-cover", isPlaceholder && "object-contain p-8");
+  const loading = eager ? "eager" : undefined;
+
+  const image = (
+    <Image
+      src={service.image}
+      alt={service.imageAlt}
+      fill
+      loading={loading}
+      sizes={
+        isDesktop ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 768px) 50vw, 100vw"
+      }
+      className={imageClassName}
+      priority={eager || service.id === 1}
+    />
+  );
+
+  if (!isDesktop) {
+    return (
+      <div className="relative h-full w-full min-w-0">
+        <div className={cn(servicesImageContainerClassName, "aspect-[4/5]")}>{image}</div>
+      </div>
+    );
+  }
+
+  return <div className="relative h-full w-full min-h-0">{image}</div>;
+}

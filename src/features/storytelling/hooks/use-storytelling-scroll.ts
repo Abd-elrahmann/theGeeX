@@ -1,0 +1,329 @@
+"use client";
+
+import { useCallback, useRef, useState } from "react";
+
+import { DESKTOP_MEDIA_QUERY, SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { readRootCssNumber } from "@/lib/read-css-var";
+import { syncScrollTriggersAfterReset } from "@/lib/scroll-session";
+import {
+  clampActiveIndex,
+  syncActiveIndexFromProgress,
+} from "@/lib/sync-active-index-from-progress";
+
+import { storytellingConfig } from "@/features/storytelling/constants/storytelling.config";
+
+interface UseStorytellingScrollOptions {
+  itemCount: number;
+  pinEnabled?: boolean;
+  backgroundEnabled?: boolean;
+  mobileBackgroundEnabled?: boolean;
+  onDrawProgress?: (progress: number) => void;
+}
+
+export function useStorytellingScroll({
+  itemCount,
+  pinEnabled = true,
+  backgroundEnabled = true,
+  mobileBackgroundEnabled = true,
+  onDrawProgress,
+}: UseStorytellingScrollOptions) {
+  const containerRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const pinStartRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [previousActiveIndex, setPreviousActiveIndex] = useState(0);
+  const [drawProgress, setDrawProgress] = useState(0);
+  const [isDark, setIsDark] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState<1 | -1>(1);
+  const activeIndexRef = useRef(0);
+
+  const setActiveIndexSafe = useCallback(
+    (index: number) => {
+      const nextIndex = clampActiveIndex(index, itemCount);
+      const currentIndex = activeIndexRef.current;
+
+      if (nextIndex === currentIndex) {
+        return;
+      }
+
+      setPreviousActiveIndex(currentIndex);
+      setTransitionDirection(nextIndex > currentIndex ? 1 : -1);
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+    },
+    [itemCount],
+  );
+
+  const resetToFirstItem = useCallback(() => {
+    activeIndexRef.current = 0;
+    setPreviousActiveIndex(0);
+    setTransitionDirection(-1);
+    setActiveIndex(0);
+    setDrawProgress(0);
+    onDrawProgress?.(0);
+  }, [onDrawProgress]);
+
+  const syncProgress = useCallback(
+    (progress: number) => {
+      setDrawProgress(progress);
+      onDrawProgress?.(progress);
+      syncActiveIndexFromProgress(progress, itemCount, setActiveIndexSafe);
+    },
+    [itemCount, onDrawProgress, setActiveIndexSafe],
+  );
+
+  const setBackgroundDark = useCallback((isActive: boolean) => {
+    setIsDark(isActive);
+  }, []);
+
+  useGSAP(
+    () => {
+      if (
+        itemCount === 0 ||
+        !containerRef.current ||
+        !stageRef.current ||
+        !pinStartRef.current
+      ) {
+        return;
+      }
+
+      const stageElement = stageRef.current;
+      const pinStartElement = pinStartRef.current;
+      const { scroll } = storytellingConfig;
+      const matchMedia = gsap.matchMedia();
+
+      matchMedia.add(SUB_DESKTOP_MEDIA_QUERY, () => {
+        if (!pinEnabled) {
+          return undefined;
+        }
+
+        const mobileScrollElement = pinStartElement.parentElement ?? stageElement;
+
+        const mobilePinTrigger = ScrollTrigger.create({
+          trigger: pinStartElement,
+          pin: stageElement,
+          pinSpacing: false,
+          anticipatePin: 1,
+          refreshPriority: -1,
+          start: "top top",
+          end: () => {
+            const distance = readRootCssNumber(
+              "--storytelling-mobile-scroll-distance",
+              2800,
+            );
+            const offset = readRootCssNumber(
+              "--storytelling-mobile-scroll-offset",
+              700,
+            );
+
+            return `+=${distance + offset}`;
+          },
+          invalidateOnRefresh: true,
+          onEnter: (self) => {
+            if (mobileBackgroundEnabled) {
+              setBackgroundDark(true);
+            }
+
+            syncProgress(self.progress);
+          },
+          onEnterBack: (self) => {
+            if (mobileBackgroundEnabled) {
+              setBackgroundDark(true);
+            }
+
+            syncProgress(self.progress);
+          },
+          onLeave: () => {
+            if (mobileBackgroundEnabled) {
+              setBackgroundDark(false);
+            }
+          },
+          onLeaveBack: () => {
+            if (mobileBackgroundEnabled) {
+              setBackgroundDark(false);
+            }
+
+            resetToFirstItem();
+          },
+          onToggle: (self) => {
+            if (!self.isActive) {
+              return;
+            }
+
+            syncProgress(self.progress);
+          },
+          onUpdate: (self) => {
+            syncProgress(self.progress);
+          },
+        });
+
+        if (mobileBackgroundEnabled) {
+          setBackgroundDark(mobilePinTrigger.isActive);
+        }
+
+        const syncMobilePinTrigger = () => {
+          mobilePinTrigger.refresh();
+          ScrollTrigger.refresh();
+
+          if (mobileBackgroundEnabled) {
+            setBackgroundDark(mobilePinTrigger.isActive);
+          }
+
+          if (mobilePinTrigger.isActive) {
+            syncProgress(mobilePinTrigger.progress);
+          }
+        };
+
+        const resizeObserver =
+          typeof ResizeObserver !== "undefined"
+            ? new ResizeObserver(() => {
+                syncMobilePinTrigger();
+              })
+            : null;
+
+        resizeObserver?.observe(mobileScrollElement);
+        resizeObserver?.observe(stageElement);
+        resizeObserver?.observe(pinStartElement);
+
+        requestAnimationFrame(syncMobilePinTrigger);
+        syncScrollTriggersAfterReset();
+
+        return () => {
+          resizeObserver?.disconnect();
+          mobilePinTrigger.kill();
+
+          if (mobileBackgroundEnabled) {
+            setBackgroundDark(false);
+          }
+        };
+      });
+
+      matchMedia.add(DESKTOP_MEDIA_QUERY, () => {
+        if (!pinEnabled) {
+          return undefined;
+        }
+
+        const scrollDistance = readRootCssNumber(
+          "--storytelling-scroll-distance",
+          scroll.distance,
+        );
+
+        const pinTrigger = ScrollTrigger.create({
+          trigger: stageElement,
+          pin: stageElement,
+          pinSpacing: true,
+          anticipatePin: 1,
+          refreshPriority: -1,
+          start: "top top",
+          end: () => `+=${scrollDistance}`,
+          invalidateOnRefresh: true,
+          onEnter: (self) => {
+            if (backgroundEnabled) {
+              setBackgroundDark(true);
+            }
+
+            syncProgress(self.progress);
+          },
+          onEnterBack: (self) => {
+            if (backgroundEnabled) {
+              setBackgroundDark(true);
+            }
+
+            syncProgress(self.progress);
+          },
+          onLeave: () => {
+            if (backgroundEnabled) {
+              setBackgroundDark(false);
+            }
+          },
+          onLeaveBack: () => {
+            if (backgroundEnabled) {
+              setBackgroundDark(false);
+            }
+
+            resetToFirstItem();
+          },
+          onToggle: (self) => {
+            if (!self.isActive) {
+              return;
+            }
+
+            syncProgress(self.progress);
+          },
+          onUpdate: (self) => {
+            syncProgress(self.progress);
+          },
+        });
+
+        if (backgroundEnabled) {
+          setBackgroundDark(pinTrigger.isActive);
+        }
+
+        const syncPinTrigger = () => {
+          pinTrigger.refresh();
+          ScrollTrigger.refresh();
+
+          if (backgroundEnabled) {
+            setBackgroundDark(pinTrigger.isActive);
+          }
+
+          if (pinTrigger.isActive) {
+            syncProgress(pinTrigger.progress);
+          }
+        };
+
+        const resizeObserver =
+          typeof ResizeObserver !== "undefined"
+            ? new ResizeObserver(() => {
+                syncPinTrigger();
+              })
+            : null;
+
+        resizeObserver?.observe(stageElement);
+        resizeObserver?.observe(pinStartElement);
+
+        requestAnimationFrame(syncPinTrigger);
+
+        return () => {
+          resizeObserver?.disconnect();
+          pinTrigger.kill();
+
+          if (backgroundEnabled) {
+            setBackgroundDark(false);
+          }
+        };
+      });
+
+      return () => {
+        matchMedia.revert();
+      };
+    },
+    {
+      scope: containerRef,
+      dependencies: [
+        pinEnabled,
+        backgroundEnabled,
+        mobileBackgroundEnabled,
+        itemCount,
+        resetToFirstItem,
+        syncProgress,
+        setBackgroundDark,
+      ],
+      revertOnUpdate: false,
+    },
+  );
+
+  return {
+    containerRef,
+    stageRef,
+    pinStartRef,
+    activeIndex,
+    previousActiveIndex,
+    drawProgress,
+    isDark,
+    transitionDirection,
+    setActiveIndex: setActiveIndexSafe,
+    syncProgress,
+  };
+}

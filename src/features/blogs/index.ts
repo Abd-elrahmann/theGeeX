@@ -1,0 +1,1 @@
+export { BlogsSection } from "./components/blogs-section";
