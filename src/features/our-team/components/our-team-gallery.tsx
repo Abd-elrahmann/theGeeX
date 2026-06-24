@@ -349,7 +349,7 @@ export function OurTeamGallery({
 
     return (
       <motion.div
-        className="grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,var(--team-mobile-card-min-width)),1fr))] gap-(--team-mobile-grid-gap)"
+        className="grid w-full grid-cols-2 gap-(--team-mobile-grid-gap)"
         initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}

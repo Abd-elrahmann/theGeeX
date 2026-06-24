@@ -782,7 +782,7 @@
   --culture-container-max-width: 1260px;
   --culture-section-gap: 24px;
   --culture-section-scroll-vh: 160;
-  --culture-section-exit-vh: 0;
+  --culture-section-exit-vh: 16;
   --culture-section-scroll-height: calc(var(--culture-section-scroll-vh) * 1vh);
   --culture-section-exit-padding: calc(var(--culture-section-exit-vh) * 1vh);
   --culture-grid-gap: 20px;
@@ -856,9 +856,9 @@
     rgb(0 0 0 / 1) 38%
   );
   --team-title-font-weight: 600;
-  --team-title-size: clamp(72px, 15vw, 120px);
-  --team-title-line-height: 1;
-  --team-title-box-height: clamp(72px, 15vw, 120px);
+  --team-title-size: clamp(60px, 16vw, 68px);
+  --team-title-line-height: 1.04;
+  --team-title-box-height: clamp(64px, 17vw, 72px);
   --team-title-z-index: 1;
   --team-margin-top: var(--section-stack-gap);
   --team-padding-x: 16px;
