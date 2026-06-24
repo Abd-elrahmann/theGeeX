@@ -40,8 +40,8 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
           )}
         >
-          <div className="grid w-full grid-cols-2 gap-(--footer-top-row-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.45fr)]">
-            <nav aria-label="Footer navigation" className="order-2 flex flex-col items-start gap-(--footer-link-column-gap) md:order-1">
+          <div className="grid w-full grid-cols-2 gap-(--footer-top-row-gap) min-[767px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.45fr)]">
+            <nav aria-label="Footer navigation" className="order-2 flex flex-col items-start gap-(--footer-link-column-gap) min-[767px]:order-1">
               {footerNavLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -57,7 +57,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               ))}
             </nav>
 
-            <nav aria-label="Footer social links" className="order-3 flex flex-col items-start gap-(--footer-link-column-gap) md:order-2">
+            <nav aria-label="Footer social links" className="order-3 flex flex-col items-start gap-(--footer-link-column-gap) min-[767px]:order-2">
               {footerSocialLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -75,7 +75,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               ))}
             </nav>
 
-            <div className="order-1 col-span-2 flex flex-col items-start gap-(--footer-newsletter-gap) md:order-3 md:col-span-1">
+            <div className="order-1 col-span-2 flex flex-col items-start gap-(--footer-newsletter-gap) min-[767px]:order-3 min-[767px]:col-span-1">
               <div className="flex w-full flex-col items-start gap-(--footer-newsletter-copy-gap)">
                 <h2
                   className={cn(
@@ -101,7 +101,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
                 </p>
               </div>
 
-              <div className="flex w-full flex-col items-stretch gap-(--footer-newsletter-form-gap) md:flex-row md:items-center">
+              <div className="flex w-full flex-col items-stretch gap-(--footer-newsletter-form-gap) lg:flex-row lg:items-center">
                 <input
                   type="email"
                   placeholder={footerContent.emailPlaceholder}
@@ -130,7 +130,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
           </div>
 
           <div className="order-2 mt-(--footer-rights-margin-top) flex w-full items-center justify-center gap-(--footer-rights-line-gap) pt-(--footer-rights-padding-top) pb-(--footer-rights-padding-bottom)">
-            <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) lg:block" />
+            <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) min-[767px]:block" />
 
             <div className="flex w-fit max-w-(--footer-rights-max-width) shrink-0 flex-wrap items-center justify-center gap-(--footer-rights-gap)">
               {footerContent.rights.map((item, index) => (
@@ -150,7 +150,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               ))}
             </div>
 
-            <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) lg:block" />
+            <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) min-[767px]:block" />
           </div>
 
           <div className="order-3 relative h-(--footer-logo-height) w-full">

@@ -17,12 +17,14 @@ interface StorytellingPathProps {
   drawProgress: number;
   className?: string;
   preserveAspectRatio?: string;
+  reverseDraw?: boolean;
 }
 
 export function StorytellingPath({
   drawProgress,
   className,
   preserveAspectRatio = "xMinYMin slice",
+  reverseDraw = false,
 }: StorytellingPathProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const pathCachesRef = useRef<PathDrawCache[]>([]);
@@ -72,9 +74,9 @@ export function StorytellingPath({
         pathDataAttribute: "data-storytelling-stroke",
       });
 
-      updatePathDrawProgress(pathCachesRef.current, drawProgress);
+      updatePathDrawProgress(pathCachesRef.current, drawProgress, reverseDraw);
     },
-    { dependencies: [strokePaths], scope: svgRef },
+    { dependencies: [strokePaths, reverseDraw], scope: svgRef },
   );
 
   useEffect(() => {
@@ -82,8 +84,8 @@ export function StorytellingPath({
       return;
     }
 
-    updatePathDrawProgress(pathCachesRef.current, drawProgress);
-  }, [drawProgress]);
+    updatePathDrawProgress(pathCachesRef.current, drawProgress, reverseDraw);
+  }, [drawProgress, reverseDraw]);
 
   return (
     <div

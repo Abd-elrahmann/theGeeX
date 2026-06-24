@@ -36,7 +36,7 @@ export function ProcessSection() {
         <div className="contents lg:flex lg:min-w-0 lg:flex-1 lg:items-start lg:self-stretch">
           <h2
             className={cn(
-              "z-(--process-title-z-index) w-full self-start whitespace-pre-wrap wrap-break-word bg-background font-cal-sans lg:sticky",
+              "z-(--process-title-z-index) w-full self-start whitespace-pre-wrap wrap-break-word bg-background text-left font-cal-sans min-[767px]:text-center lg:sticky lg:text-left",
               "before:hidden",
               "text-(length:--process-title-size) leading-(--process-title-line-height)",
               "font-(--process-title-weight) tracking-normal",
@@ -50,7 +50,7 @@ export function ProcessSection() {
         </div>
 
         <div
-          className="min-w-0 lg:ml-auto lg:w-full lg:self-stretch"
+          className="mx-auto w-full min-w-0 lg:ml-auto lg:mr-0 lg:w-full lg:self-stretch"
           style={{ maxWidth: "var(--process-cards-column-max-width)" }}
         >
           <div
@@ -60,7 +60,7 @@ export function ProcessSection() {
             {processCards.map((card, index) => (
               <div
                 key={card.id}
-                className="sticky w-full"
+                className="sticky h-fit w-full"
                 style={
                   {
                     width: "var(--process-card-width)",

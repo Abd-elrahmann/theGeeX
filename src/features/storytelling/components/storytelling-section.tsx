@@ -16,9 +16,13 @@ import { StorytellingBackground } from "./storytelling-background";
 import { StorytellingContent } from "./storytelling-content";
 import { StorytellingPath } from "./storytelling-path";
 
+const STORYTELLING_TABLET_MEDIA_QUERY = "(min-width: 767px) and (max-width: 1023px)";
+
 export function StorytellingSection() {
   const isDesktop = useDesktopBreakpoint();
+  const isTablet = useMediaQuery(STORYTELLING_TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
+  const usesDesktopVisualLayout = isDesktop || isTablet;
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const lastPointerRef = useRef({ x: -1, y: -1 });
   usePreloadStorytellingImages(storytellingItems);
@@ -93,10 +97,10 @@ export function StorytellingSection() {
       id="storytelling"
       className={cn(
         "relative isolate w-full overflow-x-clip transition-colors",
-        isDesktop ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-clip",
+        usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-clip",
         "px-(--storytelling-section-padding-x)",
         isDesktop ? "mt-(--storytelling-margin-top)" : "pt-(--storytelling-margin-top)",
-        !isDesktop && "z-[20]",
+        !isDesktop && "z-20",
         !isDesktop && isDark && "bg-(--color-storytelling-background-dark)",
         isDesktop && isPointerFine && "cursor-none",
       )}
@@ -147,17 +151,22 @@ export function StorytellingSection() {
                 "max-w-(--storytelling-content-max-width) flex-col items-center justify-center",
               )}
             >
-              <StorytellingPath
-                drawProgress={drawProgress}
-                className="top-[calc(-1*var(--storytelling-path-inset-y))] left-1/2 h-[calc(100%+2*var(--storytelling-path-inset-y))] w-auto max-w-none -translate-x-1/2 rotate-[91deg]"
-              />
+              {isTablet ? (
+                <StorytellingPath drawProgress={drawProgress} reverseDraw className="origin-center -scale-y-100" />
+              ) : (
+                <StorytellingPath
+                  drawProgress={drawProgress}
+                  reverseDraw
+                  className="-top-(--storytelling-path-inset-y) left-1/2 h-[calc(100%+2*var(--storytelling-path-inset-y))] w-auto max-w-none origin-center -translate-x-1/2 rotate-91 -scale-y-100"
+                />
+              )}
               <StorytellingContent
                 items={storytellingItems}
                 activeIndex={activeIndex}
                 previousActiveIndex={previousActiveIndex}
                 transitionDirection={transitionDirection}
-                variant="mobile"
-                onSelectIndex={setActiveIndex}
+                variant={isTablet ? "desktop" : "mobile"}
+                onSelectIndex={isTablet ? undefined : setActiveIndex}
               />
             </div>
           </div>

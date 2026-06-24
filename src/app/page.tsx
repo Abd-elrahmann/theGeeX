@@ -33,6 +33,11 @@ export default function Home() {
           <LetsTalkSection revealFooterOnScroll />
         </div>
 
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 z-15 h-(--footer-overlap-bleed-height) bg-(--color-footer-surface)"
+        />
+
         <div className="absolute inset-x-0 bottom-0 z-20">
           <SiteFooter revealFromPreviousSection />
         </div>

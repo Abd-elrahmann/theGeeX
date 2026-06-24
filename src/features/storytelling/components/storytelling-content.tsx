@@ -33,7 +33,7 @@ function StorytellingContentComponent({
         "relative z-(--storytelling-content-z-index) mx-auto box-border flex w-full shrink-0",
         "max-w-(--storytelling-content-max-width)",
         isDesktop
-          ? "gap-(--storytelling-gap) p-(--storytelling-content-padding) flex-row flex-nowrap items-center justify-center overflow-visible"
+          ? "gap-(--storytelling-gap) p-(--storytelling-content-padding) flex-row flex-nowrap items-center justify-center overflow-visible max-[1023px]:min-w-0 max-[1023px]:overflow-hidden max-[1023px]:p-0"
           : "gap-(--storytelling-gap) px-0 py-(--storytelling-content-padding) flex-col items-center overflow-x-clip",
       )}
     >

@@ -85,7 +85,7 @@ const cardDescriptionClassName = cn(
 
 const splitCardTitleClassName = cn(
   cardTitleClassName,
-  "min-h-[var(--culture-split-card-title-max-height)] whitespace-nowrap",
+  "min-h-[var(--culture-split-card-title-max-height)] whitespace-normal",
 );
 
 const splitCardDescriptionClassName = cn(

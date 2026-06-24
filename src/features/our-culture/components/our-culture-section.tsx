@@ -11,6 +11,7 @@ import {
 
 import { cn } from "@/lib/cn";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { OurCultureCard } from "@/features/our-culture/components/our-culture-card";
 import { OurCultureTitle } from "@/features/our-culture/components/our-culture-title";
@@ -22,23 +23,30 @@ import {
 } from "@/features/our-culture/constants/our-culture";
 
 type CultureStage = 0 | 1 | 2;
+const CULTURE_TABLET_MEDIA_QUERY = "(min-width: 767px) and (max-width: 1023px)";
+const cultureTabletFirstStageTrigger = 0.22;
+const cultureTabletSecondStageTrigger = 0.82;
 
 export function OurCultureSection() {
   const isDesktop = useDesktopBreakpoint();
+  const isTablet = useMediaQuery(CULTURE_TABLET_MEDIA_QUERY);
+  const usesRowLayout = isDesktop || isTablet;
   const sectionRef = useRef<HTMLElement>(null);
   const [activeStage, setActiveStage] = useState<CultureStage>(0);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
+  const firstStageTrigger = isTablet ? cultureTabletFirstStageTrigger : cultureFirstStageTrigger;
+  const secondStageTrigger = isTablet ? cultureTabletSecondStageTrigger : cultureSecondStageTrigger;
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (progress >= cultureSecondStageTrigger) {
+    if (progress >= secondStageTrigger) {
       setActiveStage(2);
       return;
     }
 
-    if (progress >= cultureFirstStageTrigger) {
+    if (progress >= firstStageTrigger) {
       setActiveStage(1);
       return;
     }
@@ -56,7 +64,7 @@ export function OurCultureSection() {
   const isFirstStageActive = activeStage >= 1;
   const isSecondStageActive = activeStage >= 2;
 
-  if (!isDesktop) {
+  if (!usesRowLayout) {
     return (
       <section
         ref={sectionRef}
@@ -104,7 +112,7 @@ export function OurCultureSection() {
                   <OurCultureCard
                     card={leadCard}
                     mode={isFirstStageActive ? "lead-collapsed" : "lead-default"}
-                    imageLayoutId="culture-stage-shared-image"
+                    imageLayoutId={activeStage === 0 ? "culture-stage-shared-image" : undefined}
                     width={isFirstStageActive ? stackedCardWidth : "var(--culture-lead-card-width)"}
                     enablePositionLayout={!isSecondStageActive}
                   />
@@ -118,7 +126,7 @@ export function OurCultureSection() {
                           : "stacked-default"
                     }
                     sharedImage={secondCard.image ?? leadCard.image}
-                    imageLayoutId="culture-stage-shared-image"
+                    imageLayoutId={activeStage === 1 ? "culture-stage-shared-image" : undefined}
                     width={
                       isSecondStageActive
                         ? stackedCardWidth
@@ -132,7 +140,7 @@ export function OurCultureSection() {
                     card={thirdCard}
                     mode={isSecondStageActive ? "stacked-expanded" : "stacked-default"}
                     sharedImage={thirdCard.image ?? secondCard.image}
-                    imageLayoutId={isSecondStageActive ? "culture-stage-shared-image" : undefined}
+                    imageLayoutId={activeStage === 2 ? "culture-stage-shared-image" : undefined}
                     width={isSecondStageActive ? "var(--culture-lead-card-width)" : stackedCardWidth}
                   />
                 </div>

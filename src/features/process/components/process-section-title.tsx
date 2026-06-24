@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 
+import { cn } from "@/lib/cn";
+
 const processTitleReveal = {
   initial: {
     opacity: 0,
@@ -38,7 +40,14 @@ export function ProcessSectionTitle({ lines }: ProcessSectionTitleProps) {
   return (
     <>
       {lines.map((line, index) => (
-        <div key={line} className="overflow-hidden px-[0.15em]">
+        <div
+          key={line}
+          className={cn(
+            "overflow-hidden px-[0.15em]",
+            index > 0 && "min-[767px]:inline-block lg:block",
+            index === 2 && "min-[767px]:ml-[-0.24em] lg:ml-0",
+          )}
+        >
           <motion.div
             className="block whitespace-nowrap"
             style={{ color: titleColors[index] }}

@@ -85,11 +85,17 @@ export function snapDrawProgress(progress: number): number {
   return progress;
 }
 
-export function updatePathDrawProgress(pathCaches: PathDrawCache[], progress: number): void {
+export function updatePathDrawProgress(
+  pathCaches: PathDrawCache[],
+  progress: number,
+  reverse = false,
+): void {
   const snappedProgress = snapDrawProgress(progress);
 
   for (const cache of pathCaches) {
-    const dashoffset = Math.round(cache.hiddenOffset * (1 - snappedProgress) * 100) / 100;
+    const direction = reverse ? -1 : 1;
+    const dashoffset =
+      Math.round(cache.hiddenOffset * (1 - snappedProgress) * direction * 100) / 100;
     cache.setDashoffset(dashoffset);
   }
 }

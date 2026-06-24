@@ -240,10 +240,10 @@ function OurTeamMobileCollapsedCard() {
 
 export function OurTeamGallery({
   isExpanded,
-  isDesktop,
+  usesScatteredLayout,
 }: {
   isExpanded: boolean;
-  isDesktop: boolean;
+  usesScatteredLayout: boolean;
 }) {
   const mobileAutoHoverCanRunRef = useRef(false);
   const mobileAutoHoverWasExpandedRef = useRef(false);
@@ -251,7 +251,7 @@ export function OurTeamGallery({
   const [mobileAutoHoverState, setMobileAutoHoverState] = useState(inactiveMobileAutoHoverState);
 
   useEffect(() => {
-    if (isDesktop || ourTeamCards.length === 0) {
+    if (usesScatteredLayout || ourTeamCards.length === 0) {
       return;
     }
 
@@ -271,10 +271,10 @@ export function OurTeamGallery({
     window.addEventListener("scroll", updateScrollDirection, { passive: true });
 
     return () => window.removeEventListener("scroll", updateScrollDirection);
-  }, [isDesktop]);
+  }, [usesScatteredLayout]);
 
   useEffect(() => {
-    if (isDesktop || !isExpanded || ourTeamCards.length === 0) {
+    if (usesScatteredLayout || !isExpanded || ourTeamCards.length === 0) {
       mobileAutoHoverCanRunRef.current = false;
       mobileAutoHoverWasExpandedRef.current = false;
       return;
@@ -299,10 +299,10 @@ export function OurTeamGallery({
     }, 0);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isDesktop, isExpanded]);
+  }, [usesScatteredLayout, isExpanded]);
 
   useEffect(() => {
-    if (isDesktop || !isExpanded || ourTeamCards.length === 0 || !mobileAutoHoverCanRunRef.current) {
+    if (usesScatteredLayout || !isExpanded || ourTeamCards.length === 0 || !mobileAutoHoverCanRunRef.current) {
       return;
     }
 
@@ -340,9 +340,9 @@ export function OurTeamGallery({
     );
 
     return () => window.clearTimeout(timeoutId);
-  }, [isDesktop, isExpanded, mobileAutoHoverState]);
+  }, [usesScatteredLayout, isExpanded, mobileAutoHoverState]);
 
-  if (!isDesktop) {
+  if (!usesScatteredLayout) {
     if (!isExpanded) {
       return <OurTeamMobileCollapsedCard />;
     }
@@ -376,10 +376,10 @@ export function OurTeamGallery({
   }
 
   return (
-    <div className="relative mx-auto w-(--team-gallery-width) max-w-full origin-top scale-(--team-gallery-scale) overflow-visible">
+    <div className="relative mx-auto h-(--team-gallery-scaled-height) w-(--team-gallery-scaled-width) max-w-full overflow-visible">
       <div
         className={cn(
-          "relative mx-auto overflow-visible",
+          "relative origin-top-left scale-(--team-gallery-scale) overflow-visible",
           "h-(--team-gallery-height) w-(--team-gallery-width)",
         )}
         style={{

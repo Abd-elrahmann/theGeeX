@@ -13,16 +13,17 @@ export function BlogCard({ blog }: BlogCardProps) {
     <article
       data-blog-cursor-zone
       className={cn(
-        "mx-auto box-border grid w-full max-w-(--blogs-card-max-width) grid-cols-1 justify-items-center gap-(--blogs-card-gap) md:mx-0 md:justify-items-start",
+        "mx-auto box-border grid w-full max-w-(--blogs-card-max-width) grid-cols-1 justify-items-center gap-(--blogs-card-gap) min-[767px]:mx-0 min-[767px]:justify-items-start",
         "rounded-(--blogs-card-radius) border border-(--color-blogs-card-border) bg-(--color-blogs-card-bg)",
         "p-(--blogs-card-padding) shadow-(--blogs-card-shadow)",
-        "md:grid-cols-[var(--blogs-card-image-width)_minmax(0,1fr)]",
+        "min-[767px]:border-transparent min-[767px]:bg-transparent min-[767px]:shadow-none",
+        "min-[767px]:grid-cols-[var(--blogs-card-image-width)_minmax(0,1fr)]",
       )}
     >
       <div
         className={cn(
-          "relative order-2 w-full overflow-hidden rounded-(--blogs-card-image-radius) md:order-0",
-          "h-(--blogs-card-image-height) md:w-(--blogs-card-image-width)",
+          "relative order-2 w-full overflow-hidden rounded-(--blogs-card-image-radius) min-[767px]:order-0",
+          "h-(--blogs-card-image-height) min-[767px]:w-(--blogs-card-image-width)",
         )}
       >
         <Image
@@ -34,7 +35,7 @@ export function BlogCard({ blog }: BlogCardProps) {
         />
       </div>
 
-      <div className="order-1 flex min-w-0 flex-col items-center md:order-0 md:min-h-(--blogs-card-image-height) md:items-start">
+      <div className="order-1 flex min-w-0 flex-col items-center min-[767px]:order-0 min-[767px]:min-h-(--blogs-card-image-height) min-[767px]:items-start">
         <span
           className={cn(
             "inline-flex w-fit items-center rounded-(--blogs-card-badge-radius)",
@@ -49,7 +50,7 @@ export function BlogCard({ blog }: BlogCardProps) {
 
         <h3
           className={cn(
-            "mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center md:text-left",
+            "mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center min-[767px]:text-left",
             "font-cal-sans text-(length:--blogs-card-title-size)",
             "leading-(--blogs-card-title-line-height) font-normal tracking-normal",
             "text-(--color-blogs-card-title)",
@@ -68,7 +69,7 @@ export function BlogCard({ blog }: BlogCardProps) {
           {blog.date}
         </p>
 
-        <div className="mt-auto hidden items-center gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top) md:flex">
+        <div className="mt-auto hidden items-center gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top) min-[767px]:flex">
           <p
             className={cn(
               "whitespace-pre font-poppins text-(length:--blogs-card-meta-size)",

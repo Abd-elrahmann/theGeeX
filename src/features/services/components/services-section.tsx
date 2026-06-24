@@ -22,8 +22,12 @@ import { ServicesSectionCursor } from "./services-section-cursor";
 import { ServicesTitle } from "./services-title";
 import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 
+const SERVICES_TABLET_MEDIA_QUERY = "(min-width: 767px) and (max-width: 1023px)";
+const SERVICES_TABLET_STAGE_HEIGHT_PX = 414;
+
 export function ServicesSection() {
   const isDesktop = useDesktopBreakpoint();
+  const isTablet = useMediaQuery(SERVICES_TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const gridRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -52,6 +56,7 @@ export function ServicesSection() {
   const { scrollYProgress } = useScroll({
     target: mobileScrollRef,
     offset: ["start start", "end end"],
+    layoutEffect: false,
   });
 
   const activeService = services[activeIndex] ?? services[0];
@@ -121,6 +126,8 @@ export function ServicesSection() {
       const columnsGap = parseFloat(rootStyles.getPropertyValue("--services-columns-gap")) || 24;
       const stageBottomPadding =
         parseFloat(rootStyles.getPropertyValue("--services-stage-bottom-padding")) || 32;
+      const pinClearance =
+        parseFloat(rootStyles.getPropertyValue("--services-mobile-pin-clearance")) || 0;
       const viewportHeight = window.innerHeight;
       const contentHeight = Math.max(
         0,
@@ -130,10 +137,12 @@ export function ServicesSection() {
         0,
         ...mobileImageMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
       );
-      const stageHeight = Math.max(
-        viewportHeight,
-        contentHeight + imageHeight + columnsGap + stageBottomPadding,
-      );
+      const stageHeight = isTablet
+        ? SERVICES_TABLET_STAGE_HEIGHT_PX + pinClearance
+        : Math.max(
+            viewportHeight,
+            contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance,
+          );
 
       setMobileStageMetrics({
         stageHeight,
@@ -162,7 +171,9 @@ export function ServicesSection() {
       resizeObserver?.disconnect();
       window.removeEventListener("resize", measureMobileStage);
     };
-  }, [isDesktop]);
+  }, [isDesktop, isTablet]);
+
+  const tabletPanelHeight = SERVICES_TABLET_STAGE_HEIGHT_PX - 64;
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
     <div
@@ -263,6 +274,7 @@ export function ServicesSection() {
             ref={mobileScrollRef}
             className="relative"
             style={{
+              marginTop: "calc(var(--services-mobile-pin-clearance) * -1)",
               minHeight:
                 mobileStageMetrics.scrollHeight > 0
                   ? `${mobileStageMetrics.scrollHeight}px`
@@ -280,14 +292,14 @@ export function ServicesSection() {
             >
               <div
                 className={cn(
-                  "relative z-(--services-content-z-index) flex h-full w-full items-center justify-center overflow-hidden",
+                  "relative z-(--services-content-z-index) flex h-full w-full items-start justify-center overflow-hidden pt-(--services-mobile-pin-clearance) min-[1024px]:items-center min-[1024px]:pt-0",
                 )}
               >
                 <div
-                  className="grid w-full content-start gap-(--services-columns-gap) py-(--services-stage-bottom-padding)"
+                  className="grid w-full content-start gap-(--services-columns-gap) py-(--services-stage-bottom-padding) min-[767px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[767px]:items-stretch"
                   style={{
                     gridTemplateRows:
-                      mobileStageMetrics.contentHeight > 0 && mobileStageMetrics.imageHeight > 0
+                      !isTablet && mobileStageMetrics.contentHeight > 0 && mobileStageMetrics.imageHeight > 0
                         ? `${mobileStageMetrics.contentHeight}px ${mobileStageMetrics.imageHeight}px`
                         : undefined,
                   }}
@@ -297,7 +309,9 @@ export function ServicesSection() {
                     className="min-h-0 overflow-hidden"
                     style={{
                       height:
-                        mobileStageMetrics.contentHeight > 0
+                        isTablet && tabletPanelHeight > 0
+                          ? `${tabletPanelHeight}px`
+                          : mobileStageMetrics.contentHeight > 0
                           ? `${mobileStageMetrics.contentHeight}px`
                           : undefined,
                     }}
@@ -320,7 +334,9 @@ export function ServicesSection() {
                     className="min-h-0 overflow-hidden rounded-(--services-content-radius)"
                     style={{
                       height:
-                        mobileStageMetrics.imageHeight > 0
+                        isTablet && tabletPanelHeight > 0
+                          ? `${tabletPanelHeight}px`
+                          : mobileStageMetrics.imageHeight > 0
                           ? `${mobileStageMetrics.imageHeight}px`
                           : undefined,
                     }}

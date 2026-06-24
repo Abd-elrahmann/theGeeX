@@ -159,9 +159,9 @@ export function ProjectsSection() {
       id="projects"
       aria-label="Projects"
       className={cn(
-        "relative mx-auto w-full overflow-visible",
-        "mt-[var(--projects-margin-top)]",
-        "[perspective:var(--projects-section-perspective)]",
+        "relative isolate mx-auto w-full overflow-visible",
+        "mt-(--projects-margin-top)",
+        "perspective-(--projects-section-perspective)",
         isDesktop && isPointerFine && "cursor-none",
       )}
       onMouseLeave={() => {
@@ -178,19 +178,19 @@ export function ProjectsSection() {
       }}
     >
       <div className="relative w-full">
-        <div className="relative h-[var(--projects-section-scroll-height)] w-full">
+        <div className="relative h-(--projects-section-scroll-height) w-full">
           <div
             className={cn(
               "sticky top-0 grid h-svh min-h-svh w-full overflow-visible",
-              "grid-rows-[auto_minmax(0,1fr)] gap-[var(--projects-title-gap)]",
+              "grid-rows-[auto_minmax(0,1fr)] gap-(--projects-title-gap)",
             )}
           >
             <ProjectsTitle />
 
-            <div className="relative z-[var(--projects-card-stack-z-index)] min-h-0 overflow-visible p-[var(--projects-card-outer-padding)]">
+            <div className="relative z-(--projects-card-stack-z-index) min-h-0 overflow-visible p-(--projects-card-outer-padding)">
               <div
                 ref={cardStackRef}
-                className="pointer-events-none relative mx-auto h-[var(--projects-card-height)] w-full"
+                className="pointer-events-none relative mx-auto h-(--projects-card-height) w-full"
               >
                 {projects.map((project, index) => (
                   <ProjectCard
@@ -209,7 +209,7 @@ export function ProjectsSection() {
 
         <div
           aria-hidden
-          className="h-[var(--projects-section-exit-padding)] w-full shrink-0"
+          className="h-(--projects-section-exit-padding) w-full shrink-0"
         />
       </div>
 

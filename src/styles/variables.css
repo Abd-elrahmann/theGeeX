@@ -135,9 +135,10 @@
   --services-title-perspective: 1200px;
   --services-title-top: calc(var(--navbar-height) + 32px);
   --services-grid-top: calc(var(--navbar-height) + 104px);
-  --services-margin-top: var(--early-section-gap);
+  --services-margin-top: var(--section-stack-gap);
   --services-stage-height: auto;
   --services-stage-bottom-padding: 32px;
+  --services-mobile-pin-clearance: calc(var(--navbar-height) + 16px);
   --services-scroll-step-vh: 100;
   --services-pin-start-offset: 0px;
   --services-sticky-padding-bottom: 48px;
@@ -217,7 +218,7 @@
   --blogs-padding-y: 48px;
   --blogs-container-max-width: 1200px;
   --blogs-section-gap: 32px;
-  --blogs-title-column-width: 100%;
+  --blogs-title-column-width: 32%;
   --blogs-title-sticky-top: 0px;
   --blogs-title-column-gap: 10px;
   --blogs-title-z-index: 1;
@@ -403,7 +404,10 @@
   --footer-padding-x: 16px;
   --footer-padding-top: 0px;
   --footer-padding-bottom: 48px;
-  --footer-card-min-height: 620px;
+  --footer-card-min-height: max(
+    620px,
+    calc(100svh - var(--footer-padding-top) - var(--footer-padding-bottom))
+  );
   --footer-card-radius: 32px;
   --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
   --footer-card-padding-x: 20px;
@@ -695,7 +699,7 @@
   --projects-title-gap: 8px;
   --projects-section-perspective: 1200px;
   --projects-section-scroll-vh: 600;
-  --projects-section-exit-vh: 24;
+  --projects-section-exit-vh: 32;
   --projects-section-scroll-height: calc(var(--projects-section-scroll-vh) * 1vh);
   --projects-section-exit-padding: calc(var(--projects-section-exit-vh) * 1vh);
   --projects-card-stack-offset-step: 56px;
@@ -769,12 +773,12 @@
   --culture-title-line-height: 1;
   --culture-title-box-height: clamp(56px, 14vw, 96px);
   --culture-title-z-index: 1;
-  --culture-margin-top: 30px;
+  --culture-margin-top: var(--section-stack-gap);
   --culture-padding-x: 16px;
   --culture-container-max-width: 1260px;
   --culture-section-gap: 24px;
   --culture-section-scroll-vh: 160;
-  --culture-section-exit-vh: 24;
+  --culture-section-exit-vh: 0;
   --culture-section-scroll-height: calc(var(--culture-section-scroll-vh) * 1vh);
   --culture-section-exit-padding: calc(var(--culture-section-exit-vh) * 1vh);
   --culture-grid-gap: 20px;
@@ -852,19 +856,20 @@
   --team-title-line-height: 1;
   --team-title-box-height: clamp(72px, 15vw, 120px);
   --team-title-z-index: 1;
-  --team-margin-top: 96px;
+  --team-margin-top: var(--section-stack-gap);
   --team-padding-x: 16px;
   --team-container-max-width: 1200px;
   --team-section-gap: 24px;
   --team-section-padding-y: 48px;
   --team-section-scroll-vh: 100;
-  --team-section-exit-vh: 24;
+  --team-section-exit-vh: 0;
   --team-section-scroll-height: calc(var(--team-section-scroll-vh) * 1vh);
   --team-section-exit-padding: calc(var(--team-section-exit-vh) * 1vh);
   --team-gallery-width: 1059px;
   --team-gallery-height: 736px;
   --team-gallery-scale: 0.9;
   --team-gallery-scaled-width: calc(var(--team-gallery-width) * var(--team-gallery-scale));
+  --team-gallery-scaled-height: calc(var(--team-gallery-height) * var(--team-gallery-scale));
   --team-gallery-bottom-bleed: 120px;
   --team-mobile-collapsed-card-width: min(150px, 42vw);
   --team-mobile-card-min-width: 156px;
@@ -992,15 +997,30 @@
     --blogs-section-gap: 40px;
     --blogs-title-column-width: 36%;
     --blogs-title-sticky-top: 116px;
-    --blogs-title-size: clamp(88px, 12vw, 116px);
-    --blogs-title-line-height: 1.12;
-    --blogs-title-box-height: 104px;
+    --blogs-title-size: 68px;
+    --blogs-title-line-height: 1.08;
+    --blogs-title-box-height: 72px;
     --blogs-cards-gap: 36px;
     --blogs-card-max-width: 100%;
     --blogs-card-gap: 20px;
     --blogs-card-image-width: 220px;
     --blogs-card-image-height: 270px;
     --blogs-card-title-size: 26px;
+    --storytelling-margin-top: var(--section-stack-gap);
+    --storytelling-gap: 40px;
+    --storytelling-media-width: 180px;
+    --storytelling-media-height: 300px;
+    --storytelling-caption-height: 92px;
+    --storytelling-caption-margin-top: 18px;
+    --storytelling-lines-width: min(
+      620px,
+      calc(
+        100vw - 2 * var(--storytelling-section-padding-x) - var(--storytelling-media-width) -
+          var(--storytelling-gap) - 8px
+      )
+    );
+    --storytelling-line-size: clamp(24px, 4vw, 34px);
+    --storytelling-content-max-width: calc(100vw - 2 * var(--storytelling-section-padding-x));
     --ambition-margin-top: max(
       var(--section-stack-gap),
       calc(
@@ -1008,6 +1028,155 @@
           var(--ambition-path-gap)
       )
     );
+  }
+}
+
+@media (min-width: 767px) and (max-width: 1023px) {
+  :root {
+    --storytelling-margin-top: var(--section-stack-gap);
+    --storytelling-gap: 40px;
+    --storytelling-media-width: 180px;
+    --storytelling-media-height: 300px;
+    --storytelling-caption-height: 92px;
+    --storytelling-caption-margin-top: 18px;
+    --storytelling-lines-width: min(
+      620px,
+      calc(
+        100vw - 2 * var(--storytelling-section-padding-x) - var(--storytelling-media-width) -
+          var(--storytelling-gap) - 8px
+      )
+    );
+    --storytelling-line-size: clamp(24px, 4vw, 34px);
+    --storytelling-content-max-width: calc(100vw - 2 * var(--storytelling-section-padding-x));
+    --services-mobile-pin-clearance: calc(var(--navbar-height) + 16px);
+    --testimonials-title-size: 112px;
+    --testimonials-title-line-height: 124px;
+    --testimonials-title-box-height: 98px;
+    --awards-title-size: 104px;
+    --awards-title-line-height: 118px;
+    --awards-title-box-height: 92px;
+    --awards-card-max-width: 520px;
+    --blogs-padding-x: 24px;
+    --blogs-padding-y: 56px;
+    --blogs-section-gap: 28px;
+    --blogs-title-column-width: 32%;
+    --blogs-title-sticky-top: 116px;
+    --blogs-title-size: 68px;
+    --blogs-title-line-height: 1.08;
+    --blogs-title-box-height: 72px;
+    --blogs-cards-gap: 28px;
+    --blogs-card-max-width: 100%;
+    --blogs-card-padding: 14px;
+    --blogs-card-gap: 16px;
+    --blogs-card-image-width: 190px;
+    --blogs-card-image-height: 238px;
+    --blogs-card-title-margin-top: 14px;
+    --blogs-card-title-size: 22px;
+    --blogs-card-date-margin-top: 12px;
+    --blogs-card-footer-padding-top: 18px;
+    --culture-margin-top: var(--section-stack-gap);
+    --culture-padding-x: 24px;
+    --culture-section-gap: 20px;
+    --culture-section-scroll-vh: 190;
+    --culture-section-exit-vh: 0;
+    --culture-grid-gap: 12px;
+    --culture-lead-card-width: min(300px, calc(100vw - 2 * var(--culture-padding-x)));
+    --culture-card-radius: 22px;
+    --culture-card-inner-radius: 18px;
+    --culture-image-radius: 18px;
+    --culture-split-card-min-height: 310px;
+    --culture-split-card-content-height: 294px;
+    --culture-split-card-media-min-height: 170px;
+    --culture-stacked-card-min-height: 294px;
+    --culture-card-content-padding-x: 14px;
+    --culture-card-content-padding-y: 14px;
+    --culture-stacked-card-padding-x: 14px;
+    --culture-stacked-card-padding-y: 14px;
+    --culture-text-block-margin-top: 20px;
+    --culture-split-card-text-block-height: 218px;
+    --culture-split-card-title-max-height: 42px;
+    --culture-split-card-collapsed-title-offset: 10px;
+    --culture-split-card-title-expanded-offset: 168px;
+    --culture-card-title-size: 13px;
+    --culture-card-description-size: 11px;
+    --culture-card-description-line-height: 1.45;
+    --culture-icon-size: 28px;
+    --culture-pill-icon-width: 18px;
+    --culture-pill-icon-height: 30px;
+    --culture-stacked-card-title-block-height: 58px;
+    --culture-stacked-card-icon-gap: 8px;
+    --team-margin-top: var(--section-stack-gap);
+    --team-padding-x: 16px;
+    --team-title-size: 96px;
+    --team-title-line-height: 96px;
+    --team-title-box-height: 76px;
+    --team-section-gap: 0px;
+    --team-section-padding-y: 44px;
+    --team-gallery-scale: 0.64;
+    --team-gallery-bottom-bleed: 48px;
+    --team-card-padding-top: 30px;
+    --team-card-content-padding-x: 14px;
+    --process-padding-x: 24px;
+    --process-padding-y: 52px;
+    --process-title-max-width: 680px;
+    --process-title-size: 56px;
+    --process-title-line-height: 1.05;
+    --process-cards-column-max-width: 620px;
+    --process-card-width: min(100%, 620px);
+    --process-card-height: 156px;
+    --process-card-gap: 14px;
+    --process-card-radius: 18px;
+    --process-card-content-padding-x: 24px;
+    --process-card-content-padding-y: 22px;
+    --process-card-index-padding-x: 24px;
+    --process-card-index-padding-y: 18px;
+    --process-card-index-size: 42px;
+    --process-card-title-size: 28px;
+    --process-card-description-size: 14px;
+    --process-card-description-line-height: 1.5;
+    --process-card-description-margin-top: 10px;
+    --process-cards-bottom-padding: 24px;
+    --process-card-sticky-top-1: 120px;
+    --process-card-sticky-top-2: 210px;
+    --process-card-sticky-top-3: 300px;
+    --process-card-sticky-top-4: 390px;
+    --process-card-sticky-top-5: 390px;
+    --packages-title-size: 112px;
+    --packages-title-line-height: 124px;
+    --packages-title-box-height: 98px;
+    --packages-button-width: 100%;
+    --packages-card-feature-dot-size: 6px;
+    --packages-card-feature-dot-offset: 7px;
+    --footer-reveal-gap: var(--footer-margin-top);
+    --lets-talk-container-max-width: 1280px;
+    --lets-talk-padding-x: 24px;
+    --lets-talk-card-radius: 44px;
+    --footer-container-max-width: 1280px;
+    --footer-padding-x: 24px;
+    --footer-padding-bottom: 56px;
+    --footer-card-min-height: max(
+      700px,
+      calc(100svh - var(--footer-padding-top) - var(--footer-padding-bottom))
+    );
+    --footer-card-radius: 44px;
+    --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
+    --footer-card-padding-x: 32px;
+    --footer-card-padding-top: 44px;
+    --footer-top-row-gap: 40px;
+    --footer-link-column-gap: 18px;
+    --footer-newsletter-gap: 22px;
+    --footer-newsletter-copy-gap: 10px;
+    --footer-newsletter-title-size: 38px;
+    --footer-newsletter-title-line-height: 1.08;
+    --footer-newsletter-subtitle-size: 16px;
+    --footer-newsletter-form-gap: 14px;
+    --footer-input-height: 54px;
+    --footer-subscribe-button-height: 54px;
+    --footer-rights-margin-top: 36px;
+    --footer-rights-padding-top: 48px;
+    --footer-rights-padding-bottom: 28px;
+    --footer-rights-line-width: 96px;
+    --footer-logo-height: 250px;
   }
 }
 
@@ -1066,6 +1235,8 @@
     --blogs-card-max-width: 600px;
     --blogs-card-gap: 24px;
     --blogs-card-title-size: 32px;
+    --storytelling-media-width: 240px;
+    --storytelling-media-height: 335px;
     --packages-padding-x: 0px;
     --packages-padding-y: 64px;
     --packages-section-gap: 40px;
@@ -1103,7 +1274,10 @@
     --footer-reveal-gap: var(--footer-margin-top);
     --footer-container-max-width: 1280px;
     --footer-padding-bottom: 64px;
-    --footer-card-min-height: 740px;
+    --footer-card-min-height: max(
+      740px,
+      calc(100svh - var(--footer-padding-top) - var(--footer-padding-bottom))
+    );
     --footer-card-radius: 48px;
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 48px;
@@ -1148,6 +1322,8 @@
     --awards-card-title-margin-top: 28px;
     --awards-card-title-height: 48px;
     --awards-card-title-size: 20px;
+    --storytelling-media-width: 260px;
+    --storytelling-media-height: 362px;
     --awards-card-place-size: 16px;
     --process-cards-column-max-width: 680px;
     --process-card-width: min(100%, 620px);
@@ -1196,7 +1372,7 @@
     );
     --ambition-text-width: 1062px;
     --ambition-text-height: 208px;
-    --storytelling-margin-top: 40px;
+    --storytelling-margin-top: var(--section-stack-gap);
     --storytelling-line-size: 49px;
     --storytelling-gap: 150px;
     --storytelling-media-offset-y: 110px;
@@ -1207,8 +1383,8 @@
     );
     --storytelling-caption-margin-top: 20px;
     --projects-margin-top: var(--section-stack-gap);
-    --team-margin-top: 120px;
-    --culture-margin-top: 120px;
+    --team-margin-top: var(--section-stack-gap);
+    --culture-margin-top: var(--section-stack-gap);
     --projects-padding-x: 0px;
     --team-padding-x: 0px;
     --culture-padding-x: 0px;
@@ -1229,7 +1405,7 @@
     --team-gallery-scale: 0.9;
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 200;
-    --culture-section-exit-vh: 40;
+    --culture-section-exit-vh: 0;
     --team-gallery-bottom-bleed: 160px;
     --team-card-padding-top: 40px;
     --team-card-content-padding-x: 24px;
@@ -1247,7 +1423,7 @@
     --projects-card-content-max-width: 100%;
     --projects-card-image-margin-top: 24px;
     --projects-section-scroll-vh: 640;
-    --projects-section-exit-vh: 64;
+    --projects-section-exit-vh: 44;
     --projects-card-stack-offset-step: 72px;
   }
 }
@@ -1316,7 +1492,10 @@
     --lets-talk-button-height: 40px;
     --footer-container-max-width: 1648px;
     --footer-padding-bottom: 72px;
-    --footer-card-min-height: 780px;
+    --footer-card-min-height: max(
+      780px,
+      calc(100svh - var(--footer-padding-top) - var(--footer-padding-bottom))
+    );
     --footer-card-radius: 64px;
     --footer-card-padding-x: 58px;
     --footer-card-padding-top: 58px;
@@ -1346,7 +1525,7 @@
     --team-title-size: 188px;
     --team-title-line-height: 188px;
     --team-title-box-height: 144px;
-    --team-margin-top: 120px;
+    --team-margin-top: var(--section-stack-gap);
     --team-section-gap: 0px;
     --team-section-padding-y: 72px;
     --team-section-scroll-vh: 100;
@@ -1361,10 +1540,10 @@
     --culture-title-size: 188px;
     --culture-title-line-height: 188px;
     --culture-title-box-height: 144px;
-    --culture-margin-top: 120px;
+    --culture-margin-top: var(--section-stack-gap);
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 220;
-    --culture-section-exit-vh: 44;
+    --culture-section-exit-vh: 0;
     --culture-grid-gap: 28px;
     --culture-card-content-padding-x: 36px;
     --culture-card-content-padding-y: 36px;
@@ -1380,7 +1559,7 @@
     --projects-margin-top: var(--section-stack-gap);
     --projects-title-gap: 32px;
     --projects-section-scroll-vh: 700;
-    --projects-section-exit-vh: 64;
+    --projects-section-exit-vh: 52;
     --projects-card-height: 900px;
     --projects-card-stack-offset-step: 84px;
     --projects-card-outer-padding: 28px;
@@ -1438,7 +1617,10 @@
     --lets-talk-content-max-width: 1320px;
     --lets-talk-title-size: 68px;
     --footer-container-max-width: 1720px;
-    --footer-card-min-height: 820px;
+    --footer-card-min-height: max(
+      820px,
+      calc(100svh - var(--footer-padding-top) - var(--footer-padding-bottom))
+    );
     --footer-logo-height: 380px;
     --services-nav-item-padding-x: 32px;
     --services-nav-item-height: 88px;
@@ -1461,7 +1643,7 @@
     --team-title-size: 220px;
     --team-title-line-height: 220px;
     --team-title-box-height: 168px;
-    --team-margin-top: 120px;
+    --team-margin-top: var(--section-stack-gap);
     --team-section-gap: 0px;
     --team-section-padding-y: 80px;
     --team-section-scroll-vh: 100;
@@ -1476,10 +1658,10 @@
     --culture-title-size: 220px;
     --culture-title-line-height: 220px;
     --culture-title-box-height: 168px;
-    --culture-margin-top: 120px;
+    --culture-margin-top: var(--section-stack-gap);
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 240;
-    --culture-section-exit-vh: 48;
+    --culture-section-exit-vh: 0;
     --culture-grid-gap: 32px;
     --culture-card-content-padding-x: 40px;
     --culture-card-content-padding-y: 40px;
@@ -1492,10 +1674,10 @@
     --projects-title-size: 280px;
     --projects-title-line-height: 280px;
     --projects-title-box-height: 214px;
-    --projects-margin-top: 208px;
+    --projects-margin-top: var(--section-stack-gap);
     --projects-title-gap: 40px;
     --projects-section-scroll-vh: 760;
-    --projects-section-exit-vh: 64;
+    --projects-section-exit-vh: 60;
     --projects-card-height: 980px;
     --projects-card-stack-offset-step: 96px;
     --projects-card-outer-padding: 36px;
