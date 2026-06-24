@@ -40,8 +40,8 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
           )}
         >
-          <div className="grid w-full grid-cols-1 gap-(--footer-top-row-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.45fr)]">
-            <nav aria-label="Footer navigation" className="flex flex-col items-start gap-(--footer-link-column-gap)">
+          <div className="grid w-full grid-cols-2 gap-(--footer-top-row-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.45fr)]">
+            <nav aria-label="Footer navigation" className="order-2 flex flex-col items-start gap-(--footer-link-column-gap) md:order-1">
               {footerNavLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -57,7 +57,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               ))}
             </nav>
 
-            <nav aria-label="Footer social links" className="flex flex-col items-start gap-(--footer-link-column-gap)">
+            <nav aria-label="Footer social links" className="order-3 flex flex-col items-start gap-(--footer-link-column-gap) md:order-2">
               {footerSocialLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -75,7 +75,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               ))}
             </nav>
 
-            <div className="flex flex-col items-start gap-(--footer-newsletter-gap)">
+            <div className="order-1 col-span-2 flex flex-col items-start gap-(--footer-newsletter-gap) md:order-3 md:col-span-1">
               <div className="flex w-full flex-col items-start gap-(--footer-newsletter-copy-gap)">
                 <h2
                   className={cn(
@@ -86,7 +86,11 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
                   {footerContent.newsletterTitle}
                 </h2>
                 <p
-                  className={cn("h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-[40px] leading-[1.2] font-semibold italic tracking-normal text-(--color-footer-subtitle)")}
+                  className={cn(
+                    "h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins",
+                    "text-(length:--footer-newsletter-subtitle-size) leading-(--footer-newsletter-subtitle-line-height)",
+                    "font-semibold italic tracking-normal text-(--color-footer-subtitle)",
+                  )}
                   style={{
                     wordWrap: "break-word",
                     wordBreak: "break-word",
@@ -97,7 +101,7 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
                 </p>
               </div>
 
-              <div className="flex w-full flex-col items-stretch gap-(--footer-newsletter-form-gap) sm:flex-row sm:items-center">
+              <div className="flex w-full flex-col items-stretch gap-(--footer-newsletter-form-gap) md:flex-row md:items-center">
                 <input
                   type="email"
                   placeholder={footerContent.emailPlaceholder}
@@ -125,8 +129,8 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
             </div>
           </div>
 
-          <div className="flex w-full items-center justify-center gap-(--footer-rights-line-gap) py-(--footer-rights-row-padding-y)">
-            <span className="h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line)" />
+          <div className="order-2 mt-(--footer-rights-margin-top) flex w-full items-center justify-center gap-(--footer-rights-line-gap) pt-(--footer-rights-padding-top) pb-(--footer-rights-padding-bottom)">
+            <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) lg:block" />
 
             <div className="flex w-fit max-w-(--footer-rights-max-width) shrink-0 flex-wrap items-center justify-center gap-(--footer-rights-gap)">
               {footerContent.rights.map((item, index) => (
@@ -146,10 +150,10 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               ))}
             </div>
 
-            <span className="h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line)" />
+            <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) lg:block" />
           </div>
 
-          <div className="relative w-full h-(--footer-logo-height)">
+          <div className="order-3 relative h-(--footer-logo-height) w-full">
             <Image
               src={footerContent.logoSrc}
               alt="theGeeX logo"

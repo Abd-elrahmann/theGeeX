@@ -7,7 +7,7 @@ export function Ambition() {
     <section
       id="ambition"
       className={cn(
-        "relative grid min-h-[100svh] w-full flex-1 place-items-center",
+        "relative grid min-h-(--ambition-min-height) w-full flex-1 place-items-center",
         "mt-(--ambition-margin-top) overflow-x-clip bg-background",
         "pb-(--ambition-padding-bottom) py-0",
       )}

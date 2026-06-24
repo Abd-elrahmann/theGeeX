@@ -68,6 +68,13 @@ interface ProjectCardProps {
   exitProgress: MotionValue<number>;
 }
 
+interface ProjectCardArticleStyle {
+  "--project-card-background": string;
+  top: string;
+  y: MotionValue<number>;
+  zIndex: string;
+}
+
 function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
 }
@@ -247,20 +254,22 @@ export function ProjectCard({
       totalCards,
     ),
   );
+  const articleStyle: ProjectCardArticleStyle = {
+    "--project-card-background": project.background,
+    top: `calc(${index} * var(--projects-card-stack-offset-step))`,
+    y: cardY,
+    zIndex: `calc(var(--projects-card-stack-z-index) + ${index})`,
+  };
 
   return (
     <motion.article
       data-project-card=""
       data-project-cursor-zone=""
       className={cn(
-        "pointer-events-auto absolute inset-x-0 top-0 isolate h-[var(--projects-card-height)] w-full min-w-0 origin-top",
+        "pointer-events-auto absolute inset-x-0 top-0 isolate h-(--projects-card-height) w-full min-w-0 origin-top",
         "transform-gpu will-change-transform backface-hidden",
       )}
-      style={{
-        top: `calc(${index} * var(--projects-card-stack-offset-step))`,
-        y: cardY,
-        zIndex: `calc(var(--projects-card-stack-z-index) + ${index})`,
-      }}
+      style={articleStyle}
       initial={false}
       onMouseEnter={() => {
         setIsCardHovered(true);
@@ -271,14 +280,11 @@ export function ProjectCard({
     >
       <motion.div
         className={cn(
-          "flex h-full min-w-0 flex-col overflow-hidden rounded-[var(--projects-card-radius)]",
-          "p-[var(--projects-card-padding)] text-[var(--color-project-card-foreground)]",
-          "shadow-[var(--projects-card-shadow)] transform-gpu will-change-transform backface-hidden",
+          "flex h-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius)",
+          "bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground)",
+          "shadow-(--projects-card-shadow) transform-gpu will-change-transform backface-hidden",
         )}
-        style={{
-          backgroundColor: project.background,
-          scale: cardScale,
-        }}
+        style={{ scale: cardScale }}
       >
         <header className={projectCardHeaderRowClassName}>
           <span className={projectCardIndexClassName}>{formatIndex(index)}</span>
@@ -293,7 +299,7 @@ export function ProjectCard({
 
         <span
           aria-hidden="true"
-          className="mt-[var(--projects-card-divider-margin-top)] block h-px w-full bg-[var(--color-project-card-divider)]"
+          className="mt-(--projects-card-divider-margin-top) block h-px w-full bg-(--color-project-card-divider)"
         />
 
         <div className={projectCardSubheaderRowClassName}>
@@ -307,7 +313,7 @@ export function ProjectCard({
           />
         </div>
 
-        <div className="relative mt-[var(--projects-card-image-margin-top)] min-h-0 w-full flex-1 overflow-hidden rounded-[var(--projects-card-image-radius)]">
+        <div className="relative mt-(--projects-card-image-margin-top) min-h-0 w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)">
           <Image
             src={project.image}
             alt={project.imageAlt}

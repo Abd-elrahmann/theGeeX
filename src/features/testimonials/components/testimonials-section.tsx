@@ -16,6 +16,7 @@ const AUTO_PLAY_INTERVAL_MS = 2000;
 const MANUAL_INTERACTION_PAUSE_MS = 6000;
 
 export function TestimonialsSection() {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -29,6 +30,7 @@ export function TestimonialsSection() {
   const [cardOffsets, setCardOffsets] = useState<number[]>([]);
   const [dragTranslateX, setDragTranslateX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isSectionInView, setIsSectionInView] = useState(false);
 
   const handleManualInteraction = () => {
     interactionUntilRef.current = Date.now() + MANUAL_INTERACTION_PAUSE_MS;
@@ -101,6 +103,33 @@ export function TestimonialsSection() {
   }, [measureCardOffsets]);
 
   useEffect(() => {
+    const sectionElement = sectionRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.35,
+      },
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isSectionInView) {
+      return;
+    }
+
     const timeoutId = window.setTimeout(() => {
       if (Date.now() < interactionUntilRef.current) {
         return;
@@ -112,10 +141,11 @@ export function TestimonialsSection() {
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [currentIndex]);
+  }, [currentIndex, isSectionInView]);
 
   return (
     <section
+      ref={sectionRef}
       id="testimonials"
       aria-label="Testimonials"
       className={cn(
@@ -132,7 +162,7 @@ export function TestimonialsSection() {
               type="button"
               aria-label="Previous testimonial"
               className={cn(
-                "absolute top-1/2 left-2 z-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text",
+                "absolute top-1/2 left-2 z-2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text lg:flex",
                 "transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border",
               )}
               onClick={() => {
@@ -149,7 +179,7 @@ export function TestimonialsSection() {
               type="button"
               aria-label="Next testimonial"
               className={cn(
-                "absolute top-1/2 right-2 z-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text",
+                "absolute top-1/2 right-2 z-2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text lg:flex",
                 "transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border",
               )}
               onClick={() => {

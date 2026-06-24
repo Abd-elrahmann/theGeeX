@@ -106,14 +106,14 @@ export function BlogsSection() {
         className={cn(
           "relative mx-auto grid w-full max-w-(--blogs-container-max-width)",
           "grid-cols-1 gap-(--blogs-section-gap) overflow-visible",
-          "lg:grid-cols-[var(--blogs-title-column-width)_minmax(0,1fr)] lg:items-start",
+          "md:grid-cols-[var(--blogs-title-column-width)_minmax(0,1fr)] md:items-start",
         )}
       >
-        <aside className="min-w-0 lg:self-stretch">
+        <aside className="min-w-0 md:self-stretch">
           <div
             className={cn(
               "relative flex w-full flex-col items-center justify-start",
-              "gap-(--blogs-title-column-gap) lg:sticky lg:self-start lg:overflow-hidden",
+              "gap-(--blogs-title-column-gap) md:sticky md:self-start md:overflow-hidden",
             )}
             style={{
               top: "var(--blogs-title-sticky-top)",

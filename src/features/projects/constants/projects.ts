@@ -59,10 +59,18 @@ export const projects: ProjectItem[] = [
   },
   {
     id: 5,
+    name: "AstraVibe",
+    categories: ["Web & Mobile Apps", "End-to-End Integration"],
+    image: "/images/ServicesCard5.jpg",
+    imageAlt: "AstraVibe web and mobile apps integration preview",
+    background: "var(--color-project-card-bg-5)",
+  },
+  {
+    id: 6,
     name: "Zamalkawy",
     categories: ["Mobile", "Website", "Match Center", "Game Hub"],
     image: "/images/ServicesCard1.jpg",
     imageAlt: "Zamalkawy mobile and website platform preview",
-    background: "var(--color-project-card-bg-5)",
+    background: "var(--color-project-card-bg-6)",
   },
 ];

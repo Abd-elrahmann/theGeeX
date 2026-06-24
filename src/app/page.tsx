@@ -1,4 +1,5 @@
 import { Ambition } from "@/features/ambition";
+import { AwardsSection } from "@/features/awards";
 import { BlogsSection } from "@/features/blogs";
 import { SiteFooter } from "@/features/footer";
 import { Hero } from "@/features/hero";
@@ -24,6 +25,7 @@ export default function Home() {
       <OurTeamSection />
       <ProcessSection />
       <TestimonialsSection />
+      <AwardsSection />
       <BlogsSection />
       <PackagesSection />
       <div className="relative mt-(--lets-talk-margin-top) h-(--lets-talk-footer-reveal-height)">

@@ -13,13 +13,15 @@ export function BlogCard({ blog }: BlogCardProps) {
     <article
       data-blog-cursor-zone
       className={cn(
-        "grid w-full max-w-(--blogs-card-max-width) grid-cols-1 gap-(--blogs-card-gap)",
+        "mx-auto box-border grid w-full max-w-(--blogs-card-max-width) grid-cols-1 justify-items-center gap-(--blogs-card-gap) md:mx-0 md:justify-items-start",
+        "rounded-(--blogs-card-radius) border border-(--color-blogs-card-border) bg-(--color-blogs-card-bg)",
+        "p-(--blogs-card-padding) shadow-(--blogs-card-shadow)",
         "md:grid-cols-[var(--blogs-card-image-width)_minmax(0,1fr)]",
       )}
     >
       <div
         className={cn(
-          "relative w-full overflow-hidden rounded-(--blogs-card-image-radius)",
+          "relative order-2 w-full overflow-hidden rounded-(--blogs-card-image-radius) md:order-0",
           "h-(--blogs-card-image-height) md:w-(--blogs-card-image-width)",
         )}
       >
@@ -32,7 +34,7 @@ export function BlogCard({ blog }: BlogCardProps) {
         />
       </div>
 
-      <div className="flex min-h-(--blogs-card-image-height) min-w-0 flex-col items-start">
+      <div className="order-1 flex min-w-0 flex-col items-center md:order-0 md:min-h-(--blogs-card-image-height) md:items-start">
         <span
           className={cn(
             "inline-flex w-fit items-center rounded-(--blogs-card-badge-radius)",
@@ -47,7 +49,7 @@ export function BlogCard({ blog }: BlogCardProps) {
 
         <h3
           className={cn(
-            "mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word",
+            "mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center md:text-left",
             "font-cal-sans text-(length:--blogs-card-title-size)",
             "leading-(--blogs-card-title-line-height) font-normal tracking-normal",
             "text-(--color-blogs-card-title)",
@@ -66,7 +68,7 @@ export function BlogCard({ blog }: BlogCardProps) {
           {blog.date}
         </p>
 
-        <div className="mt-auto flex items-center gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top)">
+        <div className="mt-auto hidden items-center gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top) md:flex">
           <p
             className={cn(
               "whitespace-pre font-poppins text-(length:--blogs-card-meta-size)",

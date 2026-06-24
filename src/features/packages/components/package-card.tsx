@@ -80,7 +80,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
         <div className="w-full min-[1440px]:text-center">
           <h3
             className={cn(
-              "w-full min-h-(--packages-card-title-min-height) whitespace-pre-wrap wrap-break-word font-cal-sans",
+              "w-full min-h-(--packages-card-title-min-height) whitespace-nowrap font-cal-sans",
               "text-(length:--packages-card-title-size) leading-(--packages-card-title-line-height)",
               "font-bold tracking-normal text-(--color-packages-card-title)",
             )}
@@ -129,7 +129,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
           onHoverStart={() => setIsHovered(true)}
           onHoverEnd={() => setIsHovered(false)}
           className={cn(
-            "relative mt-auto flex h-(--packages-button-height) w-full max-w-(--packages-button-width)",
+            "relative mt-(--packages-card-button-margin-top) flex h-(--packages-button-height) w-full max-w-(--packages-button-width)",
             "min-[1440px]:self-center",
             "items-center justify-center overflow-hidden rounded-(--packages-button-radius)",
             "bg-(--color-packages-button-bg) px-(--packages-button-padding-x) pt-(--packages-button-padding-top) pb-(--packages-button-padding-bottom)",

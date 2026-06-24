@@ -190,6 +190,34 @@ body {
   color: transparent;
 }
 
+.awards-title-box {
+  display: flex;
+  width: 100%;
+  height: var(--awards-title-box-height);
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  max-width: var(--awards-title-max-width);
+  text-align: center;
+  -webkit-mask-image: var(--awards-title-mask);
+  mask-image: var(--awards-title-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.awards-title-text {
+  display: inline-block;
+  background-image: var(--awards-title-gradient);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .culture-title-box {
   display: flex;
   width: 100%;
