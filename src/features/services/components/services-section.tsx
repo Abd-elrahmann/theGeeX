@@ -29,6 +29,7 @@ export function ServicesSection() {
   const isDesktop = useDesktopBreakpoint();
   const isTablet = useMediaQuery(SERVICES_TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
+  const [hasHydrated, setHasHydrated] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const mobileMeasureRef = useRef<HTMLDivElement>(null);
@@ -53,17 +54,21 @@ export function ServicesSection() {
     serviceCount: services.length,
     enabled: isDesktop,
   });
+  const shouldTrackMobileScroll = hasHydrated && !isDesktop;
   const { scrollYProgress } = useScroll({
-    target: mobileScrollRef,
+    target: shouldTrackMobileScroll ? mobileScrollRef : undefined,
     offset: ["start start", "end end"],
-    layoutEffect: false,
   });
 
   const activeService = services[activeIndex] ?? services[0];
   const isExploreCursorActive = isDesktop && isPointerFine && isGridHovered;
 
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (isDesktop) {
+    if (!shouldTrackMobileScroll) {
       return;
     }
 
