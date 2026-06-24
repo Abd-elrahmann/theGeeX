@@ -15,6 +15,7 @@ import { TestimonialsTitle } from "@/features/testimonials/components/testimonia
 const AUTO_PLAY_INTERVAL_MS = 2000;
 const MANUAL_INTERACTION_PAUSE_MS = 1800;
 const DRAG_DIRECTION_THRESHOLD_PX = 8;
+const SWIPE_TO_CARD_THRESHOLD_PX = 36;
 
 export function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -268,6 +269,11 @@ export function TestimonialsSection() {
                 return;
               }
 
+              const dragDeltaX = dragTranslateXRef.current - dragStartTranslateXRef.current;
+              const swipeTargetIndex =
+                Math.abs(dragDeltaX) >= SWIPE_TO_CARD_THRESHOLD_PX
+                  ? currentIndexRef.current + (dragDeltaX < 0 ? 1 : -1)
+                  : null;
               const nearestIndex = cardOffsets.reduce((bestIndex, offset, index) => {
                 const bestDistance = Math.abs(cardOffsets[bestIndex] + dragTranslateXRef.current);
                 const currentDistance = Math.abs(offset + dragTranslateXRef.current);
@@ -277,7 +283,7 @@ export function TestimonialsSection() {
 
               isDraggingRef.current = false;
               setIsDragging(false);
-              goToCard(nearestIndex);
+              goToCard(swipeTargetIndex ?? nearestIndex);
             }}
             onPointerCancel={(event) => {
               const viewportElement = viewportRef.current;
