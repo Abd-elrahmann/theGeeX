@@ -157,7 +157,7 @@ export function StorytellingSection() {
                 <StorytellingPath
                   drawProgress={drawProgress}
                   reverseDraw
-                  className="-top-(--storytelling-path-inset-y) left-1/2 h-[calc(100%+2*var(--storytelling-path-inset-y))] w-auto max-w-none origin-center -translate-x-1/2 rotate-91 -scale-y-100"
+                  className="-top-(--storytelling-path-inset-y) left-1/2 h-[calc(100%+2*var(--storytelling-path-inset-y))] w-auto max-w-none origin-center -translate-x-1/2 -scale-y-100"
                 />
               )}
               <StorytellingContent
