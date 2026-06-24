@@ -86,7 +86,11 @@
   --ambition-text-gap: 10px;
   --ambition-line-height: 1.2;
   --ambition-font-size: var(--ambition-font-size-mobile);
-  --ambition-font-size-mobile: 28px;
+  --ambition-font-size-mobile: clamp(
+    24px,
+    calc((100vw - 2 * var(--ambition-padding-x)) / 12.8),
+    28px
+  );
   --ambition-min-height: 70svh;
   --ambition-padding-x: 16px;
   --ambition-padding-bottom: 40px;
@@ -1361,7 +1365,7 @@
     --navbar-logo-width: 103px;
     --navbar-logo-height: 40px;
     --ambition-font-size: 80px;
-    --ambition-padding-x: 0px;
+    --ambition-padding-x: 40px;
     --ambition-padding-bottom: 120px;
     --ambition-margin-top: max(
       var(--section-stack-gap),
@@ -1370,7 +1374,7 @@
           var(--ambition-path-gap)
       )
     );
-    --ambition-text-width: 1062px;
+    --ambition-text-width: min(1062px, calc(100vw - 2 * var(--ambition-padding-x)));
     --ambition-text-height: 208px;
     --storytelling-margin-top: var(--section-stack-gap);
     --storytelling-line-size: 49px;

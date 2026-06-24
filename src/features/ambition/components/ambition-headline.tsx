@@ -23,7 +23,7 @@ export function AmbitionHeadline() {
         className={cn(
           ambitionTextClassName,
           "text-(--color-ambition-primary)",
-          "mx-auto w-fit max-w-full min-w-0 text-center whitespace-nowrap",
+          "mx-auto w-full max-w-full min-w-0 text-center whitespace-nowrap",
           "overflow-visible md:max-lg:overflow-hidden",
           "lg:w-auto lg:overflow-visible lg:whitespace-nowrap lg:text-left",
         )}
@@ -33,7 +33,7 @@ export function AmbitionHeadline() {
       <p
         className={cn(
           ambitionTextClassName,
-          "mx-auto w-fit max-w-full min-w-0 text-center whitespace-nowrap text-brand",
+          "mx-auto w-full max-w-full min-w-0 text-center whitespace-nowrap text-brand",
           "overflow-visible md:max-lg:overflow-hidden",
           "lg:flex lg:w-auto lg:overflow-visible lg:items-start lg:text-left",
         )}
