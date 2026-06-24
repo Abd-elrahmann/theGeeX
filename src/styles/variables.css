@@ -87,12 +87,12 @@
   --ambition-line-height: 1.2;
   --ambition-font-size: var(--ambition-font-size-mobile);
   --ambition-font-size-mobile: clamp(
-    24px,
+    22px,
     calc((100vw - 2 * var(--ambition-padding-x)) / 12.8),
     28px
   );
   --ambition-min-height: 70svh;
-  --ambition-padding-x: 16px;
+  --ambition-padding-x: 24px;
   --ambition-padding-bottom: 40px;
   --ambition-margin-top: max(
     var(--early-section-gap),
