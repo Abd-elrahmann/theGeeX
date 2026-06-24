@@ -13,7 +13,8 @@ import { TestimonialCard } from "@/features/testimonials/components/testimonial-
 import { TestimonialsTitle } from "@/features/testimonials/components/testimonials-title";
 
 const AUTO_PLAY_INTERVAL_MS = 2000;
-const MANUAL_INTERACTION_PAUSE_MS = 6000;
+const MANUAL_INTERACTION_PAUSE_MS = 1800;
+const DRAG_DIRECTION_THRESHOLD_PX = 8;
 
 export function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -24,8 +25,10 @@ export function TestimonialsSection() {
   const currentIndexRef = useRef(0);
   const pointerIdRef = useRef<number | null>(null);
   const dragStartXRef = useRef(0);
+  const dragStartYRef = useRef(0);
   const dragStartTranslateXRef = useRef(0);
   const dragTranslateXRef = useRef(0);
+  const isDraggingRef = useRef(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardOffsets, setCardOffsets] = useState<number[]>([]);
   const [dragTranslateX, setDragTranslateX] = useState(0);
@@ -130,8 +133,8 @@ export function TestimonialsSection() {
       return;
     }
 
-    const timeoutId = window.setTimeout(() => {
-      if (Date.now() < interactionUntilRef.current) {
+    const intervalId = window.setInterval(() => {
+      if (isDraggingRef.current || Date.now() < interactionUntilRef.current) {
         return;
       }
 
@@ -139,9 +142,9 @@ export function TestimonialsSection() {
     }, AUTO_PLAY_INTERVAL_MS);
 
     return () => {
-      window.clearTimeout(timeoutId);
+      window.clearInterval(intervalId);
     };
-  }, [currentIndex, isSectionInView]);
+  }, [isSectionInView]);
 
   return (
     <section
@@ -194,8 +197,8 @@ export function TestimonialsSection() {
           <div
             ref={viewportRef}
             className={cn(
-              "w-full overflow-hidden select-none",
-              isDragging ? "cursor-grabbing" : "cursor-grab",
+              "w-full touch-pan-y overflow-hidden select-none",
+              isDragging ? "cursor-grabbing" : "lg:cursor-grab",
             )}
             onPointerDown={(event) => {
               const viewportElement = viewportRef.current;
@@ -204,21 +207,42 @@ export function TestimonialsSection() {
                 return;
               }
 
-              handleManualInteraction();
               pointerIdRef.current = event.pointerId;
               dragStartXRef.current = event.clientX;
+              dragStartYRef.current = event.clientY;
               dragStartTranslateXRef.current = activeTrackOffset;
               dragTranslateXRef.current = activeTrackOffset;
-              setDragTranslateX(activeTrackOffset);
-              setIsDragging(true);
-              viewportElement.setPointerCapture(event.pointerId);
+              isDraggingRef.current = false;
             }}
             onPointerMove={(event) => {
-              if (!isDragging || pointerIdRef.current !== event.pointerId) {
+              if (pointerIdRef.current !== event.pointerId) {
                 return;
               }
 
               const deltaX = event.clientX - dragStartXRef.current;
+              const deltaY = event.clientY - dragStartYRef.current;
+
+              if (!isDraggingRef.current) {
+                const absDeltaX = Math.abs(deltaX);
+                const absDeltaY = Math.abs(deltaY);
+
+                if (absDeltaX < DRAG_DIRECTION_THRESHOLD_PX && absDeltaY < DRAG_DIRECTION_THRESHOLD_PX) {
+                  return;
+                }
+
+                if (absDeltaY >= absDeltaX) {
+                  pointerIdRef.current = null;
+                  setIsDragging(false);
+                  return;
+                }
+
+                handleManualInteraction();
+                isDraggingRef.current = true;
+                setDragTranslateX(activeTrackOffset);
+                setIsDragging(true);
+                event.currentTarget.setPointerCapture(event.pointerId);
+              }
+
               const nextTranslateX = Math.min(
                 Math.max(dragStartTranslateXRef.current + deltaX, -maxTrackOffset),
                 0,
@@ -240,6 +264,10 @@ export function TestimonialsSection() {
 
               pointerIdRef.current = null;
 
+              if (!isDraggingRef.current) {
+                return;
+              }
+
               const nearestIndex = cardOffsets.reduce((bestIndex, offset, index) => {
                 const bestDistance = Math.abs(cardOffsets[bestIndex] + dragTranslateXRef.current);
                 const currentDistance = Math.abs(offset + dragTranslateXRef.current);
@@ -247,6 +275,7 @@ export function TestimonialsSection() {
                 return currentDistance < bestDistance ? index : bestIndex;
               }, 0);
 
+              isDraggingRef.current = false;
               setIsDragging(false);
               goToCard(nearestIndex);
             }}
@@ -258,6 +287,7 @@ export function TestimonialsSection() {
               }
 
               pointerIdRef.current = null;
+              isDraggingRef.current = false;
               setIsDragging(false);
             }}
           >
