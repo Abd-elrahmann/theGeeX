@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
-import type { LenisOptions } from "lenis";
+import { useEffect, useLayoutEffect } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -51,24 +50,7 @@ interface SmoothScrollProviderProps {
   children: React.ReactNode;
 }
 
-const desktopLenisOptions: LenisOptions = {
-  autoRaf: false,
-  wheelMultiplier: 1,
-  touchMultiplier: 1,
-  lerp: 0.1,
-};
-
-const mobileLenisOptions: LenisOptions = {
-  autoRaf: false,
-  wheelMultiplier: 0.55,
-  touchMultiplier: 0.42,
-  lerp: 0.075,
-  syncTouchLerp: 0.045,
-};
-
 export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
-  const [isMobileScroll, setIsMobileScroll] = useState(false);
-
   useLayoutEffect(() => {
     prepareFreshPageScrollSession();
 
@@ -77,27 +59,8 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     }
   }, []);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncMobileScrollMode = () => {
-      setIsMobileScroll(mediaQuery.matches);
-    };
-
-    syncMobileScrollMode();
-    mediaQuery.addEventListener("change", syncMobileScrollMode);
-
-    return () => {
-      mediaQuery.removeEventListener("change", syncMobileScrollMode);
-    };
-  }, []);
-
-  const lenisOptions = useMemo(
-    () => (isMobileScroll ? mobileLenisOptions : desktopLenisOptions),
-    [isMobileScroll],
-  );
-
   return (
-    <ReactLenis key={isMobileScroll ? "mobile-scroll" : "desktop-scroll"} root options={lenisOptions}>
+    <ReactLenis root options={{ autoRaf: false }}>
       <LenisScrollTriggerSync />
       {children}
     </ReactLenis>
