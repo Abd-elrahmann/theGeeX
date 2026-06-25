@@ -33,8 +33,8 @@ export function StorytellingSection() {
     activeIndex,
     previousActiveIndex,
     drawProgress,
-    isDark,
     transitionDirection,
+    backgroundRef,
     setActiveIndex,
   } =
     useStorytellingScroll({
@@ -101,12 +101,11 @@ export function StorytellingSection() {
         "px-(--storytelling-section-padding-x)",
         isDesktop ? "mt-(--storytelling-margin-top)" : "pt-(--storytelling-margin-top)",
         !isDesktop && "z-20",
-        !isDesktop && isDark && "bg-(--color-storytelling-background-dark)",
         isDesktop && isPointerFine && "cursor-none",
       )}
       aria-label="Storytelling"
     >
-      <StorytellingBackground isDark={isDark} />
+      <StorytellingBackground ref={backgroundRef} />
 
       {isDesktop ? (
         <div

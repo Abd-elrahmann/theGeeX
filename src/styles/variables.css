@@ -656,7 +656,7 @@
   --storytelling-mobile-scroll-distance: 3400px;
   --storytelling-mobile-scroll-offset: 700px;
   --storytelling-mobile-background-extension: 320px;
-  --storytelling-mobile-background-proximity: 360px;
+  --storytelling-mobile-background-proximity: 1200px;
   --storytelling-mobile-path-bleed-y: 120px;
   --storytelling-mobile-path-top: var(--storytelling-section-padding-y);
   --storytelling-mobile-path-offset-x: calc(100vw - var(--storytelling-section-padding-x));

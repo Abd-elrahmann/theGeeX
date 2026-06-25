@@ -31,10 +31,10 @@ export function useStorytellingScroll({
   const containerRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const pinStartRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [previousActiveIndex, setPreviousActiveIndex] = useState(0);
   const [drawProgress, setDrawProgress] = useState(0);
-  const [isDark, setIsDark] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState<1 | -1>(1);
   const activeIndexRef = useRef(0);
 
@@ -74,7 +74,13 @@ export function useStorytellingScroll({
   );
 
   const setBackgroundDark = useCallback((isActive: boolean) => {
-    setIsDark(isActive);
+    const backgroundElement = backgroundRef.current;
+
+    if (!backgroundElement) {
+      return;
+    }
+
+    backgroundElement.style.opacity = isActive ? "1" : "0";
   }, []);
 
   useGSAP(
@@ -364,8 +370,8 @@ export function useStorytellingScroll({
     activeIndex,
     previousActiveIndex,
     drawProgress,
-    isDark,
     transitionDirection,
+    backgroundRef,
     setActiveIndex: setActiveIndexSafe,
     syncProgress,
   };
