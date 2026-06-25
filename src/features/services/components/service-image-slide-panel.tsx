@@ -17,7 +17,7 @@ interface ServiceImageSlidePanelProps {
   previousActiveIndex: number;
   className?: string;
   animate?: boolean;
-  imageVariant?: "desktop" | "mobile";
+  imageVariant?: "desktop" | "tablet" | "mobile";
 }
 
 function getPanelOffset(index: number, activeIndex: number): string {

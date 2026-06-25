@@ -9,7 +9,7 @@ import { servicesImageContainerClassName } from "@/features/services/constants/s
 
 interface ServiceImageProps {
   service: Service;
-  variant?: "desktop" | "mobile";
+  variant?: "desktop" | "tablet" | "mobile";
   eager?: boolean;
 }
 
@@ -37,7 +37,7 @@ export function ServiceImage({
     />
   );
 
-  if (!isDesktop) {
+  if (variant === "mobile") {
     return (
       <div className="relative h-full w-full min-w-0">
         <div className={cn(servicesImageContainerClassName, "aspect-[4/5]")}>{image}</div>

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 import { cn } from "@/lib/cn";
 
@@ -7,7 +6,6 @@ import { type TestimonialItem } from "@/features/testimonials/constants/testimon
 
 interface TestimonialCardProps {
   item: TestimonialItem;
-  isActive: boolean;
 }
 
 function TestimonialStar() {
@@ -26,19 +24,9 @@ function TestimonialStar() {
   );
 }
 
-export function TestimonialCard({ item, isActive }: TestimonialCardProps) {
+export function TestimonialCard({ item }: TestimonialCardProps) {
   return (
-    <motion.article
-      animate={{
-        opacity: isActive ? 1 : 0.7,
-        scale: isActive ? 1 : 0.96,
-      }}
-      transition={{
-        type: "spring",
-        duration: 0.4,
-        bounce: 0.2,
-        delay: 0,
-      }}
+    <article
       className={cn(
         "box-border flex h-min w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
         "bg-(--color-testimonials-card-bg) p-(--testimonials-card-padding)",
@@ -115,6 +103,6 @@ export function TestimonialCard({ item, isActive }: TestimonialCardProps) {
           ))}
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

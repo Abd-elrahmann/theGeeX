@@ -16,7 +16,7 @@ import { StorytellingBackground } from "./storytelling-background";
 import { StorytellingContent } from "./storytelling-content";
 import { StorytellingPath } from "./storytelling-path";
 
-const STORYTELLING_TABLET_MEDIA_QUERY = "(min-width: 767px) and (max-width: 1023px)";
+const STORYTELLING_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
 
 export function StorytellingSection() {
   const isDesktop = useDesktopBreakpoint();
@@ -41,7 +41,7 @@ export function StorytellingSection() {
       itemCount: storytellingItems.length,
       pinEnabled: isLayoutReady,
       backgroundEnabled: isLayoutReady,
-      mobileBackgroundEnabled: true,
+      mobileBackgroundEnabled: isLayoutReady && !isTablet,
     });
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export function StorytellingSection() {
       id="storytelling"
       className={cn(
         "relative isolate w-full overflow-x-clip transition-colors",
-        usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-clip",
+        usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-visible",
         "px-(--storytelling-section-padding-x)",
         isDesktop ? "mt-(--storytelling-margin-top)" : "pt-(--storytelling-margin-top)",
         !isDesktop && "z-20",
@@ -130,8 +130,9 @@ export function StorytellingSection() {
         <div
           className="relative mx-auto w-full max-w-(--storytelling-content-max-width)"
           style={{
-            minHeight:
-              "calc(100svh + var(--storytelling-mobile-scroll-distance, 2800px) + var(--storytelling-mobile-scroll-offset, 700px))",
+            minHeight: isTablet
+              ? "calc(100svh + var(--storytelling-mobile-scroll-distance, 2800px) + var(--storytelling-mobile-scroll-offset, 700px))"
+              : "calc(100svh + var(--storytelling-mobile-scroll-distance, 2800px) + var(--storytelling-mobile-scroll-offset, 700px) + var(--storytelling-mobile-background-extension, 0px))",
           }}
         >
           <div
@@ -156,8 +157,8 @@ export function StorytellingSection() {
               ) : (
                 <StorytellingPath
                   drawProgress={drawProgress}
-                  reverseDraw
-                  className="-top-(--storytelling-path-inset-y) left-1/2 h-[calc(100%+2*var(--storytelling-path-inset-y))] w-auto max-w-none origin-center -translate-x-1/2 -scale-y-100"
+                  useDefaultTopOffset={false}
+                  className="top-8.75 left-1/2 h-151.5 w-197.5 max-w-none origin-center -translate-x-1/2 rotate-91"
                 />
               )}
               <StorytellingContent

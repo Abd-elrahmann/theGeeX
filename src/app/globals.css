@@ -2,6 +2,10 @@
 @import "../styles/variables.css";
 
 @theme inline {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 90rem;
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-background: var(--color-background);
@@ -299,9 +303,10 @@ body {
 .navbar-nav-shell--rounded {
   width: calc(100% - 2rem);
   max-width: calc(100% - 2rem);
-  height: auto;
+  height: 100%;
   margin-inline: auto;
-  padding: var(--navbar-rounded-padding-y) var(--navbar-rounded-padding-x);
+  padding-block: 0;
+  padding-inline: var(--navbar-rounded-padding-x);
   border-radius: var(--navbar-rounded-radius);
   box-shadow: var(--navbar-rounded-shadow);
 }
@@ -313,5 +318,7 @@ body {
 
   .navbar-nav-shell--rounded {
     width: min(var(--navbar-rounded-width), calc(100% - 2rem));
+    height: auto;
+    padding: var(--navbar-rounded-padding-y) var(--navbar-rounded-padding-x);
   }
 }

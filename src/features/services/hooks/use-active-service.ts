@@ -78,6 +78,11 @@ export function useActiveService({
       const matchMedia = gsap.matchMedia();
 
       matchMedia.add(DESKTOP_MEDIA_QUERY, () => {
+        if (!stageElement.isConnected || !stageElement.parentNode || !pinStartElement.isConnected) {
+          return;
+        }
+
+        let isDisposed = false;
         const pinStartOffset = readRootCssNumber("--services-pin-start-offset", 0);
 
         const pinTrigger = ScrollTrigger.create({
@@ -109,6 +114,10 @@ export function useActiveService({
         });
 
         const syncPinTrigger = () => {
+          if (isDisposed || !stageElement.isConnected) {
+            return;
+          }
+
           pinTrigger.refresh();
           ScrollTrigger.refresh();
 
@@ -143,6 +152,7 @@ export function useActiveService({
         }
 
         return () => {
+          isDisposed = true;
           window.removeEventListener("load", handleWindowLoad);
           resizeObserver?.disconnect();
           pinTrigger.kill();

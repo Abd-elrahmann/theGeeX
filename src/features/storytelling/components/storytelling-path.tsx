@@ -16,6 +16,7 @@ import { storytellingConfig } from "@/features/storytelling/constants/storytelli
 interface StorytellingPathProps {
   drawProgress: number;
   className?: string;
+  useDefaultTopOffset?: boolean;
   preserveAspectRatio?: string;
   reverseDraw?: boolean;
 }
@@ -23,6 +24,7 @@ interface StorytellingPathProps {
 export function StorytellingPath({
   drawProgress,
   className,
+  useDefaultTopOffset = true,
   preserveAspectRatio = "xMinYMin slice",
   reverseDraw = false,
 }: StorytellingPathProps) {
@@ -91,7 +93,7 @@ export function StorytellingPath({
     <div
       className={cn(
         "pointer-events-none absolute z-(--storytelling-path-z-index) overflow-visible",
-        "-top-(--storytelling-path-inset-y)",
+        useDefaultTopOffset && "-top-(--storytelling-path-inset-y)",
         "left-[calc(50%-50vw)]",
         "w-(--storytelling-path-width)",
         "aspect-1946/1290 h-(--storytelling-path-height)",

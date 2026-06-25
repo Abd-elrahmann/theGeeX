@@ -142,7 +142,7 @@
   --services-margin-top: var(--section-stack-gap);
   --services-stage-height: auto;
   --services-stage-bottom-padding: 32px;
-  --services-mobile-pin-clearance: calc(var(--navbar-height) + 16px);
+  --services-mobile-pin-clearance: 0px;
   --services-scroll-step-vh: 100;
   --services-pin-start-offset: 0px;
   --services-sticky-padding-bottom: 48px;
@@ -171,7 +171,7 @@
   --services-content-offset-left: 0px;
   --services-content-column-width: 100%;
   --services-image-column-width: 100%;
-  --services-columns-gap: 24px;
+  --services-columns-gap: 12px;
   --services-nav-min-height: 120px;
   --services-nav-gap: 12px;
   --services-nav-title-size: 16px;
@@ -620,11 +620,11 @@
   --awards-card-place-weight: 500;
   --color-awards-card-bg: #f7f7f7;
   --color-awards-card-text: #2c3134;
-  --process-card-sticky-top-1: 88px;
-  --process-card-sticky-top-2: 158px;
-  --process-card-sticky-top-3: 228px;
-  --process-card-sticky-top-4: 298px;
-  --process-card-sticky-top-5: 298px;
+  --process-card-sticky-top-1: 56px;
+  --process-card-sticky-top-2: 150px;
+  --process-card-sticky-top-3: 250px;
+  --process-card-sticky-top-4: 350px;
+  --process-card-sticky-top-5: 286px;
   --color-process-title-muted: rgb(14 14 14 / 0.6);
   --color-process-title-accent: #0aabc8;
   --color-process-card-bg: #f4f5f7;
@@ -653,8 +653,13 @@
   --storytelling-section-padding-y: 48px;
   --storytelling-scroll-distance: 2800;
   --storytelling-scroll-offset: 300;
-  --storytelling-mobile-scroll-distance: 2800px;
+  --storytelling-mobile-scroll-distance: 3400px;
   --storytelling-mobile-scroll-offset: 700px;
+  --storytelling-mobile-background-extension: 320px;
+  --storytelling-mobile-background-proximity: 360px;
+  --storytelling-mobile-path-bleed-y: 120px;
+  --storytelling-mobile-path-top: var(--storytelling-section-padding-y);
+  --storytelling-mobile-path-offset-x: calc(100vw - var(--storytelling-section-padding-x));
   --storytelling-scroll-scrub: 1;
   --storytelling-path-stroke-width: 45;
   --storytelling-path-hide-padding: 4;
@@ -697,7 +702,7 @@
   --projects-title-size: clamp(72px, 18vw, 120px);
   --projects-title-line-height: 1;
   --projects-title-box-height: clamp(72px, 18vw, 120px);
-  --projects-margin-top: var(--section-stack-gap);
+  --projects-margin-top: calc(var(--section-stack-gap) + 160px);
   --projects-container-max-width: 1200px;
   --projects-padding-x: 0px;
   --projects-title-gap: 8px;
@@ -736,8 +741,8 @@
   --projects-card-category-text-weight: 400;
   --projects-card-category-letter-spacing: -0.02em;
   --projects-card-category-line-height: 1.2;
-  --projects-card-title-size: 40px;
-  --projects-card-title-height: 54px;
+  --projects-card-title-size: 30px;
+  --projects-card-title-height: 42px;
   --projects-card-title-weight: 600;
   --projects-card-title-letter-spacing: -2.7px;
   --projects-card-title-line-height: 1.35;
@@ -1035,7 +1040,7 @@
   }
 }
 
-@media (min-width: 767px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023.98px) {
   :root {
     --storytelling-margin-top: var(--section-stack-gap);
     --storytelling-gap: 40px;
@@ -1078,7 +1083,7 @@
     --blogs-card-title-size: 22px;
     --blogs-card-date-margin-top: 12px;
     --blogs-card-footer-padding-top: 18px;
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: calc(var(--section-stack-gap) + 120px);
     --culture-padding-x: 24px;
     --culture-section-gap: 20px;
     --culture-section-scroll-vh: 190;
@@ -1123,8 +1128,8 @@
     --process-padding-x: 24px;
     --process-padding-y: 52px;
     --process-title-max-width: 680px;
-    --process-title-size: 56px;
-    --process-title-line-height: 1.05;
+    --process-title-size: 48px;
+    --process-title-line-height: 1.04;
     --process-cards-column-max-width: 620px;
     --process-card-width: min(100%, 620px);
     --process-card-height: 156px;
@@ -1140,11 +1145,11 @@
     --process-card-description-line-height: 1.5;
     --process-card-description-margin-top: 10px;
     --process-cards-bottom-padding: 24px;
-    --process-card-sticky-top-1: 120px;
-    --process-card-sticky-top-2: 210px;
-    --process-card-sticky-top-3: 300px;
-    --process-card-sticky-top-4: 390px;
-    --process-card-sticky-top-5: 390px;
+    --process-card-sticky-top-1: 160px;
+    --process-card-sticky-top-2: 250px;
+    --process-card-sticky-top-3: 340px;
+    --process-card-sticky-top-4: 430px;
+    --process-card-sticky-top-5: 430px;
     --packages-title-size: 112px;
     --packages-title-line-height: 124px;
     --packages-title-box-height: 98px;
@@ -1388,7 +1393,7 @@
     --storytelling-caption-margin-top: 20px;
     --projects-margin-top: var(--section-stack-gap);
     --team-margin-top: var(--section-stack-gap);
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: calc(var(--section-stack-gap) + 180px);
     --projects-padding-x: 0px;
     --team-padding-x: 0px;
     --culture-padding-x: 0px;
@@ -1544,7 +1549,7 @@
     --culture-title-size: 188px;
     --culture-title-line-height: 188px;
     --culture-title-box-height: 144px;
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: calc(var(--section-stack-gap) + 240px);
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 220;
     --culture-section-exit-vh: 0;
@@ -1662,7 +1667,7 @@
     --culture-title-size: 220px;
     --culture-title-line-height: 220px;
     --culture-title-box-height: 168px;
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: calc(var(--section-stack-gap) + 320px);
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 240;
     --culture-section-exit-vh: 0;

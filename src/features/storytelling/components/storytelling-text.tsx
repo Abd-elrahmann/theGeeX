@@ -73,11 +73,11 @@ interface StorytellingLinesProps {
 }
 
 const storytellingLineClassName = cn(
-  "m-0 w-max max-w-none origin-center will-change-transform max-[1023px]:w-full max-[1023px]:max-w-full",
+  "m-0 w-max max-w-none origin-center will-change-transform max-lg:w-full max-lg:max-w-full",
   "font-[family-name:var(--font-cal-sans)] font-semibold not-italic",
   "text-[length:var(--storytelling-line-size)] leading-(--storytelling-line-line-height)",
   "tracking-(--storytelling-line-letter-spacing)",
-  "max-[1023px]:whitespace-normal lg:whitespace-nowrap",
+  "max-lg:whitespace-normal lg:whitespace-nowrap",
 );
 
 export function StorytellingLines({
@@ -92,7 +92,7 @@ export function StorytellingLines({
     <section
       aria-labelledby="storytelling-lines-heading"
       className={cn(
-        "box-border flex h-min w-(--storytelling-lines-width) max-w-none shrink-0 flex-col flex-nowrap max-[1023px]:min-w-0",
+        "box-border flex h-min w-(--storytelling-lines-width) max-w-none shrink-0 flex-col flex-nowrap max-lg:min-w-0",
         "content-center items-center justify-center overflow-visible",
         "gap-(--storytelling-line-gap)",
         isDesktop && "pl-(--storytelling-lines-padding-left)",

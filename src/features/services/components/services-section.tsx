@@ -22,8 +22,10 @@ import { ServicesSectionCursor } from "./services-section-cursor";
 import { ServicesTitle } from "./services-title";
 import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 
-const SERVICES_TABLET_MEDIA_QUERY = "(min-width: 767px) and (max-width: 1023px)";
-const SERVICES_TABLET_STAGE_HEIGHT_PX = 414;
+const SERVICES_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
+const SERVICES_TABLET_STAGE_HEIGHT_PX = 780;
+const SERVICES_TABLET_PANEL_HEIGHT_PX = 540;
+const servicesTabletPanelHeightClassName = "md:max-lg:!h-[540px]";
 
 export function ServicesSection() {
   const isDesktop = useDesktopBreakpoint();
@@ -64,7 +66,13 @@ export function ServicesSection() {
   const isExploreCursorActive = isDesktop && isPointerFine && isGridHovered;
 
   useEffect(() => {
-    setHasHydrated(true);
+    const frameId = requestAnimationFrame(() => {
+      setHasHydrated(true);
+    });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
@@ -143,7 +151,7 @@ export function ServicesSection() {
         ...mobileImageMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
       );
       const stageHeight = isTablet
-        ? SERVICES_TABLET_STAGE_HEIGHT_PX + pinClearance
+        ? Math.max(viewportHeight, SERVICES_TABLET_STAGE_HEIGHT_PX)
         : Math.max(
             viewportHeight,
             contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance,
@@ -178,7 +186,7 @@ export function ServicesSection() {
     };
   }, [isDesktop, isTablet]);
 
-  const tabletPanelHeight = SERVICES_TABLET_STAGE_HEIGHT_PX - 64;
+  const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
     <div
@@ -271,15 +279,10 @@ export function ServicesSection() {
         </>
       ) : (
         <div className="mx-auto w-full max-w-(--services-container-max-width) bg-background px-(--services-padding-x)">
-          <div className="pt-(--services-padding-y) pb-2">
-            <ServicesTitle variant="inline" />
-          </div>
-
           <div
             ref={mobileScrollRef}
             className="relative"
             style={{
-              marginTop: "calc(var(--services-mobile-pin-clearance) * -1)",
               minHeight:
                 mobileStageMetrics.scrollHeight > 0
                   ? `${mobileStageMetrics.scrollHeight}px`
@@ -297,11 +300,21 @@ export function ServicesSection() {
             >
               <div
                 className={cn(
-                  "relative z-(--services-content-z-index) flex h-full w-full items-start justify-center overflow-hidden pt-(--services-mobile-pin-clearance) min-[1024px]:items-center min-[1024px]:pt-0",
+                  "relative z-(--services-content-z-index) flex h-full w-full overflow-hidden",
+                  isTablet
+                    ? "flex-col items-start justify-start pt-(--services-padding-y)"
+                    : "flex-col items-start justify-start pt-(--services-padding-y)",
                 )}
               >
+                <div className="w-full">
+                  <ServicesTitle variant="inline" />
+                </div>
+
                 <div
-                  className="grid w-full content-start gap-(--services-columns-gap) py-(--services-stage-bottom-padding) min-[767px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[767px]:items-stretch"
+                  className={cn(
+                    "grid w-full content-start gap-(--services-columns-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-stretch",
+                    "pb-(--services-stage-bottom-padding)",
+                  )}
                   style={{
                     gridTemplateRows:
                       !isTablet && mobileStageMetrics.contentHeight > 0 && mobileStageMetrics.imageHeight > 0
@@ -311,7 +324,7 @@ export function ServicesSection() {
                 >
                   <div
                     aria-live="polite"
-                    className="min-h-0 overflow-hidden"
+                    className={cn("min-h-0 overflow-hidden", servicesTabletPanelHeightClassName)}
                     style={{
                       height:
                         isTablet && tabletPanelHeight > 0
@@ -326,6 +339,7 @@ export function ServicesSection() {
                       activeIndex={activeIndex}
                       previousActiveIndex={previousActiveIndex}
                       slideVariant="content"
+                      motionVariant={isTablet ? "content" : "image"}
                       className="h-full"
                     >
                         <ServiceContent
@@ -336,7 +350,10 @@ export function ServicesSection() {
                   </div>
 
                   <div
-                    className="min-h-0 overflow-hidden rounded-(--services-content-radius)"
+                    className={cn(
+                      "min-h-0 overflow-hidden rounded-(--services-content-radius)",
+                      servicesTabletPanelHeightClassName,
+                    )}
                     style={{
                       height:
                         isTablet && tabletPanelHeight > 0
@@ -351,7 +368,7 @@ export function ServicesSection() {
                         activeIndex={activeIndex}
                         previousActiveIndex={previousActiveIndex}
                         className="h-full"
-                        imageVariant="mobile"
+                        imageVariant={isTablet ? "tablet" : "mobile"}
                       />
                   </div>
                 </div>

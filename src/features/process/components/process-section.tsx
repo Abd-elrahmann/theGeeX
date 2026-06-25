@@ -36,7 +36,7 @@ export function ProcessSection() {
         <div className="contents lg:flex lg:min-w-0 lg:flex-1 lg:items-start lg:self-stretch">
           <h2
             className={cn(
-              "z-(--process-title-z-index) w-full self-start whitespace-pre-wrap wrap-break-word bg-background text-left font-cal-sans min-[767px]:text-center lg:sticky lg:text-left",
+              "z-(--process-title-z-index) w-full self-start whitespace-pre-wrap wrap-break-word bg-background text-left font-cal-sans md:text-center lg:sticky lg:text-left",
               "before:hidden",
               "text-(length:--process-title-size) leading-(--process-title-line-height)",
               "font-(--process-title-weight) tracking-normal",

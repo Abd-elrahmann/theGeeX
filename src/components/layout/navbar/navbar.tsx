@@ -86,7 +86,7 @@ export function Navbar() {
           className={cn(
             "navbar-nav-shell box-border flex min-w-0 max-w-full items-center bg-surface backdrop-blur-(--navbar-blur)",
             "max-lg:justify-between lg:justify-normal",
-            isRoundedNav ? "max-lg:h-auto lg:h-auto" : "max-lg:h-full lg:h-full",
+            isRoundedNav ? "max-lg:h-full lg:h-auto" : "max-lg:h-full lg:h-full",
             isRoundedNav ? "navbar-nav-shell--rounded" : "navbar-nav-shell--primary",
           )}
         >

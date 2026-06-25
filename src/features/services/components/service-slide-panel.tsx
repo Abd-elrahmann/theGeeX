@@ -24,6 +24,7 @@ interface ServiceSlidePanelProps {
   className?: string;
   animate?: boolean;
   slideVariant?: "content" | "image";
+  motionVariant?: "content" | "image";
   children: ReactNode;
 }
 
@@ -46,11 +47,12 @@ export function ServiceSlidePanel({
   className,
   animate = true,
   slideVariant = "image",
+  motionVariant = slideVariant,
   children,
 }: ServiceSlidePanelProps) {
   const direction = activeIndex >= previousActiveIndex ? 1 : -1;
   const variants =
-    slideVariant === "content" ? contentVerticalSlideVariants : verticalSlideVariants;
+    motionVariant === "content" ? contentVerticalSlideVariants : verticalSlideVariants;
   const containerClassName = getContainerClassName(slideVariant);
   const slideLayerClassName = getSlideLayerClassName(slideVariant);
 

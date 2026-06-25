@@ -84,9 +84,9 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
           : "bg-(--color-process-card-bg)",
       )}
     >
-      <div className="flex h-full w-full flex-col items-start min-[767px]:h-auto lg:h-full lg:flex-row">
+      <div className="flex h-full w-full flex-col items-start md:h-auto lg:h-full lg:flex-row">
         <div
-          className="box-border relative flex w-full flex-none items-start justify-start overflow-hidden min-[767px]:h-auto lg:h-full lg:min-w-px lg:flex-1"
+          className="box-border relative flex w-full flex-none items-start justify-start overflow-hidden md:h-auto lg:h-full lg:min-w-px lg:flex-1"
           style={{
             maxWidth: "var(--process-card-index-max-width)",
             padding: "var(--process-card-index-padding-y) var(--process-card-index-padding-x)",
@@ -117,7 +117,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         </div>
 
         <div
-          className="box-border flex w-full min-w-0 flex-1 flex-col items-start min-[767px]:h-auto lg:h-full"
+          className="box-border flex w-full min-w-0 flex-1 flex-col items-start md:h-auto lg:h-full"
           style={{
             padding: "var(--process-card-content-padding-y) var(--process-card-content-padding-x)",
           }}

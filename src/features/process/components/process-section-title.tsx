@@ -44,8 +44,8 @@ export function ProcessSectionTitle({ lines }: ProcessSectionTitleProps) {
           key={line}
           className={cn(
             "overflow-hidden px-[0.15em]",
-            index > 0 && "min-[767px]:inline-block lg:block",
-            index === 2 && "min-[767px]:ml-[-0.24em] lg:ml-0",
+            index > 0 && "md:inline-block lg:block",
+            index === 2 && "md:ml-[-0.24em] lg:ml-0",
           )}
         >
           <motion.div
