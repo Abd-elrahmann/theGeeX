@@ -37,6 +37,7 @@ export function useStorytellingScroll({
   const [drawProgress, setDrawProgress] = useState(0);
   const [transitionDirection, setTransitionDirection] = useState<1 | -1>(1);
   const activeIndexRef = useRef(0);
+  const backgroundDarkRef = useRef(false);
 
   const setActiveIndexSafe = useCallback(
     (index: number) => {
@@ -80,7 +81,18 @@ export function useStorytellingScroll({
       return;
     }
 
-    backgroundElement.style.opacity = isActive ? "1" : "0";
+    if (backgroundDarkRef.current === isActive) {
+      return;
+    }
+
+    backgroundDarkRef.current = isActive;
+
+    gsap.to(backgroundElement, {
+      opacity: isActive ? 1 : 0,
+      duration: 0.4,
+      ease: "power2.inOut",
+      overwrite: "auto",
+    });
   }, []);
 
   useGSAP(

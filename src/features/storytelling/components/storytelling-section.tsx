@@ -96,7 +96,7 @@ export function StorytellingSection() {
       ref={containerRef}
       id="storytelling"
       className={cn(
-        "relative isolate w-full overflow-x-clip transition-colors",
+        "relative isolate w-full overflow-x-clip",
         usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-visible",
         "px-(--storytelling-section-padding-x)",
         isDesktop ? "mt-(--storytelling-margin-top)" : "pt-(--storytelling-margin-top)",
