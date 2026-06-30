@@ -3,9 +3,15 @@ export interface PackageFeature {
   highlightedWords?: string[];
 }
 
+export interface PackageChip {
+  label: string;
+  variant?: "default" | "accent";
+}
+
 export interface PackageItem {
   id: number;
   name: string;
+  chips: PackageChip[];
   description: string;
   price: string;
   billingCycle: string;
@@ -19,6 +25,10 @@ export const packageItems: PackageItem[] = [
   {
     id: 1,
     name: "Startup Launcher",
+    chips: [
+      { label: "Launch" },
+      { label: "Startup", variant: "accent" },
+    ],
     description: "For startups launching with confidence",
     price: "12,000",
     billingCycle: "EGP / month",
@@ -34,6 +44,10 @@ export const packageItems: PackageItem[] = [
   {
     id: 2,
     name: "Digital Ecosystem ",
+    chips: [
+      { label: "Growth" },
+      { label: "Popular", variant: "accent" },
+    ],
     description: "for growing buisnessed ready to grow",
     price: "25,000",
     billingCycle: "EGP / month",
@@ -50,6 +64,10 @@ export const packageItems: PackageItem[] = [
   {
     id: 3,
     name: "Enterprise Transformation",
+    chips: [
+      { label: "Scale" },
+      { label: "Enterprise", variant: "accent" },
+    ],
     description: "For organizations transforming at scale.",
     price: "45,000",
     billingCycle: "EGP / month",

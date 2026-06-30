@@ -36,24 +36,30 @@ export function BlogCard({ blog }: BlogCardProps) {
       </div>
 
       <div className="order-1 flex min-w-0 flex-col items-center md:order-0 md:min-h-(--blogs-card-image-height) md:items-start">
-        <span
-          className={cn(
-            "inline-flex w-fit items-center rounded-(--blogs-card-badge-radius)",
-            "bg-(--color-blogs-card-badge-bg) px-(--blogs-card-badge-padding-x) py-(--blogs-card-badge-padding-y)",
-            "font-poppins text-(length:--blogs-card-badge-size) leading-(--blogs-card-badge-line-height)",
-            "font-medium tracking-normal text-(--color-blogs-card-badge-text)",
-            "backdrop-blur-(--blogs-card-badge-blur)",
-          )}
-        >
-          {blog.type}
-        </span>
+        <div className="flex flex-wrap items-center justify-center gap-(--blogs-card-types-gap) md:justify-start">
+          {blog.types.map((type) => (
+            <span
+              key={type}
+              className={cn(
+                "inline-flex w-fit items-center rounded-(--blogs-card-badge-radius)",
+                "bg-(--color-blogs-card-badge-bg) px-(--blogs-card-badge-padding-x) py-(--blogs-card-badge-padding-y)",
+                "font-poppins text-(length:--blogs-card-badge-size) leading-(--blogs-card-badge-line-height)",
+                "font-medium tracking-normal text-(--color-blogs-card-badge-text)",
+                "backdrop-blur-(--blogs-card-badge-blur)",
+              )}
+            >
+              {type}
+            </span>
+          ))}
+        </div>
 
         <h3
           className={cn(
             "mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center md:text-left",
             "font-cal-sans text-(length:--blogs-card-title-size)",
-            "leading-(--blogs-card-title-line-height) font-normal tracking-normal",
+            "leading-(--blogs-card-title-line-height) font-semibold tracking-normal",
             "text-(--color-blogs-card-title)",
+            "font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]",
           )}
         >
           {blog.title}

@@ -5,7 +5,7 @@ export interface BlogAuthor {
 
 export interface BlogItem {
   id: number;
-  type: string;
+  types: string[];
   title: string;
   date: string;
   imageSrc: string;
@@ -19,7 +19,7 @@ export const blogsCursorLabel = "Read Article";
 export const blogItems: BlogItem[] = [
   {
     id: 1,
-    type: "Product",
+    types: ["Product", "Strategy"],
     title: "How Product Teams Reduce Waste Before Writing a Single Line of Code",
     date: "May 12, 2026",
     imageSrc: "/images/ServicesCard1.jpg",
@@ -31,7 +31,7 @@ export const blogItems: BlogItem[] = [
   },
   {
     id: 2,
-    type: "Design",
+    types: ["Design", "UX"],
     title: "Why Interface Clarity Usually Matters More Than Feature Count",
     date: "May 26, 2026",
     imageSrc: "/images/ServicesCard2.jpg",
@@ -43,7 +43,7 @@ export const blogItems: BlogItem[] = [
   },
   {
     id: 3,
-    type: "Engineering",
+    types: ["Engineering", "Backend"],
     title: "Backend Decisions That Keep Fast-Growing Products Stable Later",
     date: "June 03, 2026",
     imageSrc: "/images/ServicesCard4.jpg",
@@ -55,7 +55,7 @@ export const blogItems: BlogItem[] = [
   },
   {
     id: 4,
-    type: "Mobile",
+    types: ["Mobile", "Experience"],
     title: "What Makes a Mobile Experience Feel Premium Instead of Merely Functional",
     date: "June 18, 2026",
     imageSrc: "/images/ServicesCard5.jpg",

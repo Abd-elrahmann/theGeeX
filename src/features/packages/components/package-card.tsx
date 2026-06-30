@@ -71,18 +71,44 @@ export function PackageCard({ item, index }: PackageCardProps) {
         "box-border flex min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
         "min-[1440px]:mx-auto min-[1440px]:items-center",
         "rounded-(--packages-card-radius) bg-(--color-packages-card-bg)",
-        "shadow-(--packages-card-shadow) backdrop-blur-(--packages-card-blur)",
+        item.featured
+          ? "shadow-(--packages-card-featured-shadow)"
+          : "shadow-(--packages-card-shadow)",
+        "backdrop-blur-(--packages-card-blur)",
         "px-(--packages-card-padding-x) pt-(--packages-card-padding-top) pb-(--packages-card-padding-bottom)",
         item.featured && "border border-(--color-packages-card-featured-border)",
       )}
     >
       <div className="flex h-(--packages-card-top-height) w-full flex-col min-[1440px]:items-center">
         <div className="w-full min-[1440px]:text-center">
+          <div className="mb-(--packages-card-chips-margin-bottom) flex w-full flex-nowrap items-center justify-start gap-(--packages-card-chips-gap) overflow-(--overflow-clip-fallback)">
+            {item.chips.map((chip) => {
+              const isAccent = chip.variant === "accent";
+
+              return (
+                <span
+                  key={chip.label}
+                  className={cn(
+                    "box-border inline-flex h-min w-min shrink-0 flex-nowrap content-center items-center justify-center gap-(--packages-card-chip-gap) overflow-(--overflow-clip-fallback) whitespace-nowrap rounded-(--packages-card-chip-radius)",
+                    "px-(--packages-card-chip-padding-x) py-(--packages-card-chip-padding-y)",
+                    "font-cal-sans text-(length:--packages-card-chip-size) leading-(--packages-card-chip-line-height) font-semibold tracking-normal",
+                    isAccent
+                      ? "bg-(--color-packages-card-chip-accent-bg) text-(--color-packages-card-chip-accent-text)"
+                      : "border border-(--color-packages-card-chip-border) bg-(--color-packages-card-chip-bg) text-(--color-packages-card-chip-text)",
+                  )}
+                >
+                  {chip.label}
+                </span>
+              );
+            })}
+          </div>
+
           <h3
             className={cn(
-              "w-full min-h-(--packages-card-title-min-height) whitespace-nowrap font-cal-sans",
+              "w-full min-h-(--packages-card-title-min-height) whitespace-pre-wrap wrap-break-word font-cal-sans",
               "text-(length:--packages-card-title-size) leading-(--packages-card-title-line-height)",
-              "font-bold tracking-normal text-(--color-packages-card-title)",
+              "font-semibold tracking-normal text-(--color-packages-card-title)",
+              "font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]",
             )}
           >
             {item.name}
@@ -129,8 +155,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
           onHoverStart={() => setIsHovered(true)}
           onHoverEnd={() => setIsHovered(false)}
           className={cn(
-            "relative mt-(--packages-card-button-margin-top) flex h-(--packages-button-height) w-full max-w-(--packages-button-width)",
-            "min-[1440px]:self-center",
+            "relative mt-(--packages-card-button-margin-top) flex h-(--packages-button-height) min-h-(--packages-button-height) w-(--packages-button-width) shrink-0 self-center",
             "items-center justify-center overflow-hidden rounded-(--packages-button-radius)",
             "bg-(--color-packages-button-bg) px-(--packages-button-padding-x) pt-(--packages-button-padding-top) pb-(--packages-button-padding-bottom)",
           )}
@@ -149,34 +174,34 @@ export function PackageCard({ item, index }: PackageCardProps) {
             )}
           />
 
-          <span className="relative z-1 block h-(--packages-button-text-frame-height) overflow-hidden">
+          <span className="absolute inset-0 z-1 flex items-center justify-center overflow-hidden">
             <span
               aria-hidden="true"
-              className="invisible block whitespace-nowrap font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium"
+              className="invisible block h-auto w-auto whitespace-pre font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium tracking-(--packages-button-text-letter-spacing) text-(--color-packages-button-text) font-features-normal"
             >
-              Book this package
+              Learn More
             </span>
 
             <motion.span
               variants={{
-                rest: { y: "0%", opacity: 1 },
-                hover: { y: "-120%", opacity: 0 },
+                rest: { x: "-50%", y: "-50%", opacity: 1 },
+                hover: { x: "-50%", y: "-170%", opacity: 0 },
               }}
               transition={packageButtonTransition}
-              className="absolute inset-0 flex items-center justify-center whitespace-nowrap font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium text-[#050505]"
+              className="absolute left-1/2 top-1/2 h-auto w-auto whitespace-pre font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium tracking-(--packages-button-text-letter-spacing) text-(--color-packages-button-text) font-features-normal"
             >
-              Book this package
+              Learn More
             </motion.span>
 
             <motion.span
               variants={{
-                rest: { y: "120%", opacity: 0 },
-                hover: { y: "0%", opacity: 1 },
+                rest: { x: "-50%", y: "70%", opacity: 0 },
+                hover: { x: "-50%", y: "-50%", opacity: 1 },
               }}
               transition={packageButtonTransition}
-              className="absolute inset-0 flex items-center justify-center whitespace-nowrap font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium text-white"
+              className="absolute left-1/2 top-1/2 h-auto w-auto whitespace-pre font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium tracking-(--packages-button-text-letter-spacing) text-(--color-packages-button-text) font-features-normal"
             >
-              Book this package
+              Learn More
             </motion.span>
           </span>
         </motion.button>
