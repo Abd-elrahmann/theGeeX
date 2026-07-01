@@ -69,8 +69,8 @@ export const packageItems: PackageItem[] = [
       { label: "Enterprise", variant: "accent" },
     ],
     description: "For organizations transforming at scale.",
-    price: "45,000",
-    billingCycle: "EGP / month",
+    price: "Contact Sales",
+    billingCycle: "",
     features: [
       { text: "End-to-end automation", highlightedWords: ["End-to-end automation"] },
       { text: "Internal dashboards & ERP solutions" },

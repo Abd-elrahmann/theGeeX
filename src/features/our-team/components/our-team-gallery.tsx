@@ -189,7 +189,10 @@ function OurTeamMobileCard({
 
   return (
     <figure
-      className="group relative m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius)"
+      className={cn(
+        "group relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius)",
+        "bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]",
+      )}
       style={{
         background: "transparent",
         aspectRatio: `${size.width} / ${size.height}`,
@@ -357,6 +360,7 @@ export function OurTeamGallery({
         {ourTeamCards.map((card, index) => (
           <motion.div
             key={card.id}
+            className="bg-transparent outline-none [-webkit-tap-highlight-color:transparent] backface-hidden"
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{

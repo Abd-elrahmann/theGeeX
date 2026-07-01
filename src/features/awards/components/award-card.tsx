@@ -44,36 +44,53 @@ export function AwardCard({
   className,
   style,
 }: AwardCardProps) {
-  const contentX = isCollapsed ? -28 : 0;
-  const logoX = isCollapsed ? -8 : 0;
+  const contentX = 0;
+  const logoX = 0;
 
   return (
     <motion.article
-      layout
+      layout="position"
       className={cn(
-        "box-border flex h-full w-full max-w-(--awards-card-max-width) flex-col items-center justify-center overflow-hidden rounded-(--awards-card-radius) bg-(--color-awards-card-bg) shadow-(--awards-card-shadow)",
+        "box-border flex h-full w-full max-w-(--awards-card-max-width) flex-col items-center justify-center gap-0 overflow-hidden rounded-(--awards-card-radius) bg-(--color-awards-card-bg) shadow-(--awards-card-shadow)",
         className,
       )}
       transition={transition}
       style={style}
-      animate={{ gap: 0, padding: isCollapsed ? 16 : 0 }}
+      animate={{
+        paddingTop: "var(--awards-card-padding-top)",
+        paddingRight: "var(--awards-card-padding-x)",
+        paddingBottom: "var(--awards-card-padding-bottom)",
+        paddingLeft: "var(--awards-card-padding-x)",
+      }}
     >
       <motion.div
-        layout
+        layout="position"
         className="ml-(--awards-icon-inset-left) shrink-0 self-start"
-        animate={{ width: isCollapsed ? 18 : 36, height: isCollapsed ? 15 : 30, x: contentX }}
+        animate={{
+          width: isCollapsed
+            ? "var(--awards-collapsed-icon-width)"
+            : "var(--awards-icon-width)",
+          height: isCollapsed
+            ? "var(--awards-collapsed-icon-height)"
+            : "var(--awards-icon-height)",
+          x: contentX,
+        }}
         transition={transition}
       >
         <AwardStarIcon className="h-full w-full" />
       </motion.div>
 
       <motion.div
-        layout
+        layout="position"
         className="flex shrink-0 items-center justify-center overflow-visible"
         animate={{
-          width: isCollapsed ? 150 : 280,
-          height: isCollapsed ? 56 : 104,
-          marginTop: 40,
+          width: isCollapsed ? "var(--awards-collapsed-image-width)" : "var(--awards-image-width)",
+          height: isCollapsed
+            ? "var(--awards-collapsed-image-slot-height)"
+            : "var(--awards-image-slot-height)",
+          marginTop: isCollapsed
+            ? "var(--awards-collapsed-card-content-gap)"
+            : "var(--awards-card-content-gap)",
           x: logoX,
         }}
         transition={transition}
@@ -89,13 +106,17 @@ export function AwardCard({
       </motion.div>
 
       <motion.span
-        layout
+        layout="position"
         aria-hidden="true"
         style={{ backgroundColor: "var(--color-awards-title-accent)" }}
         animate={{
-          width: isCollapsed ? 90 : 180,
-          marginTop: 40,
-          marginBottom: isCollapsed ? 6 : 12,
+          width: isCollapsed ? "var(--awards-collapsed-divider-width)" : "var(--awards-divider-width)",
+          marginTop: isCollapsed
+            ? "var(--awards-collapsed-divider-margin-y)"
+            : "var(--awards-divider-margin-y)",
+          marginBottom: isCollapsed
+            ? "var(--awards-collapsed-divider-margin-y)"
+            : "var(--awards-divider-margin-y)",
           x: contentX,
         }}
         className="ml-(--awards-icon-inset-left) block h-px shrink-0 self-start rounded-full"
@@ -103,14 +124,14 @@ export function AwardCard({
       />
 
       <motion.h3
-        layout
-        className="ml-(--awards-icon-inset-left) flex w-auto self-start items-center justify-start whitespace-pre text-left font-cal-sans font-semibold not-italic tracking-normal text-(--color-awards-card-title) font-features-normal"
+        className="ml-(--awards-icon-inset-left) flex w-[calc(100%-var(--awards-icon-inset-left))] min-w-0 self-start whitespace-normal wrap-break-word text-left font-cal-sans font-semibold not-italic tracking-normal text-(--color-awards-card-title) font-features-normal"
         animate={{
           x: contentX,
+          marginTop: "var(--awards-card-title-margin-top)",
           opacity: isCollapsed ? 0.6 : 1,
-          fontSize: isCollapsed ? 8 : 16,
-          lineHeight: 1.6,
-          fontWeight: 600,
+          fontSize: "var(--awards-card-title-size)",
+          lineHeight: "var(--awards-card-title-line-height)",
+          fontWeight: "var(--awards-card-title-weight)",
         }}
         transition={transition}
       >
@@ -118,15 +139,14 @@ export function AwardCard({
       </motion.h3>
 
       <motion.p
-        layout
-        className="ml-(--awards-icon-inset-left) flex w-auto self-start items-center justify-start whitespace-pre text-left font-cal-sans font-semibold not-italic tracking-normal text-(--color-awards-card-text) font-features-normal"
+        className="ml-(--awards-icon-inset-left) flex w-[calc(100%-var(--awards-icon-inset-left))] min-w-0 self-start whitespace-normal wrap-break-word text-left font-cal-sans font-semibold not-italic tracking-normal text-(--color-awards-card-text) font-features-normal"
         animate={{
           x: contentX,
-          marginTop: 8,
+          marginTop: "var(--awards-card-place-margin-top)",
           opacity: isCollapsed ? 0.6 : 1,
-          fontSize: isCollapsed ? 12 : 24,
-          lineHeight: 1.6,
-          fontWeight: 600,
+          fontSize: "var(--awards-card-place-size)",
+          lineHeight: "var(--awards-card-place-line-height)",
+          fontWeight: "var(--awards-card-place-weight)",
         }}
         transition={transition}
       >

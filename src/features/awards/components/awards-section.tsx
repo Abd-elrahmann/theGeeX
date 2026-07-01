@@ -16,7 +16,7 @@ const awardsCardStates = {
     opacity: 1,
   },
   collapsed: {
-    flexGrow: 1,
+    flexGrow: 1.45,
     height: 247,
     opacity: 1,
   },
@@ -84,9 +84,9 @@ export function AwardsSection() {
               return (
                 <motion.div
                   key={award.id}
-                  layout="size"
+                  layout="position"
                   className="flex w-full min-w-0 items-center justify-center overflow-visible md:w-px md:basis-0"
-                  initial={{ flexGrow: isFirstCard ? 2 : 1, height: isFirstCard ? 494 : 247 }}
+                  initial={{ flexGrow: isFirstCard ? 2 : 1.45, height: isFirstCard ? 494 : 247 }}
                   animate={{ flexGrow: cardState.flexGrow, height: cardState.height }}
                   transition={awardsCardTransition}
                 >

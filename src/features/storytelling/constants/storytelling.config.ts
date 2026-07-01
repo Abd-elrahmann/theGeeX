@@ -11,7 +11,7 @@ export const storytellingConfig = {
     hidePadding: 4,
   },
   background: {
-    mobileTriggerStart: "top top",
+    mobileTriggerStart: "top bottom",
     mobileTriggerEnd: "bottom top",
     light: "rgba(255, 255, 255, 0)",
     dark: "var(--color-storytelling-background-dark)",

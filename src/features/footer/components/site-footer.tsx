@@ -14,6 +14,8 @@ type SiteFooterProps = {
 };
 
 export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProps) {
+  const [rightsReserved, rightsCopyright, rightsTerms] = footerContent.rights;
+
   return (
     <footer
       className={cn(
@@ -132,9 +134,38 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
           <div className="order-2 mt-(--footer-rights-margin-top) flex w-full items-center justify-center gap-(--footer-rights-line-gap) pt-(--footer-rights-padding-top) pb-(--footer-rights-padding-bottom)">
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
 
-            <div className="flex w-fit max-w-(--footer-rights-max-width) shrink-0 flex-wrap items-center justify-center gap-(--footer-rights-gap)">
+            <div className="flex w-fit max-w-(--footer-rights-max-width) shrink-0 flex-col items-center justify-center gap-(--footer-rights-mobile-row-gap) md:flex-row md:flex-wrap md:gap-(--footer-rights-gap)">
+              <div className="flex items-center justify-center whitespace-nowrap md:hidden">
+                <span
+                  className={cn(
+                    "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                    "font-medium tracking-normal text-(--color-footer-rights)",
+                  )}
+                >
+                  {rightsTerms}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-center gap-(--footer-rights-gap) whitespace-nowrap md:hidden">
+                {[rightsReserved, rightsCopyright].map((item, index) => (
+                  <div key={item} className="flex items-center gap-(--footer-rights-gap)">
+                    <span
+                      className={cn(
+                        "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                        "font-medium tracking-normal text-(--color-footer-rights)",
+                      )}
+                    >
+                      {item}
+                    </span>
+                    {index === 0 ? (
+                      <span className="text-(--color-footer-rights-divider)">|</span>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+
               {footerContent.rights.map((item, index) => (
-                <div key={item} className="flex items-center gap-(--footer-rights-gap)">
+                <div key={item} className="hidden items-center gap-(--footer-rights-gap) md:flex">
                   <span
                     className={cn(
                       "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",

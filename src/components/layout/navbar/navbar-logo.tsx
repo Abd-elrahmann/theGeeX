@@ -19,7 +19,7 @@ export function NavbarLogo() {
         alt=""
         width={103}
         height={40}
-        priority
+        loading="eager"
         className="h-(--navbar-logo-height) w-(--navbar-logo-width)"
       />
     </Link>

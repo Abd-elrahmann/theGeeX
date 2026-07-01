@@ -322,22 +322,24 @@
   --packages-card-chip-line-height: 1.2;
   --packages-card-title-min-height: 26px;
   --packages-card-title-size: 24px;
+  --packages-card-enterprise-title-size: 20px;
   --packages-card-title-line-height: 1.4;
   --packages-card-description-margin-top: 6px;
   --packages-card-description-min-height: auto;
-  --packages-card-description-size: 14px;
-  --packages-card-description-line-height: 1.2;
+  --packages-card-description-size: 12px;
+  --packages-card-description-line-height: 1.35;
   --packages-card-price-margin-top: 16px;
   --packages-card-price-row-min-height: auto;
   --packages-card-price-gap: 8px;
-  --packages-card-price-size: 48px;
+  --packages-card-price-size: 40px;
   --packages-card-price-line-height: 1.2;
   --packages-card-price-letter-spacing: -2.1px;
-  --packages-card-billing-size: 14px;
+  --packages-card-contact-sales-size: 32px;
+  --packages-card-billing-size: 12px;
   --packages-card-billing-line-height: 1.6;
   --packages-card-billing-padding-bottom: 6px;
   --packages-card-button-margin-top: 16px;
-  --packages-button-width: 300px;
+  --packages-button-width: min(100%, 300px);
   --packages-button-height: 52px;
   --packages-button-radius: 99px;
   --packages-button-padding-x: 24px;
@@ -349,18 +351,19 @@
   --packages-button-text-frame-height: 23px;
   --packages-button-orb-width: 360px;
   --packages-button-orb-height: 360px;
-  --packages-card-features-margin-top: 72px;
+  --packages-card-features-margin-top: 24px;
   --packages-card-features-min-height: auto;
-  --packages-card-features-padding-x: 0px;
-  --packages-card-features-padding-y: 20px;
+  --packages-card-features-padding-x: var(--packages-card-padding-x);
+  --packages-card-features-padding-top: 0px;
+  --packages-card-features-padding-bottom: var(--packages-card-padding-bottom);
   --packages-card-features-gap: 12px;
   --packages-card-feature-dot-gap: 8px;
   --packages-card-feature-row-max-width: 100%;
   --packages-card-feature-text-width: calc(100% - var(--packages-card-feature-dot-size) - var(--packages-card-feature-dot-gap));
-  --packages-card-feature-dot-size: 8px;
-  --packages-card-feature-dot-offset: 6px;
-  --packages-card-feature-size: 17px;
-  --packages-card-feature-line-height: 21.2px;
+  --packages-card-feature-dot-size: 6px;
+  --packages-card-feature-dot-offset: 5px;
+  --packages-card-feature-size: 14px;
+  --packages-card-feature-line-height: 18px;
   --color-packages-card-bg: rgb(255 255 255 / 0.72);
   --color-packages-card-featured-border: rgb(10 171 200 / 0.18);
   --color-packages-card-title: #2c3134;
@@ -465,7 +468,8 @@
   --footer-rights-line-gap: 4px;
   --footer-rights-line-width: 112px;
   --footer-rights-gap: 10px;
-  --footer-rights-size: 14px;
+  --footer-rights-mobile-row-gap: 6px;
+  --footer-rights-size: 12px;
   --footer-rights-line-height: 1.4;
   --footer-logo-height: 160px;
   --color-footer-surface: #2558b4;
@@ -567,7 +571,7 @@
     rgb(0 0 0 / 1) 38%
   );
   --testimonials-carousel-gap: 16px;
-  --testimonials-card-width: min(100%, calc(100vw - 2 * var(--testimonials-padding-x)));
+  --testimonials-card-width: clamp(300px, 86vw, 360px);
   --testimonials-card-padding: 20px;
   --testimonials-card-radius: 18px;
   --testimonials-card-content-gap: 18px;
@@ -615,7 +619,7 @@
   --awards-pin-scroll-distance: 640px;
   --awards-title-z-index: 1;
   --awards-title-font-weight: 600;
-  --awards-title-size: 44px;
+  --awards-title-size: 40px;
   --awards-title-line-height: 1.2;
   --awards-title-sticky-top: var(--navbar-height);
   --awards-title-min-width: 0px;
@@ -627,13 +631,13 @@
   --awards-cards-column-max-width: 100%;
   --awards-card-max-width: 100%;
   --awards-card-radius: 32px;
-  --awards-card-padding-x: 16px;
-  --awards-card-padding-top: 20px;
-  --awards-card-padding-bottom: 20px;
+  --awards-card-padding-x: 24px;
+  --awards-card-padding-top: 24px;
+  --awards-card-padding-bottom: 24px;
   --awards-card-shadow: 0px 1px 10px 0px rgb(0 0 0 / 0.1);
   --awards-card-content-gap: 14px;
   --awards-collapsed-card-content-gap: 8px;
-  --awards-icon-inset-left: 16px;
+  --awards-icon-inset-left: 10px;
   --awards-icon-width: 36px;
   --awards-icon-height: 30px;
   --awards-collapsed-icon-width: 18px;
@@ -648,7 +652,7 @@
   --awards-collapsed-image-slot-height: 55px;
   --awards-card-title-margin-top: 18px;
   --awards-card-title-height: 34px;
-  --awards-card-title-size: clamp(11px, 3.2vw, 14px);
+  --awards-card-title-size: clamp(14px, 4.4vw, 16px);
   --awards-card-title-line-height: 1.2;
   --awards-collapsed-card-title-size: 7px;
   --awards-collapsed-card-title-line-height: 1.2;
@@ -656,7 +660,7 @@
   --awards-collapsed-card-title-weight: 500;
   --awards-card-place-margin-top: 6px;
   --awards-card-place-height: 18px;
-  --awards-card-place-size: 12px;
+  --awards-card-place-size: clamp(18px, 6.2vw, 24px);
   --awards-card-place-line-height: 1.2;
   --awards-collapsed-card-place-size: 6px;
   --awards-collapsed-card-place-line-height: 1.2;
@@ -688,6 +692,7 @@
   --color-storytelling-text-active: #ffffff;
   --color-storytelling-caption: #ffffff;
   --color-storytelling-background-dark: #000000;
+  --storytelling-page-background-opacity: 0;
   --color-storytelling-path-stroke: #262626;
   --storytelling-padding: 24px;
   --storytelling-section-padding-x: 24px;
@@ -704,7 +709,7 @@
   --storytelling-mobile-scroll-distance: 3400px;
   --storytelling-mobile-scroll-offset: 700px;
   --storytelling-mobile-background-extension: 320px;
-  --storytelling-mobile-background-proximity: 1200px;
+  --storytelling-mobile-background-fade-distance: 220px;
   --storytelling-mobile-path-bleed-y: 120px;
   --storytelling-mobile-path-top: var(--storytelling-section-padding-y);
   --storytelling-mobile-path-offset-x: calc(100vw - var(--storytelling-section-padding-x));
@@ -972,6 +977,28 @@
   --team-card-gradient-12: linear-gradient(180deg, #32508b 0%, #00205a 44%, #000c22 100%);
 }
 
+@media (max-width: 359.98px) {
+  :root {
+    --awards-title-size: 34px;
+    --awards-title-line-height: 1.12;
+    --awards-title-box-height: 92px;
+    --awards-card-padding-x: 18px;
+    --awards-card-padding-top: 20px;
+    --awards-card-padding-bottom: 20px;
+    --awards-icon-inset-left: 6px;
+    --awards-image-width: min(210px, 100%);
+    --awards-image-slot-height: 92px;
+    --awards-collapsed-image-width: min(108px, 100%);
+    --awards-collapsed-image-slot-height: 48px;
+    --awards-divider-width: min(140px, 100%);
+    --awards-collapsed-divider-width: min(74px, 100%);
+    --awards-card-title-size: clamp(13px, 4.2vw, 15px);
+    --awards-collapsed-card-title-size: 6.5px;
+    --awards-card-place-size: clamp(16px, 5.8vw, 20px);
+    --awards-collapsed-card-place-size: 6px;
+  }
+}
+
 @media (min-width: 640px) {
   :root {
     --section-stack-gap: 64px;
@@ -1045,7 +1072,7 @@
     --awards-card-padding-bottom: 24px;
     --awards-image-width: 260px;
     --awards-image-slot-height: 112px;
-    --awards-card-title-margin-top: 22px;
+    --awards-card-title-margin-top: 28px;
     --awards-card-title-height: 38px;
     --awards-card-title-size: 16px;
     --awards-card-place-size: 13px;
@@ -1113,7 +1140,7 @@
     --awards-title-size: 60px;
     --awards-title-line-height: 1.2;
     --awards-title-box-height: 144px;
-    --awards-cards-column-max-width: 560px;
+    --awards-cards-column-max-width: 640px;
     --awards-card-render-width: 340px;
     --awards-card-max-width: 100%;
     --blogs-padding-x: 24px;
@@ -1237,13 +1264,14 @@
     --footer-rights-padding-top: 48px;
     --footer-rights-padding-bottom: 28px;
     --footer-rights-line-width: 96px;
+    --footer-rights-size: 14px;
     --footer-logo-height: 250px;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --section-stack-gap: 96px;
+    --section-stack-gap: 32px;
     --services-padding-x: 0px;
     --services-title-size: 204px;
     --services-title-line-height: 204px;
@@ -1309,14 +1337,14 @@
     --packages-card-padding-top: 32px;
     --packages-card-padding-bottom: 32px;
     --packages-card-min-height: 640px;
-    --packages-card-top-height: 244px;
+    --packages-card-top-height: 316px;
     --packages-card-description-margin-top: 8px;
     --packages-card-description-min-height: 46px;
-    --packages-card-price-margin-top: 32px;
+    --packages-card-price-margin-top: 10px;
     --packages-card-price-row-min-height: 56px;
     --packages-card-price-gap: 12px;
-    --packages-card-button-margin-top: 20px;
-    --packages-card-features-margin-top: 72px;
+    --packages-card-button-margin-top: 18px;
+    --packages-card-features-margin-top: 32px;
     --packages-card-features-min-height: 252px;
     --lets-talk-container-max-width: 1280px;
     --lets-talk-padding-y: 64px;
@@ -1379,7 +1407,7 @@
     --awards-title-box-height: 144px;
     --awards-title-max-width: 540px;
     --awards-title-offset-top: 175px;
-    --awards-cards-column-max-width: 560px;
+    --awards-cards-column-max-width: 680px;
     --awards-card-max-width: 100%;
     --awards-card-radius: 32px;
     --awards-card-padding-x: 24px;
@@ -1407,6 +1435,7 @@
     --awards-collapsed-card-title-weight: 500;
     --storytelling-media-width: 260px;
     --storytelling-media-height: 362px;
+    --awards-card-place-margin-top: 14px;
     --awards-card-place-size: 15px;
     --awards-collapsed-card-place-size: 7.5px;
     --awards-collapsed-card-place-weight: 400;
@@ -1516,7 +1545,7 @@
 
 @media (min-width: 1440px) {
   :root {
-    --section-stack-gap: 112px;
+    --section-stack-gap: 32px;
     --services-container-max-width: 1440px;
     --services-title-size: 240px;
     --services-title-line-height: 240px;
@@ -1538,6 +1567,7 @@
     --awards-title-line-height: 1.2;
     --awards-title-box-height: 144px;
     --awards-title-max-width: 540px;
+    --awards-cards-column-max-width: 720px;
     --awards-card-max-width: 560px;
     --awards-cards-gap: 40px;
     --awards-card-title-size: 24px;
@@ -1667,7 +1697,7 @@
 
 @media (min-width: 1920px) {
   :root {
-    --section-stack-gap: 128px;
+    --section-stack-gap: 32px;
     --services-container-max-width: 1680px;
     --services-title-size: 280px;
     --services-title-line-height: 280px;

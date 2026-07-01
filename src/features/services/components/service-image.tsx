@@ -5,7 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 import { type Service, servicesImagePlaceholder } from "@/features/services/constants/services";
-import { servicesImageContainerClassName } from "@/features/services/constants/services-layout";
+import { servicesImageContainerVisualClassName } from "@/features/services/constants/services-layout";
 
 interface ServiceImageProps {
   service: Service;
@@ -39,11 +39,18 @@ export function ServiceImage({
 
   if (variant === "mobile") {
     return (
-      <div className="relative h-full w-full min-w-0">
-        <div className={cn(servicesImageContainerClassName, "aspect-[4/5]")}>{image}</div>
+      <div className="relative h-full min-h-[var(--services-image-min-height)] w-full min-w-0">
+        <div
+          className={cn(
+            "relative aspect-[4/5] min-h-[var(--services-image-min-height)] w-full min-w-0",
+            servicesImageContainerVisualClassName,
+          )}
+        >
+          {image}
+        </div>
       </div>
     );
   }
 
-  return <div className="relative h-full w-full min-h-0">{image}</div>;
+  return <div className="relative h-full min-h-[var(--services-image-min-height)] w-full">{image}</div>;
 }

@@ -36,9 +36,20 @@ body {
 }
 
 body {
+  position: relative;
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--color-storytelling-background-dark);
+  opacity: var(--storytelling-page-background-opacity);
 }
 
 @media (pointer: fine) {

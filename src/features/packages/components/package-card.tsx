@@ -60,6 +60,8 @@ function renderFeatureText(feature: PackageFeature) {
 
 export function PackageCard({ item, index }: PackageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const hasBillingCycle = Boolean(item.billingCycle);
+  const isContactSalesPackage = !hasBillingCycle;
 
   return (
     <motion.article
@@ -69,18 +71,18 @@ export function PackageCard({ item, index }: PackageCardProps) {
       transition={{ ...packageEnterTransition, delay: index * 0.1 }}
       className={cn(
         "box-border flex min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
-        "min-[1440px]:mx-auto min-[1440px]:items-center",
+        "min-[1440px]:mx-auto",
         "rounded-(--packages-card-radius) bg-(--color-packages-card-bg)",
         item.featured
           ? "shadow-(--packages-card-featured-shadow)"
           : "shadow-(--packages-card-shadow)",
         "backdrop-blur-(--packages-card-blur)",
-        "px-(--packages-card-padding-x) pt-(--packages-card-padding-top) pb-(--packages-card-padding-bottom)",
+        "p-0",
         item.featured && "border border-(--color-packages-card-featured-border)",
       )}
     >
-      <div className="flex h-(--packages-card-top-height) w-full flex-col min-[1440px]:items-center">
-        <div className="w-full min-[1440px]:text-center">
+      <div className="flex h-(--packages-card-top-height) w-full flex-col px-(--packages-card-padding-x) pt-(--packages-card-padding-top)">
+        <div className="w-full text-left">
           <div className="mb-(--packages-card-chips-margin-bottom) flex w-full flex-nowrap items-center justify-start gap-(--packages-card-chips-gap) overflow-(--overflow-clip-fallback)">
             {item.chips.map((chip) => {
               const isAccent = chip.variant === "accent";
@@ -109,6 +111,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
               "text-(length:--packages-card-title-size) leading-(--packages-card-title-line-height)",
               "font-semibold tracking-normal text-(--color-packages-card-title)",
               "font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]",
+              isContactSalesPackage && "whitespace-nowrap text-(length:--packages-card-enterprise-title-size)",
             )}
           >
             {item.name}
@@ -125,26 +128,34 @@ export function PackageCard({ item, index }: PackageCardProps) {
           </p>
         </div>
 
-        <div className="mt-(--packages-card-price-margin-top) flex min-h-(--packages-card-price-row-min-height) items-end gap-(--packages-card-price-gap) min-[1440px]:justify-center">
+        <div
+          className={cn(
+            "mt-(--packages-card-price-margin-top) flex min-h-(--packages-card-price-row-min-height) items-end justify-start gap-(--packages-card-price-gap)",
+            isContactSalesPackage && "w-full justify-center text-center",
+          )}
+        >
           <p
             className={cn(
               "whitespace-pre font-poppins text-(length:--packages-card-price-size)",
               "leading-(--packages-card-price-line-height) font-medium tracking-(--packages-card-price-letter-spacing)",
               "text-(--color-packages-card-price)",
+              isContactSalesPackage && "text-(length:--packages-card-contact-sales-size)",
             )}
           >
             {item.price}
           </p>
 
-          <p
-            className={cn(
-              "pb-(--packages-card-billing-padding-bottom) whitespace-pre-wrap wrap-break-word font-poppins",
-              "text-(length:--packages-card-billing-size) leading-(--packages-card-billing-line-height)",
-              "font-medium tracking-normal text-(--color-packages-card-billing)",
-            )}
-          >
-            {item.billingCycle}
-          </p>
+          {hasBillingCycle && (
+            <p
+              className={cn(
+                "pb-(--packages-card-billing-padding-bottom) whitespace-pre-wrap wrap-break-word font-poppins",
+                "text-(length:--packages-card-billing-size) leading-(--packages-card-billing-line-height)",
+                "font-medium tracking-normal text-(--color-packages-card-billing)",
+              )}
+            >
+              {item.billingCycle}
+            </p>
+          )}
         </div>
 
         <motion.button
@@ -185,7 +196,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
             <motion.span
               variants={{
                 rest: { x: "-50%", y: "-50%", opacity: 1 },
-                hover: { x: "-50%", y: "-170%", opacity: 0 },
+                hover: { x: "-50%", y: "-190%", opacity: 0 },
               }}
               transition={packageButtonTransition}
               className="absolute left-1/2 top-1/2 h-auto w-auto whitespace-pre font-poppins text-(length:--packages-button-text-size) leading-(--packages-button-text-line-height) font-medium tracking-(--packages-button-text-letter-spacing) text-(--color-packages-button-text) font-features-normal"
@@ -195,7 +206,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
 
             <motion.span
               variants={{
-                rest: { x: "-50%", y: "70%", opacity: 0 },
+                rest: { x: "-50%", y: "140%", opacity: 0 },
                 hover: { x: "-50%", y: "-50%", opacity: 1 },
               }}
               transition={packageButtonTransition}
@@ -211,7 +222,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
         className={cn(
           "mt-(--packages-card-features-margin-top) flex min-h-(--packages-card-features-min-height) w-full flex-col justify-start",
           "min-[1440px]:items-center",
-          "gap-(--packages-card-features-gap) px-(--packages-card-features-padding-x) py-(--packages-card-features-padding-y)",
+          "gap-(--packages-card-features-gap) px-(--packages-card-features-padding-x) pt-(--packages-card-features-padding-top) pb-(--packages-card-features-padding-bottom)",
         )}
       >
         {[...item.features].reverse().map((feature) => (

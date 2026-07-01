@@ -41,7 +41,7 @@ export function StorytellingSection() {
       itemCount: storytellingItems.length,
       pinEnabled: isLayoutReady,
       backgroundEnabled: isLayoutReady,
-      mobileBackgroundEnabled: isLayoutReady && !isTablet,
+      mobileBackgroundEnabled: isLayoutReady && !isDesktop,
     });
 
   useEffect(() => {
@@ -99,13 +99,13 @@ export function StorytellingSection() {
         "relative isolate w-full overflow-x-clip",
         usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-visible",
         "px-(--storytelling-section-padding-x)",
-        isDesktop ? "mt-(--storytelling-margin-top)" : "pt-(--storytelling-margin-top)",
+        "mt-(--storytelling-margin-top)",
         !isDesktop && "z-20",
         isDesktop && isPointerFine && "cursor-none",
       )}
       aria-label="Storytelling"
     >
-      <StorytellingBackground ref={backgroundRef} />
+      {isDesktop ? <StorytellingBackground ref={backgroundRef} /> : null}
 
       {isDesktop ? (
         <div

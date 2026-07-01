@@ -95,6 +95,16 @@ export function useStorytellingScroll({
     });
   }, []);
 
+  const setPageBackgroundOpacity = useCallback((opacity: number) => {
+    const clampedOpacity = Math.max(0, Math.min(opacity, 1));
+
+    backgroundDarkRef.current = clampedOpacity > 0;
+    document.documentElement.style.setProperty(
+      "--storytelling-page-background-opacity",
+      clampedOpacity.toString(),
+    );
+  }, []);
+
   useGSAP(
     () => {
       if (
@@ -133,8 +143,11 @@ export function useStorytellingScroll({
           mobileBackgroundEnabled
             ? readRootCssNumber("--storytelling-mobile-background-extension", 0)
             : 0;
-        const getMobileBackgroundProximity = () =>
-          readRootCssNumber("--storytelling-mobile-background-proximity", 0);
+        const getMobileBackgroundFadeDistance = () =>
+          Math.max(
+            readRootCssNumber("--storytelling-mobile-background-fade-distance", 240),
+            1,
+          );
         const syncMobileProgress = (self: ScrollTrigger) => {
           const progressDistance = getMobileProgressDistance();
           const totalDistance = progressDistance + getMobileBackgroundExtension();
@@ -142,25 +155,40 @@ export function useStorytellingScroll({
 
           syncProgress(progressEnd < 1 ? Math.min(self.progress / progressEnd, 1) : self.progress);
         };
+        const syncMobileBackground = (self: ScrollTrigger) => {
+          const scrollDistance = Math.max(self.end - self.start, 1);
+          const fadeProgress = Math.min(getMobileBackgroundFadeDistance() / scrollDistance, 0.5);
+          const progress = self.progress;
+
+          if (progress <= fadeProgress) {
+            setPageBackgroundOpacity(progress / fadeProgress);
+            return;
+          }
+
+          if (progress >= 1 - fadeProgress) {
+            setPageBackgroundOpacity((1 - progress) / fadeProgress);
+            return;
+          }
+
+          setPageBackgroundOpacity(1);
+        };
 
         const mobileBackgroundTrigger = mobileBackgroundEnabled
           ? ScrollTrigger.create({
               trigger: mobileScrollElement,
-              start: "top bottom",
-              end: () => `bottom+=${getMobileBackgroundProximity()} bottom`,
+              start: storytellingConfig.background.mobileTriggerStart,
+              end: storytellingConfig.background.mobileTriggerEnd,
               invalidateOnRefresh: true,
-              onEnter: () => {
-                setBackgroundDark(true);
+              onEnter: syncMobileBackground,
+              onEnterBack: syncMobileBackground,
+              onToggle: (self) => {
+                if (self.isActive) {
+                  syncMobileBackground(self);
+                }
               },
-              onEnterBack: () => {
-                setBackgroundDark(true);
-              },
-              onLeave: () => {
-                setBackgroundDark(false);
-              },
-              onLeaveBack: () => {
-                setBackgroundDark(false);
-              },
+              onUpdate: syncMobileBackground,
+              onLeave: () => setPageBackgroundOpacity(0),
+              onLeaveBack: () => setPageBackgroundOpacity(0),
             })
           : null;
 
@@ -214,7 +242,11 @@ export function useStorytellingScroll({
         });
 
         if (mobileBackgroundEnabled) {
-          setBackgroundDark(Boolean(mobileBackgroundTrigger?.isActive));
+          if (mobileBackgroundTrigger?.isActive) {
+            syncMobileBackground(mobileBackgroundTrigger);
+          } else {
+            setPageBackgroundOpacity(0);
+          }
         } else if (backgroundEnabled) {
           setBackgroundDark(mobilePinTrigger.isActive);
         }
@@ -225,7 +257,11 @@ export function useStorytellingScroll({
           ScrollTrigger.refresh();
 
           if (mobileBackgroundEnabled) {
-            setBackgroundDark(Boolean(mobileBackgroundTrigger?.isActive));
+            if (mobileBackgroundTrigger?.isActive) {
+              syncMobileBackground(mobileBackgroundTrigger);
+            } else {
+              setPageBackgroundOpacity(0);
+            }
           } else if (backgroundEnabled) {
             setBackgroundDark(mobilePinTrigger.isActive);
           }
@@ -255,7 +291,11 @@ export function useStorytellingScroll({
           mobilePinTrigger.kill();
 
           if (mobileBackgroundEnabled || backgroundEnabled) {
-            setBackgroundDark(false);
+            if (mobileBackgroundEnabled) {
+              setPageBackgroundOpacity(0);
+            } else {
+              setBackgroundDark(false);
+            }
           }
         };
       });
@@ -370,6 +410,7 @@ export function useStorytellingScroll({
         resetToFirstItem,
         syncProgress,
         setBackgroundDark,
+        setPageBackgroundOpacity,
       ],
       revertOnUpdate: false,
     },

@@ -18,6 +18,7 @@ const TICKER_INTERACTION_PAUSE_MS = 1200;
 
 export function TestimonialsSection() {
   const viewportRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const directionRef = useRef<TickerDirection>("left");
   const pauseUntilRef = useRef(0);
   const [tickerDirection, setTickerDirection] = useState<TickerDirection>("left");
@@ -53,7 +54,8 @@ export function TestimonialsSection() {
     let frameId = 0;
 
     const normalizeScroll = () => {
-      const loopWidth = viewportElement.scrollWidth / 2;
+      const firstDuplicateElement = trackRef.current?.children[testimonialItems.length] as HTMLElement | undefined;
+      const loopWidth = firstDuplicateElement?.offsetLeft ?? viewportElement.scrollWidth / 2;
 
       if (loopWidth <= 0) {
         return;
@@ -66,6 +68,10 @@ export function TestimonialsSection() {
       if (viewportElement.scrollLeft <= 0 && directionRef.current === "right") {
         viewportElement.scrollLeft += loopWidth;
       }
+    };
+
+    const handleManualScroll = () => {
+      normalizeScroll();
     };
 
     const tick = (time: number) => {
@@ -82,9 +88,11 @@ export function TestimonialsSection() {
     };
 
     normalizeScroll();
+    viewportElement.addEventListener("scroll", handleManualScroll, { passive: true });
     frameId = requestAnimationFrame(tick);
 
     return () => {
+      viewportElement.removeEventListener("scroll", handleManualScroll);
       cancelAnimationFrame(frameId);
     };
   }, []);
@@ -134,18 +142,22 @@ export function TestimonialsSection() {
             onPointerDown={() => {
               pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;
             }}
+            onTouchStart={() => {
+              pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;
+            }}
             onWheel={() => {
               pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;
             }}
           >
             <div
+              ref={trackRef}
               className="flex w-max gap-(--testimonials-carousel-gap)"
             >
               {tickerItems.map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
                   aria-hidden={index >= testimonialItems.length}
-                  className="shrink-0"
+                  className="shrink-0 snap-start"
                 >
                   <TestimonialCard item={item} />
                 </div>

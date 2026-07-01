@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CalSansUI } from "@calcom/cal-sans-ui/ui";
+import localFont from "next/font/local";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 
 import { Navbar } from "@/components/layout/navbar";
@@ -26,7 +26,17 @@ const poppins = Poppins({
   weight: ["400", "500", "700"],
 });
 
+const calSansUI = localFont({
+  src: "../../node_modules/@calcom/cal-sans-ui/dist/fonts/CalSansUI[wght,GEOM].woff2",
+  variable: "--font-cal-sans-ui",
+  display: "swap",
+  preload: false,
+});
+
+const metadataBaseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(metadataBaseUrl),
   title: "theGeeX",
   description: "Creative digital experiences",
   icons: {
@@ -66,7 +76,7 @@ export default function RootLayout({
         geistSans.variable,
         geistMono.variable,
         poppins.variable,
-        CalSansUI.variable,
+        calSansUI.variable,
         "h-full antialiased",
       )}
     >
