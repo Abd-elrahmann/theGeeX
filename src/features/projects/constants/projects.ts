@@ -4,6 +4,7 @@ export interface ProjectItem {
   id: number;
   name: string;
   categories: ProjectCategory[];
+  description?: string;
   image: string;
   imageAlt: string;
   imageClassName?: string;
@@ -46,6 +47,8 @@ export const projects: ProjectItem[] = [
     id: 3,
     name: "Performr",
     categories: ["Web & Mobile Apps", "End-to-End Product", "Brand to Platform"],
+    description:
+      "TravX was built to modernize and streamline the travel technology ecosystem through a high-performance digital platform designed for speed, scalability, and seamless connectivity.",
     image: "/images/projects/Performr.png",
     imageAlt: "Performr cross-platform product preview",
     background: "var(--color-project-card-bg-3)",
@@ -54,6 +57,8 @@ export const projects: ProjectItem[] = [
     id: 4,
     name: "moretckts",
     categories: ["Web & Mobile Apps", "End-to-End Integration"],
+    description:
+      "TravX was built to modernize and streamline the travel technology ecosystem through a high-performance digital platform designed for speed, scalability, and seamless connectivity.",
     image: "/images/projects/moretckts.png",
     imageAlt: "moretckts product integration preview",
     background: "var(--color-project-card-bg-4)",
@@ -71,6 +76,8 @@ export const projects: ProjectItem[] = [
     id: 6,
     name: "Zamalkawy",
     categories: ["Mobile", "Website", "Match Center", "Game Hub"],
+    description:
+      "TravX was built to modernize and streamline the travel technology ecosystem through a high-performance digital platform designed for speed, scalability, and seamless connectivity.",
     image: "/images/projects/zamalkawy.png",
     imageAlt: "Zamalkawy mobile and website platform preview",
     background: "var(--color-project-card-bg-6)",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/cn";
 import { useGSAP } from "@/lib/gsap";
@@ -19,6 +19,31 @@ interface StorytellingPathProps {
   useDefaultTopOffset?: boolean;
   preserveAspectRatio?: string;
   reverseDraw?: boolean;
+  milestoneProgresses?: readonly number[];
+  style?: CSSProperties;
+}
+
+interface MilestoneCache {
+  circle: SVGCircleElement;
+  progress: number;
+}
+
+const MILESTONE_REVEAL_LEAD = 0.035;
+
+function updateMilestoneProgress(
+  milestoneCaches: MilestoneCache[],
+  drawProgress: number,
+): void {
+  for (const milestone of milestoneCaches) {
+    const revealProgress = Math.max(
+      0,
+      Math.min((drawProgress - milestone.progress + MILESTONE_REVEAL_LEAD) / MILESTONE_REVEAL_LEAD, 1),
+    );
+    const isCurrent = Math.abs(drawProgress - milestone.progress) <= 0.12;
+
+    milestone.circle.style.opacity = revealProgress.toString();
+    milestone.circle.style.transform = `scale(${isCurrent ? 1.18 : 1})`;
+  }
 }
 
 export function StorytellingPath({
@@ -27,9 +52,13 @@ export function StorytellingPath({
   useDefaultTopOffset = true,
   preserveAspectRatio = "xMinYMin slice",
   reverseDraw = false,
+  milestoneProgresses = [],
+  style,
 }: StorytellingPathProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const pathCachesRef = useRef<PathDrawCache[]>([]);
+  const milestoneCachesRef = useRef<MilestoneCache[]>([]);
+  const milestoneRefs = useRef<SVGCircleElement[]>([]);
   const [strokePaths, setStrokePaths] = useState<PathDefinition[]>([]);
 
   useEffect(() => {
@@ -76,9 +105,32 @@ export function StorytellingPath({
         pathDataAttribute: "data-storytelling-stroke",
       });
 
+      const primaryPath = pathCachesRef.current[0]?.path;
+
+      milestoneCachesRef.current = primaryPath
+        ? milestoneProgresses.flatMap((progress, index) => {
+            const circle = milestoneRefs.current[index];
+
+            if (!circle) {
+              return [];
+            }
+
+            const pathLength = primaryPath.getTotalLength();
+            const clampedProgress = Math.max(0, Math.min(progress, 1));
+            const pointProgress = reverseDraw ? 1 - clampedProgress : clampedProgress;
+            const point = primaryPath.getPointAtLength(pathLength * pointProgress);
+
+            circle.setAttribute("cx", point.x.toString());
+            circle.setAttribute("cy", point.y.toString());
+
+            return [{ circle, progress: clampedProgress }];
+          })
+        : [];
+
       updatePathDrawProgress(pathCachesRef.current, drawProgress, reverseDraw);
+      updateMilestoneProgress(milestoneCachesRef.current, drawProgress);
     },
-    { dependencies: [strokePaths, reverseDraw], scope: svgRef },
+    { dependencies: [strokePaths, reverseDraw, milestoneProgresses], scope: svgRef },
   );
 
   useEffect(() => {
@@ -87,10 +139,12 @@ export function StorytellingPath({
     }
 
     updatePathDrawProgress(pathCachesRef.current, drawProgress, reverseDraw);
+    updateMilestoneProgress(milestoneCachesRef.current, drawProgress);
   }, [drawProgress, reverseDraw]);
 
   return (
     <div
+      style={style}
       className={cn(
         "pointer-events-none absolute z-(--storytelling-path-z-index) overflow-visible",
         useDefaultTopOffset && "-top-(--storytelling-path-inset-y)",
@@ -130,6 +184,26 @@ export function StorytellingPath({
             }}
             fillRule={path.fillRule}
             clipRule={path.clipRule}
+          />
+        ))}
+        {milestoneProgresses.map((progress, index) => (
+          <circle
+            key={`storytelling-path-milestone-${progress}`}
+            ref={(circle) => {
+              if (circle) {
+                milestoneRefs.current[index] = circle;
+              }
+            }}
+            r="var(--storytelling-path-dot-size, 14)"
+            fill="var(--color-storytelling-path-dot, rgb(115 115 115 / 0.96))"
+            stroke="var(--color-storytelling-path-dot-ring, rgb(255 255 255 / 0.16))"
+            strokeWidth="var(--storytelling-path-dot-ring-width, 2)"
+            opacity="0"
+            style={{
+              transformBox: "fill-box",
+              transformOrigin: "center",
+              transition: "opacity 220ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
           />
         ))}
       </svg>

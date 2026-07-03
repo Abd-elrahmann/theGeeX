@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
@@ -31,11 +32,11 @@ function ServicesPageCardHeader({
         {eyebrow}
       </p>
 
-      <div className="flex w-full items-baseline gap-(--services-page-service-title-row-gap)">
+      <div className="flex w-full min-w-0 items-baseline gap-(--services-page-service-title-row-gap)">
         <span className="h-auto w-auto shrink-0 whitespace-pre font-cal-sans text-(length:--services-page-service-index-size) leading-(--services-page-service-index-line-height) font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off]">
           {formatIndex(index)}
         </span>
-        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) truncate whitespace-nowrap font-cal-sans text-(length:--services-page-service-title-size) leading-(--services-page-service-title-line-height) font-semibold tracking-normal text-(--color-services-page-card-title)">
+        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) flex-1 truncate whitespace-nowrap font-cal-sans text-(length:--services-page-service-title-size) leading-(--services-page-service-title-line-height) font-semibold tracking-normal text-(--color-services-page-card-title)">
           {title}
         </h2>
       </div>
@@ -108,8 +109,10 @@ export function ServicesPage() {
 
         <div className="flex w-full flex-col gap-(--services-page-cards-gap)">
           {services.map((service, index) => (
-            <article
+            <Link
               key={service.id}
+              href={`/services/${service.slug}`}
+              aria-label={`Open ${service.navTitle} service page`}
               className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-y-(--services-page-card-gap)"
             >
               <div className="box-border flex h-auto min-h-(--services-page-image-height) w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:h-(--services-page-image-height) md:min-h-0 md:overflow-hidden">
@@ -133,7 +136,7 @@ export function ServicesPage() {
                   <ServiceImage service={service} variant="desktop" eager={index === 0} />
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>

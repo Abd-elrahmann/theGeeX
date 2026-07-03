@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 
 import { Navbar } from "@/components/layout/navbar";
+import { NavigationProgress } from "@/components/providers/navigation-progress";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { Cursor } from "@/components/shared/cursor";
 import { cn } from "@/lib/cn";
@@ -82,6 +83,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <SmoothScrollProvider>
+          <NavigationProgress />
           <Cursor />
           <Navbar />
           {children}

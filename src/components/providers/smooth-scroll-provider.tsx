@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
+import { usePathname } from "next/navigation";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
@@ -14,6 +15,16 @@ import {
 
 function LenisScrollTriggerSync() {
   const lenis = useLenis();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!lenis) {
+      return;
+    }
+
+    scrollToPosition(0);
+    syncScrollTriggersAfterReset();
+  }, [lenis, pathname]);
 
   useEffect(() => {
     if (!lenis) {
@@ -55,6 +66,7 @@ interface SmoothScrollProviderProps {
 export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const isSubDesktop = useMediaQuery(SUB_DESKTOP_MEDIA_QUERY);
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
+  const pathname = usePathname();
 
   useLayoutEffect(() => {
     prepareFreshPageScrollSession();
@@ -62,7 +74,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     if (window.scrollY !== 0) {
       window.scrollTo(0, 0);
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <ReactLenis

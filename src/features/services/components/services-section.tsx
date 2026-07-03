@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
@@ -261,14 +262,20 @@ export function ServicesSection() {
                 "relative z-(--services-content-z-index) flex w-full justify-center",
               )}
             >
-              <ServicesGrid
-                gridRef={gridRef}
-                services={services}
-                activeIndex={activeIndex}
-                previousActiveIndex={previousActiveIndex}
-                activeService={activeService}
-                isGridHovered={isGridHovered}
-              />
+              <Link
+                href="/services"
+                aria-label="Open Services page"
+                className="block w-(--services-grid-width) max-w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              >
+                <ServicesGrid
+                  gridRef={gridRef}
+                  services={services}
+                  activeIndex={activeIndex}
+                  previousActiveIndex={previousActiveIndex}
+                  activeService={activeService}
+                  isGridHovered={isGridHovered}
+                />
+              </Link>
             </div>
 
             <div
@@ -310,10 +317,13 @@ export function ServicesSection() {
                   <ServicesTitle variant="inline" />
                 </div>
 
-                <div
+                <Link
+                  href="/services"
+                  aria-label="Open Services page"
                   className={cn(
                     "grid w-full content-start gap-(--services-columns-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-stretch",
                     "pb-(--services-stage-bottom-padding)",
+                    "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",
                   )}
                   style={{
                     gridTemplateRows:
@@ -371,7 +381,7 @@ export function ServicesSection() {
                         imageVariant={isTablet ? "tablet" : "mobile"}
                       />
                   </div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

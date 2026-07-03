@@ -12,7 +12,7 @@ export const siteConfig = {
   name: "theGeeX",
   description: "Creative digital experiences",
   navLinks: [
-    { label: "Services", href: "#services" },
+    { label: "Services", href: "/services" },
     { label: "Why Us", href: "#why-us" },
     { label: "Projects", href: "#projects" },
     { label: "Contact Us", href: "#contact-us" },

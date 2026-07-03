@@ -1,11 +1,32 @@
+import {
+  servicePageConfigs,
+  type ServiceDetail,
+  type ServicePageSlug,
+} from "@/features/services/constants/service-pages";
+
+export type {
+  ServiceDeliverable,
+  ServiceDetail,
+  ServiceExtraSection,
+  ServiceOutcome,
+  ServiceOutcomesSection,
+  ServiceFaqItem,
+  ServiceFaqsSection,
+  ServiceProjectsSection,
+} from "@/features/services/constants/service-pages";
+
 export interface Service {
   id: number;
+  slug: ServicePageSlug;
   navTitle: string;
   contentTitle: string;
   description: string[];
   image: string;
   imageAlt: string;
+  page: ServiceDetail;
 }
+
+type ServiceBase = Omit<Service, "page">;
 
 export const servicesSectionTitle = "Services";
 
@@ -40,9 +61,10 @@ export const servicesImageSlideTransition = {
 
 export const servicesImagePlaceholder = "/images/services/placeholder.svg";
 
-export const services: Service[] = [
+const serviceBaseItems: ServiceBase[] = [
   {
     id: 1,
+    slug: "product-strategy-consultancy",
     navTitle: "Product Strategy & Consultancy",
     contentTitle: "Great Products Start Long Before Development",
     description: [
@@ -58,6 +80,7 @@ export const services: Service[] = [
   },
   {
     id: 2,
+    slug: "ui-ux-product-design",
     navTitle: "UI/UX & Product Design",
     contentTitle: "Designed to Be Effortless. Built to Perform.",
     description: [
@@ -73,6 +96,7 @@ export const services: Service[] = [
   },
   {
     id: 3,
+    slug: "backend-cloud-engineering",
     navTitle: "Backend & Cloud Engineering",
     contentTitle: "The Foundation Behind Every Great Product",
     description: [
@@ -88,6 +112,7 @@ export const services: Service[] = [
   },
   {
     id: 4,
+    slug: "frontend-mobile-app-development",
     navTitle: "Frontend & Mobile App Development",
     contentTitle: "Digital Experiences Users Love to Use",
     description: [
@@ -103,6 +128,7 @@ export const services: Service[] = [
   },
   {
     id: 5,
+    slug: "api-design-ecosystem-integration",
     navTitle: "API Design & Ecosystem Integration",
     contentTitle: "Where Systems Connect and Businesses Scale",
     description: [
@@ -117,3 +143,12 @@ export const services: Service[] = [
     imageAlt: "Connect integrations ecosystem mockup",
   },
 ];
+
+export const services: Service[] = serviceBaseItems.map((service) => ({
+  ...service,
+  page: servicePageConfigs[service.slug],
+}));
+
+export function getServiceBySlug(slug: string): Service | undefined {
+  return services.find((service) => service.slug === slug);
+}
