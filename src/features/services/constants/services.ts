@@ -53,7 +53,7 @@ export const services: Service[] = [
       "Technical Feasibility",
       "Growth Planning",
     ],
-    image: "/images/ServicesCard1.jpg",
+    image: "/images/services/One.png",
     imageAlt: "Establish digital brand presence mockup",
   },
   {
@@ -68,7 +68,7 @@ export const services: Service[] = [
       "Design Systems",
       "Usability Optimization",
     ],
-    image: "/images/ServicesCard2.jpg",
+    image: "/images/services/Two.png",
     imageAlt: "Monetize checkout and payment flow mockup",
   },
   {
@@ -83,7 +83,7 @@ export const services: Service[] = [
       "Performance Optimization",
       "Monitoring & Scalability",
     ],
-    image: servicesImagePlaceholder,
+    image: "/images/services/Three.png",
     imageAlt: "Mobilize mobile apps mockup placeholder",
   },
   {
@@ -98,7 +98,7 @@ export const services: Service[] = [
       "Performance Optimization",
       "App Store Deployment",
     ],
-    image: "/images/ServicesCard4.jpg",
+    image: "/images/services/Four.png",
     imageAlt: "Evolve digital transformation mockup",
   },
   {
@@ -106,9 +106,14 @@ export const services: Service[] = [
     navTitle: "API Design & Ecosystem Integration",
     contentTitle: "Where Systems Connect and Businesses Scale",
     description: [
-      "Don't just exist-be found. Data-driven strategies to make sure your message hits the right score",
+      "Custom API Development",
+      "Third-Party Integrations",
+      "Payment Gateway Integration",
+      "CRM & ERP Connectivity",
+      "Legacy System Integration",
+      "API Documentation",
     ],
-    image: "/images/ServicesCard5.jpg",
+    image: "/images/services/Five.png",
     imageAlt: "Connect integrations ecosystem mockup",
   },
 ];

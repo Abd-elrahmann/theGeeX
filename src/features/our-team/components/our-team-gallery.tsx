@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 import { cn } from "@/lib/cn";
 
@@ -101,6 +102,20 @@ function TeamCardHoverContent({
   );
 }
 
+function TeamCollapsedPrimaryArtwork() {
+  return (
+    <div className="absolute inset-0 z-10 box-border flex flex-col items-center justify-start gap-(--team-collapsed-card-gap) overflow-(--overflow-clip-fallback) rounded-(--team-card-radius) bg-(--color-team-collapsed-card-bg) p-(--team-collapsed-card-padding)">
+      <Image
+        src="/images/ourTeam/ourTeamLogo.svg"
+        alt="theGeeX team logo"
+        width={83}
+        height={87}
+        className="h-auto w-(--team-collapsed-logo-width) shrink-0"
+      />
+    </div>
+  );
+}
+
 function OurTeamAnimatedCard({
   card,
   isExpanded,
@@ -124,10 +139,14 @@ function OurTeamAnimatedCard({
   const collapsedY = isPrimaryCard
     ? collapsedPrimaryY
     : collapsedPrimaryY + card.collapsedOffsetY;
+  const isCollapsedPrimaryCard = !isExpanded && isPrimaryCard;
 
   return (
     <motion.figure
-      className="group absolute left-0 top-0 m-0 flex box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius)"
+      className={cn(
+        "group absolute left-0 top-0 m-0 flex box-border flex-col items-center justify-start overflow-hidden",
+        "rounded-(--team-card-radius)",
+      )}
       initial={false}
       animate={{
         x: isExpanded ? card.targetX : collapsedX,
@@ -160,20 +179,26 @@ function OurTeamAnimatedCard({
           : isPrimaryCard
             ? ourTeamCards.length + 1
             : ourTeamCards.length - card.id,
-        background: "transparent",
-        paddingTop: "var(--team-card-padding-top)",
+        background: isCollapsedPrimaryCard
+          ? "var(--color-team-collapsed-card-bg)"
+          : "transparent",
+        paddingTop: isCollapsedPrimaryCard ? 0 : "var(--team-card-padding-top)",
       }}
       aria-label={`${card.name}, ${card.role}`}
     >
-      <TeamCardArtwork card={card} />
+      {isCollapsedPrimaryCard ? <TeamCollapsedPrimaryArtwork /> : <TeamCardArtwork card={card} />}
 
-      <div className="absolute inset-0 bg-[rgb(0_0_0/0.56)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      {!isCollapsedPrimaryCard ? (
+        <div className="absolute inset-0 bg-[rgb(0_0_0/0.56)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      ) : null}
 
-      <div className="relative z-10 flex w-full flex-col items-center justify-start gap-0 transition-opacity duration-300 group-hover:opacity-0">
-        <div className="mt-(--team-card-copy-offset) h-(--team-card-name-block-height)" />
-      </div>
+      {!isCollapsedPrimaryCard ? (
+        <div className="relative z-10 flex w-full flex-col items-center justify-start gap-0 transition-opacity duration-300 group-hover:opacity-0">
+          <div className="mt-(--team-card-copy-offset) h-(--team-card-name-block-height)" />
+        </div>
+      ) : null}
 
-      <TeamCardHoverContent card={card} />
+      {!isCollapsedPrimaryCard ? <TeamCardHoverContent card={card} /> : null}
     </motion.figure>
   );
 }
@@ -228,6 +253,8 @@ function OurTeamMobileCollapsedCard() {
     return null;
   }
 
+  const size = ourTeamCardSizes.standard;
+
   return (
     <motion.div
       className="mx-auto w-full max-w-(--team-mobile-collapsed-card-width)"
@@ -236,7 +263,15 @@ function OurTeamMobileCollapsedCard() {
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
-      <OurTeamMobileCard card={primaryCard} isActive={false} />
+      <figure
+        className="relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius) bg-(--color-team-collapsed-card-bg) outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]"
+        style={{
+          aspectRatio: `${size.width} / ${size.height}`,
+        }}
+        aria-label="theGeeX team logo"
+      >
+        <TeamCollapsedPrimaryArtwork />
+      </figure>
     </motion.div>
   );
 }

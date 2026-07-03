@@ -19,7 +19,8 @@ export function ServiceContentArrow({ isGridHovered = false }: ServiceContentArr
       aria-hidden="true"
       className={cn(
         "inline-flex shrink-0 items-center justify-center overflow-hidden p-0",
-        "size-(--services-content-arrow-size) text-(--color-services-content-arrow)",
+        "size-(--services-content-arrow-size) transition-colors duration-300",
+        isHovered ? "text-(--color-services-content-accent)" : "text-(--color-services-content-arrow)",
       )}
       onMouseEnter={() => {
         setIsArrowHovered(true);

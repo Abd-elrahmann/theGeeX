@@ -70,7 +70,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
       viewport={{ once: true, amount: 0.25 }}
       transition={{ ...packageEnterTransition, delay: index * 0.1 }}
       className={cn(
-        "box-border flex min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
+        "box-border flex h-full min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
         "min-[1440px]:mx-auto",
         "rounded-(--packages-card-radius) bg-(--color-packages-card-bg)",
         item.featured

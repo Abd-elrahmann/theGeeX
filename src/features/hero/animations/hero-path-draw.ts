@@ -184,7 +184,8 @@ export function createHeroPathScrollDraw(
       pin,
       pinType: "fixed",
       pinSpacing: true,
-      anticipatePin: 0,
+      anticipatePin: 2,
+      fastScrollEnd: false,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         const currentDrawProgress = drawProgress.value;

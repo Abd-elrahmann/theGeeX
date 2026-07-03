@@ -12,6 +12,7 @@ interface ServiceContentProps {
   variant?: "panel" | "standalone";
   isGridHovered?: boolean;
   headerContent?: ReactNode;
+  showContentTitle?: boolean;
 }
 
 const serviceContentTitleClassName = cn(
@@ -28,15 +29,22 @@ export function ServiceContent({
   variant = "panel",
   isGridHovered = false,
   headerContent,
+  showContentTitle = true,
 }: ServiceContentProps) {
   const content = (
     <>
-      {headerContent ? <div className="w-full shrink-0">{headerContent}</div> : null}
+      {headerContent ? (
+        <div className={cn("w-full shrink-0", !showContentTitle && "mb-(--services-content-header-desc-gap)")}>
+          {headerContent}
+        </div>
+      ) : null}
 
       <div className="service-content-details" aria-label={`${service.contentTitle} details`}>
-        <header className="relative w-full shrink-0">
-          <h3 className={serviceContentTitleClassName}>{service.contentTitle}</h3>
-        </header>
+        {showContentTitle ? (
+          <header className="relative w-full shrink-0">
+            <h3 className={serviceContentTitleClassName}>{service.contentTitle}</h3>
+          </header>
+        ) : null}
 
         <ul className={cn("service-content-description-list space-y-2", serviceContentDescriptionClassName)}>
           {service.description.map((item) => (

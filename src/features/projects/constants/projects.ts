@@ -6,6 +6,7 @@ export interface ProjectItem {
   categories: ProjectCategory[];
   image: string;
   imageAlt: string;
+  imageClassName?: string;
   background: string;
 }
 
@@ -29,7 +30,7 @@ export const projects: ProjectItem[] = [
     id: 1,
     name: "TravX",
     categories: ["Mobile", "Website", "Rebranding"],
-    image: "/images/ServicesCard1.jpg",
+    image: "/images/projects/travx.jpg",
     imageAlt: "TravX mobile and website experience preview",
     background: "var(--color-project-card-bg-1)",
   },
@@ -37,7 +38,7 @@ export const projects: ProjectItem[] = [
     id: 2,
     name: "EFG Hermes",
     categories: ["Web Application"],
-    image: "/images/ServicesCard2.jpg",
+    image: "/images/projects/efg_hermes.png",
     imageAlt: "EFG Hermes web application preview",
     background: "var(--color-project-card-bg-2)",
   },
@@ -45,7 +46,7 @@ export const projects: ProjectItem[] = [
     id: 3,
     name: "Performr",
     categories: ["Web & Mobile Apps", "End-to-End Product", "Brand to Platform"],
-    image: "/images/ServicesCard4.jpg",
+    image: "/images/projects/Performr.png",
     imageAlt: "Performr cross-platform product preview",
     background: "var(--color-project-card-bg-3)",
   },
@@ -53,7 +54,7 @@ export const projects: ProjectItem[] = [
     id: 4,
     name: "moretckts",
     categories: ["Web & Mobile Apps", "End-to-End Integration"],
-    image: "/images/ServicesCard5.jpg",
+    image: "/images/projects/moretckts.png",
     imageAlt: "moretckts product integration preview",
     background: "var(--color-project-card-bg-4)",
   },
@@ -61,15 +62,16 @@ export const projects: ProjectItem[] = [
     id: 5,
     name: "AstraVibe",
     categories: ["Web & Mobile Apps", "End-to-End Integration"],
-    image: "/images/ServicesCard5.jpg",
+    image: "/images/projects/astravibe.png",
     imageAlt: "AstraVibe web and mobile apps integration preview",
+    imageClassName: "md:scale-[1.12]",
     background: "var(--color-project-card-bg-5)",
   },
   {
     id: 6,
     name: "Zamalkawy",
     categories: ["Mobile", "Website", "Match Center", "Game Hub"],
-    image: "/images/ServicesCard1.jpg",
+    image: "/images/projects/zamalkawy.png",
     imageAlt: "Zamalkawy mobile and website platform preview",
     background: "var(--color-project-card-bg-6)",
   },

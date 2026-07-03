@@ -3,6 +3,8 @@
 import { useEffect, useLayoutEffect } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { bindLenisScrollTrigger, scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import {
@@ -51,6 +53,9 @@ interface SmoothScrollProviderProps {
 }
 
 export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
+  const isSubDesktop = useMediaQuery(SUB_DESKTOP_MEDIA_QUERY);
+  const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
+
   useLayoutEffect(() => {
     prepareFreshPageScrollSession();
 
@@ -60,7 +65,16 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   }, []);
 
   return (
-    <ReactLenis root options={{ autoRaf: false }}>
+    <ReactLenis
+      key={scrollMode}
+      root
+      options={{
+        autoRaf: false,
+        lerp: isSubDesktop ? 0.02 : 0.08,
+        touchMultiplier: isSubDesktop ? 0.12 : 0.85,
+        wheelMultiplier: 0.62,
+      }}
+    >
       <LenisScrollTriggerSync />
       {children}
     </ReactLenis>

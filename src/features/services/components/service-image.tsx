@@ -19,8 +19,9 @@ export function ServiceImage({
   eager = false,
 }: ServiceImageProps) {
   const isDesktop = variant === "desktop";
+  const isMobile = variant === "mobile";
   const isPlaceholder = service.image === servicesImagePlaceholder;
-  const imageClassName = cn("object-cover", isPlaceholder && "object-contain p-8");
+  const imageClassName = cn(isMobile ? "object-contain" : "object-cover", isPlaceholder && "object-contain p-8");
   const loading = eager ? "eager" : undefined;
 
   const image = (
@@ -37,12 +38,12 @@ export function ServiceImage({
     />
   );
 
-  if (variant === "mobile") {
+  if (isMobile) {
     return (
-      <div className="relative h-full min-h-[var(--services-image-min-height)] w-full min-w-0">
+      <div className="relative h-(--services-mobile-image-height) w-full min-w-0">
         <div
           className={cn(
-            "relative aspect-[4/5] min-h-[var(--services-image-min-height)] w-full min-w-0",
+            "relative h-full w-full min-w-0",
             servicesImageContainerVisualClassName,
           )}
         >
@@ -52,5 +53,5 @@ export function ServiceImage({
     );
   }
 
-  return <div className="relative h-full min-h-[var(--services-image-min-height)] w-full">{image}</div>;
+  return <div className="relative h-full min-h-(--services-image-min-height) w-full">{image}</div>;
 }

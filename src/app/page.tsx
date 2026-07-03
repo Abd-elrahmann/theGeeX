@@ -1,4 +1,5 @@
 import { Ambition } from "@/features/ambition";
+import { AiGrowthSection } from "@/features/ai-growth";
 import { AwardsSection } from "@/features/awards";
 import { BlogsSection } from "@/features/blogs";
 import { SiteFooter } from "@/features/footer";
@@ -19,6 +20,7 @@ export default function Home() {
       <Hero />
       <Ambition />
       <ServicesSection />
+      <AiGrowthSection />
       <StorytellingSection />
       <ProjectsSection />
       <OurCultureSection />

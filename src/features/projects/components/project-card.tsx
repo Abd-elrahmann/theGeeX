@@ -313,7 +313,7 @@ export function ProjectCard({
           />
         </div>
 
-        <div className="relative mt-(--projects-card-image-margin-top) min-h-0 w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)">
+        <div className="relative mx-auto mt-(--projects-card-image-margin-top) min-h-0 w-full max-w-(--projects-card-content-max-width) flex-1 overflow-hidden rounded-(--projects-card-image-radius)">
           <Image
             src={project.image}
             alt={project.imageAlt}
@@ -324,7 +324,7 @@ export function ProjectCard({
             priority={index === 0}
             unoptimized
             draggable={false}
-            className="block h-full w-full object-cover"
+            className={cn("block h-full w-full object-cover object-center", project.imageClassName)}
           />
         </div>
       </motion.div>

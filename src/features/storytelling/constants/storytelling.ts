@@ -21,14 +21,14 @@ export const storytellingItems: StorytellingItem[] = [
   },
   {
     id: 2,
-    image: "/images/storyTelling3.jpg",
+    image: "/images/storyTelling2.jpg",
     imageAlt: "Two team members collaborating at a computer workstation",
     caption:
       "We act as your technical co-founder—handling everything from build to launch and scale.",
   },
   {
     id: 3,
-    image: "/images/storyTelling2.jpg",
+    image: "/images/storyTelling3.jpg",
     imageAlt: "Team collaborating around a shared workspace table",
     caption:
       "No disconnected tools—everything we build works as one unified, integrated ecosystem.",

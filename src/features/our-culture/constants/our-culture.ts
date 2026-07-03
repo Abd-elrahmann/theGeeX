@@ -24,7 +24,7 @@ export const cultureCards: CultureCard[] = [
       "Music fuels our creativity. It keeps ideas flowing, inspires fresh perspectives, and reminds us that great experiences-like great songs-are built on rhythm, emotion, and connection.",
     mobileDescription:
       "Music fuels our creativity, sparks fresh ideas, and keeps our momentum alive.",
-    image: "/images/ourCulture1.png",
+    image: "/images/calture/calture1.jpg",
     variant: "split",
   },
   {
@@ -34,7 +34,7 @@ export const cultureCards: CultureCard[] = [
       "We value curiosity and deep thinking. Reading Kafka reflects our belief that challenging ideas expand how we see the world, solve problems, and understand people.",
     mobileDescription:
       "Curiosity drives us, Kafka reminds us to think deeper, question assumptions, and see the world differently.",
-    image: "/images/ourCulture2.png",
+    image: "/images/calture/calture2.jpg",
     variant: "stacked",
   },
   {
@@ -44,7 +44,7 @@ export const cultureCards: CultureCard[] = [
       "Evidence beats assumptions. We trust research, experimentation, and data-driven thinking to guide our decisions and turn innovation into real, measurable impact.",
     mobileDescription:
       "We use research, experimentation, and data to drive decisions and create measurable impact.",
-    image: "/images/ourCulture3.png",
+    image: "/images/calture/calture3.jpg",
     variant: "stacked",
   },
 ];

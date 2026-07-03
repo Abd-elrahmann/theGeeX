@@ -28,7 +28,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
   return (
     <article
       className={cn(
-        "box-border flex h-min w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
+        "box-border flex h-(--testimonials-card-height) w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
         "bg-(--color-testimonials-card-bg) p-(--testimonials-card-padding)",
       )}
     >
@@ -58,8 +58,8 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
         </p>
       </div>
 
-      <div className="mt-(--testimonials-card-footer-margin-top) flex w-full items-center justify-between gap-(--testimonials-card-footer-gap)">
-        <div className="flex min-w-0 items-center gap-(--testimonials-person-gap)">
+      <div className="mt-auto flex w-full items-center justify-between gap-(--testimonials-card-footer-gap) pt-(--testimonials-card-footer-margin-top)">
+        <div className="flex min-w-0 flex-1 items-center gap-(--testimonials-person-gap)">
           <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-end justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) bg-background px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-top-padding) pb-(--testimonials-person-frame-padding)">
             <Image
               src={item.personImageSrc}
@@ -70,10 +70,10 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
             />
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p
               className={cn(
-                "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                "w-full truncate whitespace-nowrap font-cal-sans",
                 "text-(length:--testimonials-person-name-size) leading-(--testimonials-person-name-line-height)",
                 "font-(--testimonials-person-name-weight) tracking-(--testimonials-person-name-letter-spacing)",
                 "text-(--color-testimonials-person-name)",
@@ -85,7 +85,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
 
             <p
               className={cn(
-                "w-full whitespace-pre-wrap wrap-break-word font-poppins",
+                "w-full truncate whitespace-nowrap font-poppins",
                 "text-(length:--testimonials-person-role-size) leading-(--testimonials-person-role-line-height)",
                 "font-(--testimonials-person-role-weight) tracking-(--testimonials-person-role-letter-spacing)",
                 "text-(--color-testimonials-person-role)",
