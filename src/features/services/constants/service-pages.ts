@@ -47,6 +47,7 @@ export interface ServiceFaqsSection {
 export interface ServiceDetail {
   smallTitle: string;
   mainTitle: string;
+  mobileMainTitle?: string;
   categories: string[];
   overviewTitle: string;
   overviewDescription: string;
@@ -141,6 +142,7 @@ export const servicePageConfigs = {
     assetFolder: "Product Strategy & Consultancy",
     smallTitle: "Product Strategy & Consultancy",
     mainTitle: "Great Products Aren't Built by\nChance. They're Built on Strategy.",
+    mobileMainTitle: "Great Products Aren't\nBuilt by Chance.\nThey're Built on Strategy.",
     categories: ["Brand Identity", "Content Structure", "Performance Optimization"],
     overviewTitle: "Blueprinting products built to scale",
     overviewDescription:

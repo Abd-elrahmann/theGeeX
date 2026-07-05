@@ -26,10 +26,27 @@ interface ServiceDetailPageProps {
   service: Service;
 }
 
+function ServiceDetailTitle({ title, className = "" }: { title: string; className?: string }) {
+  return (
+    <h1 className={`m-0 w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--service-detail-main-title-size) leading-(--service-detail-main-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) font-features-normal ${className}`}>
+      {title.split("\n").map((line) => (
+        <span key={line} className="block">
+          {line}
+        </span>
+      ))}
+    </h1>
+  );
+}
+
 const deliverTransition = {
   type: "spring",
   duration: 0.4,
   bounce: 0.15,
+} as const;
+
+const deliverNumberColor = {
+  active: "#2c3134",
+  inactive: "#2c3134",
 } as const;
 
 const faqTextReveal = {
@@ -87,13 +104,14 @@ function ServiceDetailHero({ service }: ServiceDetailPageProps) {
           <p className="m-0 w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--service-detail-small-title-size) leading-(--service-detail-small-title-line-height) font-semibold tracking-normal text-(--color-service-detail-accent) font-features-normal">
             {service.page.smallTitle}
           </p>
-          <h1 className="m-0 w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--service-detail-main-title-size) leading-(--service-detail-main-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) font-features-normal">
-            {service.page.mainTitle.split("\n").map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
+          {service.page.mobileMainTitle ? (
+            <>
+              <ServiceDetailTitle title={service.page.mobileMainTitle} className="md:hidden" />
+              <ServiceDetailTitle title={service.page.mainTitle} className="hidden md:block" />
+            </>
+          ) : (
+            <ServiceDetailTitle title={service.page.mainTitle} />
+          )}
         </div>
         <ul className="m-0 flex list-none flex-row flex-wrap items-center justify-center gap-x-(--service-detail-types-gap) gap-y-(--service-detail-types-row-gap) p-0 font-poppins text-(length:--service-detail-type-size) leading-(--service-detail-type-line-height) font-normal tracking-normal text-(--color-service-detail-text)">
           {service.page.categories.map((category, index) => (
@@ -117,7 +135,7 @@ function ServiceDetailHero({ service }: ServiceDetailPageProps) {
 function ServiceOverview({ service }: ServiceDetailPageProps) {
   return (
     <section className="mx-auto grid w-full max-w-(--service-detail-container-max-width) grid-cols-1 gap-(--service-detail-section-gap) px-(--service-detail-padding-x) py-(--service-detail-section-padding-y)">
-      <div className="flex w-full flex-col gap-(--service-detail-section-label-gap)">
+      <div className="flex w-full flex-col items-center gap-(--service-detail-section-label-gap) text-center md:items-start md:text-left">
         <p className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-label-size) leading-(--service-detail-label-line-height) font-medium tracking-[-0.02em] text-(--color-service-detail-accent)">
           Overview
         </p>
@@ -142,9 +160,11 @@ function ServiceOverview({ service }: ServiceDetailPageProps) {
           ))}
         </div>
 
-        <p className="m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-description-size) leading-(--service-detail-description-line-height) font-light tracking-normal text-(--color-service-detail-text) font-features-normal">
-          {service.page.overviewDescription}
-        </p>
+        <div className="relative min-h-(--service-detail-description-min-height) w-full md:min-h-0">
+          <p className="absolute inset-x-0 top-0 m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-description-size) leading-(--service-detail-description-line-height) font-light tracking-normal text-(--color-service-detail-text) font-features-normal md:static">
+            {service.page.overviewDescription}
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -152,16 +172,18 @@ function ServiceOverview({ service }: ServiceDetailPageProps) {
 
 function DeliverableRow({ item, index, isActive }: { item: ServiceDeliverable; index: number; isActive: boolean }) {
   return (
-    <motion.article className="flex w-full flex-row flex-nowrap items-start justify-start gap-(--service-detail-deliver-heading-gap) overflow-hidden" animate={{ opacity: isActive ? 1 : 0.34 }} transition={deliverTransition}>
-        <motion.span className="h-auto w-auto shrink-0 whitespace-pre font-cal-sans text-(length:--service-detail-deliver-number-size) leading-(--service-detail-deliver-number-line-height) font-semibold tracking-[-0.04em]" animate={{ color: isActive ? "var(--color-service-detail-accent)" : "var(--color-service-detail-inactive)" }} transition={deliverTransition}>
-          {formatIndex(index)}
-        </motion.span>
+    <motion.article className="flex w-full flex-col gap-(--service-detail-deliver-row-gap) overflow-hidden" transition={deliverTransition}>
       <div className="flex min-w-0 flex-1 flex-col gap-(--service-detail-deliver-row-gap)">
-        <motion.h3 className="m-0 min-w-0 flex-1 whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--service-detail-deliver-title-size) leading-(--service-detail-deliver-title-line-height) font-semibold tracking-normal" animate={{ color: isActive ? "var(--color-service-detail-text)" : "var(--color-service-detail-inactive)" }} transition={deliverTransition}>
-          {item.title}
-        </motion.h3>
+        <div className="relative min-w-0 pl-(--service-detail-deliver-number-column-width)">
+          <motion.span className="absolute top-(--service-detail-deliver-number-offset-y) left-0 h-auto w-auto whitespace-pre text-center font-cal-sans text-(length:--service-detail-deliver-number-size) leading-(--service-detail-deliver-number-line-height) font-semibold tracking-[-0.04em] font-features-normal" animate={{ color: isActive ? deliverNumberColor.active : deliverNumberColor.inactive }} transition={deliverTransition}>
+            {formatIndex(index)}
+          </motion.span>
+          <motion.h3 className="m-0 min-w-0 flex-1 whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--service-detail-deliver-title-size) leading-(--service-detail-deliver-title-line-height) font-semibold tracking-normal" animate={{ color: isActive ? "var(--color-service-detail-text)" : "var(--color-service-detail-inactive)" }} transition={deliverTransition}>
+            {item.title}
+          </motion.h3>
+        </div>
 
-        <motion.div initial={false} animate={{ height: isActive ? "auto" : 0, opacity: isActive ? 1 : 0 }} transition={deliverTransition} className="overflow-hidden">
+        <motion.div initial={false} animate={{ height: isActive ? "auto" : 0, opacity: isActive ? 1 : 0 }} transition={deliverTransition} className="overflow-hidden pl-(--service-detail-deliver-number-column-width)">
           <p className="m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-deliver-description-size) leading-(--service-detail-deliver-description-line-height) font-normal tracking-normal text-(--color-service-detail-text) font-features-normal">
             {item.description}
           </p>
@@ -191,7 +213,7 @@ function DeliverableImageSlidePanel({
           fill
           aria-hidden="true"
           className={fallbackDeliverable.image.endsWith(".svg") ? "rounded-3xl object-contain p-4 lg:p-10" : "rounded-3xl object-cover"}
-          sizes="(min-width: 1024px) 50vw, calc(100vw - 32px)"
+          sizes="(min-width: 1024px) 50vw, calc(100vw - (2 * var(--service-detail-padding-x)))"
           priority
         />
       ) : null}
@@ -216,41 +238,13 @@ function DeliverableImageSlidePanel({
               alt={item.title}
               fill
               className={item.image.endsWith(".svg") ? "rounded-3xl object-contain p-4 lg:p-10" : "rounded-3xl object-cover"}
-              sizes="(min-width: 1024px) 50vw, calc(100vw - 32px)"
+              sizes="(min-width: 1024px) 50vw, calc(100vw - (2 * var(--service-detail-padding-x)))"
               priority={index === 0}
               loading={index === 0 ? "eager" : undefined}
             />
           </motion.div>
         );
       })}
-    </div>
-  );
-}
-
-function DeliverableStaticImagePanel({
-  deliverables,
-  activeIndex,
-}: {
-  deliverables: ServiceDeliverable[];
-  activeIndex: number;
-}) {
-  const activeDeliverable = deliverables[activeIndex] ?? deliverables[0];
-
-  if (!activeDeliverable) {
-    return null;
-  }
-
-  return (
-    <div className="isolate relative z-10 h-(--service-detail-deliver-image-height) w-full overflow-hidden rounded-3xl bg-surface">
-      <Image
-        key={activeDeliverable.image}
-        src={activeDeliverable.image}
-        alt={activeDeliverable.title}
-        fill
-        className={activeDeliverable.image.endsWith(".svg") ? "rounded-3xl object-contain p-4" : "rounded-3xl object-cover"}
-        sizes="calc(100vw - 32px)"
-        priority
-      />
     </div>
   );
 }
@@ -297,10 +291,11 @@ function WhatWeDeliver({ service }: ServiceDetailPageProps) {
 
         <div ref={mobilePinRegionRef} className="relative min-h-(--service-detail-deliver-scroll-height) w-full">
           <div className="sticky top-(--service-detail-deliver-sticky-top) z-10 flex w-full flex-col gap-(--service-detail-deliver-grid-gap)">
-            <div className="w-full">
-              <DeliverableStaticImagePanel
+            <div className="w-full px-(--service-detail-padding-x)">
+              <DeliverableImageSlidePanel
                 deliverables={service.page.deliverables}
                 activeIndex={activeIndex}
+                previousActiveIndex={previousActiveIndex}
               />
             </div>
 
@@ -511,7 +506,7 @@ function ServiceFaqs({ faqs }: { faqs?: ServiceFaqsSection }) {
     <section className="relative w-full bg-background px-(--service-detail-padding-x) py-(--service-detail-faqs-padding-y)" aria-labelledby="service-faqs-title">
       <div className="relative mx-auto grid w-full max-w-(--service-detail-container-max-width) grid-cols-1 gap-(--service-detail-faqs-section-gap) overflow-visible md:grid-cols-[var(--service-detail-faqs-title-column-width)_minmax(0,1fr)] md:items-start">
         <aside className="min-w-0 md:self-stretch">
-          <div className="relative z-1 flex h-(--service-detail-faqs-title-box-height) w-full flex-col flex-nowrap content-start items-start justify-start gap-(--service-detail-faqs-title-gap) overflow-clip rounded-none p-0 md:sticky md:top-(--service-detail-faqs-title-sticky-top)">
+          <div className="relative z-1 flex h-(--service-detail-faqs-title-box-height) w-full flex-col flex-nowrap content-start items-center justify-start gap-(--service-detail-faqs-title-gap) overflow-clip rounded-none p-0 text-center md:sticky md:top-(--service-detail-faqs-title-sticky-top) md:items-start md:text-left">
             <motion.p
               className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-faqs-label-size) leading-(--service-detail-faqs-label-line-height) font-medium tracking-[-0.02em] text-(--color-service-detail-accent)"
               initial={faqTextReveal.initial}

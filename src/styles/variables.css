@@ -341,6 +341,7 @@
   --service-detail-overview-images-gap: 8px;
   --service-detail-overview-image-height: clamp(118px, 33vw, 170px);
   --service-detail-overview-image-radius: 16px;
+  --service-detail-description-min-height: 180px;
   --service-detail-description-size: 16px;
   --service-detail-description-line-height: 1.6;
   --service-detail-deliver-sticky-top: var(--navbar-height);
@@ -353,6 +354,8 @@
   --service-detail-deliver-items-gap: 24px;
   --service-detail-deliver-row-gap: 14px;
   --service-detail-deliver-heading-gap: 14px;
+  --service-detail-deliver-number-column-width: 30px;
+  --service-detail-deliver-number-offset-y: 0.65em;
   --service-detail-deliver-number-size: 14px;
   --service-detail-deliver-number-line-height: 1.2;
   --service-detail-deliver-title-size: clamp(24px, 5vw, 32px);
@@ -427,6 +430,8 @@
   --color-service-detail-heading: #202020;
   --color-service-detail-muted: var(--color-ai-growth-title-muted);
   --color-service-detail-inactive: var(--color-ai-growth-title-muted);
+  --color-service-detail-deliver-number-active: var(--black, #000000);
+  --color-service-detail-deliver-number-inactive: var(--color-service-detail-text);
   --color-service-detail-border: #e8e8e8;
   --color-service-detail-outcome-bg: #f7f7f7;
   --color-service-detail-outcome-active-bg: #0aabc8;
@@ -1244,10 +1249,15 @@
     --service-detail-breadcrumb-size: 12px;
     --service-detail-small-title-size: 13px;
     --service-detail-main-title-size: clamp(24px, 7vw, 30px);
-    --service-detail-main-title-line-height: 1.08;
+    --service-detail-main-title-line-height: 1.2em;
+    --service-detail-types-gap: 10px;
+    --service-detail-types-row-gap: 6px;
+    --service-detail-type-separator-gap: 10px;
     --service-detail-title-stack-gap: 8px;
     --service-detail-overview-images-gap: 6px;
     --service-detail-overview-image-height: clamp(128px, 38vw, 152px);
+    --service-detail-description-size: 14px;
+    --service-detail-description-min-height: 202px;
     --service-detail-deliver-sticky-top: calc(var(--navbar-height) + 8px);
     --service-detail-deliver-image-height: clamp(240px, 66vw, 300px);
     --service-detail-faqs-title-size: 25px;
