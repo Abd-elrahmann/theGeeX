@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { cn } from "@/lib/cn";
 
 import {
@@ -60,6 +61,7 @@ function renderFeatureText(feature: PackageFeature) {
 
 export function PackageCard({ item, index }: PackageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const canAnimateButtonHover = useDesktopBreakpoint();
   const hasBillingCycle = Boolean(item.billingCycle);
   const isContactSalesPackage = !hasBillingCycle;
 
@@ -161,9 +163,13 @@ export function PackageCard({ item, index }: PackageCardProps) {
         <motion.button
           type="button"
           initial="rest"
-          animate={isHovered ? "hover" : "rest"}
-          whileTap="hover"
-          onHoverStart={() => setIsHovered(true)}
+          animate={canAnimateButtonHover && isHovered ? "hover" : "rest"}
+          whileTap={canAnimateButtonHover ? "hover" : "rest"}
+          onHoverStart={() => {
+            if (canAnimateButtonHover) {
+              setIsHovered(true);
+            }
+          }}
           onHoverEnd={() => setIsHovered(false)}
           className={cn(
             "relative mt-(--packages-card-button-margin-top) flex h-(--packages-button-height) min-h-(--packages-button-height) w-(--packages-button-width) shrink-0 self-center",
