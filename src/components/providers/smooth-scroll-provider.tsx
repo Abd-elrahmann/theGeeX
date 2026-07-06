@@ -68,6 +68,12 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
   const pathname = usePathname();
 
+  useEffect(() => {
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+    });
+  }, []);
+
   useLayoutEffect(() => {
     prepareFreshPageScrollSession();
 
@@ -82,7 +88,11 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       root
       options={{
         autoRaf: false,
+        autoResize: true,
+        gestureOrientation: "vertical",
         lerp: 0.08,
+        overscroll: false,
+        smoothWheel: true,
         touchMultiplier: isSubDesktop ? 1 : 0.85,
         wheelMultiplier: 0.62,
       }}
