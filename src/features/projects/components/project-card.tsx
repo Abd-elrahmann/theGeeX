@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, type MotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 import { cn } from "@/lib/cn";
 import { formatIndex } from "@/lib/format-index";
@@ -280,12 +281,18 @@ export function ProjectCard({
     >
       <motion.div
         className={cn(
-          "flex h-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius)",
+          "relative flex h-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius)",
           "bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground)",
           "shadow-(--projects-card-shadow) transform-gpu will-change-transform backface-hidden",
         )}
         style={{ scale: cardScale }}
       >
+        <Link
+          href={`/projects/${project.slug}`}
+          aria-label={`View ${project.name} project details`}
+          className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
+        />
+
         <header className={projectCardHeaderRowClassName}>
           <span className={projectCardIndexClassName}>{formatIndex(index)}</span>
           <span className={projectCardCategoryBadgeClassName}>

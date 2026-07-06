@@ -75,6 +75,10 @@ interface ServicePageInput extends Omit<ServiceDetail, "overviewImages" | "deliv
 }
 
 function serviceAssetPath(assetFolder: string, fileName: string): string {
+  if (fileName.startsWith("/")) {
+    return fileName;
+  }
+
   return `/images/${assetFolder}/${fileName}`;
 }
 
@@ -148,9 +152,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "We help businesses turn ideas into scalable digital products through strategic planning, product discovery, technology selection, and roadmap development. By aligning business goals with technical execution, we reduce risk, accelerate development, and create a clear path from concept to launch.",
     overviewImageFiles: [
-      "Product Roadmapping & Scoping.png",
-      "Market & Technical Feasibility.png",
-      "Tech Stack Selection.png",
+      "/images/Projects-Services/Product Strategy & Consultancy1.png",
+      "/images/Projects-Services/Product Strategy & Consultancy2.png",
+      "/images/Projects-Services/Product Strategy & Consultancy3.png",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Connect and Scale",
@@ -217,9 +221,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "At TheGeeX, design is where technology meets art. We create user-centered digital experiences that balance functionality, usability, and visual excellence. Through research, strategy, and thoughtful design systems, we help businesses deliver products that users enjoy and trust.",
     overviewImageFiles: [
-      "User Research & Wireframing (1).png",
-      "High-Fidelity UI Design.png",
-      "Interactive Prototyping.png",
+      "/images/Projects-Services/UIUX & Product Design1.png",
+      "/images/Projects-Services/UIUX & Product Design2.png",
+      "/images/Projects-Services/UIUX & Product Design3.png",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Connect and Scale",
@@ -281,9 +285,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "A powerful user experience starts with an even stronger foundation. At TheGeeX, we design and engineer robust backend systems, cloud environments, and data architectures that ensure your applications remain fast, secure, and reliable under any level of demand. Our solutions are built to scale with your business and support long-term growth.",
     overviewImageFiles: [
-      "Cloud Infrastructure Management.png",
-      "Database Design & Optimization.png",
-      "Cloud Infrastructure Management.png",
+      "/images/Projects-Services/UIUX & Product Design1.png",
+      "/images/Projects-Services/UIUX & Product Design3.png",
+      "/images/Projects-Services/EFG2.png",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Connect and Scale",
@@ -345,9 +349,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "We transform complex functionality into fast, responsive, and intuitive digital experiences. Using modern web frameworks and mobile technologies, we develop applications that deliver exceptional performance, seamless interactions, and consistent experiences across every device.",
     overviewImageFiles: [
-      "High-Performance Web Apps.png",
-      "Native & Cross-Platform Mobile Apps.png",
-      "Performance Optimization.png",
+      "/images/Projects-Services/UIUX & Product Design2.png",
+      "/images/Projects-Services/astravibe2.png",
+      "/images/Projects-Services/travx1.png",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Connect and Scale",
@@ -409,9 +413,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "Modern software thrives on connectivity. At TheGeeX, we design secure, scalable APIs and seamless integrations that allow systems, platforms, and third-party services to communicate effortlessly. From internal operations to external partnerships, we help businesses create connected ecosystems that improve efficiency, automation, and data flow.",
     overviewImageFiles: [
-      "Custom API Development.png",
-      "Third-Party Engine Orchestration.png",
-      "Enterprise Legacy Integrations.png",
+      "/images/Projects-Services/UIUX & Product Design1.png",
+      "/images/Projects-Services/EFG2.png",
+      "/images/Projects-Services/UIUX & Product Design3.png",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Connect and Scale",

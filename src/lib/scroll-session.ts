@@ -22,10 +22,8 @@ export function prepareFreshPageScrollSession(): void {
   disableScrollRestoration();
   resetHeroScrollState();
   resetNavbarScrollMemory();
-
-  if (window.scrollY !== 0) {
-    scrollToPosition(0);
-  }
+  scrollToPosition(0);
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 export function syncScrollTriggersAfterReset(): void {

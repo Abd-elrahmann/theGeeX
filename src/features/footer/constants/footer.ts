@@ -6,8 +6,8 @@ export interface FooterLinkItem {
 export const footerNavLinks: FooterLinkItem[] = [
   { label: "Home", href: "/" },
   { label: "Why Us", href: "#why-us" },
-  { label: "Projects", href: "#projects" },
-  { label: "Services", href: "#services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Services", href: "/services" },
   { label: "Contact Us", href: "#contact-us" },
 ];
 
