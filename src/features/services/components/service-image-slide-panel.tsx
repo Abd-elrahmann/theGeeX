@@ -58,7 +58,7 @@ export function ServiceImageSlidePanel({
           <motion.div
             key={service.id}
             aria-hidden={!isActive}
-            className={servicesImageSlideLayerClassName}
+            className={cn("will-change-transform", servicesImageSlideLayerClassName)}
             initial={false}
             animate={{ y: getPanelOffset(index, activeIndex) }}
             transition={servicesImageSlideTransition}

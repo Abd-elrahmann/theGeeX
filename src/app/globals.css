@@ -50,6 +50,7 @@ body::before {
   pointer-events: none;
   background-color: var(--color-storytelling-background-dark);
   opacity: var(--storytelling-page-background-opacity);
+  transition: opacity 0.5s cubic-bezier(0.44, 0, 0.56, 1) 0s;
 }
 
 @media (pointer: fine) {

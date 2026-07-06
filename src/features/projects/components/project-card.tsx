@@ -31,12 +31,12 @@ const projectCardIndexClassName = cn(
 );
 
 const projectCardCategoryBadgeClassName = cn(
-  "z-[2] flex h-min min-w-0 flex-row flex-wrap items-start justify-end",
+  "z-[2] flex h-min w-min shrink-0 flex-row flex-nowrap items-center justify-start",
   "gap-[var(--projects-card-category-gap)]",
 );
 
 const projectCardCategoryTextClassName = cn(
-  "block h-auto w-auto max-w-full whitespace-nowrap rounded-[var(--projects-card-category-radius)] px-[var(--projects-card-category-padding-x)] py-[var(--projects-card-category-padding-y)] text-left",
+  "block h-auto w-auto whitespace-pre rounded-[var(--projects-card-category-radius)] px-[var(--projects-card-category-padding-x)] py-[var(--projects-card-category-padding-y)] text-left",
   "bg-[var(--color-project-card-category-bg)]",
   "font-[family-name:var(--font-poppins)] font-[var(--projects-card-category-text-weight)] not-italic",
   "text-[length:var(--projects-card-category-text-size)] leading-[var(--projects-card-category-line-height)]",
@@ -46,7 +46,7 @@ const projectCardCategoryTextClassName = cn(
 
 const projectCardTitleClassName = cn(
   "m-0 min-w-0 flex-1 whitespace-pre-wrap break-words",
-  "h-[var(--projects-card-title-height)] font-[family-name:var(--font-cal-sans)]",
+  "h-auto min-h-[var(--projects-card-title-height)] font-[family-name:var(--font-cal-sans)]",
   "font-[var(--projects-card-title-weight)] not-italic",
   "text-[length:var(--projects-card-title-size)] leading-[var(--projects-card-title-line-height)]",
   "tracking-[var(--projects-card-title-letter-spacing)]",
@@ -281,11 +281,15 @@ export function ProjectCard({
     >
       <motion.div
         className={cn(
-          "relative flex h-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius)",
+          "relative box-border flex h-full min-w-0 flex-col items-start justify-start overflow-hidden rounded-(--projects-card-radius) border-solid",
           "bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground)",
           "shadow-(--projects-card-shadow) transform-gpu will-change-transform backface-hidden",
         )}
-        style={{ scale: cardScale }}
+        style={{
+          scale: cardScale,
+          borderWidth: "var(--projects-card-border-width)",
+          borderColor: "var(--color-project-card-border)",
+        }}
       >
         <Link
           href={`/projects/${project.slug}`}
@@ -320,19 +324,31 @@ export function ProjectCard({
           />
         </div>
 
-        <div className="relative mx-auto mt-(--projects-card-image-margin-top) min-h-0 w-full max-w-(--projects-card-content-max-width) flex-1 overflow-hidden rounded-(--projects-card-image-radius)">
-          <Image
-            src={project.image}
-            alt={project.imageAlt}
-            width={1600}
-            height={1200}
-            sizes="(min-width: 1024px) min(100vw, 1280px), 100vw"
-            loading={index === 0 ? "eager" : undefined}
-            priority={index === 0}
-            unoptimized
-            draggable={false}
-            className={cn("block h-full w-full object-cover object-center", project.imageClassName)}
-          />
+        <div
+          className="relative mt-(--projects-card-image-margin-top) h-px min-h-(--projects-card-image-min-height) w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)"
+          style={{ borderRadius: "var(--projects-card-image-radius)" }}
+        >
+          <div
+            className="absolute inset-0 overflow-hidden"
+            style={{ borderRadius: "var(--projects-card-image-radius)" }}
+          >
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              fill
+              sizes="(min-width: 1024px) min(100vw, 1280px), 100vw"
+              loading={index === 0 ? "eager" : undefined}
+              priority={index === 0}
+              unoptimized
+              draggable={false}
+              style={{
+                objectPosition: "var(--projects-card-image-position)",
+                transform: "translateY(var(--projects-card-image-translate-y)) scale(var(--projects-card-image-scale))",
+                transformOrigin: "center center",
+              }}
+              className={cn("absolute inset-0 block h-full w-full object-cover object-center", project.imageClassName)}
+            />
+          </div>
         </div>
       </motion.div>
     </motion.article>

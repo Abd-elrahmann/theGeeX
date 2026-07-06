@@ -184,7 +184,7 @@ export function createHeroPathScrollDraw(
       pin,
       pinType: "fixed",
       pinSpacing: true,
-      anticipatePin: 2,
+      anticipatePin: 1,
       fastScrollEnd: false,
       invalidateOnRefresh: true,
       onUpdate: (self) => {

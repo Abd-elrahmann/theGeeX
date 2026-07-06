@@ -49,17 +49,16 @@ export function ServicesSection() {
   const {
     containerRef,
     stageRef,
-    pinStartRef,
     activeIndex,
     previousActiveIndex,
     setActiveIndex,
   } = useActiveService({
     serviceCount: services.length,
-    enabled: isDesktop,
+    enabled: false,
   });
   const shouldTrackMobileScroll = hasHydrated && !isDesktop;
   const { scrollYProgress } = useScroll({
-    target: shouldTrackMobileScroll ? mobileScrollRef : undefined,
+    target: isDesktop ? containerRef : shouldTrackMobileScroll ? mobileScrollRef : undefined,
     offset: ["start start", "end end"],
   });
 
@@ -77,7 +76,7 @@ export function ServicesSection() {
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (!shouldTrackMobileScroll) {
+    if (!isDesktop && !shouldTrackMobileScroll) {
       return;
     }
 
@@ -188,6 +187,7 @@ export function ServicesSection() {
   }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
+  const desktopScrollStepCount = Math.max(services.length - 1, 0);
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
     <div
@@ -224,10 +224,17 @@ export function ServicesSection() {
       ref={containerRef}
       id="services"
       className={cn(
-        "relative w-full overflow-x-clip bg-background",
+        "relative z-20 w-full overflow-x-clip bg-background",
         "mt-(--services-margin-top)",
         isDesktop && isPointerFine && "cursor-none",
       )}
+      style={
+        isDesktop
+          ? {
+              minHeight: `calc(100svh + ${desktopScrollStepCount} * var(--services-scroll-step-vh) * 1svh)`,
+            }
+          : undefined
+      }
       aria-label="Services"
       onMouseLeave={() => {
         setIsGridHovered(false);
@@ -240,16 +247,9 @@ export function ServicesSection() {
       {isDesktop ? (
         <>
           <div
-            ref={pinStartRef}
-            id="services-pin-start"
-            aria-hidden
-            className="pointer-events-none h-px w-full shrink-0"
-          />
-
-          <div
             ref={stageRef}
             className={cn(
-              "relative mx-auto w-full max-w-(--services-container-max-width)",
+              "sticky top-(--services-sticky-top) mx-auto w-full max-w-(--services-container-max-width)",
               "bg-background px-(--services-padding-x)",
             )}
           >

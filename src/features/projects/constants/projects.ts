@@ -33,11 +33,11 @@ export const projectsPageTitle = "Recent Projects";
 export const projectsPageDescription =
   "Explore the products, platforms, and digital ecosystems we've designed, engineered, and scaled—turning ambitious ideas into measurable business outcomes.";
 export const projectsCursorLabel = "View Project";
-export const projectsFirstCardEnterProgress = 0.06;
+export const projectsFirstCardEnterProgress = 0.13;
 
 export const projectsCardRevealScaleTo = 0.9;
 export const projectsCardScaleUpRecoveryExponent = 1.75;
-export const projectsCardRevealOffsetY = 64;
+export const projectsCardRevealOffsetY = 0;
 export const projectsCardHiddenOffsetY = 900;
 export const projectsCardScaleDepthStep = 0.025;
 export const projectsCardExitScaleSpeed = 1.75;
@@ -372,7 +372,6 @@ export const projects: ProjectItem[] = [
         activeColor: "#ffe700",
       },
     ],
-    imageClassName: "md:scale-[1.12]",
     background: "var(--color-project-card-bg-5)",
   },
   {

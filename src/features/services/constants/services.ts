@@ -35,28 +35,27 @@ export const servicesCursorLabel = "Explore Service";
 export const servicesScrollHeightPerService = 100;
 
 export const servicesTransition = {
-  type: "spring" as const,
-  duration: 0.45,
-  bounce: 0.2,
-  delay: 0.04,
+  type: "tween" as const,
+  ease: [0.44, 0, 0.56, 1] as const,
+  duration: 0.5,
+  delay: 0,
 };
 
 export const servicesSlideTransition = {
-  type: "spring" as const,
-  stiffness: 220,
-  damping: 31,
-  mass: 1,
-  delay: 0.05,
+  type: "tween" as const,
+  ease: [0.44, 0, 0.56, 1] as const,
+  duration: 0.5,
+  delay: 0,
 };
 
 export const servicesContentSlideTransition = {
   ...servicesSlideTransition,
-  delay: 0.05,
+  delay: 0,
 };
 
 export const servicesImageSlideTransition = {
   ...servicesSlideTransition,
-  delay: 0.1,
+  delay: 0,
 };
 
 export const servicesImagePlaceholder = "/images/services/placeholder.svg";

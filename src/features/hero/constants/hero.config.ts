@@ -19,22 +19,34 @@ export const heroConfig = {
   reveal: {
     initial: {
       opacity: 0,
-      y: 16,
+      x: 0,
+      y: 10,
+      scale: 1,
+      rotate: 0,
+      skewX: 0,
+      skewY: 0,
+      filter: "blur(10px)",
     },
     animate: {
       opacity: 1,
+      x: 0,
       y: 0,
+      scale: 1,
+      rotate: 0,
+      skewX: 0,
+      skewY: 0,
+      filter: "blur(0px)",
     },
     transition: {
       duration: 0.6,
       type: "spring" as const,
-      stiffness: 120,
-      damping: 18,
+      bounce: 0,
     },
     stagger: 0.075,
     viewport: {
       once: true,
-      amount: 0.5,
+      amount: 0,
+      margin: "0px 0px -50% 0px",
     },
   },
 } as const;

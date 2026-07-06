@@ -102,14 +102,14 @@ export function TestimonialsSection() {
       id="testimonials"
       aria-label="Testimonials"
       className={cn(
-        "relative w-full overflow-visible bg-background",
+        "relative w-full overflow-visible",
         "mt-(--testimonials-margin-top) px-(--testimonials-padding-x) py-(--testimonials-padding-y)",
       )}
     >
-      <div className="mx-auto flex w-full max-w-(--testimonials-container-max-width) flex-col gap-(--testimonials-section-gap)">
+      <div className="flex w-full flex-col gap-(--testimonials-section-gap)">
         <TestimonialsTitle />
 
-        <div className="relative w-full overflow-hidden">
+        <div className="relative -mx-(--testimonials-padding-x) w-[calc(100%+2*var(--testimonials-padding-x))] overflow-visible px-(--testimonials-padding-x)">
           <button
             type="button"
             aria-label="Move testimonials left"

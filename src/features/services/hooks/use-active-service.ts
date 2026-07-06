@@ -29,6 +29,10 @@ function getPinScrollDistance(serviceCount: number): number {
   return (steps * stepVh * window.innerHeight) / 100;
 }
 
+function getPinCoverDistance(serviceCount: number): number {
+  return getPinScrollDistance(serviceCount) + readRootCssNumber("--services-ai-cover-buffer", 0);
+}
+
 export function useActiveService({
   serviceCount,
   enabled = true,
@@ -84,22 +88,29 @@ export function useActiveService({
 
         let isDisposed = false;
         const pinStartOffset = readRootCssNumber("--services-pin-start-offset", 0);
+        const syncServiceProgress = (self: ScrollTrigger) => {
+          const baseDistance = Math.max(getPinScrollDistance(serviceCount), 1);
+          const coverDistance = Math.max(getPinCoverDistance(serviceCount), baseDistance);
+          const progress = Math.min((self.progress * coverDistance) / baseDistance, 1);
+
+          syncActiveIndexFromProgress(progress, serviceCount, setActiveIndexSafe);
+        };
 
         const pinTrigger = ScrollTrigger.create({
           trigger: stageElement,
           pin: stageElement,
-          pinSpacing: true,
-          anticipatePin: 2,
+          pinSpacing: false,
+          anticipatePin: 1,
           fastScrollEnd: false,
           refreshPriority: -1,
           start: `top top+=${pinStartOffset}`,
-          end: () => `+=${getPinScrollDistance(serviceCount)}`,
+          end: () => `+=${getPinCoverDistance(serviceCount)}`,
           invalidateOnRefresh: true,
           onEnter: (self) => {
-            syncActiveIndexFromProgress(self.progress, serviceCount, setActiveIndexSafe);
+            syncServiceProgress(self);
           },
           onEnterBack: (self) => {
-            syncActiveIndexFromProgress(self.progress, serviceCount, setActiveIndexSafe);
+            syncServiceProgress(self);
           },
           onLeaveBack: resetToFirstService,
           onToggle: (self) => {
@@ -107,10 +118,10 @@ export function useActiveService({
               return;
             }
 
-            syncActiveIndexFromProgress(self.progress, serviceCount, setActiveIndexSafe);
+            syncServiceProgress(self);
           },
           onUpdate: (self) => {
-            syncActiveIndexFromProgress(self.progress, serviceCount, setActiveIndexSafe);
+            syncServiceProgress(self);
           },
         });
 
@@ -123,7 +134,7 @@ export function useActiveService({
           ScrollTrigger.refresh();
 
           if (pinTrigger.isActive) {
-            syncActiveIndexFromProgress(pinTrigger.progress, serviceCount, setActiveIndexSafe);
+            syncServiceProgress(pinTrigger);
           }
         };
 

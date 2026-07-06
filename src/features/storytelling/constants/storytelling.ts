@@ -47,6 +47,7 @@ export const storytellingLineActiveTransition = {
 };
 
 export const storytellingBackgroundTransition = {
-  duration: 0.45,
-  ease: [0.22, 1, 0.36, 1],
+  duration: 0.5,
+  ease: [0.44, 0, 0.56, 1],
+  delay: 0,
 } as const;

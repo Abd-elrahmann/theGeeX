@@ -74,7 +74,7 @@ export function useProcessScroll({
           trigger: stageElement,
           pin: stageElement,
           pinSpacing: true,
-          anticipatePin: 2,
+          anticipatePin: 1,
           fastScrollEnd: false,
           refreshPriority: -1,
           start: `top top+=${pinStartOffset}`,

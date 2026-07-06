@@ -147,6 +147,8 @@
   --services-mobile-pin-clearance: 0px;
   --services-scroll-step-vh: 100;
   --services-pin-start-offset: 0px;
+  --services-ai-cover-buffer: 900px;
+  --services-sticky-top: 0px;
   --services-sticky-padding-bottom: 48px;
   --services-content-z-index: 5;
   --services-grid-height: auto;
@@ -221,7 +223,7 @@
   --services-mobile-title-spacing: 120px;
   --services-mobile-stack-offset: 0px;
   --services-page-top-padding: var(--navbar-height);
-  --services-page-container-max-width: 1440px;
+  --services-page-container-max-width: 1200px;
   --services-page-padding-x: 16px;
   --services-page-padding-top: 48px;
   --services-page-padding-bottom: 80px;
@@ -274,8 +276,9 @@
   --ai-growth-padding-x: 16px;
   --ai-growth-padding-y: 56px;
   --ai-growth-container-max-width: 1200px;
-  --ai-growth-scroll-height: calc(100svh + 520px);
-  --ai-growth-sticky-top: var(--navbar-height);
+  --ai-growth-scroll-height: calc(100svh + 420px);
+  --ai-growth-pin-scroll-distance: 420px;
+  --ai-growth-sticky-top: 0px;
   --ai-growth-stage-min-height: calc(100svh - var(--ai-growth-sticky-top));
   --ai-growth-stage-height: calc(100svh - var(--ai-growth-sticky-top));
   --ai-growth-mobile-stage-height: calc(100svh + 420px);
@@ -828,7 +831,7 @@
   --testimonials-stars-gap: 6px;
   --testimonials-star-width: 14px;
   --testimonials-star-height: 13px;
-  --color-testimonials-card-bg: #ffffff;
+  --color-testimonials-card-bg: #f8f9fb;
   --color-testimonials-card-title: #0e0e0e;
   --color-testimonials-card-comment: #2c3134;
   --color-testimonials-person-name: #0e0e0e;
@@ -962,20 +965,11 @@
   --storytelling-line-letter-spacing: -0.04em;
   --storytelling-line-gap: 10px;
   --storytelling-content-max-width: min(1200px, 100%);
-  --color-projects-title-gradient-start: rgb(0 0 0 / 0.48);
-  --color-projects-title-gradient-mid: rgb(0 0 0 / 0.24);
-  --color-projects-title-gradient-end: rgb(0 0 0 / 0);
-  --projects-title-gradient: linear-gradient(
-    180deg,
-    var(--color-projects-title-gradient-start) 0%,
-    var(--color-projects-title-gradient-mid) 32%,
-    var(--color-projects-title-gradient-end) 100%
-  );
-  --projects-title-mask: linear-gradient(
-    0deg,
-    rgb(0 0 0 / 0) 0%,
-    rgb(0 0 0 / 1) 38%
-  );
+  --color-projects-title-gradient-start: var(--color-services-title-gradient-start);
+  --color-projects-title-gradient-mid: var(--color-services-title-gradient-mid);
+  --color-projects-title-gradient-end: var(--color-services-title-gradient-end);
+  --projects-title-gradient: var(--services-title-gradient);
+  --projects-title-mask: var(--services-title-mask);
   --projects-title-font-weight: 600;
   --projects-title-size: clamp(72px, 18vw, 120px);
   --projects-title-line-height: 1;
@@ -993,18 +987,26 @@
   --projects-card-outer-padding: 20px;
   --projects-card-height: 810px;
   --projects-card-parallax-travel: 400px;
-  --projects-title-z-index: 1;
+  --projects-title-z-index: 20;
   --projects-card-stack-z-index: 10;
   --projects-card-radius: 8px;
-  --projects-card-padding: 20px;
-  --color-project-card-border: #ffffff;
+  --projects-card-padding: 24px;
+  --color-project-card-border: rgb(255 255 255 / 0.1);
   --projects-card-border-width: 1px;
-  --color-project-card-shadow: rgb(0 0 0 / 0.1);
+  --color-project-card-shadow: rgb(0 0 0 / 0.05);
   --projects-card-shadow-offset-x: 0px;
   --projects-card-shadow-offset-y: 200px;
   --projects-card-shadow-blur: 100px;
   --projects-card-shadow-spread: 0px;
-  --projects-card-shadow: inset 0 24px 40px -20px rgb(0 0 0 / 0.14);
+  --projects-card-shadow:
+    0px -3.3592091064px 16.7960455318px -0.3125px rgb(0 0 0 / 0.05),
+    0px -7.9619187352px 39.8095936762px -0.625px rgb(0 0 0 / 0.05),
+    0px -14.5233627586px 72.6168137931px -0.9375px rgb(0 0 0 / 0.05),
+    0px -24.145061431px 120.7253071552px -1.25px rgb(0 0 0 / 0.05),
+    0px -38.9923054439px 194.9615272196px -1.5625px rgb(0 0 0 / 0.05),
+    0px -63.8265352148px 319.1326760742px -1.875px rgb(0 0 0 / 0.05),
+    0px -109.9049835267px 549.5249176337px -2.1875px rgb(0 0 0 / 0.05),
+    0px -200px 1000px -2.5px rgb(0 0 0 / 0.05);
   --projects-card-header-height: 40px;
   --projects-card-index-size: 14px;
   --projects-card-index-weight: 600;
@@ -1027,15 +1029,17 @@
   --projects-card-content-max-width: 100%;
   --projects-card-arrow-size: 40px;
   --projects-card-arrow-offset-x: -13px;
-  --projects-card-divider-margin-top: 14px;
-  --projects-card-subheader-margin-top: 18px;
-  --projects-card-image-margin-top: 20px;
-  --projects-card-image-min-height: 180px;
+  --projects-card-divider-margin-top: 8px;
+  --projects-card-subheader-margin-top: 8px;
+  --projects-card-image-margin-top: 8px;
+  --projects-card-image-min-height: 280px;
+  --projects-card-image-scale: 1.5;
+  --projects-card-image-translate-y: 2%;
   --projects-card-image-radius: 8px;
-  --projects-card-image-position: center 35%;
+  --projects-card-image-position: center 70%;
   --projects-card-stack-base-offset: 0px;
   --projects-page-top-padding: var(--navbar-height);
-  --projects-page-container-max-width: 1440px;
+  --projects-page-container-max-width: 1200px;
   --projects-page-padding-x: var(--services-page-padding-x);
   --projects-page-padding-top: 48px;
   --projects-page-padding-bottom: 80px;
@@ -1057,7 +1061,7 @@
   --projects-page-card-description-size: 16px;
   --projects-page-card-description-line-height: 1.6;
   --projects-detail-top-padding: var(--navbar-height);
-  --projects-detail-container-max-width: 1440px;
+  --projects-detail-container-max-width: 1200px;
   --projects-detail-padding-x: var(--services-page-padding-x);
   --projects-detail-hero-padding-top: 48px;
   --projects-detail-hero-padding-bottom: 40px;
@@ -1172,7 +1176,7 @@
   --culture-title-z-index: 1;
   --culture-margin-top: var(--section-stack-gap);
   --culture-padding-x: 16px;
-  --culture-container-max-width: 1260px;
+  --culture-container-max-width: 1200px;
   --culture-section-gap: 24px;
   --culture-section-scroll-vh: 160;
   --culture-section-exit-vh: 16;
@@ -1403,7 +1407,7 @@
     --projects-page-card-description-line-height: 1.45;
     --service-detail-project-card-description-size: 13px;
     --service-detail-project-card-description-line-height: 1.45;
-    --projects-card-image-min-height: 170px;
+    --projects-card-image-min-height: 220px;
   }
 }
 
@@ -1619,7 +1623,7 @@
     --blogs-card-title-line-height: 1.4;
     --blogs-card-date-margin-top: 12px;
     --blogs-card-footer-padding-top: 18px;
-    --culture-margin-top: calc(var(--section-stack-gap) + 120px);
+    --culture-margin-top: var(--section-stack-gap);
     --culture-padding-x: 24px;
     --culture-section-gap: 20px;
     --culture-section-scroll-vh: 190;
@@ -1787,6 +1791,7 @@
     --services-margin-top: var(--section-stack-gap);
     --services-stage-bottom-padding: 48px;
     --services-scroll-step-vh: 100;
+    --services-ai-cover-buffer: 900px;
     --services-grid-width: 1070px;
     --services-content-margin: 0px;
     --services-nav-offset-top: 0px;
@@ -1805,6 +1810,19 @@
     --services-grid-height: calc(
       5 * var(--services-nav-item-height) + 4 * var(--services-nav-list-gap)
     );
+    --services-sticky-top: max(
+      0px,
+      calc(
+        (
+          100svh -
+            (
+              var(--services-grid-top) +
+              var(--services-grid-height) +
+              var(--services-stage-bottom-padding)
+            )
+        ) / 2
+      )
+    );
     --services-nav-item-radius: 16px;
     --services-nav-index-size: 18px;
     --services-nav-title-size: 18px;
@@ -1820,7 +1838,9 @@
     --ai-growth-title-size: 60px;
     --ai-growth-description-size: 16px;
     --ai-growth-grid-gap: 40px;
-    --ai-growth-scroll-height: calc(100svh + 520px);
+    --ai-growth-scroll-height: calc(100svh + 260px);
+    --ai-growth-pin-scroll-distance: 420px;
+    --ai-growth-sticky-top: var(--services-sticky-top);
     --ai-growth-mobile-stage-height: 0px;
     --ai-growth-mobile-rows-track-height: auto;
     --blogs-padding-x: 0px;
@@ -2010,13 +2030,13 @@
     --storytelling-caption-margin-top: 20px;
     --projects-margin-top: var(--section-stack-gap);
     --team-margin-top: var(--section-stack-gap);
-    --culture-margin-top: calc(var(--section-stack-gap) + 180px);
+    --culture-margin-top: var(--section-stack-gap);
     --projects-padding-x: 0px;
     --team-padding-x: 0px;
     --culture-padding-x: 0px;
     --projects-title-size: 204px;
     --projects-title-line-height: 204px;
-    --projects-title-box-height: 157px;
+    --projects-title-box-height: 124px;
     --team-title-size: 160px;
     --team-title-line-height: 160px;
     --team-title-box-height: 124px;
@@ -2024,6 +2044,7 @@
     --culture-title-line-height: 160px;
     --culture-title-box-height: 124px;
     --projects-title-gap: 24px;
+    --projects-card-height: 740px;
     --team-section-gap: 0px;
     --team-section-padding-y: 64px;
     --team-section-scroll-vh: 100;
@@ -2038,16 +2059,29 @@
     --team-card-name-size: 28px;
     --culture-grid-gap: 24px;
     --projects-card-padding: 20px;
+    --projects-card-header-height: 48px;
+    --projects-card-index-size: 16px;
+    --projects-card-category-padding-x: 16px;
+    --projects-card-category-padding-y: 6px;
+    --projects-card-category-gap: 10px;
+    --projects-card-category-text-size: 16px;
+    --projects-card-category-line-height: 1.6;
+    --projects-card-title-size: 40px;
+    --projects-card-title-height: 54px;
+    --projects-card-title-letter-spacing: 0px;
+    --projects-card-arrow-size: 48px;
     --culture-card-content-padding-x: 32px;
     --culture-card-content-padding-y: 32px;
     --culture-stacked-card-padding-x: 32px;
     --culture-stacked-card-padding-y: 32px;
     --culture-text-block-margin-top: 48px;
     --culture-split-card-media-min-height: 420px;
-    --projects-card-divider-margin-top: 16px;
-    --projects-card-subheader-margin-top: 20px;
+    --projects-card-divider-margin-top: 8px;
+    --projects-card-subheader-margin-top: 8px;
     --projects-card-content-max-width: 100%;
-    --projects-card-image-margin-top: 24px;
+    --projects-card-image-margin-top: 8px;
+    --projects-card-image-min-height: 320px;
+    --projects-card-image-scale: 0.95;
     --projects-section-scroll-vh: 640;
     --projects-section-exit-vh: 44;
     --projects-card-stack-offset-step: 72px;
@@ -2057,7 +2091,7 @@
 @media (min-width: 1440px) {
   :root {
     --section-stack-gap: 32px;
-    --services-container-max-width: 1440px;
+    --services-container-max-width: 1200px;
     --services-title-size: 240px;
     --services-title-line-height: 240px;
     --services-title-height: 184px;
@@ -2066,13 +2100,13 @@
     --services-grid-top: calc(var(--services-title-top) + 188px);
     --services-margin-top: var(--section-stack-gap);
     --services-stage-bottom-padding: 64px;
-    --testimonials-container-max-width: 1440px;
+    --testimonials-container-max-width: 1200px;
     --testimonials-padding-y: 72px;
     --testimonials-title-max-width: calc(100vw - 96px);
     --testimonials-title-size: 220px;
     --testimonials-title-line-height: 240px;
     --testimonials-title-box-height: 184px;
-    --awards-container-max-width: 1440px;
+    --awards-container-max-width: 1200px;
     --awards-padding-y: 72px;
     --awards-title-size: 60px;
     --awards-title-line-height: 1.2;
@@ -2083,21 +2117,21 @@
     --awards-cards-gap: 40px;
     --awards-card-title-size: 24px;
     --awards-card-title-height: 58px;
-    --process-container-max-width: 1440px;
+    --process-container-max-width: 1200px;
     --process-padding-y: 72px;
     --process-title-size: 72px;
     --process-card-title-size: 44px;
-    --services-grid-width: min(1360px, calc(100vw - 112px));
+    --services-grid-width: min(1200px, calc(100vw - 112px));
     --services-grid-template-columns: minmax(0, 1.18fr) 420px minmax(0, 1.08fr);
     --services-columns-gap: 16px;
     --services-nav-list-gap: 16px;
-    --blogs-container-max-width: 1440px;
+    --blogs-container-max-width: 1200px;
     --blogs-padding-y: 72px;
     --blogs-section-gap: 72px;
     --blogs-title-size: 172px;
     --blogs-title-line-height: 204px;
     --blogs-title-box-height: 157px;
-    --packages-container-max-width: 1440px;
+    --packages-container-max-width: 1200px;
     --packages-padding-y: 72px;
     --packages-section-gap: 48px;
     --packages-title-size: 240px;
@@ -2148,7 +2182,7 @@
     --services-content-description-size: 18px;
     --services-description-max-width: 520px;
     --services-image-radius: var(--services-content-radius);
-    --team-container-max-width: 1360px;
+    --team-container-max-width: 1200px;
     --team-title-size: 188px;
     --team-title-line-height: 188px;
     --team-title-box-height: 144px;
@@ -2163,11 +2197,11 @@
     --team-card-content-padding-x: 28px;
     --team-card-name-size: 31px;
     --team-card-role-size: 15px;
-    --culture-container-max-width: 1360px;
+    --culture-container-max-width: 1200px;
     --culture-title-size: 188px;
     --culture-title-line-height: 188px;
     --culture-title-box-height: 144px;
-    --culture-margin-top: calc(var(--section-stack-gap) + 240px);
+    --culture-margin-top: var(--section-stack-gap);
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 220;
     --culture-section-exit-vh: 0;
@@ -2179,34 +2213,36 @@
     --culture-card-title-size: 21px;
     --culture-card-title-line-height: 1.12;
     --culture-card-description-size: 16px;
-    --projects-container-max-width: 1440px;
+    --projects-container-max-width: 1200px;
     --projects-title-size: 240px;
     --projects-title-line-height: 240px;
-    --projects-title-box-height: 184px;
+    --projects-title-box-height: 144px;
     --projects-margin-top: var(--section-stack-gap);
     --projects-title-gap: 32px;
     --projects-section-scroll-vh: 700;
     --projects-section-exit-vh: 52;
-    --projects-card-height: 900px;
+    --projects-card-height: 760px;
     --projects-card-stack-offset-step: 84px;
     --projects-card-outer-padding: 28px;
-    --projects-card-padding: 28px;
+    --projects-card-padding: 20px;
     --projects-card-header-height: 48px;
     --projects-card-index-size: 16px;
-    --projects-card-category-padding-x: 18px;
-    --projects-card-category-padding-y: 8px;
-    --projects-card-category-text-size: 18px;
     --projects-card-category-padding-x: 16px;
-    --projects-card-category-padding-y: 7px;
-    --projects-card-category-gap: 8px;
+    --projects-card-category-padding-y: 6px;
+    --projects-card-category-gap: 10px;
     --projects-card-category-text-size: 16px;
-    --projects-card-title-size: 48px;
-    --projects-card-title-height: 64px;
+    --projects-card-category-line-height: 1.6;
+    --projects-card-title-size: 40px;
+    --projects-card-title-height: 54px;
+    --projects-card-title-letter-spacing: 0px;
     --projects-card-content-max-width: 100%;
     --projects-card-arrow-size: 48px;
-    --projects-card-divider-margin-top: 20px;
-    --projects-card-subheader-margin-top: 24px;
-    --projects-card-image-margin-top: 20px;
+    --projects-card-divider-margin-top: 8px;
+    --projects-card-subheader-margin-top: 8px;
+    --projects-card-image-margin-top: 8px;
+    --projects-card-image-min-height: 340px;
+    --projects-card-image-scale: 0.96;
+    --projects-card-image-position: center 30%;
     --projects-page-padding-x: var(--services-page-padding-x);
     --projects-page-padding-top: 64px;
     --projects-page-padding-bottom: 96px;
@@ -2231,7 +2267,7 @@
 @media (min-width: 1920px) {
   :root {
     --section-stack-gap: 32px;
-    --services-container-max-width: 1680px;
+    --services-container-max-width: 1200px;
     --services-title-size: 280px;
     --services-title-line-height: 280px;
     --services-title-height: 214px;
@@ -2240,7 +2276,7 @@
     --services-grid-top: calc(var(--services-title-top) + 208px);
     --services-margin-top: var(--section-stack-gap);
     --services-stage-bottom-padding: 72px;
-    --process-container-max-width: 1680px;
+    --process-container-max-width: 1200px;
     --process-padding-y: 80px;
     --process-title-size: 80px;
     --process-card-title-size: 48px;
@@ -2248,11 +2284,11 @@
     --services-grid-template-columns: minmax(0, 1.2fr) 500px minmax(0, 1.12fr);
     --services-columns-gap: 24px;
     --services-nav-list-gap: 18px;
-    --blogs-container-max-width: 1680px;
+    --blogs-container-max-width: 1200px;
     --blogs-padding-y: 80px;
     --blogs-section-gap: 80px;
     --blogs-title-box-height: 184px;
-    --packages-container-max-width: 1680px;
+    --packages-container-max-width: 1200px;
     --packages-padding-y: 80px;
     --packages-title-size: 280px;
     --packages-title-line-height: 280px;
@@ -2288,7 +2324,7 @@
     --services-content-description-size: 19px;
     --services-description-max-width: 560px;
     --services-image-radius: var(--services-content-radius);
-    --team-container-max-width: 1520px;
+    --team-container-max-width: 1200px;
     --team-title-size: 220px;
     --team-title-line-height: 220px;
     --team-title-box-height: 168px;
@@ -2303,11 +2339,11 @@
     --team-card-content-padding-x: 32px;
     --team-card-name-size: 34px;
     --team-card-role-size: 16px;
-    --culture-container-max-width: 1520px;
+    --culture-container-max-width: 1200px;
     --culture-title-size: 220px;
     --culture-title-line-height: 220px;
     --culture-title-box-height: 168px;
-    --culture-margin-top: calc(var(--section-stack-gap) + 320px);
+    --culture-margin-top: var(--section-stack-gap);
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 240;
     --culture-section-exit-vh: 0;
@@ -2319,25 +2355,31 @@
     --culture-card-title-size: 25px;
     --culture-card-title-line-height: 1.12;
     --culture-card-description-size: 18px;
-    --projects-container-max-width: 1680px;
+    --projects-container-max-width: 1200px;
     --projects-title-size: 280px;
     --projects-title-line-height: 280px;
-    --projects-title-box-height: 214px;
+    --projects-title-box-height: 168px;
     --projects-margin-top: var(--section-stack-gap);
     --projects-title-gap: 40px;
     --projects-section-scroll-vh: 760;
     --projects-section-exit-vh: 60;
-    --projects-card-height: 980px;
+    --projects-card-height: min(
+      880px,
+      calc(100svh - var(--projects-title-box-height) - var(--projects-title-gap) - 48px)
+    );
     --projects-card-stack-offset-step: 96px;
     --projects-card-outer-padding: 36px;
     --projects-card-padding: 32px;
     --projects-card-header-height: 52px;
     --projects-card-index-size: 18px;
-    --projects-card-category-padding-x: 20px;
-    --projects-card-category-padding-y: 9px;
-    --projects-card-category-text-size: 19px;
-    --projects-card-title-size: 56px;
-    --projects-card-title-height: 74px;
+    --projects-card-category-padding-x: 16px;
+    --projects-card-category-padding-y: 6px;
+    --projects-card-category-gap: 10px;
+    --projects-card-category-text-size: 16px;
+    --projects-card-category-line-height: 1.6;
+    --projects-card-title-size: 40px;
+    --projects-card-title-height: 54px;
+    --projects-card-title-letter-spacing: 0px;
     --projects-card-content-max-width: 100%;
     --projects-card-arrow-size: 52px;
     --projects-card-divider-margin-top: 24px;
@@ -2348,5 +2390,152 @@
     --projects-page-section-gap: 48px;
     --projects-page-title-size: 70px;
     --projects-page-card-height: 810px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --services-container-max-width: 1200px;
+    --services-title-size: 204px;
+    --services-title-line-height: 204px;
+    --services-title-height: 157px;
+    --services-title-box-height: 157px;
+    --services-grid-top: calc(var(--services-title-top) + 160px);
+    --services-stage-bottom-padding: 48px;
+    --services-grid-width: 1070px;
+    --services-grid-template-columns: minmax(0, 1.1fr) 347px minmax(0, 1fr);
+    --services-columns-gap: 8px;
+    --services-nav-list-gap: 14px;
+    --services-nav-item-padding-x: 24px;
+    --services-nav-item-height: 70px;
+    --services-nav-item-radius: 16px;
+    --services-nav-index-size: 18px;
+    --services-nav-index-width: 16px;
+    --services-nav-index-height: 22px;
+    --services-nav-title-size: 18px;
+    --services-content-radius: 16px;
+    --services-content-padding-top: 20px;
+    --services-content-padding-left: 20px;
+    --services-content-padding-right: 16px;
+    --services-content-padding-bottom: 16px;
+    --services-content-header-desc-gap: 24px;
+    --services-content-header-size: 20px;
+    --services-content-description-size: 16px;
+    --services-description-max-width: 420px;
+    --process-container-max-width: 1200px;
+    --process-padding-y: 64px;
+    --process-title-size: 60px;
+    --process-card-title-size: 34px;
+    --blogs-container-max-width: 1200px;
+    --blogs-padding-y: 64px;
+    --blogs-section-gap: 64px;
+    --blogs-title-size: clamp(120px, 12vw, 172px);
+    --blogs-title-line-height: 1.1860465116;
+    --blogs-title-box-height: 157px;
+    --packages-container-max-width: 1200px;
+    --packages-padding-y: 64px;
+    --packages-section-gap: 40px;
+    --packages-title-size: 180px;
+    --packages-title-line-height: 204px;
+    --packages-title-box-height: 157px;
+    --packages-card-max-width: 420px;
+    --packages-card-padding-x: 28px;
+    --packages-card-feature-row-max-width: 336px;
+    --packages-card-feature-text-width: 320px;
+    --lets-talk-container-max-width: 1200px;
+    --lets-talk-padding-y: 64px;
+    --lets-talk-card-min-height: 560px;
+    --lets-talk-card-radius: 56px;
+    --lets-talk-card-padding-y: 84px;
+    --lets-talk-content-max-width: 1000px;
+    --lets-talk-content-gap: 36px;
+    --lets-talk-copy-gap: 18px;
+    --lets-talk-title-size: 52px;
+    --footer-container-max-width: 1200px;
+    --footer-padding-bottom: 64px;
+    --footer-card-min-height: max(
+      740px,
+      calc(100svh - var(--footer-padding-top) - var(--footer-padding-bottom))
+    );
+    --footer-card-radius: 48px;
+    --footer-card-padding-x: 40px;
+    --footer-card-padding-top: 48px;
+    --footer-top-row-gap: 48px;
+    --footer-newsletter-gap: 22px;
+    --footer-newsletter-copy-gap: 10px;
+    --footer-newsletter-title-size: 44px;
+    --footer-logo-height: 280px;
+    --testimonials-container-max-width: 1200px;
+    --testimonials-padding-y: 64px;
+    --testimonials-title-max-width: calc(100vw - 64px);
+    --testimonials-title-size: 180px;
+    --testimonials-title-line-height: 204px;
+    --testimonials-title-box-height: 157px;
+    --awards-container-max-width: 1200px;
+    --awards-padding-y: 64px;
+    --awards-cards-column-max-width: 680px;
+    --awards-card-max-width: 100%;
+    --awards-cards-gap: 32px;
+    --awards-card-title-size: 18px;
+    --awards-card-title-height: 48px;
+    --team-container-max-width: 1200px;
+    --team-title-size: 160px;
+    --team-title-line-height: 160px;
+    --team-title-box-height: 124px;
+    --team-section-padding-y: 64px;
+    --team-gallery-scale: 0.9;
+    --team-gallery-bottom-bleed: 160px;
+    --team-card-content-padding-x: 24px;
+    --team-card-name-size: 28px;
+    --team-card-role-size: 14px;
+    --culture-container-max-width: 1200px;
+    --culture-title-size: 160px;
+    --culture-title-line-height: 160px;
+    --culture-title-box-height: 124px;
+    --culture-margin-top: var(--section-stack-gap);
+    --culture-section-scroll-vh: 200;
+    --culture-grid-gap: 24px;
+    --culture-card-content-padding-x: 32px;
+    --culture-card-content-padding-y: 32px;
+    --culture-stacked-card-padding-x: 32px;
+    --culture-stacked-card-padding-y: 32px;
+    --culture-card-title-size: 22px;
+    --culture-card-description-size: 16px;
+    --projects-container-max-width: 1200px;
+    --projects-title-size: 204px;
+    --projects-title-line-height: 204px;
+    --projects-title-box-height: 124px;
+    --projects-title-gap: 8px;
+    --projects-section-scroll-vh: 640;
+    --projects-section-exit-vh: 44;
+    --projects-card-height: min(
+      760px,
+      calc(100svh - var(--projects-title-box-height) - var(--projects-title-gap) - 40px)
+    );
+    --projects-card-stack-offset-step: 72px;
+    --projects-card-outer-padding: 20px;
+    --projects-card-padding: 20px;
+    --projects-card-header-height: 40px;
+    --projects-card-index-size: 14px;
+    --projects-card-category-padding-x: 16px;
+    --projects-card-category-padding-y: 6px;
+    --projects-card-category-gap: 10px;
+    --projects-card-category-text-size: 16px;
+    --projects-card-category-line-height: 1.6;
+    --projects-card-title-size: 40px;
+    --projects-card-title-height: 54px;
+    --projects-card-title-letter-spacing: 0px;
+    --projects-card-arrow-size: 40px;
+    --projects-card-divider-margin-top: 16px;
+    --projects-card-subheader-margin-top: 20px;
+    --projects-card-image-margin-top: 24px;
+    --projects-page-padding-top: 48px;
+    --projects-page-padding-bottom: 80px;
+    --projects-page-section-gap: 32px;
+    --projects-page-hero-gap: 16px;
+    --projects-page-title-size: clamp(32px, 9vw, 54px);
+    --projects-page-description-size: 16px;
+    --projects-page-cards-gap: 32px;
+    --projects-page-card-height: 520px;
   }
 }

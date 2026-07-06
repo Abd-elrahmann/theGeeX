@@ -87,10 +87,8 @@ export function useStorytellingScroll({
 
     backgroundDarkRef.current = isActive;
 
-    gsap.to(backgroundElement, {
+    gsap.set(backgroundElement, {
       opacity: isActive ? 1 : 0,
-      duration: 0.4,
-      ease: "power2.inOut",
       overwrite: "auto",
     });
   }, []);
@@ -118,6 +116,8 @@ export function useStorytellingScroll({
 
       const stageElement = stageRef.current;
       const pinStartElement = pinStartRef.current;
+      const containerElement = containerRef.current;
+      const aiSectionElement = document.querySelector<HTMLElement>("#ai-growth");
       const { scroll } = storytellingConfig;
       const matchMedia = gsap.matchMedia();
 
@@ -196,7 +196,7 @@ export function useStorytellingScroll({
           trigger: pinStartElement,
           pin: stageElement,
           pinSpacing: false,
-          anticipatePin: 2,
+          anticipatePin: 1,
           fastScrollEnd: false,
           refreshPriority: -1,
           start: "top top",
@@ -310,41 +310,46 @@ export function useStorytellingScroll({
           "--storytelling-scroll-distance",
           scroll.distance,
         );
+        const getDesktopBackgroundDistance = () => {
+          const stageBottomPadding = readRootCssNumber(
+            "--storytelling-stage-bottom-padding",
+            48,
+          );
+          const sectionGap = readRootCssNumber("--storytelling-margin-top", 32);
+
+          return scrollDistance + stageBottomPadding + sectionGap;
+        };
+
+        const backgroundTrigger = backgroundEnabled
+          ? ScrollTrigger.create({
+              trigger: aiSectionElement ?? containerElement,
+              start: "bottom top",
+              end: () => `+=${getDesktopBackgroundDistance()}`,
+              invalidateOnRefresh: true,
+              onEnter: () => setBackgroundDark(true),
+              onEnterBack: () => setBackgroundDark(true),
+              onLeave: () => setBackgroundDark(false),
+              onLeaveBack: () => setBackgroundDark(false),
+            })
+          : null;
 
         const pinTrigger = ScrollTrigger.create({
           trigger: stageElement,
           pin: stageElement,
           pinSpacing: true,
-          anticipatePin: 2,
+          anticipatePin: 1,
           fastScrollEnd: false,
           refreshPriority: -1,
           start: "top top",
           end: () => `+=${scrollDistance}`,
           invalidateOnRefresh: true,
           onEnter: (self) => {
-            if (backgroundEnabled) {
-              setBackgroundDark(true);
-            }
-
             syncProgress(self.progress);
           },
           onEnterBack: (self) => {
-            if (backgroundEnabled) {
-              setBackgroundDark(true);
-            }
-
             syncProgress(self.progress);
           },
-          onLeave: () => {
-            if (backgroundEnabled) {
-              setBackgroundDark(false);
-            }
-          },
           onLeaveBack: () => {
-            if (backgroundEnabled) {
-              setBackgroundDark(false);
-            }
-
             resetToFirstItem();
           },
           onToggle: (self) => {
@@ -360,15 +365,16 @@ export function useStorytellingScroll({
         });
 
         if (backgroundEnabled) {
-          setBackgroundDark(pinTrigger.isActive);
+          setBackgroundDark(backgroundTrigger?.isActive ?? false);
         }
 
         const syncPinTrigger = () => {
+          backgroundTrigger?.refresh();
           pinTrigger.refresh();
           ScrollTrigger.refresh();
 
           if (backgroundEnabled) {
-            setBackgroundDark(pinTrigger.isActive);
+            setBackgroundDark(backgroundTrigger?.isActive ?? false);
           }
 
           if (pinTrigger.isActive) {
@@ -390,6 +396,7 @@ export function useStorytellingScroll({
 
         return () => {
           resizeObserver?.disconnect();
+          backgroundTrigger?.kill();
           pinTrigger.kill();
 
           if (backgroundEnabled) {

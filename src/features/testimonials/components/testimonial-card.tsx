@@ -60,7 +60,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
 
       <div className="mt-auto flex w-full items-center justify-between gap-(--testimonials-card-footer-gap) pt-(--testimonials-card-footer-margin-top)">
         <div className="flex min-w-0 flex-1 items-center gap-(--testimonials-person-gap)">
-          <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-end justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) bg-background px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-top-padding) pb-(--testimonials-person-frame-padding)">
+          <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-end justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-top-padding) pb-(--testimonials-person-frame-padding)">
             <Image
               src={item.personImageSrc}
               alt={item.personName}

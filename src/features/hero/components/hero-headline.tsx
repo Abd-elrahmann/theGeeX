@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 import { cn } from "@/lib/cn";
 
@@ -9,11 +10,12 @@ import { heroConfig } from "@/features/hero/constants/hero.config";
 interface QuotedHeadlineProps {
   lines: readonly string[];
   keyPrefix: string;
+  isInView: boolean;
 }
 
-function QuotedHeadline({ lines, keyPrefix }: QuotedHeadlineProps) {
+function QuotedHeadline({ lines, keyPrefix, isInView }: QuotedHeadlineProps) {
   const { quoteOpen, quoteClose } = heroConfig.headline;
-  const { initial, animate, transition, stagger, viewport } = heroConfig.reveal;
+  const { initial, animate, transition, stagger } = heroConfig.reveal;
   const lastLineIndex = lines.length - 1;
 
   return (
@@ -35,8 +37,7 @@ function QuotedHeadline({ lines, keyPrefix }: QuotedHeadlineProps) {
                   : "text-primary",
               )}
               initial={initial}
-              whileInView={animate}
-              viewport={viewport}
+              animate={isInView ? animate : initial}
               transition={{
                 ...transition,
                 delay: index * stagger,
@@ -54,7 +55,10 @@ function QuotedHeadline({ lines, keyPrefix }: QuotedHeadlineProps) {
 }
 
 export function HeroHeadline() {
-  const { lines, compactLines } = heroConfig.headline;
+  const { lines } = heroConfig.headline;
+  const { viewport } = heroConfig.reveal;
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const isInView = useInView(headingRef, viewport);
 
   const headingClassName = cn(
     "h-auto w-full max-w-(--hero-headline-max-width) font-poppins text-center font-bold not-italic tracking-normal",
@@ -72,12 +76,12 @@ export function HeroHeadline() {
         "lg:relative lg:translate-x-0 lg:translate-y-0",
       )}
     >
-      <h1 className={headingClassName}>
+      <h1 ref={headingRef} className={headingClassName}>
         <span className="lg:hidden">
-          <QuotedHeadline lines={compactLines} keyPrefix="compact" />
+          <QuotedHeadline lines={lines} keyPrefix="compact" isInView={isInView} />
         </span>
         <span className="hidden lg:block">
-          <QuotedHeadline lines={lines} keyPrefix="desktop" />
+          <QuotedHeadline lines={lines} keyPrefix="desktop" isInView={isInView} />
         </span>
       </h1>
     </div>

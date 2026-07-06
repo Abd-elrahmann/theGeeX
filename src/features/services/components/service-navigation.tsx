@@ -23,14 +23,6 @@ interface ServiceNavItemContentProps {
 function ServiceNavItemContent({ service, index, isActive }: ServiceNavItemContentProps) {
   return (
     <>
-      {isActive ? (
-        <motion.div
-          layoutId="services-nav-active-bg"
-          className="absolute inset-0 rounded-(--services-nav-item-radius) bg-(--color-services-nav-active-bg)"
-          transition={servicesTransition}
-        />
-      ) : null}
-
       <span
         className={cn(
           "relative z-1 flex shrink-0 items-center justify-center whitespace-nowrap font-cal-sans font-semibold not-italic",
@@ -88,6 +80,18 @@ export function ServiceNavigation({
           : "relative h-auto w-full",
       )}
     >
+      {isDesktop ? (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 left-0 h-(--services-nav-item-height) w-full rounded-(--services-nav-item-radius) bg-(--color-services-nav-active-bg)"
+          initial={false}
+          animate={{
+            y: `calc(${activeIndex} * (var(--services-nav-item-height) + var(--services-nav-list-gap)))`,
+          }}
+          transition={servicesTransition}
+        />
+      ) : null}
+
       <ul className="flex w-full flex-col gap-(--services-nav-list-gap)">
         {services.map((service, index) => {
           const isActive = index === activeIndex;
