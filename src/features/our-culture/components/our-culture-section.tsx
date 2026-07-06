@@ -24,8 +24,6 @@ import {
 
 type CultureStage = 0 | 1 | 2;
 const CULTURE_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
-const cultureMobileFirstStageTrigger = 0.3;
-const cultureMobileSecondStageTrigger = 0.7;
 const cultureTabletFirstStageTrigger = 0.22;
 const cultureTabletSecondStageTrigger = 0.82;
 
@@ -39,16 +37,8 @@ export function OurCultureSection() {
     target: sectionRef,
     offset: ["start start", "end end"],
   });
-  const firstStageTrigger = isDesktop
-    ? cultureFirstStageTrigger
-    : isTablet
-      ? cultureTabletFirstStageTrigger
-      : cultureMobileFirstStageTrigger;
-  const secondStageTrigger = isDesktop
-    ? cultureSecondStageTrigger
-    : isTablet
-      ? cultureTabletSecondStageTrigger
-      : cultureMobileSecondStageTrigger;
+  const firstStageTrigger = isTablet ? cultureTabletFirstStageTrigger : cultureFirstStageTrigger;
+  const secondStageTrigger = isTablet ? cultureTabletSecondStageTrigger : cultureSecondStageTrigger;
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (progress >= secondStageTrigger) {
@@ -84,7 +74,7 @@ export function OurCultureSection() {
       >
         <MotionConfig transition={cultureAnimationTransition}>
           <div className="relative h-(--culture-section-scroll-height) w-full">
-            <div className="sticky top-0 grid h-svh min-h-svh w-full grid-rows-[auto_minmax(0,1fr)] overflow-x-clip overflow-y-visible lg:overflow-visible">
+            <div className="sticky top-0 grid h-svh min-h-svh w-full grid-rows-[auto_minmax(0,1fr)] overflow-visible">
               <div className="mx-auto flex w-full max-w-(--culture-container-max-width) flex-col gap-(--culture-section-gap)">
                 <OurCultureTitle />
 
@@ -113,7 +103,7 @@ export function OurCultureSection() {
     <section ref={sectionRef} id="our-culture" aria-label="Our Culture" className="relative mx-auto mt-(--culture-margin-top) w-full px-(--culture-padding-x)">
       <MotionConfig transition={cultureAnimationTransition}>
         <div className="relative h-(--culture-section-scroll-height) w-full">
-          <div className="sticky top-0 grid h-svh min-h-svh w-full grid-rows-[auto_minmax(0,1fr)] overflow-x-clip overflow-y-visible lg:overflow-visible">
+          <div className="sticky top-0 grid h-svh min-h-svh w-full grid-rows-[auto_minmax(0,1fr)] overflow-visible">
             <div className="mx-auto flex w-full max-w-(--culture-container-max-width) flex-col gap-(--culture-section-gap)">
               <OurCultureTitle />
 

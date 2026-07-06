@@ -28,14 +28,7 @@ export function bindLenisScrollTrigger(lenis: Lenis): () => void {
     pinType: rootElement.style.transform ? "transform" : "fixed",
   });
 
-  ScrollTrigger.defaults({
-    scroller: rootElement,
-  });
-
   return () => {
-    ScrollTrigger.defaults({
-      scroller: window,
-    });
     ScrollTrigger.scrollerProxy(rootElement, {});
     activeLenis = null;
   };
