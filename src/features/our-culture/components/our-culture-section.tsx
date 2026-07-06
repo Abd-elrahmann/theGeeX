@@ -24,6 +24,8 @@ import {
 
 type CultureStage = 0 | 1 | 2;
 const CULTURE_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
+const cultureMobileFirstStageTrigger = 0.3;
+const cultureMobileSecondStageTrigger = 0.7;
 const cultureTabletFirstStageTrigger = 0.22;
 const cultureTabletSecondStageTrigger = 0.82;
 
@@ -37,8 +39,16 @@ export function OurCultureSection() {
     target: sectionRef,
     offset: ["start start", "end end"],
   });
-  const firstStageTrigger = isTablet ? cultureTabletFirstStageTrigger : cultureFirstStageTrigger;
-  const secondStageTrigger = isTablet ? cultureTabletSecondStageTrigger : cultureSecondStageTrigger;
+  const firstStageTrigger = isDesktop
+    ? cultureFirstStageTrigger
+    : isTablet
+      ? cultureTabletFirstStageTrigger
+      : cultureMobileFirstStageTrigger;
+  const secondStageTrigger = isDesktop
+    ? cultureSecondStageTrigger
+    : isTablet
+      ? cultureTabletSecondStageTrigger
+      : cultureMobileSecondStageTrigger;
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (progress >= secondStageTrigger) {

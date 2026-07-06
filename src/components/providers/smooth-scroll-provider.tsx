@@ -82,10 +82,8 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       root
       options={{
         autoRaf: false,
-        lerp: isSubDesktop ? 0.06 : 0.08,
-        syncTouch: isSubDesktop,
-        syncTouchLerp: 0.08,
-        touchMultiplier: isSubDesktop ? 0.75 : 0.85,
+        lerp: 0.08,
+        touchMultiplier: isSubDesktop ? 1 : 0.85,
         wheelMultiplier: 0.62,
       }}
     >

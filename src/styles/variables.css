@@ -1403,6 +1403,9 @@
     --projects-page-card-description-line-height: 1.45;
     --service-detail-project-card-description-size: 13px;
     --service-detail-project-card-description-line-height: 1.45;
+    --projects-section-scroll-vh: 720;
+    --projects-section-exit-vh: 40;
+    --culture-section-scroll-vh: 280;
     --projects-card-image-min-height: 170px;
   }
 }
