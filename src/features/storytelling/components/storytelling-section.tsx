@@ -143,7 +143,7 @@ export function StorytellingSection() {
 
           <div
             ref={stageRef}
-            className="relative h-svh overflow-visible py-(--storytelling-section-padding-y)"
+            className="relative h-svh overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)"
           >
             <div
               className={cn(
