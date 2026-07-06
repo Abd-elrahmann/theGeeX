@@ -36,7 +36,7 @@ function ServicesPageCardHeader({
         <span className="h-auto w-auto shrink-0 whitespace-pre font-cal-sans text-(length:--services-page-service-index-size) leading-(--services-page-service-index-line-height) font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off]">
           {formatIndex(index)}
         </span>
-        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) flex-1 truncate whitespace-nowrap font-cal-sans text-(length:--services-page-service-title-size) leading-(--services-page-service-title-line-height) font-semibold tracking-normal text-(--color-services-page-card-title)">
+        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) flex-1 whitespace-normal break-words font-cal-sans text-(length:--services-page-service-title-size) leading-(--services-page-service-title-line-height) font-semibold tracking-normal text-(--color-services-page-card-title)">
           {title}
         </h2>
       </div>

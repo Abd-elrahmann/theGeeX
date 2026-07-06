@@ -1622,7 +1622,7 @@
     --culture-margin-top: calc(var(--section-stack-gap) + 120px);
     --culture-padding-x: 24px;
     --culture-section-gap: 20px;
-    --culture-section-scroll-vh: 190;
+    --culture-section-scroll-vh: 260;
     --culture-section-exit-vh: 0;
     --culture-grid-gap: 12px;
     --culture-lead-card-width: min(300px, calc(100vw - 2 * var(--culture-padding-x)));

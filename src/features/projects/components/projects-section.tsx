@@ -159,7 +159,7 @@ export function ProjectsSection() {
       id="projects"
       aria-label="Projects"
       className={cn(
-        "relative isolate mx-auto w-full overflow-visible",
+        "relative isolate mx-auto w-full overflow-x-clip overflow-y-visible lg:overflow-visible",
         "mt-(--projects-margin-top)",
         "perspective-(--projects-section-perspective)",
         isDesktop && isPointerFine && "cursor-none",
@@ -181,7 +181,7 @@ export function ProjectsSection() {
         <div className="relative h-(--projects-section-scroll-height) w-full">
           <div
             className={cn(
-              "sticky top-0 grid h-svh min-h-svh w-full overflow-visible",
+              "sticky top-0 grid h-svh min-h-svh w-full overflow-x-clip overflow-y-visible lg:overflow-visible",
               "grid-rows-[auto_minmax(0,1fr)] gap-(--projects-title-gap)",
             )}
           >
