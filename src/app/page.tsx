@@ -30,17 +30,17 @@ export default function Home() {
       <AwardsSection />
       <BlogsSection />
       <PackagesSection />
-      <div className="relative mt-(--lets-talk-margin-top) h-(--lets-talk-footer-reveal-height)">
-        <div className="sticky top-0 z-10">
+      <div className="relative mt-(--lets-talk-margin-top) h-auto md:h-(--lets-talk-footer-reveal-height)">
+        <div className="relative z-10 md:sticky md:top-0">
           <LetsTalkSection revealFooterOnScroll />
         </div>
 
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 z-15 h-(--footer-overlap-bleed-height) bg-(--color-footer-surface)"
+          className="hidden absolute inset-x-0 bottom-0 z-15 h-(--footer-overlap-bleed-height) bg-(--color-footer-surface) md:block"
         />
 
-        <div className="absolute inset-x-0 bottom-0 z-20">
+        <div className="relative z-20 md:absolute md:inset-x-0 md:bottom-0">
           <SiteFooter revealFromPreviousSection />
         </div>
       </div>

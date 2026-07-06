@@ -26,8 +26,7 @@ export const packageItems: PackageItem[] = [
     id: 1,
     name: "Startup Launcher",
     chips: [
-      { label: "Launch" },
-      { label: "Startup", variant: "accent" },
+      { label: "Build" },
     ],
     description: "For startups launching with confidence",
     price: "12,000",
@@ -45,8 +44,8 @@ export const packageItems: PackageItem[] = [
     id: 2,
     name: "Digital Ecosystem ",
     chips: [
-      { label: "Growth" },
-      { label: "Popular", variant: "accent" },
+      { label: "Grow" },
+      { label: "Most picked", variant: "accent" },
     ],
     description: "for growing buisnessed ready to grow",
     price: "25,000",
@@ -66,7 +65,6 @@ export const packageItems: PackageItem[] = [
     name: "Enterprise Transformation",
     chips: [
       { label: "Scale" },
-      { label: "Enterprise", variant: "accent" },
     ],
     description: "For organizations transforming at scale.",
     price: "Contact Sales",

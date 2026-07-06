@@ -138,7 +138,7 @@ export function TestimonialsSection() {
 
           <div
             ref={viewportRef}
-            className="w-full touch-pan-x overflow-x-auto overflow-y-hidden overscroll-x-contain pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden"
+            className="w-full touch-pan-y overflow-x-auto overflow-y-hidden overscroll-x-contain pb-2 select-none scrollbar-none lg:touch-pan-x [&::-webkit-scrollbar]:hidden"
             onPointerDown={() => {
               pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;
             }}
