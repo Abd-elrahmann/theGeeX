@@ -79,11 +79,9 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         autoRaf: false,
         autoResize: true,
         gestureOrientation: "vertical",
-        lerp: 0.08,
+        lerp: isSubDesktop ? 0.12 : 0.08,
         overscroll: false,
         smoothWheel: true,
-        syncTouch: isSubDesktop,
-        touchInertiaExponent: 1.1,
         touchMultiplier: isSubDesktop ? 1 : 0.85,
         wheelMultiplier: 0.62,
       }}

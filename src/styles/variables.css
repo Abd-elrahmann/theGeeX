@@ -931,8 +931,8 @@
   --storytelling-section-padding-y: 48px;
   --storytelling-scroll-distance: 2800;
   --storytelling-scroll-offset: 300;
-  --storytelling-mobile-scroll-distance: 3400px;
-  --storytelling-mobile-scroll-offset: 700px;
+  --storytelling-mobile-scroll-distance: 3000px;
+  --storytelling-mobile-scroll-offset: 360px;
   --storytelling-mobile-background-extension: 320px;
   --storytelling-mobile-background-fade-distance: 220px;
   --storytelling-mobile-path-bleed-y: 120px;
@@ -1403,8 +1403,8 @@
     --projects-page-card-description-line-height: 1.45;
     --service-detail-project-card-description-size: 13px;
     --service-detail-project-card-description-line-height: 1.45;
-    --projects-section-scroll-vh: 1400;
-    --projects-section-exit-vh: 64;
+    --projects-section-scroll-vh: 1000;
+    --projects-section-exit-vh: 52;
     --culture-section-scroll-vh: 280;
     --projects-card-image-min-height: 170px;
   }
