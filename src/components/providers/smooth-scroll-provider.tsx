@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { usePathname } from "next/navigation";
 
@@ -22,15 +22,6 @@ function LenisScrollTriggerSync() {
       return;
     }
 
-    scrollToPosition(0);
-    syncScrollTriggersAfterReset();
-  }, [lenis, pathname]);
-
-  useEffect(() => {
-    if (!lenis) {
-      return;
-    }
-
     const handleScroll = () => {
       ScrollTrigger.update();
     };
@@ -46,15 +37,22 @@ function LenisScrollTriggerSync() {
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
-    scrollToPosition(0);
-    syncScrollTriggersAfterReset();
-
     return () => {
       lenis.off("scroll", handleScroll);
       unbindScrollerProxy();
       gsap.ticker.remove(tickerCallback);
     };
   }, [lenis]);
+
+  useEffect(() => {
+    if (!lenis) {
+      return;
+    }
+
+    prepareFreshPageScrollSession();
+    scrollToPosition(0);
+    syncScrollTriggersAfterReset();
+  }, [lenis, pathname]);
 
   return null;
 }
@@ -66,21 +64,12 @@ interface SmoothScrollProviderProps {
 export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const isSubDesktop = useMediaQuery(SUB_DESKTOP_MEDIA_QUERY);
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
-  const pathname = usePathname();
 
   useEffect(() => {
     ScrollTrigger.config({
       ignoreMobileResize: true,
     });
   }, []);
-
-  useLayoutEffect(() => {
-    prepareFreshPageScrollSession();
-
-    if (window.scrollY !== 0) {
-      window.scrollTo(0, 0);
-    }
-  }, [pathname]);
 
   return (
     <ReactLenis
@@ -90,7 +79,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         autoRaf: false,
         autoResize: true,
         gestureOrientation: "vertical",
-        lerp: 0.08,
+        lerp: isSubDesktop ? 0.18 : 0.08,
         overscroll: false,
         smoothWheel: true,
         touchMultiplier: isSubDesktop ? 1 : 0.85,

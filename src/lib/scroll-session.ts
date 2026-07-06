@@ -1,8 +1,8 @@
 import { resetNavbarScrollMemory } from "@/lib/navbar-scroll-memory";
 
 import { resetHeroScrollState } from "@/lib/hero-scroll-state";
-import { scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import { ScrollTrigger } from "@/lib/gsap";
+import { resizeActiveLenis } from "@/lib/lenis-scroll-trigger";
 
 export function disableScrollRestoration(): void {
   if (typeof window === "undefined") {
@@ -22,10 +22,17 @@ export function prepareFreshPageScrollSession(): void {
   disableScrollRestoration();
   resetHeroScrollState();
   resetNavbarScrollMemory();
-  scrollToPosition(0);
-  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 export function syncScrollTriggersAfterReset(): void {
-  ScrollTrigger.refresh();
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      resizeActiveLenis();
+      ScrollTrigger.refresh();
+    });
+  });
 }

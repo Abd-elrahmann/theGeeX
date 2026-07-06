@@ -25,19 +25,24 @@ export function bindLenisScrollTrigger(lenis: Lenis): () => void {
         height: window.innerHeight,
       };
     },
+    pinType: rootElement.style.transform ? "transform" : "fixed",
   });
 
-  const handleRefresh = () => {
-    lenis.resize();
-  };
-
-  ScrollTrigger.addEventListener("refresh", handleRefresh);
+  ScrollTrigger.defaults({
+    scroller: rootElement,
+  });
 
   return () => {
-    ScrollTrigger.removeEventListener("refresh", handleRefresh);
+    ScrollTrigger.defaults({
+      scroller: window,
+    });
     ScrollTrigger.scrollerProxy(rootElement, {});
     activeLenis = null;
   };
+}
+
+export function resizeActiveLenis(): void {
+  activeLenis?.resize();
 }
 
 export function scrollToPosition(position: number): void {
