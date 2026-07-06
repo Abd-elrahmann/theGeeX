@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,6 +36,7 @@ const fallbackProcessSteps = projectItems.find((projectItem) => projectItem.slug
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const [activeProcessIndex, setActiveProcessIndex] = useState(0);
+  const processCardRefs = useRef<Array<HTMLElement | null>>([]);
   const projectTitle = project.detailTitle ?? project.name;
   const breadcrumbLabel = project.breadcrumbLabel ?? project.name;
   const primaryCategory = project.detailCategory ?? project.categories[0] ?? "Project";
@@ -46,6 +47,59 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const relatedProjects = projectItems.filter(
     (projectItem) => relatedProjectIds.includes(projectItem.id) && projectItem.id !== project.id,
   );
+
+  useEffect(() => {
+    if (!processSteps.length) {
+      return;
+    }
+
+    let animationFrame = 0;
+
+    const updateActiveProcessIndex = () => {
+      animationFrame = 0;
+      const targetY = Math.min(window.innerHeight * 0.42, window.innerHeight - 140);
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      processCardRefs.current.forEach((cardElement, index) => {
+        if (!cardElement) {
+          return;
+        }
+
+        const rect = cardElement.getBoundingClientRect();
+        const cardAnchorY = rect.top + rect.height * 0.35;
+        const distance = Math.abs(cardAnchorY - targetY);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveProcessIndex(closestIndex);
+    };
+
+    const requestUpdate = () => {
+      if (animationFrame) {
+        return;
+      }
+
+      animationFrame = window.requestAnimationFrame(updateActiveProcessIndex);
+    };
+
+    updateActiveProcessIndex();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, [processSteps.length]);
 
   return (
     <main className="relative z-(--page-main-z-index) min-h-svh w-full bg-background pt-(--projects-detail-top-padding)">
@@ -181,11 +235,10 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
               {processSteps.map((step, index) => (
                 <motion.article
                   key={step.number}
-                  className="flex min-h-(--projects-detail-process-card-height) w-full flex-col content-start items-start justify-center gap-(--projects-detail-process-card-inner-gap) overflow-visible rounded-none p-0"
-                  viewport={{ amount: 0.75, margin: "0px 0px -45% 0px" }}
-                  onViewportEnter={() => {
-                    setActiveProcessIndex(index);
+                  ref={(element) => {
+                    processCardRefs.current[index] = element;
                   }}
+                  className="flex min-h-(--projects-detail-process-card-height) w-full flex-col content-start items-start justify-center gap-(--projects-detail-process-card-inner-gap) overflow-visible rounded-none p-0"
                 >
                   <span className="font-cal-sans text-(length:--projects-detail-process-number-size) leading-(--projects-detail-process-number-line-height) font-semibold tracking-normal text-(--projects-detail-muted-color)">
                     {step.number}
@@ -201,7 +254,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
             </div>
 
             <div className="sticky top-(--projects-detail-process-icons-sticky-top) z-10 order-1 box-border block h-(--projects-detail-process-icons-height) w-full rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icons-background) p-(--projects-detail-process-icons-padding) md:order-2 md:w-(--projects-detail-process-icons-width) md:self-start">
-              <div className="grid h-full w-full grid-cols-5 items-center justify-items-center gap-(--projects-detail-process-icons-gap) md:grid-cols-1 md:grid-rows-5">
+              <div className="grid h-full w-full grid-cols-5 items-center justify-items-center gap-(--projects-detail-process-icons-gap) md:grid-cols-1 md:grid-rows-5 lg:grid-cols-5 lg:grid-rows-1">
                 {processSteps.map((step, index) => {
                   const isActive = activeProcessIndex === index;
 
