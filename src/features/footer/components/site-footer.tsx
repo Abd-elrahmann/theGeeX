@@ -21,7 +21,8 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
       className={cn(
         "w-full overflow-visible bg-background",
         revealFromPreviousSection ? "relative mt-0" : "relative mt-(--footer-margin-top)",
-        "px-(--footer-padding-x) pt-(--footer-padding-top) pb-(--footer-padding-bottom)",
+        "px-(--footer-padding-x) pt-(--footer-padding-top)",
+        revealFromPreviousSection ? "pb-0" : "pb-(--footer-padding-bottom)",
       )}
     >
       <div className="relative mx-auto w-full max-w-(--footer-container-max-width)">

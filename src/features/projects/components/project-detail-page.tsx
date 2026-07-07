@@ -163,7 +163,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
             sectionHeightVh={260}
             speed={1.1}
             alignY="Center"
-            stickyOffsetPx={0}
+            stickyOffsetPx={48}
             maxWidth="var(--projects-detail-description-max-width)"
             padding="var(--projects-detail-description-padding)"
             startPaddingVh={20}
@@ -230,8 +230,8 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
             <span className="block whitespace-nowrap">conversation to lasting support.</span>
           </h2>
 
-          <div className="grid w-full grid-cols-1 gap-(--projects-detail-process-grid-gap) md:grid-cols-[minmax(0,1fr)_var(--projects-detail-process-icons-width)]">
-            <div className="order-2 flex w-full flex-col gap-(--projects-detail-process-card-gap) md:order-1">
+          <div className="grid w-full grid-cols-1 gap-(--projects-detail-process-grid-gap) lg:grid-cols-[minmax(0,1fr)_var(--projects-detail-process-icons-width)] lg:items-start">
+            <div className="order-2 flex min-w-0 w-full flex-col gap-(--projects-detail-process-card-gap) lg:order-1 lg:col-start-1 lg:row-start-1">
               {processSteps.map((step, index) => (
                 <motion.article
                   key={step.number}
@@ -253,8 +253,8 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
               ))}
             </div>
 
-            <div className="sticky top-(--projects-detail-process-icons-sticky-top) z-10 order-1 box-border block h-(--projects-detail-process-icons-height) w-full rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icons-background) p-(--projects-detail-process-icons-padding) md:order-2 md:w-(--projects-detail-process-icons-width) md:self-start">
-              <div className="grid h-full w-full grid-cols-5 items-center justify-items-center gap-(--projects-detail-process-icons-gap) md:grid-cols-1 md:grid-rows-5 lg:grid-cols-5 lg:grid-rows-1">
+            <div className="sticky top-(--projects-detail-process-icons-sticky-top) z-10 order-1 box-border block h-(--projects-detail-process-icons-height) w-full rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icons-background) p-(--projects-detail-process-icons-padding) lg:order-2 lg:col-start-2 lg:row-start-1 lg:w-(--projects-detail-process-icons-width) lg:self-start">
+              <div className="grid h-full w-full grid-cols-5 items-center justify-items-center gap-(--projects-detail-process-icons-gap) lg:grid-cols-5 lg:grid-rows-1">
                 {processSteps.map((step, index) => {
                   const isActive = activeProcessIndex === index;
 

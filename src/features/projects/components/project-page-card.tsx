@@ -45,7 +45,7 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
       <Link
         href={`/projects/${project.slug}`}
         aria-label={`View ${project.name} project details`}
-        className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
+        className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
       />
 
       <header className="relative mx-auto flex min-h-(--projects-card-header-height) w-full max-w-(--projects-card-content-max-width) shrink-0 items-start justify-between gap-(--projects-page-card-header-gap) md:h-(--projects-card-header-height) md:items-center">
@@ -85,12 +85,15 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
         </p>
       ) : null}
 
-      <div className="relative mx-auto mt-(--projects-card-image-margin-top) h-px min-h-(--projects-card-image-min-height) w-full max-w-(--projects-card-content-max-width) flex-1 overflow-visible rounded-(--projects-card-image-radius)">
+      <div className="relative mx-auto mt-(--projects-page-card-image-margin-top) h-px min-h-(--projects-page-card-image-min-height) w-full max-w-(--projects-card-content-max-width) flex-1 overflow-visible rounded-(--projects-card-image-radius)">
         <div
           role="img"
           aria-label={project.imageAlt}
-          className="absolute inset-0 block h-full w-full overflow-visible rounded-(--projects-card-image-radius) bg-cover bg-no-repeat bg-position-(--projects-card-image-position)"
-          style={{ backgroundImage: `url(${project.image})` } as ProjectCardImageStyle}
+          className="absolute inset-0 block h-full w-full overflow-visible rounded-(--projects-card-image-radius) bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${project.image})`,
+            transform: "translateY(var(--projects-page-card-image-top-offset))",
+          } as ProjectCardImageStyle}
         />
       </div>
     </article>

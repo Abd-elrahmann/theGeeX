@@ -69,12 +69,17 @@ function AiGrowthRowItem({ row, isActive }: { row: AiGrowthRow; isActive: boolea
 
 export function AiGrowthSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const mobileRowsTrackRef = useRef<HTMLDivElement | null>(null);
+  const mobileScrollRef = useRef<HTMLDivElement | null>(null);
+  const mobileStageContentRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canSyncActiveRow, setCanSyncActiveRow] = useState(false);
+  const [mobileStageMetrics, setMobileStageMetrics] = useState({
+    stageHeight: 0,
+    scrollHeight: 0,
+  });
   const isDesktop = useDesktopBreakpoint();
   const { scrollYProgress } = useScroll({
-    target: isDesktop ? sectionRef : mobileRowsTrackRef,
+    target: isDesktop ? sectionRef : mobileScrollRef,
     offset: ["start start", "end end"],
   });
 
@@ -102,6 +107,46 @@ export function AiGrowthSection() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isDesktop) {
+      return;
+    }
+
+    const measureMobileStage = () => {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const pinScrollDistance =
+        parseFloat(rootStyles.getPropertyValue("--ai-growth-pin-scroll-distance")) || 0;
+      const viewportHeight = window.innerHeight;
+      const contentHeight = mobileStageContentRef.current?.offsetHeight ?? 0;
+      const stageHeight = Math.max(viewportHeight, contentHeight);
+
+      setMobileStageMetrics({
+        stageHeight,
+        scrollHeight: stageHeight + pinScrollDistance,
+      });
+    };
+
+    measureMobileStage();
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined" && mobileStageContentRef.current
+        ? new ResizeObserver(() => {
+            measureMobileStage();
+          })
+        : null;
+
+    if (mobileStageContentRef.current && resizeObserver) {
+      resizeObserver.observe(mobileStageContentRef.current);
+    }
+
+    window.addEventListener("resize", measureMobileStage);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", measureMobileStage);
+    };
+  }, [isDesktop]);
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (!canSyncActiveRow) {
       return;
@@ -117,40 +162,62 @@ export function AiGrowthSection() {
       ref={sectionRef}
       id="ai-growth"
       aria-label="AI for real growth"
-      className="relative z-10 mt-(--ai-growth-margin-top) min-h-(--ai-growth-scroll-height) w-full bg-background px-(--ai-growth-padding-x) py-(--ai-growth-padding-y)"
+      className="relative z-10 mt-(--ai-growth-margin-top) min-h-(--ai-growth-scroll-height) w-full bg-background px-(--ai-growth-padding-x) pt-(--ai-growth-padding-y) pb-(--ai-growth-padding-y) lg:pb-0"
     >
       <div
-        className="mx-auto grid min-h-(--ai-growth-mobile-stage-height) w-full max-w-(--ai-growth-container-max-width) grid-cols-1 items-start gap-(--ai-growth-grid-gap) lg:sticky lg:top-(--ai-growth-sticky-top) lg:min-h-0 lg:grid-cols-[minmax(var(--ai-growth-grid-one-min-width),1fr)_minmax(var(--ai-growth-grid-two-min-width),1fr)]"
+        ref={mobileScrollRef}
+        className="mx-auto min-h-(--ai-growth-mobile-rows-track-height) w-full max-w-(--ai-growth-container-max-width) lg:min-h-(--ai-growth-scroll-height)"
+        style={
+          !isDesktop && mobileStageMetrics.scrollHeight > 0
+            ? {
+                minHeight: `${mobileStageMetrics.scrollHeight}px`,
+              }
+            : undefined
+        }
       >
-        <div className="flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-intro-gap) overflow-clip rounded-none p-0 lg:min-w-(--ai-growth-grid-one-min-width)">
-          <h2 className="m-0 hidden w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:block">
-            <span className="text-(--color-ai-growth-title-muted)">{aiGrowthTitlePrefix} </span>
-            <span className="text-(--color-ai-growth-accent)">{aiGrowthTitleAccent}</span>
-          </h2>
+        <div
+          className="sticky top-0 h-(--ai-growth-stage-height) overflow-hidden lg:top-(--ai-growth-sticky-top) lg:h-(--ai-growth-stage-height)"
+          style={
+            !isDesktop && mobileStageMetrics.stageHeight > 0
+              ? {
+                  height: `${mobileStageMetrics.stageHeight}px`,
+                }
+              : undefined
+          }
+        >
+          <div
+            ref={mobileStageContentRef}
+            className="grid min-h-(--ai-growth-stage-min-height) w-full grid-cols-1 items-start gap-(--ai-growth-grid-gap) lg:h-full lg:grid-cols-[minmax(var(--ai-growth-grid-one-min-width),1fr)_minmax(var(--ai-growth-grid-two-min-width),1fr)]"
+          >
+            <div className="flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-intro-gap) overflow-clip rounded-none p-0 lg:min-w-(--ai-growth-grid-one-min-width)">
+              <h2 className="m-0 hidden w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:block">
+                <span className="text-(--color-ai-growth-title-muted)">{aiGrowthTitlePrefix} </span>
+                <span className="text-(--color-ai-growth-accent)">{aiGrowthTitleAccent}</span>
+              </h2>
 
-          <h2 className="m-0 block w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:hidden">
-            <span className="text-(--color-ai-growth-title-muted)">{aiGrowthCompactTitlePrefix}</span>
-            <span className="text-(--color-ai-growth-accent)">{`\n${aiGrowthCompactTitleAccent}`}</span>
-          </h2>
+              <h2 className="m-0 block w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:hidden">
+                <span className="text-(--color-ai-growth-title-muted)">{aiGrowthCompactTitlePrefix}</span>
+                <span className="text-(--color-ai-growth-accent)">{`\n${aiGrowthCompactTitleAccent}`}</span>
+              </h2>
 
-          <p className="m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-description-size) leading-(--ai-growth-description-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal">
-            {aiGrowthDescription}
-          </p>
-        </div>
+              <p className="m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-description-size) leading-(--ai-growth-description-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal">
+                {aiGrowthDescription}
+              </p>
+            </div>
 
-        <div ref={mobileRowsTrackRef} className="min-h-(--ai-growth-mobile-rows-track-height) w-full lg:min-h-0">
-          <div className="sticky top-(--ai-growth-mobile-rows-sticky-top) box-border flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-rows-gap) overflow-clip rounded-none pt-(--ai-growth-grid-two-padding-top) lg:static lg:min-w-(--ai-growth-grid-two-min-width)">
-            {aiGrowthRows.map((row, index) => (
-              <Fragment key={row.id}>
-                <AiGrowthRowItem row={row} isActive={index === activeIndex} />
-                {index < aiGrowthRows.length - 1 ? (
-                  <div
-                    aria-hidden="true"
-                    className="flex h-px w-full flex-row content-start items-start justify-start gap-(--ai-growth-row-divider-gap) overflow-clip rounded-(--ai-growth-row-divider-radius) bg-(--color-ai-growth-row-divider) p-0"
-                  />
-                ) : null}
-              </Fragment>
-            ))}
+            <div className="box-border flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-rows-gap) overflow-clip rounded-none pt-(--ai-growth-grid-two-padding-top) lg:min-w-(--ai-growth-grid-two-min-width)">
+              {aiGrowthRows.map((row, index) => (
+                <Fragment key={row.id}>
+                  <AiGrowthRowItem row={row} isActive={index === activeIndex} />
+                  {index < aiGrowthRows.length - 1 ? (
+                    <div
+                      aria-hidden="true"
+                      className="flex h-px w-full flex-row content-start items-start justify-start gap-(--ai-growth-row-divider-gap) overflow-clip rounded-(--ai-growth-row-divider-radius) bg-(--color-ai-growth-row-divider) p-0"
+                    />
+                  ) : null}
+                </Fragment>
+              ))}
+            </div>
           </div>
         </div>
       </div>

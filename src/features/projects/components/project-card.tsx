@@ -294,7 +294,7 @@ export function ProjectCard({
         <Link
           href={`/projects/${project.slug}`}
           aria-label={`View ${project.name} project details`}
-          className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
+          className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
         />
 
         <header className={projectCardHeaderRowClassName}>

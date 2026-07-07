@@ -113,7 +113,7 @@ export function StorytellingSection() {
           className={cn(
             "relative z-(--storytelling-stage-z-index) mx-auto flex w-full",
             "max-w-(--storytelling-content-max-width)",
-            "min-h-(--storytelling-stage-min-height) items-center justify-center",
+            "min-h-(--storytelling-stage-min-height) items-start justify-start xl:items-center xl:justify-center",
             "py-(--storytelling-section-padding-y)",
           )}
         >
