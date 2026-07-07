@@ -25,7 +25,7 @@ import {
 
 const projectCardIndexClassName = cn(
   "h-auto w-auto whitespace-pre text-left",
-  "font-[family-name:var(--font-cal-sans)] font-[var(--projects-card-index-weight)] not-italic",
+  "font-cal-sans font-[var(--projects-card-index-weight)] not-italic",
   "text-[length:var(--projects-card-index-size)] leading-none tracking-[0px]",
   "text-[var(--color-project-card-foreground)] [font-feature-settings:normal]",
 );
@@ -46,7 +46,7 @@ const projectCardCategoryTextClassName = cn(
 
 const projectCardTitleClassName = cn(
   "m-0 min-w-0 flex-1 whitespace-pre-wrap break-words",
-  "h-auto min-h-[var(--projects-card-title-height)] font-[family-name:var(--font-cal-sans)]",
+  "h-auto min-h-[var(--projects-card-title-height)] font-cal-sans",
   "font-[var(--projects-card-title-weight)] not-italic",
   "text-[length:var(--projects-card-title-size)] leading-[var(--projects-card-title-line-height)]",
   "tracking-[var(--projects-card-title-letter-spacing)]",

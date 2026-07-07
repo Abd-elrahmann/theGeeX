@@ -87,7 +87,7 @@ function getDeliverableImageOffset(index: number, activeIndex: number): string {
 function ServiceDetailHero({ service }: ServiceDetailPageProps) {
   return (
     <section className="mx-auto flex w-full max-w-(--service-detail-container-max-width) flex-col items-start gap-(--service-detail-hero-gap) px-(--service-detail-padding-x) pt-(--service-detail-hero-padding-top)">
-      <nav aria-label="Breadcrumb" className="flex w-min flex-row flex-nowrap items-center justify-start gap-(--service-detail-breadcrumb-gap) overflow-clip p-0 font-poppins text-(length:--service-detail-breadcrumb-size) leading-(--service-detail-breadcrumb-line-height) text-(--color-service-detail-muted)">
+      <nav aria-label="Breadcrumb" className="flex h-[19px] w-min flex-row flex-nowrap content-center items-center justify-center gap-(--service-detail-breadcrumb-gap) overflow-(--overflow-clip-fallback) p-0 whitespace-nowrap font-poppins text-(length:--service-detail-breadcrumb-size) leading-(--service-detail-breadcrumb-line-height) font-normal text-(--color-service-detail-text)">
         <Link href="/" className="whitespace-nowrap transition-colors duration-200 hover:text-(--color-service-detail-text)">
           Home
         </Link>

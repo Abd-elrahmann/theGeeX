@@ -16,7 +16,7 @@ interface ServiceContentProps {
 }
 
 const serviceContentTitleClassName = cn(
-  "m-0 w-full min-w-0 font-[family-name:var(--font-cal-sans)] font-semibold not-italic",
+  "m-0 w-full min-w-0 font-cal-sans font-semibold not-italic",
   "text-[length:var(--services-content-header-size)] leading-(--services-content-header-line-height)",
   "tracking-[0em] whitespace-normal text-(--color-cta-text) lg:text-(--color-services-content-accent)",
   "[font-feature-settings:var(--services-content-font-features)]",

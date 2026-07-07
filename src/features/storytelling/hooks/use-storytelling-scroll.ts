@@ -15,6 +15,7 @@ import { storytellingConfig } from "@/features/storytelling/constants/storytelli
 
 interface UseStorytellingScrollOptions {
   itemCount: number;
+  layoutMode: "desktop" | "tablet" | "mobile";
   pinEnabled?: boolean;
   backgroundEnabled?: boolean;
   mobileBackgroundEnabled?: boolean;
@@ -23,6 +24,7 @@ interface UseStorytellingScrollOptions {
 
 export function useStorytellingScroll({
   itemCount,
+  layoutMode,
   pinEnabled = true,
   backgroundEnabled = true,
   mobileBackgroundEnabled = true,
@@ -117,7 +119,6 @@ export function useStorytellingScroll({
       const stageElement = stageRef.current;
       const pinStartElement = pinStartRef.current;
       const containerElement = containerRef.current;
-      const aiSectionElement = document.querySelector<HTMLElement>("#ai-growth");
       const { scroll } = storytellingConfig;
       const matchMedia = gsap.matchMedia();
 
@@ -322,8 +323,8 @@ export function useStorytellingScroll({
 
         const backgroundTrigger = backgroundEnabled
           ? ScrollTrigger.create({
-              trigger: aiSectionElement ?? containerElement,
-              start: "bottom top",
+              trigger: containerElement,
+              start: "center center",
               end: () => `+=${getDesktopBackgroundDistance()}`,
               invalidateOnRefresh: true,
               onEnter: () => setBackgroundDark(true),
@@ -412,6 +413,7 @@ export function useStorytellingScroll({
     {
       scope: containerRef,
       dependencies: [
+        layoutMode,
         pinEnabled,
         backgroundEnabled,
         mobileBackgroundEnabled,
@@ -421,7 +423,7 @@ export function useStorytellingScroll({
         setBackgroundDark,
         setPageBackgroundOpacity,
       ],
-      revertOnUpdate: false,
+      revertOnUpdate: true,
     },
   );
 

@@ -8,7 +8,7 @@ const projectsTitleHeadingClassName = cn(
 );
 
 const projectsTitleTextClassName = cn(
-  "projects-title-text font-[family-name:var(--font-cal-sans)] not-italic",
+  "projects-title-text font-cal-sans not-italic",
   "font-(--projects-title-font-weight)",
   "text-[length:var(--projects-title-size)] leading-(--projects-title-line-height)",
   "tracking-[0px] text-center whitespace-nowrap",

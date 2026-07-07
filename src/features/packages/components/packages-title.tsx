@@ -8,7 +8,7 @@ const packagesTitleHeadingClassName = cn(
 );
 
 const packagesTitleTextClassName = cn(
-  "packages-title-text font-[family-name:var(--font-cal-sans)] not-italic",
+  "packages-title-text font-cal-sans not-italic",
   "font-(--packages-title-font-weight)",
   "text-[length:var(--packages-title-size)] leading-(--packages-title-line-height)",
   "tracking-[0px] text-center whitespace-nowrap",

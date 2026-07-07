@@ -26,7 +26,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-poppins: var(--font-poppins);
-  --font-cal-sans: var(--font-cal-sans-ui), "Cal Sans Placeholder", sans-serif;
+  --font-cal-sans: "Cal Sans", var(--font-cal-sans-text), ui-sans-serif, sans-serif;
 }
 
 html,
@@ -40,6 +40,10 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-cal-sans {
+  font-synthesis: none;
 }
 
 body::before {

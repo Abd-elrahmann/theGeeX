@@ -74,7 +74,7 @@ interface StorytellingLinesProps {
 
 const storytellingLineClassName = cn(
   "m-0 w-max max-w-none origin-center will-change-transform max-lg:w-full max-lg:max-w-full",
-  "font-[family-name:var(--font-cal-sans)] font-semibold not-italic",
+  "font-cal-sans font-semibold not-italic",
   "text-[length:var(--storytelling-line-size)] leading-(--storytelling-line-line-height)",
   "tracking-(--storytelling-line-letter-spacing)",
   "max-lg:whitespace-normal lg:whitespace-nowrap",

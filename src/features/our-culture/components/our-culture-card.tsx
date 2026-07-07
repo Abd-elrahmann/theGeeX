@@ -70,7 +70,7 @@ const stackedCardClassName = cn(
 );
 
 const cardTitleClassName = cn(
-  "w-full whitespace-pre-wrap break-words font-[family-name:var(--font-cal-sans)]",
+  "w-full whitespace-pre-wrap break-words font-cal-sans",
   "text-[length:var(--culture-card-title-size)] leading-[var(--culture-card-title-line-height)]",
   "font-[var(--culture-card-title-weight)] tracking-[var(--culture-card-title-letter-spacing)]",
   "text-[var(--color-culture-card-title)] [font-feature-settings:'blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on]",

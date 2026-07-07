@@ -12,7 +12,7 @@ const servicesTitleHeadingClassName = cn(
 );
 
 const servicesTitleTextClassName = cn(
-  "services-title-text font-[family-name:var(--font-cal-sans)] not-italic",
+  "services-title-text font-cal-sans not-italic",
   "font-(--services-title-font-weight)",
   "text-[length:var(--services-title-size)] leading-(--services-title-line-height)",
   "tracking-[0px] text-center whitespace-nowrap",

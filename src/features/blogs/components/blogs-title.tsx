@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 
-import { blogsSectionTitle } from "@/features/blogs/constants/blogs";
+import { blogsHomeSectionTitle } from "@/features/blogs/constants/blogs";
 
 const blogsTitleHeadingClassName = cn(
   "relative m-0 mx-auto flex w-full justify-center p-0",
@@ -15,7 +15,11 @@ const blogsTitleTextClassName = cn(
   "[font-feature-settings:normal]",
 );
 
-export function BlogsTitle() {
+interface BlogsTitleProps {
+  title?: string;
+}
+
+export function BlogsTitle({ title = blogsHomeSectionTitle }: BlogsTitleProps) {
   return (
     <div className="pointer-events-none relative z-(--blogs-title-z-index) w-full overflow-visible">
       <h2 className={blogsTitleHeadingClassName}>
@@ -32,7 +36,7 @@ export function BlogsTitle() {
             color: "transparent",
           }}
         >
-          {blogsSectionTitle}
+          {title}
         </span>
       </h2>
     </div>

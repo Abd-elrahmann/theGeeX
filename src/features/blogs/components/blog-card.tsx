@@ -11,12 +11,13 @@ interface BlogCardProps {
   footerClassName?: string;
   imageClassName?: string;
   metaContainerClassName?: string;
+  typesClassName?: string;
   titleClassName?: string;
   maxTypes?: number;
   dateClassName?: string;
 }
 
-export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, titleClassName, maxTypes }: BlogCardProps) {
+export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, titleClassName, maxTypes }: BlogCardProps) {
   const visibleTypes = typeof maxTypes === "number" ? blog.types.slice(0, maxTypes) : blog.types;
 
   return (
@@ -50,7 +51,7 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
       </div>
 
       <div className="order-1 flex min-w-0 flex-col items-center md:order-0 md:min-h-(--blogs-card-image-height) md:items-start">
-        <div className="flex flex-wrap items-center justify-center gap-(--blogs-card-types-gap) md:justify-start">
+        <div className={cn("flex flex-wrap items-center justify-center gap-(--blogs-card-types-gap) md:justify-start", typesClassName)}>
           {visibleTypes.map((type) => (
             <span
               key={type}

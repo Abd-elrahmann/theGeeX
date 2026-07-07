@@ -25,7 +25,7 @@ interface ProjectDetailChipStyle extends CSSProperties {
 const projectDescriptionFont = {
   fontFamily: "var(--font-cal-sans)",
   fontSize: "var(--projects-detail-description-size)",
-  fontWeight: 600,
+  fontWeight: 400,
   lineHeight: "var(--projects-detail-description-line-height)",
   letterSpacing: "0em",
   textAlign: "center",
@@ -109,7 +109,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
       >
         <nav
           aria-label="Breadcrumb"
-          className="flex h-(--projects-detail-breadcrumb-height) w-min flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-breadcrumb-gap) overflow-(--overflow-clip-fallback) p-0 font-poppins text-(length:--projects-detail-breadcrumb-size) leading-(--projects-detail-breadcrumb-line-height) text-(--projects-detail-muted-color)"
+          className="flex h-(--projects-detail-breadcrumb-height) w-min flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-breadcrumb-gap) overflow-(--overflow-clip-fallback) p-0 whitespace-nowrap font-poppins text-(length:--projects-detail-breadcrumb-size) leading-(--projects-detail-breadcrumb-line-height) font-normal text-(--projects-detail-text-color)"
         >
           <Link href="/" className="whitespace-nowrap transition-colors hover:text-(--projects-detail-text-color) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--projects-detail-accent-color)">
             Home

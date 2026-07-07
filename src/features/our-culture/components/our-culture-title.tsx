@@ -8,7 +8,7 @@ const ourCultureTitleHeadingClassName = cn(
 );
 
 const ourCultureTitleTextClassName = cn(
-  "culture-title-text font-[family-name:var(--font-cal-sans)] not-italic",
+  "culture-title-text font-cal-sans not-italic",
   "font-[var(--culture-title-font-weight)]",
   "text-[length:var(--culture-title-size)] leading-[var(--culture-title-line-height)]",
   "max-w-full tracking-[0px] text-center whitespace-nowrap",

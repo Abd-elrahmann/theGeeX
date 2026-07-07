@@ -39,10 +39,15 @@ function ClockIcon() {
   );
 }
 
-function BlogDetailBlockView({ block }: { block: BlogArticleDetailBlock }) {
+function BlogDetailBlockView({ block, isFirstHeading }: { block: BlogArticleDetailBlock; isFirstHeading: boolean }) {
   if (block.type === "heading" && block.content) {
     return (
-      <h2 className="m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-[28px] leading-[1.6] font-medium tracking-normal text-text font-features-[normal]">
+      <h2
+        className={cn(
+          "m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins leading-[1.6] font-medium tracking-normal text-text font-features-[normal] md:text-[28px]",
+          isFirstHeading ? "text-[24px]" : "text-[18px]",
+        )}
+      >
         {renderInlineBold(block.content)}
       </h2>
     );
@@ -53,6 +58,69 @@ function BlogDetailBlockView({ block }: { block: BlogArticleDetailBlock }) {
       <p className="m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-[16px] leading-[1.6] font-normal tracking-normal text-text font-features-[normal]">
         {renderInlineBold(block.content)}
       </p>
+    );
+  }
+
+  if (block.type === "callout" && block.content) {
+    if (block.variant === "split-arrows") {
+      const [topLine = "", bottomLine = ""] = block.content.split("\n\n");
+      const [leftTarget = "", rightTarget = ""] = bottomLine.split("] [").map((part, index, parts) => {
+        if (parts.length === 1) {
+          return part;
+        }
+
+        if (index === 0) {
+          return `${part}]`;
+        }
+
+        if (index === parts.length - 1) {
+          return `[${part}`;
+        }
+
+        return `[${part}]`;
+      });
+
+      return (
+        <div
+          className={cn(
+            "box-border flex h-min w-full flex-col items-center justify-center gap-2.5 overflow-(--overflow-clip-fallback)",
+            "border border-(--color-blogs-detail-callout-border) bg-(--color-blogs-detail-callout-bg) px-3 py-2",
+          )}
+        >
+          <p className="m-0 w-full whitespace-pre-wrap wrap-break-word text-center font-poppins text-[16px] leading-[1.6] font-normal tracking-normal text-text font-features-[normal]">
+            {renderInlineBold(topLine)}
+          </p>
+
+          <div className="grid w-full max-w-110 grid-cols-2 items-start gap-x-4 gap-y-1">
+            <div className="flex justify-center text-[18px] leading-none text-text" aria-hidden="true">
+              ↓
+            </div>
+            <div className="flex justify-center text-[18px] leading-none text-text" aria-hidden="true">
+              ↓
+            </div>
+
+            <p className="m-0 whitespace-nowrap text-center font-poppins text-[16px] leading-[1.6] font-normal tracking-normal text-text font-features-[normal]">
+              {renderInlineBold(leftTarget)}
+            </p>
+            <p className="m-0 whitespace-nowrap text-center font-poppins text-[16px] leading-[1.6] font-normal tracking-normal text-text font-features-[normal]">
+              {renderInlineBold(rightTarget)}
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={cn(
+          "box-border flex h-min w-full flex-col items-center justify-center gap-2.5 overflow-(--overflow-clip-fallback)",
+          "border border-(--color-blogs-detail-callout-border) bg-(--color-blogs-detail-callout-bg) px-3 py-2",
+        )}
+      >
+        <p className="m-0 w-full whitespace-pre-wrap wrap-break-word text-center font-poppins text-[16px] leading-[1.6] font-normal tracking-normal text-text font-features-[normal]">
+          {renderInlineBold(block.content)}
+        </p>
+      </div>
     );
   }
 
@@ -80,14 +148,15 @@ function BlogDetailBlockView({ block }: { block: BlogArticleDetailBlock }) {
 }
 
 export function BlogDetailPage({ article }: BlogDetailPageProps) {
-  const relatedBlogs = blogItems.filter((blog) => blog.title !== article.title).slice(0, 2);
+  const relatedBlogs = blogItems.filter((blog) => blog.slug !== article.slug).slice(0, 2);
+  let headingCount = 0;
 
   return (
     <main className="relative z-(--page-main-z-index) min-h-svh w-full bg-background pt-(--navbar-height)">
       <article className="mx-auto flex w-full max-w-300 flex-col gap-10 px-4 pt-14 pb-20 md:px-6 lg:px-8">
         <nav
           aria-label="Breadcrumb"
-          className="flex w-min flex-row flex-nowrap items-center justify-start gap-2 overflow-(--overflow-clip-fallback) p-0 whitespace-nowrap font-poppins text-(length:--service-detail-breadcrumb-size) leading-(--service-detail-breadcrumb-line-height) text-(--color-service-detail-muted)"
+          className="flex h-[19px] w-min flex-row flex-nowrap content-center items-center justify-center gap-2 overflow-(--overflow-clip-fallback) p-0 whitespace-nowrap font-poppins text-(length:--service-detail-breadcrumb-size) leading-(--service-detail-breadcrumb-line-height) font-normal text-(--color-service-detail-text)"
         >
           <Link href="/" className="whitespace-nowrap transition-colors duration-200 hover:text-(--color-service-detail-text)">
             Home
@@ -101,15 +170,15 @@ export function BlogDetailPage({ article }: BlogDetailPageProps) {
         </nav>
 
         <header className="flex w-full flex-col gap-6">
-          <h1
+          <h2
             className={cn(
               "m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
-              "text-[40px] leading-[1.4] font-semibold tracking-normal text-text",
+              "text-[24px] leading-[1.4] font-normal tracking-normal text-(--color-blogs-detail-title) md:text-[40px]",
               "font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]",
             )}
           >
             {article.title}
-          </h1>
+          </h2>
 
           <p className="m-0 font-poppins text-[16px] leading-[1.6] font-normal text-text">{article.date}</p>
 
@@ -170,7 +239,11 @@ export function BlogDetailPage({ article }: BlogDetailPageProps) {
         <section className="flex w-full flex-col gap-8">
           <div className="flex w-full max-w-225 flex-col gap-8">
             {article.detailBlocks.map((block, index) => (
-              <BlogDetailBlockView key={`${article.slug}-${block.type}-${index}`} block={block} />
+              <BlogDetailBlockView
+                key={`${article.slug}-${block.type}-${index}`}
+                block={block}
+                isFirstHeading={block.type === "heading" && headingCount++ === 0}
+              />
             ))}
           </div>
         </section>
@@ -179,7 +252,7 @@ export function BlogDetailPage({ article }: BlogDetailPageProps) {
           <h2
             className={cn(
               "m-0 h-auto w-full whitespace-pre-wrap wrap-break-word text-left font-cal-sans",
-              "text-[clamp(42px,8vw,70px)] leading-[1.4] font-semibold tracking-[-0.04em] text-text",
+              "text-[clamp(42px,8vw,70px)] leading-[1.4] font-semibold tracking-[-0.04em] text-(--color-blogs-detail-title)",
               "font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]",
             )}
           >
@@ -192,10 +265,12 @@ export function BlogDetailPage({ article }: BlogDetailPageProps) {
                 key={blog.id}
                 blog={blog}
                 articleClassName="h-full md:max-w-none md:grid-cols-[168px_minmax(0,1fr)]"
+                dateClassName="self-center text-center md:self-start md:text-left"
                 footerClassName="pt-0"
                 imageClassName="h-75 md:h-75 md:w-42"
-                metaContainerClassName="mt-auto"
-                titleClassName="text-[20px] leading-[1.35] md:text-[24px] md:leading-[1.4]"
+                metaContainerClassName="order-3 mt-auto"
+                typesClassName="order-2 mt-4"
+                titleClassName="order-1 text-[20px] leading-[1.35] md:text-[24px] md:leading-[1.4]"
                 maxTypes={1}
               />
             ))}

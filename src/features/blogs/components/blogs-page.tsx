@@ -1,5 +1,5 @@
 import { BlogCard } from "@/features/blogs/components/blog-card";
-import { blogItems } from "@/features/blogs/constants/blogs";
+import { blogItems, blogsPageTitle } from "@/features/blogs/constants/blogs";
 
 const blogsPageDescription =
   "Insights on product strategy, design clarity, engineering decisions, mobile experiences, and scalable growth systems from the theGeeX team.";
@@ -16,7 +16,7 @@ export function BlogsPage() {
             id="blogs-page-title"
             className="m-0 w-full max-w-150 whitespace-pre-wrap wrap-break-word font-cal-sans text-[clamp(42px,8vw,70px)] leading-[1.4] font-semibold tracking-normal text-text font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]"
           >
-            Blogs
+            {blogsPageTitle}
           </h1>
 
           <p className="m-0 w-full max-w-175 whitespace-pre-wrap wrap-break-word font-poppins text-[16px] leading-[1.6] font-normal tracking-normal text-text font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]">
@@ -35,8 +35,10 @@ export function BlogsPage() {
               key={blog.id}
               blog={blog}
               articleClassName="md:max-w-[820px]"
-              dateClassName="self-start text-left"
-              titleClassName="text-[20px] leading-[1.35] md:text-(length:--blogs-card-title-size) md:leading-(--blogs-card-title-line-height) md:max-w-none md:overflow-hidden md:[display:-webkit-box] md:[-webkit-box-orient:vertical] md:[-webkit-line-clamp:3]"
+              dateClassName="self-center text-center md:self-start md:text-left"
+              metaContainerClassName="order-3"
+              typesClassName="order-2 mt-4"
+              titleClassName="order-1 max-w-96 overflow-hidden text-[20px] leading-[1.35] font-normal [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3] md:max-w-140 md:text-(length:--blogs-card-title-size) md:leading-(--blogs-card-title-line-height) lg:max-w-110"
             />
           ))}
         </div>

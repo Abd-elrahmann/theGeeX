@@ -8,7 +8,7 @@ const testimonialsTitleHeadingClassName = cn(
 );
 
 const testimonialsTitleTextClassName = cn(
-  "testimonials-title-text font-[family-name:var(--font-cal-sans)] not-italic",
+  "testimonials-title-text font-cal-sans not-italic",
   "font-(--testimonials-title-font-weight)",
   "text-[length:var(--testimonials-title-size)] leading-(--testimonials-title-line-height)",
   "tracking-[0px] text-center whitespace-nowrap",

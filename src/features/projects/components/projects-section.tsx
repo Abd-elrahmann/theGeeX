@@ -159,7 +159,7 @@ export function ProjectsSection() {
       id="projects"
       aria-label="Projects"
       className={cn(
-        "relative isolate mx-auto w-full overflow-visible",
+        "relative isolate z-(--projects-section-z-index) mx-auto w-full overflow-visible",
         "mt-(--projects-margin-top)",
         "perspective-(--projects-section-perspective)",
         isDesktop && isPointerFine && "cursor-none",

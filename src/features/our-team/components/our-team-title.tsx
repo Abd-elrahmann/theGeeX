@@ -8,7 +8,7 @@ const ourTeamTitleHeadingClassName = cn(
 );
 
 const ourTeamTitleTextClassName = cn(
-  "team-title-text font-[family-name:var(--font-cal-sans)] not-italic",
+  "team-title-text font-cal-sans not-italic",
   "font-(--team-title-font-weight)",
   "text-[length:var(--team-title-size)] leading-(--team-title-line-height)",
   "tracking-[0px] text-center whitespace-nowrap",

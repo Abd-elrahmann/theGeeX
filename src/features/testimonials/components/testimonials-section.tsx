@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { ArrowRightIcon } from "@/components/shared/icons/arrow-right";
+import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { cn } from "@/lib/cn";
 
 import {
@@ -11,17 +12,18 @@ import {
 import { TestimonialCard } from "@/features/testimonials/components/testimonial-card";
 import { TestimonialsTitle } from "@/features/testimonials/components/testimonials-title";
 
-const tickerItems = [...testimonialItems, ...testimonialItems];
 type TickerDirection = "left" | "right";
 const TICKER_SPEED_PX_PER_SECOND = 36;
 const TICKER_INTERACTION_PAUSE_MS = 1200;
 
 export function TestimonialsSection() {
+  const isDesktop = useDesktopBreakpoint();
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const directionRef = useRef<TickerDirection>("left");
   const pauseUntilRef = useRef(0);
   const [tickerDirection, setTickerDirection] = useState<TickerDirection>("left");
+  const items = isDesktop ? [...testimonialItems, ...testimonialItems] : testimonialItems;
 
   const handleTickerDirectionChange = (direction: TickerDirection) => {
     directionRef.current = direction;
@@ -46,7 +48,7 @@ export function TestimonialsSection() {
   useEffect(() => {
     const viewportElement = viewportRef.current;
 
-    if (!viewportElement) {
+    if (!viewportElement || !isDesktop) {
       return;
     }
 
@@ -95,7 +97,7 @@ export function TestimonialsSection() {
       viewportElement.removeEventListener("scroll", handleManualScroll);
       cancelAnimationFrame(frameId);
     };
-  }, []);
+  }, [isDesktop]);
 
   return (
     <section
@@ -138,7 +140,10 @@ export function TestimonialsSection() {
 
           <div
             ref={viewportRef}
-            className="w-full touch-pan-y overflow-x-auto overflow-y-hidden overscroll-x-contain pb-2 select-none scrollbar-none lg:touch-pan-x [&::-webkit-scrollbar]:hidden"
+            className={cn(
+              "w-full overflow-x-auto overflow-y-hidden overscroll-x-contain pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden",
+              isDesktop ? "touch-pan-x" : "touch-pan-x snap-x snap-mandatory",
+            )}
             onPointerDown={() => {
               pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;
             }}
@@ -153,10 +158,10 @@ export function TestimonialsSection() {
               ref={trackRef}
               className="flex w-max gap-(--testimonials-carousel-gap)"
             >
-              {tickerItems.map((item, index) => (
+              {items.map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
-                  aria-hidden={index >= testimonialItems.length}
+                  aria-hidden={isDesktop && index >= testimonialItems.length}
                   className="shrink-0 snap-start"
                 >
                   <TestimonialCard item={item} />

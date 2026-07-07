@@ -23,7 +23,9 @@ export function StorytellingSection() {
   const isTablet = useMediaQuery(STORYTELLING_TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const usesDesktopVisualLayout = isDesktop || isTablet;
+  const layoutMode = isDesktop ? "desktop" : isTablet ? "tablet" : "mobile";
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const isBackgroundActiveRef = useRef(false);
   const lastPointerRef = useRef({ x: -1, y: -1 });
   usePreloadStorytellingImages(storytellingItems);
   const {
@@ -39,9 +41,10 @@ export function StorytellingSection() {
   } =
     useStorytellingScroll({
       itemCount: storytellingItems.length,
+      layoutMode,
       pinEnabled: isLayoutReady,
-      backgroundEnabled: isLayoutReady,
-      mobileBackgroundEnabled: isLayoutReady && !isDesktop,
+      backgroundEnabled: false,
+      mobileBackgroundEnabled: false,
     });
 
   useEffect(() => {
@@ -53,6 +56,80 @@ export function StorytellingSection() {
       cancelAnimationFrame(frameId);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isLayoutReady) {
+      return;
+    }
+
+    let frameId = 0;
+    const backgroundElement = backgroundRef.current;
+
+    const applyBackgroundState = (isActive: boolean) => {
+      if (isBackgroundActiveRef.current === isActive) {
+        return;
+      }
+
+      isBackgroundActiveRef.current = isActive;
+
+      if (backgroundElement) {
+        backgroundElement.style.opacity = isDesktop && isActive ? "1" : "0";
+      }
+
+      document.documentElement.style.setProperty(
+        "--storytelling-page-background-opacity",
+        !isDesktop && isActive ? "1" : "0",
+      );
+    };
+
+    const syncBackgroundState = () => {
+      frameId = 0;
+
+      const triggerElement = stageRef.current ?? containerRef.current;
+
+      if (!triggerElement) {
+        applyBackgroundState(false);
+        return;
+      }
+
+      const rect = triggerElement.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const isActive = rect.top <= viewportCenter && rect.bottom >= viewportCenter;
+
+      applyBackgroundState(isActive);
+    };
+
+    const requestSync = () => {
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(syncBackgroundState);
+    };
+
+    requestSync();
+    window.addEventListener("scroll", requestSync, { passive: true });
+    window.addEventListener("resize", requestSync);
+
+    return () => {
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener("scroll", requestSync);
+      window.removeEventListener("resize", requestSync);
+      isBackgroundActiveRef.current = false;
+
+      if (backgroundElement) {
+        backgroundElement.style.opacity = "0";
+      }
+
+      document.documentElement.style.setProperty(
+        "--storytelling-page-background-opacity",
+        "0",
+      );
+    };
+  }, [backgroundRef, containerRef, isDesktop, isLayoutReady, stageRef]);
 
   useEffect(() => {
     if (!isDesktop || !isPointerFine) {
@@ -96,11 +173,10 @@ export function StorytellingSection() {
       ref={containerRef}
       id="storytelling"
       className={cn(
-        "relative isolate w-full overflow-x-clip",
+        "relative isolate z-(--storytelling-section-z-index) w-full overflow-x-clip",
         usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-visible",
         "px-(--storytelling-section-padding-x)",
         "mt-(--storytelling-margin-top)",
-        !isDesktop && "z-20",
         isDesktop && isPointerFine && "cursor-none",
       )}
       aria-label="Storytelling"
@@ -113,7 +189,7 @@ export function StorytellingSection() {
           className={cn(
             "relative z-(--storytelling-stage-z-index) mx-auto flex w-full",
             "max-w-(--storytelling-content-max-width)",
-            "min-h-(--storytelling-stage-min-height) items-start justify-start xl:items-center xl:justify-center",
+            "min-h-(--storytelling-stage-min-height) items-center justify-center",
             "py-(--storytelling-section-padding-y)",
           )}
         >
