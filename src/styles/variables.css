@@ -1513,8 +1513,8 @@
     --projects-card-category-text-size: 10px;
     --projects-card-title-size: clamp(22px, 6.6vw, 28px);
     --projects-card-title-height: 36px;
-    --projects-card-title-line-height: 1.18;
-    --projects-card-title-letter-spacing: -0.06em;
+    --projects-card-title-line-height: 1.26;
+    --projects-card-title-letter-spacing: 0px;
     --projects-card-arrow-size: 32px;
     --projects-card-arrow-offset-x: -4px;
     --projects-card-divider-margin-top: 6px;
@@ -1609,7 +1609,31 @@
     --projects-page-card-description-line-height: 1.45;
     --service-detail-project-card-description-size: 13px;
     --service-detail-project-card-description-line-height: 1.45;
+    --projects-card-padding: 16px;
+    --projects-card-header-height: 32px;
+    --projects-card-category-padding-x: 8px;
+    --projects-card-category-padding-y: 4px;
+    --projects-card-category-gap: 4px;
+    --projects-card-category-text-size: 10px;
+    --projects-card-title-size: clamp(22px, 6.6vw, 28px);
+    --projects-card-title-height: 36px;
+    --projects-card-title-line-height: 1.26;
+    --projects-card-title-letter-spacing: 0px;
+    --projects-card-arrow-size: 32px;
+    --projects-card-arrow-offset-x: -4px;
+    --projects-card-divider-margin-top: 6px;
+    --projects-card-subheader-margin-top: 6px;
     --projects-card-image-min-height: 220px;
+    --process-card-title-letter-spacing: 0px;
+    --testimonials-card-title-letter-spacing: 0px;
+    --testimonials-card-comment-letter-spacing: 0px;
+    --testimonials-person-name-letter-spacing: 0px;
+    --testimonials-person-role-letter-spacing: 0px;
+    --culture-card-title-letter-spacing: 0px;
+    --culture-card-description-letter-spacing: 0px;
+    --team-card-name-letter-spacing: 0px;
+    --team-card-role-letter-spacing: 0px;
+    --team-card-name-line-height: 1.14;
   }
 }
 

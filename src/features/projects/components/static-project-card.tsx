@@ -38,7 +38,7 @@ export function StaticProjectCard({ project, index }: StaticProjectCardProps) {
       <Link
         href={`/projects/${project.slug}`}
         aria-label={`View ${project.name} project details`}
-        className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
+        className="absolute inset-0 z-20 rounded-(--projects-card-radius) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-project-card-category-bg)"
       />
 
       <header className="relative mx-auto flex min-h-(--projects-card-header-height) w-full max-w-(--projects-card-content-max-width) shrink-0 items-start justify-between gap-(--service-detail-project-card-header-gap) md:h-(--projects-card-header-height) md:items-center">
@@ -60,7 +60,7 @@ export function StaticProjectCard({ project, index }: StaticProjectCardProps) {
       <span aria-hidden="true" className="mt-(--projects-card-divider-margin-top) block h-px w-full bg-(--color-project-card-divider)" />
 
       <div className="relative mx-auto mt-(--projects-card-subheader-margin-top) flex w-full max-w-(--projects-card-content-max-width) items-center justify-between gap-3">
-        <h3 className="m-0 h-(--projects-card-title-height) min-w-0 flex-1 whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--projects-card-title-size) leading-(--projects-card-title-line-height) font-(--projects-card-title-weight) tracking-(--projects-card-title-letter-spacing) text-(--color-project-card-foreground) font-features-normal">
+        <h3 className="m-0 h-auto min-h-(--projects-card-title-height) min-w-0 flex-1 whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--projects-card-title-size) leading-(--projects-card-title-line-height) font-(--projects-card-title-weight) tracking-(--projects-card-title-letter-spacing) text-(--color-project-card-foreground) font-features-normal">
           {project.name}
         </h3>
         <span aria-hidden="true" className="relative inline-flex shrink-0 translate-x-(--projects-card-arrow-offset-x) items-center justify-center overflow-hidden size-(--projects-card-arrow-size) text-(--color-project-card-foreground)">
