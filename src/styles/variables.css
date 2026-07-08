@@ -760,15 +760,15 @@
   --color-contact-us-submit-text: #ffffff;
   --color-contact-us-submit-text-hover: #ffffff;
   --terms-page-top-padding: calc(var(--navbar-height) + 32px);
-  --terms-page-padding-x: 32px;
+  --terms-page-padding-x: 20px;
   --terms-page-padding-top: 48px;
   --terms-page-padding-bottom: 80px;
   --terms-page-layout-gap: 40px;
-  --terms-page-breadcrumb-padding-x: 20px;
+  --terms-page-breadcrumb-padding-x: 12px;
   --terms-page-breadcrumb-gap: 8px;
   --terms-page-breadcrumb-size: 16px;
   --terms-page-breadcrumb-line-height: 1.2;
-  --terms-page-header-padding-x: 20px;
+  --terms-page-header-padding-x: 12px;
   --terms-page-header-gap: 16px;
   --terms-page-title-size: 24px;
   --terms-page-title-line-height: 1.15;
@@ -779,7 +779,7 @@
   --terms-page-body-size: 14px;
   --terms-page-body-line-height: 1.6;
   --terms-page-sections-gap: 24px;
-  --terms-page-section-padding-x: 20px;
+  --terms-page-section-padding-x: 12px;
   --terms-page-section-padding-y: 24px;
   --terms-page-section-title-size: 16px;
   --terms-page-section-title-line-height: 1.3;
