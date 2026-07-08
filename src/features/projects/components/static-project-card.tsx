@@ -49,7 +49,7 @@ export function StaticProjectCard({ project, index }: StaticProjectCardProps) {
           {project.categories.map((category) => (
             <span
               key={category}
-              className="block h-auto w-auto max-w-full whitespace-nowrap rounded-(--projects-card-category-radius) bg-(--color-project-card-category-bg) px-(--projects-card-category-padding-x) py-(--projects-card-category-padding-y) text-left font-poppins text-(length:--projects-card-category-text-size) leading-(--projects-card-category-line-height) font-(--projects-card-category-text-weight) tracking-(--projects-card-category-letter-spacing) text-(--color-project-card-category-text) font-features-normal"
+              className="block h-auto max-w-full whitespace-normal wrap-break-word rounded-(--projects-card-category-radius) bg-(--color-project-card-category-bg) px-(--projects-card-category-padding-x) py-(--projects-card-category-padding-y) text-left font-poppins text-(length:--projects-card-category-text-size) leading-(--projects-card-category-line-height) font-(--projects-card-category-text-weight) tracking-(--projects-card-category-letter-spacing) text-(--color-project-card-category-text) font-features-normal md:w-auto md:whitespace-nowrap"
             >
               {category}
             </span>
@@ -85,8 +85,11 @@ export function StaticProjectCard({ project, index }: StaticProjectCardProps) {
         <div
           role="img"
           aria-label={project.imageAlt}
-          className="absolute inset-0 block h-full w-full overflow-visible rounded-(--projects-card-image-radius) bg-cover bg-no-repeat bg-position-(--projects-card-image-position)"
-          style={{ backgroundImage: `url(${project.image})` } as StaticProjectCardImageStyle}
+          className="absolute inset-0 block h-full w-full overflow-visible rounded-(--projects-card-image-radius) bg-cover bg-center bg-no-repeat md:bg-position-(--projects-card-image-position)"
+          style={{
+            backgroundImage: `url(${project.image})`,
+            backgroundSize: "var(--projects-card-background-size)",
+          } as StaticProjectCardImageStyle}
         />
       </div>
     </article>

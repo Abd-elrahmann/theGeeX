@@ -1204,6 +1204,7 @@
   --projects-card-image-translate-y: 2%;
   --projects-card-image-radius: 8px;
   --projects-card-image-position: center 70%;
+  --projects-card-background-size: cover;
   --projects-card-stack-base-offset: 0px;
   --projects-page-top-padding: var(--navbar-height);
   --projects-page-container-max-width: 1200px;
@@ -1517,13 +1518,15 @@
     --projects-card-title-letter-spacing: 0px;
     --projects-card-arrow-size: 32px;
     --projects-card-arrow-offset-x: -4px;
-    --projects-card-divider-margin-top: 6px;
+    --projects-card-divider-margin-top: 10px;
     --projects-card-subheader-margin-top: 6px;
     --projects-card-image-margin-top: 12px;
     --projects-card-image-min-height: 180px;
-    --projects-card-image-scale: 1.08;
+    --projects-card-image-scale: 0.94;
     --projects-card-image-translate-y: 0%;
-    --projects-card-image-position: center 55%;
+    --projects-card-image-position: center center;
+    --projects-card-background-size: 94%;
+    --projects-page-card-image-top-offset: 0px;
     --awards-card-padding-bottom: 20px;
     --awards-icon-inset-left: 6px;
     --awards-image-width: min(210px, 100%);

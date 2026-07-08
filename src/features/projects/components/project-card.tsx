@@ -31,12 +31,12 @@ const projectCardIndexClassName = cn(
 );
 
 const projectCardCategoryBadgeClassName = cn(
-  "z-[2] flex h-min w-min shrink-0 flex-row flex-nowrap items-center justify-start",
+  "z-[2] flex h-min min-w-0 max-w-full shrink-0 flex-row flex-wrap items-start justify-end md:w-min md:flex-nowrap md:items-center md:justify-start",
   "gap-[var(--projects-card-category-gap)]",
 );
 
 const projectCardCategoryTextClassName = cn(
-  "block h-auto w-auto whitespace-pre rounded-[var(--projects-card-category-radius)] px-[var(--projects-card-category-padding-x)] py-[var(--projects-card-category-padding-y)] text-left",
+  "block h-auto max-w-full whitespace-normal wrap-break-word rounded-[var(--projects-card-category-radius)] px-[var(--projects-card-category-padding-x)] py-[var(--projects-card-category-padding-y)] text-left md:w-auto md:whitespace-pre",
   "bg-[var(--color-project-card-category-bg)]",
   "font-[family-name:var(--font-poppins)] font-[var(--projects-card-category-text-weight)] not-italic",
   "text-[length:var(--projects-card-category-text-size)] leading-[var(--projects-card-category-line-height)]",
@@ -54,7 +54,7 @@ const projectCardTitleClassName = cn(
 );
 
 const projectCardHeaderRowClassName = cn(
-  "relative mx-auto flex h-[var(--projects-card-header-height)] w-full max-w-[var(--projects-card-content-max-width)] shrink-0 items-center justify-between",
+  "relative mx-auto flex min-h-[var(--projects-card-header-height)] w-full max-w-[var(--projects-card-content-max-width)] shrink-0 items-start justify-between md:h-[var(--projects-card-header-height)] md:items-center",
 );
 
 const projectCardSubheaderRowClassName = cn(
