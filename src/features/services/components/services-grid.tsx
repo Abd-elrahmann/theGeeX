@@ -41,8 +41,13 @@ export function ServicesGrid({
         "max-w-full",
         "grid-cols-(--services-grid-template-columns)",
         "gap-x-(--services-columns-gap)",
+        "services-scroll-stage",
       )}
       aria-label="Services content"
+      style={{
+        scrollBehavior: "smooth",
+        overscrollBehavior: "contain",
+      }}
     >
       <div className="relative h-(--services-grid-height) min-h-(--services-grid-height) min-w-0 self-stretch">
         <ServiceNavigation services={services} activeIndex={activeIndex} />

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 import { cn } from "@/lib/cn";
 import { formatIndex } from "@/lib/format-index";
@@ -11,7 +12,6 @@ interface ServiceNavigationProps {
   services: Service[];
   activeIndex: number;
   variant?: "desktop" | "mobile";
-  onSelectIndex?: (index: number) => void;
 }
 
 interface ServiceNavItemContentProps {
@@ -40,13 +40,12 @@ function ServiceNavItemContent({ service, index, isActive }: ServiceNavItemConte
 
       <span
         className={cn(
-          "relative z-1 min-w-0 flex-1 whitespace-nowrap font-cal-sans font-semibold not-italic",
+          "relative z-1 min-w-0 flex-1 whitespace-nowrap font-cal-sans not-italic",
           "text-(length:--services-nav-title-size) leading-(--services-nav-title-line-height)",
-          "tracking-(--services-nav-index-letter-spacing)",
-          "font-features-(--services-nav-index-font-features)",
+          "tracking-normal",
           isActive
-            ? "text-(--color-services-nav-active-text)"
-            : "text-(--color-services-nav-inactive-text)",
+            ? "font-bold text-(--color-services-nav-active-text) [text-shadow:0_0_0.45px_currentColor,0_0_0.45px_currentColor]"
+            : "font-semibold text-(--color-services-nav-inactive-text)",
         )}
       >
         {service.navTitle}
@@ -59,7 +58,6 @@ export function ServiceNavigation({
   services,
   activeIndex,
   variant = "desktop",
-  onSelectIndex,
 }: ServiceNavigationProps) {
   const isDesktop = variant === "desktop";
   const itemClassName = cn(
@@ -99,26 +97,25 @@ export function ServiceNavigation({
           return (
             <li key={service.id} className="relative w-full">
               {isDesktop ? (
-                <div
+                <Link
+                  href={`/services/${service.slug}`}
                   className={itemClassName}
                   role="group"
                   aria-label={
-                    isActive ? `${service.navTitle}, current service` : service.navTitle
+                    isActive ? `Open ${service.navTitle} service page, current service` : `Open ${service.navTitle} service page`
                   }
                 >
                   <ServiceNavItemContent service={service} index={index} isActive={isActive} />
-                </div>
+                </Link>
               ) : (
-                <button
-                  type="button"
+                <Link
+                  href={`/services/${service.slug}`}
                   className={cn(itemClassName, "text-left")}
                   aria-current={isActive ? "true" : undefined}
-                  onClick={() => {
-                    onSelectIndex?.(index);
-                  }}
+                  aria-label={isActive ? `Open ${service.navTitle} service page, current service` : `Open ${service.navTitle} service page`}
                 >
                   <ServiceNavItemContent service={service} index={index} isActive={isActive} />
-                </button>
+                </Link>
               )}
             </li>
           );

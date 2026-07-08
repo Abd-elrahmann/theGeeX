@@ -9,29 +9,39 @@ import { servicesImageContainerVisualClassName } from "@/features/services/const
 
 interface ServiceImageProps {
   service: Service;
-  variant?: "desktop" | "tablet" | "mobile";
+  variant?: "desktop" | "tablet" | "mobile" | "page";
   eager?: boolean;
+  imageSrc?: string;
+  imageAlt?: string;
 }
 
 export function ServiceImage({
   service,
   variant = "desktop",
   eager = false,
+  imageSrc,
+  imageAlt,
 }: ServiceImageProps) {
-  const isDesktop = variant === "desktop";
   const isMobile = variant === "mobile";
-  const isPlaceholder = service.image === servicesImagePlaceholder;
-  const imageClassName = cn(isMobile ? "object-contain" : "object-cover", isPlaceholder && "object-contain p-8");
+  const isPage = variant === "page";
+  const resolvedImageSrc = imageSrc ?? service.image;
+  const resolvedImageAlt = imageAlt ?? service.imageAlt;
+  const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
+  const imageClassName = cn(
+    isMobile ? "object-contain object-center" : "object-cover object-center",
+    "rounded-(--services-image-radius)",
+    isPlaceholder && "object-contain p-8",
+  );
   const loading = eager ? "eager" : undefined;
 
   const image = (
     <Image
-      src={service.image}
-      alt={service.imageAlt}
+      src={resolvedImageSrc}
+      alt={resolvedImageAlt}
       fill
       loading={loading}
       sizes={
-        isDesktop ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 768px) 50vw, 100vw"
+        variant === "desktop" ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 768px) 50vw, 100vw"
       }
       className={imageClassName}
       priority={eager || service.id === 1}
@@ -53,5 +63,31 @@ export function ServiceImage({
     );
   }
 
-  return <div className="relative h-full min-h-(--services-image-min-height) w-full">{image}</div>;
+  if (isPage) {
+    return (
+      <div className="relative h-full min-h-full w-full min-w-0 overflow-hidden rounded-(--services-image-radius)">
+        <div
+          className={cn(
+            "relative h-full min-h-full w-full min-w-0",
+            servicesImageContainerVisualClassName,
+          )}
+        >
+          {image}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative h-full min-h-(--services-image-min-height) w-85 max-w-full overflow-hidden rounded-(--services-image-radius)">
+      <div
+        className={cn(
+          "relative h-full min-h-full w-full min-w-0",
+          servicesImageContainerVisualClassName,
+        )}
+      >
+        {image}
+      </div>
+    </div>
+  );
 }

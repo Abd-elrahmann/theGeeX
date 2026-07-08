@@ -110,11 +110,6 @@ body::before {
   list-style: none;
   width: 100%;
   min-width: 0;
-  font-family: var(--font-poppins), system-ui, sans-serif;
-  font-weight: 300;
-  font-size: var(--services-content-description-size);
-  line-height: var(--services-content-description-line-height);
-  color: var(--color-services-content-text);
 }
 
 .service-content-bullet {
@@ -124,6 +119,25 @@ body::before {
   background-color: var(--color-services-content-text);
   width: var(--services-content-bullet-size);
   height: var(--services-content-bullet-size);
+}
+
+.services-pin-container {
+  touch-action: none;
+  pointer-events: auto;
+  overflow: visible;
+}
+
+.services-scroll-stage {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .services-scroll-stage {
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+  }
 }
 
 .projects-title-box {

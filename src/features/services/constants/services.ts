@@ -21,7 +21,9 @@ export interface Service {
   navTitle: string;
   contentTitle: string;
   description: string[];
+  pageDescription?: string[];
   image: string;
+  pageImage: string;
   imageAlt: string;
   page: ServiceDetail;
 }
@@ -74,7 +76,17 @@ const serviceBaseItems: ServiceBase[] = [
       "Technical Feasibility",
       "Growth Planning",
     ],
-    image: "/images/services/One.png",
+    pageDescription: [
+      "Product",
+      "RoadmappingFeature",
+      "ScopingTech Stack",
+      "SelectionMarket",
+      "ValidationTechnical",
+      "FeasibilityGrowth",
+      "Planning",
+    ],
+    image: "/images/Service Sections Covers/one.png",
+    pageImage: "/images/services/One.png",
     imageAlt: "Establish digital brand presence mockup",
   },
   {
@@ -90,7 +102,8 @@ const serviceBaseItems: ServiceBase[] = [
       "Design Systems",
       "Usability Optimization",
     ],
-    image: "/images/services/Two.png",
+    image: "/images/Service Sections Covers/two.png",
+    pageImage: "/images/services/Two.png",
     imageAlt: "Monetize checkout and payment flow mockup",
   },
   {
@@ -106,7 +119,8 @@ const serviceBaseItems: ServiceBase[] = [
       "Performance Optimization",
       "Monitoring & Scalability",
     ],
-    image: "/images/services/Three.png",
+    image: "/images/Service Sections Covers/three.png",
+    pageImage: "/images/services/Three.png",
     imageAlt: "Mobilize mobile apps mockup placeholder",
   },
   {
@@ -122,7 +136,8 @@ const serviceBaseItems: ServiceBase[] = [
       "Performance Optimization",
       "App Store Deployment",
     ],
-    image: "/images/services/Four.png",
+    image: "/images/Service Sections Covers/four.png",
+    pageImage: "/images/services/Four.png",
     imageAlt: "Evolve digital transformation mockup",
   },
   {
@@ -138,7 +153,8 @@ const serviceBaseItems: ServiceBase[] = [
       "Legacy System Integration",
       "API Documentation",
     ],
-    image: "/images/services/Five.png",
+    image: "/images/Service Sections Covers/five.png",
+    pageImage: "/images/services/Five.png",
     imageAlt: "Connect integrations ecosystem mockup",
   },
 ];

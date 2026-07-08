@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLenis } from "lenis/react";
 import Link from "next/link";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
@@ -8,6 +9,8 @@ import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
+import { scrollToPosition } from "@/lib/lenis-scroll-trigger";
+import { readRootCssNumber } from "@/lib/read-css-var";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
@@ -27,8 +30,11 @@ const SERVICES_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98p
 const SERVICES_TABLET_STAGE_HEIGHT_PX = 780;
 const SERVICES_TABLET_PANEL_HEIGHT_PX = 540;
 const servicesTabletPanelHeightClassName = "md:max-lg:!h-[540px]";
+const SERVICES_WHEEL_MIN_DELTA = 4;
+const SERVICES_WHEEL_STEP_GUARD_MS = 180;
 
 export function ServicesSection() {
+  const lenis = useLenis();
   const isDesktop = useDesktopBreakpoint();
   const isTablet = useMediaQuery(SERVICES_TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
@@ -39,6 +45,9 @@ export function ServicesSection() {
   const mobileContentMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const mobileImageMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const lastPointerRef = useRef({ x: -1, y: -1 });
+  const lastWheelStepTimeRef = useRef(0);
+  const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isLenisScrollingRef = useRef(false);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -58,12 +67,46 @@ export function ServicesSection() {
   });
   const shouldTrackMobileScroll = hasHydrated && !isDesktop;
   const { scrollYProgress } = useScroll({
-    target: isDesktop ? containerRef : shouldTrackMobileScroll ? mobileScrollRef : undefined,
+    target: shouldTrackMobileScroll ? mobileScrollRef : undefined,
     offset: ["start start", "end end"],
   });
 
   const activeService = services[activeIndex] ?? services[0];
   const isExploreCursorActive = isDesktop && isPointerFine && isGridHovered;
+
+  const getDesktopScrollStepMetrics = useCallback(() => {
+    const sectionElement = containerRef.current;
+
+    if (!sectionElement) {
+      return null;
+    }
+
+    const scrollStepVh = readRootCssNumber(
+      "--services-scroll-step-vh",
+      services.length > 1 ? 100 : 0,
+    );
+    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
+    const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
+
+    return {
+      stepDistance,
+      sectionTop,
+    };
+  }, [containerRef]);
+
+  const scrollDesktopToIndex = useCallback(
+    (index: number) => {
+      const metrics = getDesktopScrollStepMetrics();
+
+      if (!metrics) {
+        return;
+      }
+
+      const nextPosition = metrics.sectionTop + index * metrics.stepDistance;
+      scrollToPosition(nextPosition);
+    },
+    [getDesktopScrollStepMetrics],
+  );
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
@@ -76,12 +119,62 @@ export function ServicesSection() {
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (!isDesktop && !shouldTrackMobileScroll) {
+    if (!shouldTrackMobileScroll) {
       return;
     }
 
     syncActiveIndexFromProgress(progress, services.length, setActiveIndex);
   });
+
+  useEffect(() => {
+    if (!isDesktop) {
+      lastWheelStepTimeRef.current = 0;
+      return;
+    }
+
+    const sectionElement = containerRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    const handleWheel = (event: WheelEvent) => {
+      const sectionRect = sectionElement.getBoundingClientRect();
+
+      if (sectionRect.top > 0 || sectionRect.bottom < window.innerHeight) {
+        return;
+      }
+
+      if (Math.abs(event.deltaY) < SERVICES_WHEEL_MIN_DELTA) {
+        return;
+      }
+
+      const now = performance.now();
+
+      if (now - lastWheelStepTimeRef.current < SERVICES_WHEEL_STEP_GUARD_MS) {
+        event.preventDefault();
+        return;
+      }
+
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const nextIndex = Math.max(0, Math.min(services.length - 1, activeIndex + direction));
+
+      if (nextIndex === activeIndex) {
+        return;
+      }
+
+      event.preventDefault();
+      lastWheelStepTimeRef.current = now;
+      setActiveIndex(nextIndex);
+      scrollDesktopToIndex(nextIndex);
+    };
+
+    sectionElement.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      sectionElement.removeEventListener("wheel", handleWheel);
+    };
+  }, [activeIndex, containerRef, isDesktop, scrollDesktopToIndex, setActiveIndex]);
 
   const syncGridHoverFromPointer = useCallback((clientX: number, clientY: number) => {
     const gridElement = gridRef.current;
@@ -108,26 +201,43 @@ export function ServicesSection() {
   }, [isDesktop, isPointerFine, isExploreCursorActive]);
 
   useEffect(() => {
-    if (!isDesktop || !isPointerFine) {
+    if (!lenis || !isDesktop || !isPointerFine) {
       return;
     }
 
-    const handleScroll = () => {
-      const { x, y } = lastPointerRef.current;
+    const handleLenisScroll = () => {
+      isLenisScrollingRef.current = true;
+      setIsGridHovered(false);
 
-      if (x < 0) {
-        return;
+      if (hoverScrollTimeoutRef.current) {
+        clearTimeout(hoverScrollTimeoutRef.current);
       }
 
-      syncGridHoverFromPointer(x, y);
+      hoverScrollTimeoutRef.current = setTimeout(() => {
+        isLenisScrollingRef.current = false;
+        hoverScrollTimeoutRef.current = null;
+
+        const { x, y } = lastPointerRef.current;
+
+        if (x >= 0 && y >= 0) {
+          syncGridHoverFromPointer(x, y);
+        }
+      }, 100);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    lenis.on("scroll", handleLenisScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      lenis.off("scroll", handleLenisScroll);
+
+      if (hoverScrollTimeoutRef.current) {
+        clearTimeout(hoverScrollTimeoutRef.current);
+        hoverScrollTimeoutRef.current = null;
+      }
+
+      isLenisScrollingRef.current = false;
     };
-  }, [isDesktop, isPointerFine, syncGridHoverFromPointer]);
+  }, [lenis, isDesktop, isPointerFine, syncGridHoverFromPointer]);
 
   useEffect(() => {
     if (isDesktop) {
@@ -241,6 +351,11 @@ export function ServicesSection() {
       }}
       onMouseMove={(event) => {
         lastPointerRef.current = { x: event.clientX, y: event.clientY };
+
+        if (isLenisScrollingRef.current) {
+          return;
+        }
+
         syncGridHoverFromPointer(event.clientX, event.clientY);
       }}
     >
@@ -263,8 +378,8 @@ export function ServicesSection() {
               )}
             >
               <Link
-                href="/services"
-                aria-label="Open Services page"
+                href={`/services/${activeService.slug}`}
+                aria-label={`Open ${activeService.navTitle} service page`}
                 className="block w-(--services-grid-width) max-w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
               >
                 <ServicesGrid
@@ -318,8 +433,8 @@ export function ServicesSection() {
                 </div>
 
                 <Link
-                  href="/services"
-                  aria-label="Open Services page"
+                  href={`/services/${activeService.slug}`}
+                  aria-label={`Open ${activeService.navTitle} service page`}
                   className={cn(
                     "grid w-full content-start gap-(--services-columns-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-stretch",
                     "pb-(--services-stage-bottom-padding)",

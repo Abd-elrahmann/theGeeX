@@ -211,7 +211,7 @@
   --services-image-min-height: 280px;
   --services-mobile-image-height: clamp(190px, 54vw, 240px);
   --services-image-max-width: 100%;
-  --services-image-radius: 0px;
+  --services-image-radius: var(--services-content-radius);
   --services-section-cursor-z-index: 10000;
   --services-section-cursor-radius: 99px;
   --services-section-cursor-width: 160px;
@@ -2020,7 +2020,7 @@
     --services-grid-top: calc(var(--services-title-top) + 160px);
     --services-margin-top: var(--section-stack-gap);
     --services-stage-bottom-padding: 48px;
-    --services-scroll-step-vh: 100;
+    --services-scroll-step-vh: 72;
     --services-ai-cover-buffer: 900px;
     --services-grid-width: 1070px;
     --services-content-margin: 0px;

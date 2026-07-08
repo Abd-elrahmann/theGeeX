@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
+import { ScrollTrigger } from "@/lib/gsap";
 
 import { services } from "@/features/services/constants/services";
 import { ServiceContent } from "@/features/services/components/service-content";
@@ -33,10 +34,10 @@ function ServicesPageCardHeader({
       </p>
 
       <div className="flex w-full min-w-0 items-baseline gap-(--services-page-service-title-row-gap)">
-        <span className="h-auto w-auto shrink-0 whitespace-pre font-cal-sans text-(length:--services-page-service-index-size) leading-(--services-page-service-index-line-height) font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off]">
+        <span className="h-[31px] w-[24px] shrink-0 whitespace-pre font-cal-sans text-[26px] leading-[31px] font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off]">
           {formatIndex(index)}
         </span>
-        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) flex-1 whitespace-normal break-words font-cal-sans text-(length:--services-page-service-title-size) leading-(--services-page-service-title-line-height) font-semibold tracking-normal text-(--color-services-page-card-title)">
+        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) flex-1 whitespace-normal wrap-break-word font-cal-sans text-[28px] leading-[1.2] font-semibold tracking-normal text-(--color-services-page-card-title)">
           {title}
         </h2>
       </div>
@@ -45,6 +46,7 @@ function ServicesPageCardHeader({
 }
 
 export function ServicesPage() {
+  const servicesPageRef = useRef<HTMLElement>(null);
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [isPageHovered, setIsPageHovered] = useState(false);
@@ -80,8 +82,35 @@ export function ServicesPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const container = servicesPageRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    let timeoutId = 0;
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <main
+      ref={servicesPageRef}
       className="relative z-(--page-main-z-index) min-h-svh w-full bg-background pt-(--services-page-top-padding)"
       onMouseEnter={() => {
         setIsPageHovered(true);
@@ -92,7 +121,7 @@ export function ServicesPage() {
     >
       <section
         aria-labelledby="services-page-title"
-        className="mx-auto box-border flex h-min w-full max-w-(--services-page-container-max-width) flex-col content-center items-center justify-center gap-(--services-page-section-gap) overflow-clip rounded-none px-(--services-page-padding-x) pt-(--services-page-padding-top) pb-(--services-page-padding-bottom)"
+        className="mx-auto box-border flex h-min w-full max-w-[1120px] flex-col content-center items-center justify-center gap-[24px] overflow-visible rounded-none px-[80px] pt-[48px] pb-[80px]"
       >
         <header className="flex w-full flex-col items-center gap-(--services-page-hero-gap) text-center">
           <h1
@@ -118,9 +147,10 @@ export function ServicesPage() {
               <div className="box-border flex h-auto min-h-(--services-page-image-height) w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:h-(--services-page-image-height) md:min-h-0 md:overflow-hidden">
                 <ServiceContent
                   service={service}
-                  variant="standalone"
+                  variant="page"
                   isGridHovered={isArrowActive}
                   showContentTitle={false}
+                  descriptionItems={service.pageDescription ?? service.description}
                   headerContent={
                     <ServicesPageCardHeader
                       index={index}
@@ -133,7 +163,12 @@ export function ServicesPage() {
 
               <div className="box-border flex h-(--services-page-image-height) min-h-0 w-full flex-1 flex-col content-start items-start justify-between overflow-hidden rounded-none p-0">
                 <div className="relative h-(--services-page-image-height) w-full overflow-hidden rounded-(--services-image-radius)">
-                  <ServiceImage service={service} variant="desktop" eager={index === 0} />
+                  <ServiceImage
+                    service={service}
+                    variant="page"
+                    eager={index === 0}
+                    imageSrc={service.pageImage}
+                  />
                 </div>
               </div>
             </Link>
