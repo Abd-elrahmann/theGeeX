@@ -142,7 +142,7 @@ export function TestimonialsSection() {
             ref={viewportRef}
             className={cn(
               "w-full overflow-x-auto overflow-y-hidden overscroll-x-contain pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden",
-              isDesktop ? "touch-pan-x" : "touch-pan-x snap-x snap-mandatory",
+              isDesktop ? "touch-pan-x" : "[touch-action:pan-x_pan-y] snap-x snap-mandatory",
             )}
             onPointerDown={() => {
               pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;
