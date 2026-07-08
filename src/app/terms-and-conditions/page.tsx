@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { SiteFooter } from "@/features/footer";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions | theGeeX",
-  description: "Terms and conditions for using theGeeX website and services.",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Terms & Conditions",
+  description: "Terms and conditions for using theGeeX website, digital products, and services.",
+  path: "/terms-and-conditions",
+});
 
 type TermsSection = {
   title: string;

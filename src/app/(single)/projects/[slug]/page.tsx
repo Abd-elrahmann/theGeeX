@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ProjectDetailPage } from "@/features/projects/components/project-detail-page";
 import { getProjectBySlug, projects } from "@/features/projects/constants/projects";
+import { createPageMetadata } from "@/lib/metadata";
 
 interface ProjectRouteProps {
   params: Promise<{
@@ -13,20 +15,19 @@ export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export async function generateMetadata({ params }: ProjectRouteProps) {
+export async function generateMetadata({ params }: ProjectRouteProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
   if (!project) {
-    return {
-      title: "Project | theGeeX",
-    };
+    return createPageMetadata({ title: "Project", path: "/projects", noIndex: true });
   }
 
-  return {
-    title: `${project.name} | theGeeX`,
+  return createPageMetadata({
+    title: project.name,
     description: project.description,
-  };
+    path: `/projects/${project.slug}`,
+  });
 }
 
 export default async function ProjectRoute({ params }: ProjectRouteProps) {

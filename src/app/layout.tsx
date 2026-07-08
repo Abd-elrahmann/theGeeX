@@ -9,6 +9,7 @@ import { NavigationProgress } from "@/components/providers/navigation-progress";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { Cursor } from "@/components/shared/cursor";
 import { cn } from "@/lib/cn";
+import { siteMetadata } from "@/lib/metadata";
 
 import "@/lib/gsap";
 import "./globals.css";
@@ -29,34 +30,29 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "700"],
 });
 
-const metadataBaseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(metadataBaseUrl),
-  title: "theGeeX",
-  description: "Creative digital experiences",
+  metadataBase: siteMetadata.metadataBase,
+  title: siteMetadata.name,
+  description: siteMetadata.description,
+  applicationName: siteMetadata.name,
   icons: {
     icon: "/images/logo.svg",
     shortcut: "/images/logo.svg",
     apple: "/images/logo.svg",
   },
   openGraph: {
-    title: "theGeeX",
-    description: "Creative digital experiences",
-    images: [
-      {
-        url: "/images/logo.svg",
-        width: 103,
-        height: 40,
-        alt: "theGeeX",
-      },
-    ],
+    title: siteMetadata.name,
+    description: siteMetadata.description,
+    siteName: siteMetadata.name,
+    locale: "en_US",
+    type: "website",
+    images: [siteMetadata.ogImage],
   },
   twitter: {
-    card: "summary",
-    title: "theGeeX",
-    description: "Creative digital experiences",
-    images: ["/images/logo.svg"],
+    card: "summary_large_image",
+    title: siteMetadata.name,
+    description: siteMetadata.description,
+    images: [siteMetadata.ogImage],
   },
 };
 

@@ -10,7 +10,8 @@ export interface SiteCta {
 
 export const siteConfig = {
   name: "theGeeX",
-  description: "Creative digital experiences",
+  description:
+    "theGeeX is an AI-native digital transformation studio building brands, products, platforms, and growth systems.",
   navLinks: [
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },

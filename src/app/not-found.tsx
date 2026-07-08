@@ -1,5 +1,7 @@
 "use client";
 
+import type { Metadata } from "next";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
@@ -7,6 +9,13 @@ import { useState } from "react";
 import { AnimatedArrowSwap } from "@/components/shared/animations/animated-arrow-swap";
 import { ArrowUpRightIcon } from "@/components/shared/icons/arrow-up-right";
 import { SiteFooter } from "@/features/footer";
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Page Not Found",
+  description: "The page you are looking for could not be found on theGeeX.",
+  noIndex: true,
+});
 
 const notFoundButtonTransition = {
   type: "spring" as const,

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { Ambition } from "@/features/ambition";
 import { AiGrowthSection } from "@/features/ai-growth";
 import { AwardsSection } from "@/features/awards";
@@ -13,6 +15,13 @@ import { ProjectsSection } from "@/features/projects";
 import { ServicesSection } from "@/features/services";
 import { StorytellingSection } from "@/features/storytelling";
 import { TestimonialsSection } from "@/features/testimonials";
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = createPageMetadata({
+  description:
+    "Explore theGeeX across strategy, branding, product design, engineering, AI automation, growth, and digital transformation services.",
+  path: "/",
+});
 
 export default function Home() {
   return (
