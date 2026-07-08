@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { navbarConfig } from "@/config/navbar.config";
 import { cn } from "@/lib/cn";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
@@ -24,6 +24,29 @@ export function Navbar() {
   const headerRef = useRef<HTMLElement>(null);
   const animatedRef = useRef<HTMLDivElement>(null);
   const hasInitialized = useRef(false);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const header = headerRef.current;
+      const target = event.target;
+
+      if (!(target instanceof Node) || !header || header.contains(target)) {
+        return;
+      }
+
+      setIsMobileMenuRequested(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [isMobileMenuOpen]);
 
   useLayoutEffect(() => {
     const header = headerRef.current;
