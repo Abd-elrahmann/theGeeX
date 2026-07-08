@@ -1,0 +1,40 @@
+export const contactUsContent = {
+  title: "Tell us what you\nhave in mind.",
+  titleAccent: "mind.",
+  emailLabel: "Email",
+  emailValue: "hello@thegeex.org",
+  phoneLabel: "Phone number",
+  phoneValue: "+20 1108828385",
+  locationLabel: "Location",
+  locationValue: "4 Ibn Al Saegh , 5th floor",
+  formTitle: "Start your project",
+  fields: [
+    {
+      id: "fullName",
+      label: "Full Name",
+      placeholder: "Enter your full name",
+      type: "text",
+      autoComplete: "name",
+    },
+    {
+      id: "email",
+      label: "Email",
+      placeholder: "Enter your email",
+      type: "email",
+      autoComplete: "email",
+    },
+    {
+      id: "phoneNumber",
+      label: "Phone Number",
+      placeholder: "Enter your phone number",
+      type: "tel",
+      autoComplete: "tel",
+    },
+  ],
+  messageField: {
+    id: "message",
+    label: "Message",
+    placeholder: "Tell us about your project",
+  },
+  submitLabel: "Submit",
+} as const;

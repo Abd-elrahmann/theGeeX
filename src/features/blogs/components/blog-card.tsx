@@ -12,12 +12,13 @@ interface BlogCardProps {
   imageClassName?: string;
   metaContainerClassName?: string;
   typesClassName?: string;
+  typeChipClassName?: string;
   titleClassName?: string;
   maxTypes?: number;
   dateClassName?: string;
 }
 
-export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, titleClassName, maxTypes }: BlogCardProps) {
+export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, typeChipClassName, titleClassName, maxTypes }: BlogCardProps) {
   const visibleTypes = typeof maxTypes === "number" ? blog.types.slice(0, maxTypes) : blog.types;
 
   return (
@@ -61,6 +62,7 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
                 "font-poppins text-(length:--blogs-card-badge-size) leading-(--blogs-card-badge-line-height)",
                 "font-normal tracking-[-0.02em] text-(--color-blogs-card-badge-text)",
                 "backdrop-blur-(--blogs-card-badge-blur)",
+                typeChipClassName,
               )}
             >
               {type}

@@ -1,3 +1,7 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 import { SiteFooter } from "@/features/footer";
 import { LetsTalkSection } from "@/features/lets-talk";
 
@@ -6,6 +10,18 @@ export default function SinglePageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const shouldHideLetsTalk = pathname.startsWith("/packages");
+
+  if (shouldHideLetsTalk) {
+    return (
+      <>
+        {children}
+        <SiteFooter compactSpacing />
+      </>
+    );
+  }
+
   return (
     <>
       {children}

@@ -119,7 +119,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
             Projects
           </Link>
           <span aria-hidden="true">&gt;</span>
-          <span className="whitespace-nowrap text-(--projects-detail-text-color)">{breadcrumbLabel}</span>
+          <span className="whitespace-nowrap font-medium text-(--projects-detail-text-color)">{breadcrumbLabel}</span>
         </nav>
 
         <div className="flex flex-col gap-(--projects-detail-title-stack-gap)">

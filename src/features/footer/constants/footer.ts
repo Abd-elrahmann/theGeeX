@@ -3,11 +3,16 @@ export interface FooterLinkItem {
   href: string;
 }
 
+export interface FooterRightItem {
+  label: string;
+  href?: string;
+}
+
 export const footerNavLinks: FooterLinkItem[] = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
-  { label: "Contact Us", href: "#contact-us" },
+  { label: "Contact Us", href: "/contact-us" },
 ];
 
 export const footerSocialLinks: FooterLinkItem[] = [
@@ -21,6 +26,10 @@ export const footerContent = {
   newsletterSubtitle: "No spam just the good stuff.",
   emailPlaceholder: "Write your email here",
   subscribeLabel: "Subscribe",
-  rights: ["All rights reserved", "© 2026 TheGeeX", "Terms & Conditions"],
+  rights: [
+    { label: "All rights reserved" },
+    { label: "© 2026 TheGeeX" },
+    { label: "Terms & Conditions", href: "/terms-and-conditions" },
+  ] satisfies FooterRightItem[],
   logoSrc: "/images/footerLogo.png",
 } as const;

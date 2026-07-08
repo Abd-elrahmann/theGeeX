@@ -15,10 +15,10 @@ export const siteConfig = {
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
     { label: "Projects", href: "/projects" },
-    { label: "Contact Us", href: "#contact-us" },
+    { label: "Contact Us", href: "/contact-us" },
   ] satisfies NavLink[],
   cta: {
     label: "Book a Free Strategy Call",
-    href: "#contact-us",
+    href: "/contact-us",
   } satisfies SiteCta,
 } as const;

@@ -1,0 +1,1 @@
+export { ContactUsPage } from "@/features/contact-us/components/contact-us-page";

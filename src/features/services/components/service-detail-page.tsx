@@ -96,7 +96,7 @@ function ServiceDetailHero({ service }: ServiceDetailPageProps) {
           Services
         </Link>
         <span aria-hidden>&gt;</span>
-        <span className="whitespace-nowrap text-(--color-service-detail-text)">{service.navTitle}</span>
+        <span className="whitespace-nowrap font-medium text-(--color-service-detail-text)">{service.navTitle}</span>
       </nav>
 
       <div className="mx-auto flex w-full max-w-(--service-detail-title-max-width) flex-col items-center gap-(--service-detail-title-types-gap) text-center">

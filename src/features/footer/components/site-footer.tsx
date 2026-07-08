@@ -11,18 +11,19 @@ import {
 
 type SiteFooterProps = {
   revealFromPreviousSection?: boolean;
+  compactSpacing?: boolean;
 };
 
-export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProps) {
+export function SiteFooter({ revealFromPreviousSection = false, compactSpacing = false }: SiteFooterProps) {
   const [rightsReserved, rightsCopyright, rightsTerms] = footerContent.rights;
 
   return (
     <footer
       className={cn(
         "w-full overflow-visible bg-background",
-        revealFromPreviousSection ? "relative mt-0" : "relative mt-(--footer-margin-top)",
+        revealFromPreviousSection || compactSpacing ? "relative mt-0" : "relative mt-(--footer-margin-top)",
         "px-(--footer-padding-x) pt-(--footer-padding-top)",
-        revealFromPreviousSection ? "pb-0" : "pb-(--footer-padding-bottom)",
+        revealFromPreviousSection || compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
       )}
     >
       <div className="relative mx-auto w-full max-w-(--footer-container-max-width)">
@@ -137,26 +138,39 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
 
             <div className="flex w-fit max-w-(--footer-rights-max-width) shrink-0 flex-col items-center justify-center gap-(--footer-rights-mobile-row-gap) md:flex-row md:flex-wrap md:gap-(--footer-rights-gap)">
               <div className="flex items-center justify-center whitespace-nowrap md:hidden">
-                <span
-                  className={cn(
-                    "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
-                    "font-medium tracking-normal text-(--color-footer-rights)",
-                  )}
-                >
-                  {rightsTerms}
-                </span>
+                {rightsTerms.href ? (
+                  <Link
+                    href={rightsTerms.href}
+                    className={cn(
+                      "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                      "font-medium tracking-normal text-(--color-footer-rights)",
+                      "transition-colors duration-200 hover:underline hover:underline-offset-4",
+                    )}
+                  >
+                    {rightsTerms.label}
+                  </Link>
+                ) : (
+                  <span
+                    className={cn(
+                      "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                      "font-medium tracking-normal text-(--color-footer-rights)",
+                    )}
+                  >
+                    {rightsTerms.label}
+                  </span>
+                )}
               </div>
 
               <div className="flex items-center justify-center gap-(--footer-rights-gap) whitespace-nowrap md:hidden">
                 {[rightsReserved, rightsCopyright].map((item, index) => (
-                  <div key={item} className="flex items-center gap-(--footer-rights-gap)">
+                  <div key={item.label} className="flex items-center gap-(--footer-rights-gap)">
                     <span
                       className={cn(
                         "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
                         "font-medium tracking-normal text-(--color-footer-rights)",
                       )}
                     >
-                      {item}
+                      {item.label}
                     </span>
                     {index === 0 ? (
                       <span className="text-(--color-footer-rights-divider)">|</span>
@@ -166,15 +180,28 @@ export function SiteFooter({ revealFromPreviousSection = false }: SiteFooterProp
               </div>
 
               {footerContent.rights.map((item, index) => (
-                <div key={item} className="hidden items-center gap-(--footer-rights-gap) md:flex">
-                  <span
-                    className={cn(
-                      "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
-                      "font-medium tracking-normal text-(--color-footer-rights)",
-                    )}
-                  >
-                    {item}
-                  </span>
+                <div key={item.label} className="hidden items-center gap-(--footer-rights-gap) md:flex">
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                        "font-medium tracking-normal text-(--color-footer-rights)",
+                        "transition-colors duration-200 hover:underline hover:underline-offset-4",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <span
+                      className={cn(
+                        "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                        "font-medium tracking-normal text-(--color-footer-rights)",
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                  )}
                   {index < footerContent.rights.length - 1 ? (
                     <span className="text-(--color-footer-rights-divider)">|</span>
                   ) : null}

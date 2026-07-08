@@ -166,7 +166,7 @@ export function BlogDetailPage({ article }: BlogDetailPageProps) {
             Blogs
           </Link>
           <span aria-hidden="true">&gt;</span>
-          <span className="whitespace-nowrap text-(--color-service-detail-text)">{article.breadcrumbLabel}</span>
+          <span className="whitespace-nowrap font-medium text-(--color-service-detail-text)">{article.breadcrumbLabel}</span>
         </nav>
 
         <header className="flex w-full flex-col gap-6">
