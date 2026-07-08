@@ -1560,6 +1560,9 @@
     --team-margin-top: calc(var(--section-stack-gap) + 64px);
     --service-detail-hero-gap: 18px;
     --service-detail-breadcrumb-size: 12px;
+    --packages-detail-breadcrumb-size: 12px;
+    --terms-page-breadcrumb-size: 12px;
+    --projects-detail-breadcrumb-size: 12px;
     --service-detail-small-title-size: 13px;
     --service-detail-main-title-size: clamp(24px, 7vw, 30px);
     --service-detail-main-title-line-height: 1.2em;
