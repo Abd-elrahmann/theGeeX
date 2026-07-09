@@ -698,8 +698,7 @@
     var(--lets-talk-card-min-height) +
     var(--lets-talk-padding-y) * 2 +
     var(--footer-reveal-gap) +
-    var(--footer-card-min-height) +
-    var(--footer-padding-bottom)
+    var(--footer-card-min-height)
   );
   --color-lets-talk-overlay: rgb(0 0 0 / 0.24);
   --color-lets-talk-title: #ffffff;
@@ -1149,7 +1148,7 @@
   --projects-section-exit-padding: calc(var(--projects-section-exit-vh) * 1vh);
   --projects-card-stack-offset-step: 56px;
   --projects-card-outer-padding: 20px;
-  --projects-card-height: 600px;
+  --projects-card-height: 650px;
   --projects-card-parallax-travel: 400px;
   --projects-title-z-index: 20;
   --projects-card-stack-z-index: 10;
@@ -1555,7 +1554,7 @@
 
 @media (max-width: 767.98px) {
   :root {
-    --culture-margin-top: calc(var(--section-stack-gap) + 32px);
+    --culture-margin-top: var(--section-stack-gap);
     --culture-section-exit-vh: 28;
     --team-margin-top: calc(var(--section-stack-gap) + 64px);
     --service-detail-hero-gap: 18px;
