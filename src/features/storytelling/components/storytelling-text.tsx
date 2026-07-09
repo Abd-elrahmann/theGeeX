@@ -26,7 +26,7 @@ interface StorytellingCaptionPanelProps {
 const storytellingCaptionClassName = cn(
   "absolute inset-0 w-full font-poppins font-normal not-italic",
   "h-(--storytelling-caption-height) min-h-(--storytelling-caption-height)",
-  "text-center text-[length:var(--storytelling-caption-size)]",
+  "text-center lg:text-left text-[length:var(--storytelling-caption-size)]",
   "leading-(--storytelling-caption-line-height) tracking-[0em]",
   "whitespace-pre-wrap break-words text-(--color-storytelling-caption)",
 );
@@ -93,7 +93,7 @@ export function StorytellingLines({
       aria-labelledby="storytelling-lines-heading"
       className={cn(
         "box-border flex h-min w-(--storytelling-lines-width) max-w-none shrink-0 flex-col flex-nowrap max-lg:min-w-0",
-        "content-center items-center justify-center overflow-visible",
+        "content-start items-center justify-start overflow-visible lg:items-start",
         "gap-(--storytelling-line-gap)",
         isDesktop && "pl-(--storytelling-lines-padding-left)",
         !isDesktop && "w-full pl-0",

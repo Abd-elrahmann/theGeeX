@@ -31,5 +31,5 @@ export const footerContent = {
     { label: "© 2026 TheGeeX" },
     { label: "Terms & Conditions", href: "/terms-and-conditions" },
   ] satisfies FooterRightItem[],
-  logoSrc: "/images/footerLogo.png",
+  logoSrc: "/images/footer_logo.png",
 } as const;

@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { useLenis } from "lenis/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
@@ -35,6 +36,7 @@ const SERVICES_WHEEL_STEP_GUARD_MS = 180;
 
 export function ServicesSection() {
   const lenis = useLenis();
+  const router = useRouter();
   const isDesktop = useDesktopBreakpoint();
   const isTablet = useMediaQuery(SERVICES_TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
@@ -42,6 +44,7 @@ export function ServicesSection() {
   const gridRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const mobileMeasureRef = useRef<HTMLDivElement>(null);
+  const mobileTitleRef = useRef<HTMLDivElement>(null);
   const mobileContentMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const mobileImageMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const lastPointerRef = useRef({ x: -1, y: -1 });
@@ -251,7 +254,9 @@ export function ServicesSection() {
         parseFloat(rootStyles.getPropertyValue("--services-stage-bottom-padding")) || 32;
       const pinClearance =
         parseFloat(rootStyles.getPropertyValue("--services-mobile-pin-clearance")) || 0;
+      const scrollStepVh = parseFloat(rootStyles.getPropertyValue("--services-scroll-step-vh")) || 100;
       const viewportHeight = window.innerHeight;
+      const titleHeight = mobileTitleRef.current?.offsetHeight ?? 0;
       const contentHeight = Math.max(
         0,
         ...mobileContentMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
@@ -264,14 +269,16 @@ export function ServicesSection() {
         ? Math.max(viewportHeight, SERVICES_TABLET_STAGE_HEIGHT_PX)
         : Math.max(
             viewportHeight,
-            contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance,
+            titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance,
           );
 
       setMobileStageMetrics({
         stageHeight,
         contentHeight,
         imageHeight,
-        scrollHeight: stageHeight + Math.max(services.length - 1, 0) * viewportHeight,
+        scrollHeight:
+          stageHeight +
+          Math.max(services.length, 1) * viewportHeight * (scrollStepVh / 100),
       });
     };
 
@@ -297,7 +304,7 @@ export function ServicesSection() {
   }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
-  const desktopScrollStepCount = Math.max(services.length - 1, 0);
+  const desktopScrollStepCount = Math.max(services.length, 1);
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
     <div
@@ -327,6 +334,33 @@ export function ServicesSection() {
         {services[serviceIndex]?.navTitle}
       </span>
     </div>
+  );
+
+  const navigateToActiveService = useCallback(() => {
+    router.push(`/services/${activeService.slug}`);
+  }, [activeService.slug, router]);
+
+  const handleDesktopCardClick = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if ((event.target as HTMLElement).closest("a, button")) {
+        return;
+      }
+
+      navigateToActiveService();
+    },
+    [navigateToActiveService],
+  );
+
+  const handleDesktopCardKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      event.preventDefault();
+      navigateToActiveService();
+    },
+    [navigateToActiveService],
   );
 
   return (
@@ -377,10 +411,13 @@ export function ServicesSection() {
                 "relative z-(--services-content-z-index) flex w-full justify-center",
               )}
             >
-              <Link
-                href={`/services/${activeService.slug}`}
+              <div
+                role="link"
+                tabIndex={0}
                 aria-label={`Open ${activeService.navTitle} service page`}
                 className="block w-(--services-grid-width) max-w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                onClick={handleDesktopCardClick}
+                onKeyDown={handleDesktopCardKeyDown}
               >
                 <ServicesGrid
                   gridRef={gridRef}
@@ -390,7 +427,7 @@ export function ServicesSection() {
                   activeService={activeService}
                   isGridHovered={isGridHovered}
                 />
-              </Link>
+              </div>
             </div>
 
             <div
@@ -412,7 +449,7 @@ export function ServicesSection() {
             }}
           >
             <div
-              className="sticky top-0 overflow-hidden"
+              className="sticky top-0 overflow-visible"
               style={{
                 height:
                   mobileStageMetrics.stageHeight > 0
@@ -422,13 +459,13 @@ export function ServicesSection() {
             >
               <div
                 className={cn(
-                  "relative z-(--services-content-z-index) flex h-full w-full overflow-hidden",
+                  "relative z-(--services-content-z-index) flex h-full w-full overflow-visible",
                   isTablet
                     ? "flex-col items-start justify-start pt-(--services-padding-y)"
                     : "flex-col items-start justify-start pt-(--services-padding-y)",
                 )}
               >
-                <div className="w-full">
+                <div ref={mobileTitleRef} className="w-full shrink-0">
                   <ServicesTitle variant="inline" />
                 </div>
 
@@ -469,6 +506,7 @@ export function ServicesSection() {
                     >
                         <ServiceContent
                           service={activeService}
+                          layoutMode="flow"
                           headerContent={renderMobileServiceHeader(activeIndex)}
                         />
                       </ServiceSlidePanel>
@@ -517,6 +555,7 @@ export function ServicesSection() {
                     <ServiceContent
                       service={service}
                       variant="standalone"
+                      layoutMode="flow"
                       headerContent={renderMobileServiceHeader(index)}
                     />
                   </div>

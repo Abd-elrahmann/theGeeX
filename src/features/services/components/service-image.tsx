@@ -50,14 +50,21 @@ export function ServiceImage({
 
   if (isMobile) {
     return (
-      <div className="relative h-(--services-mobile-image-height) w-full min-w-0">
-        <div
-          className={cn(
-            "relative h-full w-full min-w-0",
-            servicesImageContainerVisualClassName,
-          )}
-        >
-          {image}
+      <div className="relative w-full min-w-0 overflow-hidden rounded-(--services-image-radius)">
+        <div className={cn("relative w-full min-w-0", servicesImageContainerVisualClassName)}>
+          <Image
+            src={resolvedImageSrc}
+            alt={resolvedImageAlt}
+            width={1254}
+            height={1254}
+            loading={loading}
+            sizes="100vw"
+            className={cn(
+              "h-auto w-full object-contain object-center rounded-(--services-image-radius)",
+              isPlaceholder && "object-contain p-8",
+            )}
+            priority={eager || service.id === 1}
+          />
         </div>
       </div>
     );

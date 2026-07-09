@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
-import { useScroll, useTransform } from "framer-motion";
 
 import { ExploreSectionCursor } from "@/components/shared/cursor";
 import { exploreCursorTransition } from "@/components/shared/cursor/constants/cursor.config";
@@ -49,6 +49,18 @@ function getMainAnimationEnd(): number {
   return scrollVh / (scrollVh + exitVh);
 }
 
+function easeOutCubic(value: number): number {
+  return 1 - Math.pow(1 - value, 3);
+}
+
+function getDelayedLiftProgress(progress: number, startThreshold: number): number {
+  if (progress <= startThreshold) {
+    return 0;
+  }
+
+  return easeOutCubic((progress - startThreshold) / (1 - startThreshold));
+}
+
 export function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardStackRef = useRef<HTMLDivElement>(null);
@@ -69,6 +81,16 @@ export function ProjectsSection() {
   const animationProgress = useTransform(scrollYProgress, (progress) =>
     Math.min(progress / mainAnimationEnd, 1),
   );
+
+  const sectionLiftY = useTransform(animationProgress, (progress) => {
+    if (!isDesktop) {
+      return 0;
+    }
+
+    const delayedProgress = getDelayedLiftProgress(progress, 0.015);
+
+    return -delayedProgress * 320;
+  });
 
   const exitProgress = useTransform(scrollYProgress, (progress) => {
     if (progress <= mainAnimationEnd) {
@@ -179,11 +201,12 @@ export function ProjectsSection() {
     >
       <div className="relative w-full">
         <div className="relative h-(--projects-section-scroll-height) w-full">
-          <div
+          <motion.div
             className={cn(
               "sticky top-0 grid h-svh min-h-svh w-full overflow-visible",
               "grid-rows-[auto_minmax(0,1fr)] gap-(--projects-title-gap)",
             )}
+            style={{ y: sectionLiftY }}
           >
             <ProjectsTitle />
 
@@ -204,7 +227,7 @@ export function ProjectsSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         <div

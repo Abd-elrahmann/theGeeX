@@ -11,7 +11,6 @@ import { formatIndex } from "@/lib/format-index";
 import { ProjectCardArrow } from "@/features/projects/components/project-card-arrow";
 
 import {
-  projectsCardExitScaleSpeed,
   projectsFirstCardEnterProgress,
   projectsCardHiddenOffsetY,
   projectsCardParallaxTravel,
@@ -97,7 +96,6 @@ function getCardEnterRange(
   const remainingCards = totalCards - 1;
   const remainingSpan = Math.max(1 - firstCardSpan, 0) / remainingCards;
   const enterStart = firstCardSpan + (index - 1) * remainingSpan;
-
   return {
     enterStart,
     enterEnd: Math.min(enterStart + remainingSpan, 1),
@@ -180,20 +178,6 @@ function getStackScale(progress: number, index: number, totalCards: number): num
   return settledScale;
 }
 
-function applyExitScaleRecovery(
-  scale: number,
-  exitProgress: number,
-  speedMultiplier = 1,
-): number {
-  if (exitProgress <= 0) {
-    return scale;
-  }
-
-  const easedExit = Math.min(exitProgress * projectsCardExitScaleSpeed * speedMultiplier, 1);
-
-  return scale + (1 - scale) * easedExit;
-}
-
 function getLastCardScale(
   progress: number,
   index: number,
@@ -218,16 +202,13 @@ function getLastCardScale(
 
 function getCardScale(
   progress: number,
-  exitProgress: number,
   index: number,
   totalCards: number,
 ): number {
   const isLastCard = index === totalCards - 1;
-  const baseScale = isLastCard
+  return isLastCard
     ? getLastCardScale(progress, index, totalCards)
     : getStackScale(progress, index, totalCards);
-
-  return applyExitScaleRecovery(baseScale, exitProgress, isLastCard ? 1.8 : 1);
 }
 
 export function ProjectCard({
@@ -235,7 +216,6 @@ export function ProjectCard({
   index,
   totalCards,
   scrollProgress,
-  exitProgress,
 }: ProjectCardProps) {
   const [isCardHovered, setIsCardHovered] = useState(false);
   const { enterStart, enterEnd } = getCardEnterRange(index, totalCards);
@@ -247,13 +227,8 @@ export function ProjectCard({
     getCardY(progress, index, enterStart, enterEnd, speedFactor),
   );
 
-  const cardScale = useTransform([scrollProgress, exitProgress], ([progress, exit]) =>
-    getCardScale(
-      progress as number,
-      exit as number,
-      index,
-      totalCards,
-    ),
+  const cardScale = useTransform(scrollProgress, (progress) =>
+    getCardScale(progress, index, totalCards),
   );
   const articleStyle: ProjectCardArticleStyle = {
     "--project-card-background": project.background,
@@ -326,11 +301,15 @@ export function ProjectCard({
 
         <div
           className="relative mt-(--projects-card-image-margin-top) h-px min-h-(--projects-card-image-min-height) w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)"
-          style={{ borderRadius: "var(--projects-card-image-radius)" }}
+          style={{
+            borderRadius: "var(--projects-card-image-radius)",
+          }}
         >
           <div
             className="absolute inset-0 overflow-hidden"
-            style={{ borderRadius: "var(--projects-card-image-radius)" }}
+            style={{
+              borderRadius: "var(--projects-card-image-radius)",
+            }}
           >
             <Image
               src={project.image}
@@ -342,11 +321,13 @@ export function ProjectCard({
               unoptimized
               draggable={false}
               style={{
-                objectPosition: "var(--projects-card-image-position)",
-                transform: "translateY(var(--projects-card-image-translate-y)) scale(var(--projects-card-image-scale))",
-                transformOrigin: "center center",
+                objectPosition: project.imagePosition ?? "var(--projects-card-image-position)",
+                borderRadius: "var(--projects-card-image-radius)",
               }}
-              className={cn("absolute inset-0 block h-full w-full object-cover object-center", project.imageClassName)}
+              className={cn(
+                "absolute inset-0 block h-full w-full object-cover",
+                project.imageClassName,
+              )}
             />
           </div>
         </div>

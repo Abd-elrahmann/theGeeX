@@ -40,12 +40,39 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
 
         <div
           className={cn(
-            "relative z-10 flex min-h-(--footer-card-min-height) w-full flex-col justify-between overflow-hidden rounded-(--footer-card-radius)",
+            "relative z-10 flex min-h-(--footer-card-min-height) w-full flex-col items-center justify-between overflow-hidden rounded-(--footer-card-radius)",
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
           )}
+          style={{
+            boxSizing: "border-box",
+            alignContent: "center",
+            flexWrap: "nowrap",
+            overflow: "clip",
+            borderRadius: "64px",
+            backgroundColor: "#2558b4",
+            padding: "20px 58px 0 58px",
+          }}
         >
-          <div className="grid w-full grid-cols-2 gap-(--footer-top-row-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.45fr)]">
-            <nav aria-label="Footer navigation" className="order-2 flex flex-col items-start gap-(--footer-link-column-gap) md:order-1">
+          <div
+            className="flex w-full flex-col gap-(--footer-top-row-gap) md:flex-row md:items-start md:gap-2"
+            style={{ alignContent: "center", flexWrap: "nowrap" }}
+          >
+            <nav
+              aria-label="Footer navigation"
+              className="order-2 flex h-min w-full flex-col items-start justify-center gap-5 overflow-visible p-0 content-start md:order-1 md:w-px md:flex-1"
+              style={{
+                flex: 1,
+                width: "1px",
+                height: "min-content",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                overflow: "visible",
+                padding: 0,
+                alignContent: "flex-start",
+                flexWrap: "nowrap",
+                borderRadius: 0,
+              }}
+            >
               {footerNavLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -61,7 +88,22 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
               ))}
             </nav>
 
-            <nav aria-label="Footer social links" className="order-3 flex flex-col items-start gap-(--footer-link-column-gap) md:order-2">
+            <nav
+              aria-label="Footer social links"
+              className="order-3 flex h-min w-full flex-col items-start justify-center gap-5 overflow-visible p-0 content-start md:order-2 md:w-px md:flex-1"
+              style={{
+                flex: 1,
+                width: "1px",
+                height: "min-content",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                overflow: "visible",
+                padding: 0,
+                alignContent: "flex-start",
+                flexWrap: "nowrap",
+                borderRadius: 0,
+              }}
+            >
               {footerSocialLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -79,22 +121,20 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
               ))}
             </nav>
 
-            <div className="order-1 col-span-2 flex flex-col items-start gap-(--footer-newsletter-gap) md:order-3 md:col-span-1">
+            <div className="order-1 flex w-full flex-col items-start gap-(--footer-newsletter-gap) md:order-3 md:w-px md:flex-[1.45]">
               <div className="flex w-full flex-col items-start gap-(--footer-newsletter-copy-gap)">
                 <h2
-                  className={cn(
-                    "whitespace-pre-wrap font-cal-sans text-(length:--footer-newsletter-title-size)",
-                    "leading-(--footer-newsletter-title-line-height) font-semibold tracking-normal text-(--color-footer-title)",
-                  )}
+                  className="h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-[40px] leading-[1.2] font-semibold italic tracking-normal text-white"
+                  style={{
+                    wordWrap: "break-word",
+                    wordBreak: "break-word",
+                    fontFeatureSettings: "normal",
+                  }}
                 >
                   {footerContent.newsletterTitle}
                 </h2>
                 <p
-                  className={cn(
-                    "h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins",
-                    "text-(length:--footer-newsletter-subtitle-size) leading-(--footer-newsletter-subtitle-line-height)",
-                    "font-semibold italic tracking-normal text-(--color-footer-subtitle)",
-                  )}
+                  className="h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-[40px] leading-[1.2] font-semibold italic tracking-normal text-white"
                   style={{
                     wordWrap: "break-word",
                     wordBreak: "break-word",
@@ -142,7 +182,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
                   <Link
                     href={rightsTerms.href}
                     className={cn(
-                      "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                      "font-poppins text-[18px] leading-[1.2]",
                       "font-medium tracking-normal text-(--color-footer-rights)",
                       "transition-colors duration-200 hover:underline hover:underline-offset-4",
                     )}
@@ -152,7 +192,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
                 ) : (
                   <span
                     className={cn(
-                      "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                      "font-poppins text-[18px] leading-[1.2]",
                       "font-medium tracking-normal text-(--color-footer-rights)",
                     )}
                   >
@@ -166,7 +206,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
                   <div key={item.label} className="flex items-center gap-(--footer-rights-gap)">
                     <span
                       className={cn(
-                        "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                        "font-poppins text-[18px] leading-[1.2]",
                         "font-medium tracking-normal text-(--color-footer-rights)",
                       )}
                     >
@@ -185,7 +225,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
                     <Link
                       href={item.href}
                       className={cn(
-                        "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                        "font-poppins text-[18px] leading-[1.2]",
                         "font-medium tracking-normal text-(--color-footer-rights)",
                         "transition-colors duration-200 hover:underline hover:underline-offset-4",
                       )}
@@ -195,7 +235,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
                   ) : (
                     <span
                       className={cn(
-                        "font-poppins text-(length:--footer-rights-size) leading-(--footer-rights-line-height)",
+                        "font-poppins text-[18px] leading-[1.2]",
                         "font-medium tracking-normal text-(--color-footer-rights)",
                       )}
                     >
@@ -212,12 +252,21 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
           </div>
 
-          <div className="order-3 relative h-(--footer-logo-height) w-full">
+          <div
+            className="order-3 relative block h-86.5 w-full flex-1 overflow-visible"
+            style={{
+              aspectRatio: "4.427745664739884 / 1",
+            }}
+          >
             <Image
               src={footerContent.logoSrc}
               alt="theGeeX logo"
               fill
-              className="object-contain object-center"
+              className="object-contain object-top"
+              style={{
+                objectPosition: "center top",
+                borderRadius: 0,
+              }}
               sizes="(min-width: 1440px) 1440px, 100vw"
             />
           </div>

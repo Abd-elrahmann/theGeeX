@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import type { MotionValue } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 import { formatIndex } from "@/lib/format-index";
@@ -19,10 +20,6 @@ interface ProjectPageCardProps {
 
 interface ProjectPageCardStyle extends CSSProperties {
   "--project-card-background": string;
-}
-
-interface ProjectCardImageStyle extends CSSProperties {
-  backgroundImage: string;
 }
 
 export function ProjectPageCard({ project, index, totalCards, scrollProgress }: ProjectPageCardProps) {
@@ -85,17 +82,33 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
         </p>
       ) : null}
 
-      <div className="relative mx-auto mt-(--projects-page-card-image-margin-top) h-px min-h-(--projects-page-card-image-min-height) w-full max-w-(--projects-card-content-max-width) flex-1 overflow-visible rounded-(--projects-card-image-radius)">
+      <div
+        className="relative mt-(--projects-page-card-image-margin-top) h-px min-h-(--projects-page-card-image-min-height) w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)"
+        style={{
+          borderRadius: "var(--projects-card-image-radius)",
+        }}
+      >
         <div
-          role="img"
-          aria-label={project.imageAlt}
-          className="absolute inset-0 block h-full w-full overflow-visible rounded-(--projects-card-image-radius) bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 overflow-hidden rounded-(--projects-card-image-radius)"
           style={{
-            backgroundImage: `url(${project.image})`,
-            backgroundSize: "var(--projects-card-background-size)",
-            transform: "translateY(var(--projects-page-card-image-top-offset))",
-          } as ProjectCardImageStyle}
-        />
+            borderRadius: "var(--projects-card-image-radius)",
+          }}
+        >
+          <Image
+            src={project.image}
+            alt={project.imageAlt}
+            fill
+            sizes="100vw"
+            unoptimized
+            draggable={false}
+            style={{
+              objectFit: "cover",
+              objectPosition: project.imagePosition ?? "center",
+              borderRadius: "var(--projects-card-image-radius)",
+            }}
+            className="absolute inset-0 block h-full w-full object-cover"
+          />
+        </div>
       </div>
     </article>
   );
