@@ -121,7 +121,7 @@ export function ServicesPage() {
     >
       <section
         aria-labelledby="services-page-title"
-        className="mx-auto box-border flex h-min w-full max-w-[1120px] flex-col content-center items-center justify-center gap-[24px] overflow-visible rounded-none px-[80px] pt-[48px] pb-[80px]"
+        className="mx-auto box-border flex h-min w-full max-w-[1120px] flex-col content-center items-center justify-center gap-(--services-page-section-gap) overflow-visible rounded-none px-[80px] pt-[48px] pb-[80px]"
       >
         <header className="flex w-full flex-col items-center gap-(--services-page-hero-gap) text-center">
           <h1
@@ -136,15 +136,15 @@ export function ServicesPage() {
           </p>
         </header>
 
-        <div className="flex w-full flex-col gap-(--services-page-cards-gap)">
+        <div className="mt-(--services-page-grid-offset) flex w-full flex-col gap-(--services-page-cards-gap)">
           {services.map((service, index) => (
             <Link
               key={service.id}
               href={`/services/${service.slug}`}
               aria-label={`Open ${service.navTitle} service page`}
-              className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-y-(--services-page-card-gap)"
+              className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:mx-auto md:h-(--services-page-grid-min-height) md:max-w-(--services-page-card-width) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-y-(--services-page-card-gap)"
             >
-              <div className="box-border flex h-auto min-h-(--services-page-image-height) w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:h-(--services-page-image-height) md:min-h-0 md:overflow-hidden">
+              <div className="box-border flex h-auto min-h-(--services-page-grid-min-height) w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:h-(--services-page-grid-min-height) md:min-h-0 md:overflow-hidden">
                 <ServiceContent
                   service={service}
                   variant="page"
@@ -161,8 +161,8 @@ export function ServicesPage() {
                 />
               </div>
 
-              <div className="box-border flex h-(--services-page-image-height) min-h-0 w-full flex-1 flex-col content-start items-start justify-between overflow-hidden rounded-none p-0">
-                <div className="relative h-(--services-page-image-height) w-full overflow-hidden rounded-(--services-image-radius)">
+              <div className="box-border flex h-(--services-page-grid-min-height) min-h-0 w-full flex-1 flex-col content-start items-start justify-between overflow-hidden rounded-none p-0">
+                <div className="relative h-(--services-page-grid-min-height) w-full overflow-hidden rounded-(--services-image-radius) md:rounded-l-none">
                   <ServiceImage
                     service={service}
                     variant="page"

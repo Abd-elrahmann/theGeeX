@@ -229,19 +229,21 @@
   --services-page-padding-x: 16px;
   --services-page-padding-top: 48px;
   --services-page-padding-bottom: 80px;
-  --services-page-section-gap: 24px;
+  --services-page-section-gap: 40px;
   --services-page-hero-gap: 16px;
   --services-page-hero-max-width: 700px;
   --services-page-title-size: clamp(34px, 10vw, 44px);
   --services-page-title-line-height: 1.2;
-  --services-page-description-size: 13px;
+  --services-page-description-size: 14px;
   --services-page-description-line-height: 1.5;
+  --services-page-grid-offset: 28px;
+  --services-page-card-width: 900px;
   --services-page-cards-gap: 24px;
   --services-page-card-radius: 0px;
   --services-page-card-gap: 0px;
   --services-page-mobile-card-row-gap: 12px;
   --services-page-grid-padding: 24px;
-  --services-page-grid-min-height: 340px;
+  --services-page-grid-min-height: 400px;
   --services-page-content-gap: 32px;
   --services-page-service-copy-max-width: 560px;
   --services-page-service-kicker-size: 16px;
@@ -263,7 +265,7 @@
   --services-page-feature-line-height: 1.45;
   --services-page-feature-dot-size: 6px;
   --services-page-feature-dot-offset: 8px;
-  --services-page-image-height: 300px;
+  --services-page-image-height: 400px;
   --services-page-image-radius: 0px;
   --color-services-page-text: #2c3134;
   --color-services-page-muted: rgb(44 49 52 / 0.72);
@@ -313,13 +315,13 @@
   --service-detail-container-max-width: 1200px;
   --service-detail-padding-x: 16px;
   --service-detail-hero-padding-top: 56px;
-  --service-detail-hero-gap: 22px;
+  --service-detail-hero-gap: 32px;
   --service-detail-breadcrumb-gap: 8px;
   --service-detail-breadcrumb-size: 16px;
   --service-detail-breadcrumb-line-height: 1.2;
   --service-detail-title-max-width: 906px;
   --service-detail-title-stack-gap: 10px;
-  --service-detail-title-types-gap: 10px;
+  --service-detail-title-types-gap: 18px;
   --service-detail-small-title-size: 13px;
   --service-detail-small-title-line-height: 1.2;
   --service-detail-main-title-size: clamp(28px, 7.6vw, 38px);
@@ -329,11 +331,11 @@
   --service-detail-type-separator-gap: 16px;
   --service-detail-type-padding-x: 16px;
   --service-detail-type-padding-y: 8px;
-  --service-detail-type-size: 12px;
+  --service-detail-type-size: 14px;
   --service-detail-type-line-height: 1.2;
   --service-detail-image-container-padding-x: 0px;
   --service-detail-image-container-padding-y: 10px;
-  --service-detail-hero-image-height: 320px;
+  --service-detail-hero-image-height: 500px;
   --service-detail-image-radius: 24px;
   --service-detail-section-padding-y: 64px;
   --service-detail-section-gap: 32px;
@@ -344,8 +346,9 @@
   --service-detail-section-title-line-height: 1.3;
   --service-detail-overview-grid-gap: 28px;
   --service-detail-overview-images-gap: 8px;
-  --service-detail-overview-image-height: clamp(118px, 33vw, 170px);
+  --service-detail-overview-image-height: clamp(140px, 36vw, 210px);
   --service-detail-overview-image-radius: 16px;
+  --service-detail-overview-description-max-width: 500px;
   --service-detail-description-min-height: 180px;
   --service-detail-description-size: 16px;
   --service-detail-description-line-height: 1.6;
@@ -382,7 +385,7 @@
   --service-detail-outcomes-title-line-height: 1.2;
   --service-detail-outcomes-title-max-width: 360px;
   --service-detail-outcomes-cards-gap: 10px;
-  --service-detail-outcome-card-width: 507px;
+  --service-detail-outcome-card-width: 100%;
   --service-detail-outcome-card-padding: 24px;
   --service-detail-outcome-card-gap: 10px;
   --service-detail-outcome-card-radius: 24px;
@@ -1653,8 +1656,8 @@
     --services-page-padding-x: 80px;
     --services-page-title-size: 70px;
     --services-page-service-title-max-width: 100%;
-    --services-page-grid-min-height: 380px;
-    --services-page-image-height: 360px;
+    --services-page-grid-min-height: 400px;
+    --services-page-image-height: 400px;
     --hero-path-scroll-distance: 640;
     --hero-path-scroll-hold-distance: 140;
     --hero-headline-size: 60px;
@@ -1662,9 +1665,11 @@
     --hero-headline-offset-y: 0px;
     --hero-padding-x: 32px;
     --navbar-height: 72px;
+    --navbar-primary-padding-x: 80px;
+    --navbar-rounded-padding-x: 80px;
     --navbar-mobile-padding-x: 32px;
-    --navbar-logo-width: 82px;
-    --navbar-logo-height: 24px;
+    --navbar-logo-width: 103px;
+    --navbar-logo-height: 40px;
     --navbar-mobile-menu-height: 418px;
     --navbar-mobile-menu-padding: 20px 32px 40px 32px;
     --navbar-mobile-menu-rounded-radius: 40px;
@@ -1755,13 +1760,15 @@
     --services-page-padding-x: 32px;
     --services-page-padding-top: 40px;
     --services-page-padding-bottom: 64px;
+    --services-page-section-gap: 32px;
     --services-page-title-size: 50px;
-    --services-page-description-size: 14px;
+    --services-page-description-size: 15px;
     --services-page-description-line-height: 1.5;
+    --services-page-grid-offset: 24px;
     --services-page-cards-gap: 18px;
     --services-page-mobile-card-row-gap: 0px;
-    --services-page-image-height: 280px;
-    --services-page-grid-min-height: 280px;
+    --services-page-image-height: 400px;
+    --services-page-grid-min-height: 400px;
     --services-page-service-title-max-width: 100%;
     --services-page-service-title-size: 14px;
     --services-page-service-index-size: 16px;
@@ -1958,12 +1965,13 @@
 
 @media (min-width: 1024px) {
   :root {
+    --service-detail-container-max-width: calc(100vw - 100px);
     --section-stack-gap: 32px;
     --services-padding-x: 0px;
     --team-collapsed-card-padding: 80px;
     --projects-section-exit-vh: 20;
     --projects-section-exit-vh: 18;
-    --services-page-description-size: 15px;
+    --services-page-description-size: 16px;
     --services-page-description-line-height: 1.6;
     --services-page-service-title-max-width: 100%;
     --services-page-service-title-size: 19px;
@@ -1971,18 +1979,19 @@
     --services-page-service-eyebrow-size: 14px;
     --services-content-header-desc-gap: 24px;
     --services-page-mobile-card-row-gap: 0px;
-    --services-page-grid-min-height: 420px;
-    --services-page-image-height: 390px;
-    --service-detail-padding-x: 40px;
+    --services-page-grid-min-height: 400px;
+    --services-page-image-height: 400px;
+    --service-detail-padding-x: 45px;
     --service-detail-title-max-width: 1120px;
     --service-detail-hero-padding-top: 72px;
-    --service-detail-hero-gap: 28px;
+    --service-detail-hero-gap: 40px;
     --service-detail-breadcrumb-size: 16px;
     --projects-detail-breadcrumb-size: 16px;
     --service-detail-small-title-size: 16px;
     --service-detail-main-title-size: clamp(38px, 5vw, 56px);
     --service-detail-main-title-line-height: 1.2;
-    --service-detail-type-size: 13px;
+    --service-detail-title-types-gap: 24px;
+    --service-detail-type-size: 15px;
     --service-detail-section-title-size: clamp(38px, 3vw, 44px);
     --service-detail-deliver-title-size: 32px;
     --service-detail-deliver-heading-gap: 28px;
@@ -1991,7 +2000,7 @@
     --service-detail-projects-title-size: 30px;
     --service-detail-faqs-title-size: 40px;
     --service-detail-faqs-title-max-width: 520px;
-    --service-detail-image-container-padding-x: 40px;
+    --service-detail-image-container-padding-x: 0px;
     --service-detail-image-container-padding-y: 10px;
     --service-detail-hero-image-height: 500px;
     --service-detail-deliver-sticky-top: calc(var(--navbar-height) + 40px);
@@ -2000,12 +2009,14 @@
     --service-detail-deliver-grid-gap: 40px;
     --service-detail-overview-grid-gap: 40px;
     --service-detail-overview-images-gap: 16px;
-    --service-detail-overview-image-height: 203px;
+    --service-detail-overview-image-height: 240px;
+    --service-detail-overview-description-max-width: 660px;
     --service-detail-outcomes-scroll-height: auto;
     --service-detail-outcomes-padding-bottom: 40px;
     --service-detail-projects-padding-top: 40px;
     --service-detail-outcomes-title-column-width: 46%;
     --service-detail-outcomes-title-box-height: 371px;
+    --service-detail-outcome-card-width: 100%;
     --service-detail-project-card-height: 810px;
     --service-detail-faqs-title-column-width: 46%;
     --service-detail-faqs-title-box-height: 371px;
@@ -2261,7 +2272,7 @@
     --hero-headline-line-height: 1.25;
     --hero-headline-offset-y: 32px;
     --hero-padding-x: 40px;
-    --navbar-height: 96px;
+    --navbar-height: 72px;
     --navbar-primary-padding-x: 80px;
     --navbar-logo-width: 103px;
     --navbar-logo-height: 40px;
@@ -2666,6 +2677,9 @@
 
 @media (min-width: 1440px) {
   :root {
+    --service-detail-container-max-width: calc(100vw - 120px);
+    --service-detail-padding-x: 35px;
+    --service-detail-title-max-width: calc(100vw - 120px);
     --services-container-max-width: 1200px;
     --services-title-size: 204px;
     --services-title-line-height: 204px;

@@ -51,7 +51,7 @@ export function ServiceContent({
 
   if (variant === "page") {
     return (
-      <article className={servicesContentContainerClassName}>
+      <article className={cn(servicesContentContainerClassName, "md:rounded-r-none")}>
         {headerContent ? (
           <div className={cn("w-full shrink-0", !showContentTitle && "mb-(--services-content-header-desc-gap)")}>
             {headerContent}

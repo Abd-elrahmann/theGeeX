@@ -30,6 +30,7 @@ export function ServiceImage({
   const imageClassName = cn(
     isMobile ? "object-contain object-center" : "object-cover object-center",
     "rounded-(--services-image-radius)",
+    isPage && "md:rounded-l-none",
     isPlaceholder && "object-contain p-8",
   );
   const loading = eager ? "eager" : undefined;
@@ -72,10 +73,10 @@ export function ServiceImage({
 
   if (isPage) {
     return (
-      <div className="relative h-full min-h-full w-full min-w-0 overflow-hidden rounded-(--services-image-radius)">
+      <div className="relative h-full min-h-full w-full min-w-0 overflow-hidden rounded-(--services-image-radius) md:rounded-l-none">
         <div
           className={cn(
-            "relative h-full min-h-full w-full min-w-0",
+            "relative h-full min-h-full w-full min-w-0 md:rounded-l-none",
             servicesImageContainerVisualClassName,
           )}
         >

@@ -160,21 +160,21 @@ export const servicePageConfigs = {
     deliverMainTitle: "Everything You Need to Connect and Scale",
     deliverables: [
       {
-        title: "API Development",
+        title: "Product Roadmapping",
         description:
-          "Design and build secure, high-performance APIs that enable reliable communication between systems.",
+          "Define features, priorities, timelines, and milestones through a structured roadmap that aligns business goals with technical execution.",
         imageFile: "Product Roadmapping & Scoping.png",
       },
       {
-        title: "System Integration",
+        title: "Technology Strategy",
         description:
-          "Connect applications, platforms, and databases to streamline operations and eliminate data silos.",
+          "Select the right technologies, frameworks, and architecture to build a scalable, secure, and future-ready digital product.",
         imageFile: "Market & Technical Feasibility.png",
       },
       {
-        title: "Integration Architecture",
+        title: "Market & Technical Feasibility",
         description:
-          "Design scalable integration frameworks that support growth, flexibility, and long-term maintainability.",
+          "Evaluate business viability, technical requirements, and potential risks before development begins, enabling informed decisions and reducing costly mistakes.",
         imageFile: "Tech Stack Selection.png",
       },
     ],

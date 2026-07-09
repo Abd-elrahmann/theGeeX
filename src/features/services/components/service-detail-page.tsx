@@ -78,10 +78,10 @@ function getDeliverableImageOffset(index: number, activeIndex: number): string {
   }
 
   if (index < activeIndex) {
-    return "100%";
+    return "-100%";
   }
 
-  return "-100%";
+  return "100%";
 }
 
 function ServiceDetailHero({ service }: ServiceDetailPageProps) {
@@ -123,9 +123,16 @@ function ServiceDetailHero({ service }: ServiceDetailPageProps) {
         </ul>
       </div>
 
-      <div className="box-border flex h-min w-full flex-row flex-nowrap items-center justify-center gap-0 overflow-hidden px-(--service-detail-image-container-padding-x) py-(--service-detail-image-container-padding-y)">
-        <div className="relative block h-(--service-detail-hero-image-height) w-full overflow-hidden rounded-(--service-detail-image-radius)">
-          <Image src={service.image} alt={service.imageAlt} fill priority className="object-cover" sizes="(min-width: 1024px) 1120px, 100vw" />
+      <div className="box-border flex h-min w-full self-stretch flex-row flex-nowrap items-center justify-start gap-0 overflow-hidden px-(--service-detail-image-container-padding-x) py-(--service-detail-image-container-padding-y)">
+        <div className="relative block h-(--service-detail-hero-image-height) w-full max-w-none overflow-hidden rounded-(--service-detail-image-radius)">
+          <Image
+            src={service.pageImage}
+            alt={service.imageAlt}
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="(min-width: 1440px) calc(100vw - 160px), (min-width: 1024px) calc(100vw - 80px), 100vw"
+          />
         </div>
       </div>
     </section>
@@ -135,11 +142,11 @@ function ServiceDetailHero({ service }: ServiceDetailPageProps) {
 function ServiceOverview({ service }: ServiceDetailPageProps) {
   return (
     <section className="mx-auto grid w-full max-w-(--service-detail-container-max-width) grid-cols-1 gap-(--service-detail-section-gap) px-(--service-detail-padding-x) py-(--service-detail-section-padding-y)">
-      <div className="flex w-full flex-col items-center gap-(--service-detail-section-label-gap) text-center md:items-start md:text-left">
+      <div className="flex w-full flex-col items-start gap-(--service-detail-section-label-gap) text-left">
         <p className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-label-size) leading-(--service-detail-label-line-height) font-medium tracking-[-0.02em] text-(--color-service-detail-accent)">
           Overview
         </p>
-        <h2 className="m-0 w-full max-w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-section-title-size) leading-(--service-detail-section-title-line-height) font-medium tracking-normal text-(--color-service-detail-heading)">
+        <h2 className="m-0 h-auto w-full max-w-full whitespace-pre-wrap wrap-break-word font-poppins text-[38px] leading-[1.3] font-semibold tracking-normal text-(--color-service-detail-heading) [font-synthesis:weight] [-webkit-text-stroke:0.1px_currentColor] [text-shadow:0_0_0.15px_currentColor] font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]">
           {service.page.overviewTitle}
         </h2>
       </div>
@@ -160,7 +167,7 @@ function ServiceOverview({ service }: ServiceDetailPageProps) {
           ))}
         </div>
 
-        <div className="relative min-h-(--service-detail-description-min-height) w-full md:min-h-0">
+        <div className="relative min-h-(--service-detail-description-min-height) w-full md:min-h-0 md:max-w-(--service-detail-overview-description-max-width)">
           <p className="absolute inset-x-0 top-0 m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-description-size) leading-(--service-detail-description-line-height) font-light tracking-normal text-(--color-service-detail-text) font-features-normal md:static">
             {service.page.overviewDescription}
           </p>
@@ -205,7 +212,7 @@ function DeliverableImageSlidePanel({
   const fallbackDeliverable = deliverables[0];
 
   return (
-    <div className="isolate relative z-10 h-(--service-detail-deliver-image-height) w-full overflow-hidden rounded-3xl bg-surface">
+    <div className="isolate relative z-10 h-(--service-detail-deliver-image-height) w-full overflow-hidden rounded-3xl bg-surface lg:h-full">
       {fallbackDeliverable ? (
         <Image
           src={fallbackDeliverable.image}
@@ -284,7 +291,7 @@ function WhatWeDeliver({ service }: ServiceDetailPageProps) {
           <p className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-label-size) leading-(--service-detail-label-line-height) font-semibold tracking-[-0.02em] text-(--color-service-detail-accent)">
             {service.page.deliverTitle}
           </p>
-          <h2 className="m-0 w-full max-w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-section-title-size) leading-(--service-detail-section-title-line-height) font-medium tracking-normal text-(--color-service-detail-text)">
+          <h2 className="m-0 w-full max-w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-section-title-size) leading-(--service-detail-section-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) [font-synthesis:weight] [-webkit-text-stroke:0.1px_currentColor] [text-shadow:0_0_0.15px_currentColor]">
             {service.page.deliverMainTitle}
           </h2>
         </div>
@@ -311,17 +318,17 @@ function WhatWeDeliver({ service }: ServiceDetailPageProps) {
         </div>
       </div>
 
-      <div className="sticky top-(--service-detail-deliver-sticky-top) mx-auto hidden w-full max-w-(--service-detail-container-max-width) grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center gap-(--service-detail-deliver-grid-gap) lg:grid lg:min-h-(--service-detail-deliver-stage-height)">
+      <div className="sticky top-(--service-detail-deliver-sticky-top) mx-auto hidden w-full max-w-(--service-detail-container-max-width) grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] items-center gap-(--service-detail-deliver-grid-gap) lg:grid lg:min-h-(--service-detail-deliver-stage-height) lg:items-stretch">
         <div className="col-start-1 row-start-1 flex w-full flex-col gap-(--service-detail-section-label-gap)">
           <p className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-label-size) leading-(--service-detail-label-line-height) font-semibold tracking-[-0.02em] text-(--color-service-detail-accent)">
             {service.page.deliverTitle}
           </p>
-          <h2 className="m-0 w-full max-w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-section-title-size) leading-(--service-detail-section-title-line-height) font-medium tracking-normal text-(--color-service-detail-text)">
+          <h2 className="m-0 w-full max-w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-section-title-size) leading-(--service-detail-section-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) [font-synthesis:weight] [-webkit-text-stroke:0.1px_currentColor] [text-shadow:0_0_0.15px_currentColor]">
             {service.page.deliverMainTitle}
           </h2>
         </div>
 
-        <div className="col-start-2 row-span-2 row-start-1 w-full">
+        <div className="col-start-2 row-span-2 row-start-1 h-full w-full self-stretch">
           <DeliverableImageSlidePanel
             deliverables={service.page.deliverables}
             activeIndex={activeIndex}
@@ -414,7 +421,7 @@ function ServiceOutcomes({ outcomes }: { outcomes?: ServiceOutcomesSection }) {
             </p>
             <h2
               id="service-outcomes-title"
-              className="m-0 w-full whitespace-nowrap font-cal-sans text-(length:--service-detail-outcomes-title-size) leading-(--service-detail-outcomes-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]"
+              className="m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-outcomes-title-size) leading-(--service-detail-outcomes-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) [font-synthesis:weight] [-webkit-text-stroke:0.1px_currentColor] [text-shadow:0_0_0.15px_currentColor] font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]"
             >
               {outcomes.title}
             </h2>
@@ -422,7 +429,7 @@ function ServiceOutcomes({ outcomes }: { outcomes?: ServiceOutcomesSection }) {
         </aside>
 
         <div className="min-w-0">
-          <div className="flex h-min w-full flex-1 flex-col flex-nowrap content-center items-center justify-center gap-(--service-detail-outcomes-cards-gap) overflow-clip rounded-none p-0">
+          <div className="flex h-min w-full flex-1 flex-col flex-nowrap content-center items-stretch justify-center gap-(--service-detail-outcomes-cards-gap) overflow-clip rounded-none p-0">
             {outcomes.outcomes.map((outcome, index) => (
               <OutcomeCard key={outcome.title} outcome={outcome} isActive={index === activeIndex} />
             ))}

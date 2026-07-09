@@ -343,7 +343,8 @@ body::before {
 
 @media (min-width: 1024px) {
   .navbar-nav-shell--primary {
-    padding-inline: var(--navbar-primary-padding-x);
+    height: auto;
+    padding: var(--navbar-rounded-padding-y) var(--navbar-primary-padding-x);
   }
 
   .navbar-nav-shell--rounded {
