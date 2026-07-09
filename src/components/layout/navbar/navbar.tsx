@@ -100,7 +100,7 @@ export function Navbar() {
         ref={animatedRef}
         className={cn(
           "relative box-border h-full w-full max-w-full translate-y-0 opacity-100",
-          "flex items-center justify-center will-change-transform",
+          "flex justify-center will-change-transform max-lg:items-center lg:items-start",
         )}
         inert={!isVisible}
       >

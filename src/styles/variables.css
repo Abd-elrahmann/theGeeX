@@ -46,7 +46,7 @@
   --navbar-rounded-shadow-x: 0;
   --navbar-rounded-shadow-y: 0;
   --navbar-rounded-shadow-blur: 10px;
-  --navbar-rounded-shadow: 0 0 10px 0 var(--navbar-rounded-shadow-color);
+  --navbar-rounded-shadow: var(--navbar-rounded-shadow-x) var(--navbar-rounded-shadow-y) var(--navbar-rounded-shadow-blur) 0 var(--navbar-rounded-shadow-color);
   --navbar-logo-width: 66px;
   --navbar-logo-height: 24px;
   --navbar-menu-icon-size: 24px;
@@ -321,7 +321,7 @@
   --service-detail-breadcrumb-line-height: 1.2;
   --service-detail-title-max-width: 906px;
   --service-detail-title-stack-gap: 10px;
-  --service-detail-title-types-gap: 18px;
+  --service-detail-title-types-gap: 10px;
   --service-detail-small-title-size: 13px;
   --service-detail-small-title-line-height: 1.2;
   --service-detail-main-title-size: clamp(28px, 7.6vw, 38px);
@@ -1666,7 +1666,7 @@
     --hero-padding-x: 32px;
     --navbar-height: 72px;
     --navbar-primary-padding-x: 80px;
-    --navbar-rounded-padding-x: 80px;
+    --navbar-rounded-padding-x: 32px;
     --navbar-mobile-padding-x: 32px;
     --navbar-logo-width: 103px;
     --navbar-logo-height: 40px;
@@ -1984,13 +1984,13 @@
     --service-detail-padding-x: 45px;
     --service-detail-title-max-width: 1120px;
     --service-detail-hero-padding-top: 72px;
-    --service-detail-hero-gap: 40px;
+    --service-detail-hero-gap: 32px;
     --service-detail-breadcrumb-size: 16px;
     --projects-detail-breadcrumb-size: 16px;
     --service-detail-small-title-size: 16px;
     --service-detail-main-title-size: clamp(38px, 5vw, 56px);
     --service-detail-main-title-line-height: 1.2;
-    --service-detail-title-types-gap: 24px;
+    --service-detail-title-types-gap: 10px;
     --service-detail-type-size: 15px;
     --service-detail-section-title-size: clamp(38px, 3vw, 44px);
     --service-detail-deliver-title-size: 32px;
