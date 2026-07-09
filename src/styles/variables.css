@@ -1149,7 +1149,7 @@
   --projects-section-exit-padding: calc(var(--projects-section-exit-vh) * 1vh);
   --projects-card-stack-offset-step: 56px;
   --projects-card-outer-padding: 20px;
-  --projects-card-height: 480px;
+  --projects-card-height: 600px;
   --projects-card-parallax-travel: 400px;
   --projects-title-z-index: 20;
   --projects-card-stack-z-index: 10;
