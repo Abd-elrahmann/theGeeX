@@ -40,6 +40,7 @@
   --navbar-rounded-width: 950px;
   --navbar-rounded-padding-y: 16px;
   --navbar-rounded-padding-x: 32px;
+  --navbar-rounded-offset-top: 8px;
   --navbar-rounded-radius: 99px;
   --navbar-rounded-section-gap: 40px;
   --navbar-rounded-shadow-color: rgb(0 0 0 / 0.05);

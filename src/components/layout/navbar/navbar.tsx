@@ -93,7 +93,7 @@ export function Navbar() {
       ref={headerRef}
       className={cn(
         "fixed inset-x-0 top-0 z-(--navbar-z-index) box-border h-(--navbar-height) w-full max-w-full",
-        isMobileMenuOpen ? "overflow-visible" : "overflow-hidden",
+        isMobileMenuOpen ? "overflow-visible" : "overflow-hidden lg:overflow-visible",
       )}
     >
       <div
@@ -110,6 +110,7 @@ export function Navbar() {
             "navbar-nav-shell box-border flex min-w-0 max-w-full items-center bg-surface backdrop-blur-(--navbar-blur)",
             "max-lg:justify-between lg:justify-normal",
             isRoundedNav ? "max-lg:h-full lg:h-auto" : "max-lg:h-full lg:h-full",
+            isRoundedNav && "lg:mt-(--navbar-rounded-offset-top)",
             isRoundedNav ? "navbar-nav-shell--rounded" : "navbar-nav-shell--primary",
           )}
         >
