@@ -34,7 +34,8 @@ export const projectsPageTitle = "Recent Projects";
 export const projectsPageDescription =
   "Explore the products, platforms, and digital ecosystems we've designed, engineered, and scaled—turning ambitious ideas into measurable business outcomes.";
 export const projectsCursorLabel = "View Project";
-export const projectsFirstCardEnterProgress = 0.12;
+export const projectsFirstCardEnterProgress = 0.18;
+export const projectsFirstCardLiftDistance = 320;
 export const projectsFirstCardEnterWindowRatio = 0.22;
 export const projectsCardEnterWindowRatio = 0.65;
 

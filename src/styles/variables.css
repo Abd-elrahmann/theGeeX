@@ -1152,7 +1152,7 @@
   --projects-margin-top: calc(var(--section-stack-gap) + 160px);
   --projects-container-max-width: 1200px;
   --projects-padding-x: 0px;
-  --projects-title-gap: 8px;
+  --projects-title-gap: 48px;
   --projects-section-perspective: 1200px;
   --projects-section-sticky-top: 160px;
   --projects-section-scroll-vh: 600;
@@ -1991,6 +1991,7 @@
 
 @media (min-width: 1024px) {
   :root {
+    --projects-title-gap: 144px;
     --service-detail-container-max-width: calc(100vw - 100px);
     --section-stack-gap: 32px;
     --services-padding-x: 0px;
@@ -2350,7 +2351,7 @@
     --culture-title-size: 160px;
     --culture-title-line-height: 160px;
     --culture-title-box-height: 124px;
-    --projects-title-gap: 24px;
+    --projects-title-gap: 144px;
     --projects-card-height: 820px;
     --team-section-gap: 0px;
     --team-section-padding-y: 64px;
@@ -2532,7 +2533,7 @@
     --projects-title-line-height: var(--services-title-line-height);
     --projects-title-box-height: var(--services-title-box-height);
     --projects-margin-top: var(--section-stack-gap);
-    --projects-title-gap: 32px;
+    --projects-title-gap: 144px;
     --projects-section-scroll-vh: 860;
     --projects-section-exit-vh: 52;
     --projects-card-height: 760px;
@@ -2701,7 +2702,7 @@
     --projects-title-line-height: var(--services-title-line-height);
     --projects-title-box-height: var(--services-title-box-height);
     --projects-margin-top: var(--section-stack-gap);
-    --projects-title-gap: 40px;
+    --projects-title-gap: 144px;
     --projects-section-sticky-top: 160px;
     --projects-section-scroll-vh: 940;
     --projects-section-exit-vh: 60;
@@ -2863,7 +2864,7 @@
     --projects-title-size: 204px;
     --projects-title-line-height: var(--services-title-line-height);
     --projects-title-box-height: var(--services-title-box-height);
-    --projects-title-gap: 24px;
+    --projects-title-gap: 144px;
     --projects-section-scroll-vh: 820;
     --projects-section-exit-vh: 18;
     --projects-card-height: 820px;

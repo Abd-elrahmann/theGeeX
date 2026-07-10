@@ -19,6 +19,7 @@ import {
   projects,
   projectsCursorLabel,
   projectsFirstCardEnterProgress,
+  projectsFirstCardLiftDistance,
 } from "@/features/projects/constants/projects";
 
 const projectCursorZoneSelector = "[data-project-cursor-zone]";
@@ -54,24 +55,8 @@ function getProjectsStickyTop(): number {
   return readRootCssNumber("--projects-section-sticky-top", 0);
 }
 
-function getProjectsCardStackOffsetStep(): number {
-  return readRootCssNumber("--projects-card-stack-offset-step", 56);
-}
-
-function getProjectsCardHeight(): number {
-  return readRootCssNumber("--projects-card-height", 650);
-}
-
 function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
-}
-
-function getDelayedLiftProgress(progress: number, startThreshold: number): number {
-  if (progress <= startThreshold) {
-    return 0;
-  }
-
-  return easeOutCubic((progress - startThreshold) / (1 - startThreshold));
 }
 
 export function ProjectsSection() {
@@ -85,8 +70,6 @@ export function ProjectsSection() {
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [mainAnimationEnd, setMainAnimationEnd] = useState(getMainAnimationEnd);
   const [stickyTopOffset, setStickyTopOffset] = useState(getProjectsStickyTop);
-  const [cardStackOffsetStep, setCardStackOffsetStep] = useState(getProjectsCardStackOffsetStep);
-  const [cardHeight, setCardHeight] = useState(getProjectsCardHeight);
   const [isCardStackHovered, setIsCardStackHovered] = useState(false);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -103,9 +86,10 @@ export function ProjectsSection() {
       return 0;
     }
 
-    const delayedProgress = getDelayedLiftProgress(progress, projectsFirstCardEnterProgress);
+    const firstCardLiftProgress = Math.max(projectsFirstCardEnterProgress, Number.EPSILON);
+    const liftProgress = Math.min(progress / firstCardLiftProgress, 1);
 
-    return -delayedProgress * 320;
+    return -easeOutCubic(liftProgress) * projectsFirstCardLiftDistance;
   });
 
   const exitProgress = useTransform(scrollYProgress, (progress) => {
@@ -120,8 +104,6 @@ export function ProjectsSection() {
     const syncLayout = () => {
       setMainAnimationEnd(getMainAnimationEnd());
       setStickyTopOffset(getProjectsStickyTop());
-      setCardStackOffsetStep(getProjectsCardStackOffsetStep());
-      setCardHeight(getProjectsCardHeight());
       lenis?.resize();
     };
 
@@ -245,8 +227,6 @@ export function ProjectsSection() {
                     project={project}
                     index={index}
                     totalCards={projects.length}
-                    stackOffsetStep={cardStackOffsetStep}
-                    cardHeight={cardHeight}
                     scrollProgress={animationProgress}
                     exitProgress={exitProgress}
                   />

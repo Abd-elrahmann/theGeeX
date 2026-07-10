@@ -64,15 +64,13 @@ interface ProjectCardProps {
   project: ProjectItem;
   index: number;
   totalCards: number;
-  stackOffsetStep: number;
-  cardHeight: number;
   scrollProgress: MotionValue<number>;
   exitProgress: MotionValue<number>;
 }
 
 interface ProjectCardArticleStyle {
   "--project-card-background": string;
-  top: MotionValue<number>;
+  top: string;
   y: MotionValue<number>;
   zIndex: string;
 }
@@ -217,8 +215,6 @@ export function ProjectCard({
   project,
   index,
   totalCards,
-  stackOffsetStep,
-  cardHeight,
   scrollProgress,
 }: ProjectCardProps) {
   const [isCardHovered, setIsCardHovered] = useState(false);
@@ -235,16 +231,9 @@ export function ProjectCard({
     getCardScale(progress, index, totalCards),
   );
 
-  const cardTop = useTransform(scrollProgress, (progress) => {
-    const scale = getCardScale(progress, index, totalCards);
-    const shrinkOffset = (1 - scale) * cardHeight;
-
-    return index * stackOffsetStep - shrinkOffset;
-  });
-
   const articleStyle: ProjectCardArticleStyle = {
     "--project-card-background": project.background,
-    top: cardTop,
+    top: `calc(${index} * var(--projects-card-stack-offset-step))`,
     y: cardY,
     zIndex: `calc(var(--projects-card-stack-z-index) + ${index})`,
   };
