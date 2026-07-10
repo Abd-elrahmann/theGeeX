@@ -1,4 +1,4 @@
-import { PackagesSection } from "@/features/packages/components/packages-section";
+import { PackagesSection } from "@/features/packages/section/components/packages-section";
 
 export function PackagesPage() {
   return (

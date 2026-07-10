@@ -80,7 +80,7 @@ export function PackageDetailPage({ item }: PackageDetailPageProps) {
 
         <section className="flex w-full flex-col gap-(--packages-detail-included-gap)">
           <h2 className="m-0 whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--packages-detail-included-title-size) leading-(--packages-detail-title-line-height) font-semibold tracking-normal text-(--color-packages-detail-text) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]">
-            What's Included
+            What&apos;s Included
           </h2>
 
           <div

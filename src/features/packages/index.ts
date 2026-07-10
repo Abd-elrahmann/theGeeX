@@ -1,3 +1,3 @@
-export { PackagesSection } from "./components/packages-section";
-export { PackagesPage } from "./components/packages-page";
-export { PackageDetailPage } from "./components/package-detail-page";
+export { PackagesSection } from "./section/components/packages-section";
+export { PackagesPage } from "./page/components/packages-page";
+export { PackageDetailPage } from "./single/components/package-detail-page";

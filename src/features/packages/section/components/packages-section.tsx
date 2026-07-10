@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 import { packageItems } from "@/features/packages/constants/packages";
-import { PackageCard } from "./package-card";
+import { PackageCard } from "@/features/packages/shared/components/package-card";
 import { PackagesTitle } from "./packages-title";
 
 export function PackagesSection() {
