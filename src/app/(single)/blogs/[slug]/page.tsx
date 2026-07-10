@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { BlogDetailPage } from "@/features/blogs/components/blog-detail-page";
+import { BlogDetailPage } from "@/features/blogs/single/components/blog-detail-page";
 import { getAllBlogSlugs, getBlogArticleBySlug } from "@/features/blogs/constants/blogs";
 import { createPageMetadata } from "@/lib/metadata";
 

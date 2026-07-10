@@ -1,4 +1,4 @@
-import { BlogCard } from "@/features/blogs/components/blog-card";
+import { BlogCard } from "@/features/blogs/shared/components/blog-card";
 import { blogItems, blogsPageTitle } from "@/features/blogs/constants/blogs";
 
 const blogsPageDescription =

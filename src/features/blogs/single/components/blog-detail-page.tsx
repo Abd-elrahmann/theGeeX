@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { BlogCard } from "@/features/blogs/components/blog-card";
+import { BlogCard } from "@/features/blogs/shared/components/blog-card";
 import { blogItems } from "@/features/blogs/constants/blogs";
 import type { BlogArticleDetail, BlogArticleDetailBlock } from "@/features/blogs/constants/blogs";
 import { cn } from "@/lib/cn";

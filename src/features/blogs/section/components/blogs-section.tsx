@@ -9,8 +9,8 @@ import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { blogItems } from "@/features/blogs/constants/blogs";
-import { BlogCard } from "./blog-card";
-import { BlogsSectionCursor } from "./blogs-section-cursor";
+import { BlogCard } from "@/features/blogs/shared/components/blog-card";
+import { BlogsSectionCursor } from "@/features/blogs/shared/components/blogs-section-cursor";
 import { BlogsTitle } from "./blogs-title";
 
 const blogCursorZoneSelector = "[data-blog-cursor-zone]";

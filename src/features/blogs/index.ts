@@ -1,2 +1,3 @@
-export { BlogsSection } from "./components/blogs-section";
-export { BlogsPage } from "./components/blogs-page";
+export { BlogsSection } from "./section/components/blogs-section";
+export { BlogsPage } from "./page/components/blogs-page";
+export { BlogDetailPage } from "./single/components/blog-detail-page";
