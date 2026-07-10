@@ -23,6 +23,8 @@ const aiGrowthRowTransition = {
   delay: 0,
 } as const;
 
+const aiGrowthActiveTriggerDelay = 0.18;
+
 function splitFirstWord(text: string): { firstWord: string; rest: string } {
   const [firstWord = "", ...restWords] = text.split(" ");
 
@@ -152,7 +154,9 @@ export function AiGrowthSection() {
       return;
     }
 
-    const clampedProgress = Math.max(0, Math.min(progress, 1));
+    const delayedProgress = Math.max(0, progress - aiGrowthActiveTriggerDelay);
+    const normalizedProgress = delayedProgress / (1 - aiGrowthActiveTriggerDelay);
+    const clampedProgress = Math.max(0, Math.min(normalizedProgress, 1));
 
     syncActiveIndexFromProgress(clampedProgress, aiGrowthRows.length, setActiveIndex);
   });

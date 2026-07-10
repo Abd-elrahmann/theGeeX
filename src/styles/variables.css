@@ -1,3 +1,4 @@
+
 :root {
   --color-primary: #0a0a0a;
   --color-secondary: #525252;
@@ -277,7 +278,7 @@
   --color-services-page-card-bg: #ffffff;
   --color-services-page-card-border: rgb(0 0 0 / 0.08);
   --color-services-page-image-bg: rgb(37 88 180 / 0.04);
-  --ai-growth-margin-top: var(--section-stack-gap);
+  --ai-growth-margin-top: calc(var(--section-stack-gap) + 64px);
   --ai-growth-padding-x: 16px;
   --ai-growth-padding-y: 56px;
   --ai-growth-container-max-width: 1200px;
@@ -1152,7 +1153,7 @@
   --projects-margin-top: calc(var(--section-stack-gap) + 160px);
   --projects-container-max-width: 1200px;
   --projects-padding-x: 0px;
-  --projects-title-gap: 48px;
+  --projects-title-gap: 8px;
   --projects-section-perspective: 1200px;
   --projects-section-sticky-top: 160px;
   --projects-section-scroll-vh: 600;
@@ -1991,7 +1992,8 @@
 
 @media (min-width: 1024px) {
   :root {
-    --projects-title-gap: 144px;
+    --projects-title-gap: 24px;
+    --process-margin-top: 0px;
     --service-detail-container-max-width: calc(100vw - 100px);
     --section-stack-gap: 32px;
     --services-padding-x: 0px;
@@ -2103,6 +2105,7 @@
     --ai-growth-title-size: 60px;
     --ai-growth-description-size: 16px;
     --ai-growth-grid-gap: 40px;
+    --ai-growth-margin-top: calc(var(--section-stack-gap) + 88px);
     --ai-growth-scroll-height: calc(100svh + 260px);
     --ai-growth-pin-scroll-distance: 420px;
     --ai-growth-sticky-top: var(--services-sticky-top);
@@ -2273,7 +2276,7 @@
     --storytelling-media-width: 260px;
     --storytelling-media-height: 362px;
     --awards-card-place-margin-top: 14px;
-    --awards-card-place-size: 15px;
+    --awards-card-place-size: 20px;
     --awards-collapsed-card-place-size: 7.5px;
     --awards-collapsed-card-place-weight: 400;
     --awards-collapsed-card-text-opacity: 60;
@@ -2351,7 +2354,7 @@
     --culture-title-size: 160px;
     --culture-title-line-height: 160px;
     --culture-title-box-height: 124px;
-    --projects-title-gap: 144px;
+    --projects-title-gap: 24px;
     --projects-card-height: 820px;
     --team-section-gap: 0px;
     --team-section-padding-y: 64px;
@@ -2398,6 +2401,7 @@
 
 @media (min-width: 1440px) {
   :root {
+    --process-margin-top: 0px;
     --section-stack-gap: 32px;
     --services-container-max-width: 1200px;
     --services-title-size: 240px;
@@ -2415,7 +2419,7 @@
     --testimonials-title-line-height: 240px;
     --testimonials-title-box-height: 184px;
     --awards-container-max-width: 1200px;
-    --awards-padding-y: 72px;
+    --awards-padding-y: 20px;
     --awards-title-size: 60px;
     --awards-title-line-height: 1.2;
     --awards-title-box-height: 144px;
@@ -2424,6 +2428,7 @@
     --awards-card-max-width: 560px;
     --awards-cards-gap: 40px;
     --awards-card-title-size: 24px;
+    --awards-card-place-size: 24px;
     --awards-card-title-height: 58px;
     --process-container-max-width: 1200px;
     --process-padding-y: 72px;
@@ -2433,8 +2438,9 @@
     --services-grid-template-columns: minmax(0, 1.18fr) 420px minmax(0, 1.08fr);
     --services-columns-gap: 16px;
     --services-nav-list-gap: 16px;
+    --blogs-margin-top: 0px;
     --blogs-container-max-width: 1200px;
-    --blogs-padding-y: 72px;
+    --blogs-padding-y: 32px;
     --blogs-section-gap: 72px;
     --blogs-title-size: 172px;
     --blogs-title-line-height: 204px;
@@ -2503,11 +2509,11 @@
     --team-title-box-height: 144px;
     --team-margin-top: var(--section-stack-gap);
     --team-section-gap: 0px;
-    --team-section-padding-y: 72px;
+    --team-section-padding-y: 40px;
     --team-section-scroll-vh: 100;
     --team-section-exit-vh: 0;
     --team-gallery-scale: 1;
-    --team-gallery-bottom-bleed: 176px;
+    --team-gallery-bottom-bleed: 96px;
     --team-card-padding-top: 40px;
     --team-card-content-padding-x: 28px;
     --team-card-name-size: 31px;
@@ -2516,7 +2522,7 @@
     --culture-title-size: 188px;
     --culture-title-line-height: 188px;
     --culture-title-box-height: 144px;
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: 0px;
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 220;
     --culture-section-exit-vh: 0;
@@ -2533,7 +2539,7 @@
     --projects-title-line-height: var(--services-title-line-height);
     --projects-title-box-height: var(--services-title-box-height);
     --projects-margin-top: var(--section-stack-gap);
-    --projects-title-gap: 144px;
+    --projects-title-gap: 32px;
     --projects-section-scroll-vh: 860;
     --projects-section-exit-vh: 52;
     --projects-card-height: 760px;
@@ -2585,6 +2591,7 @@
 
 @media (min-width: 1920px) {
   :root {
+    --process-margin-top: 0px;
     --section-stack-gap: 32px;
     --services-container-max-width: 1200px;
     --services-title-size: 240px;
@@ -2603,8 +2610,9 @@
     --services-grid-template-columns: minmax(0, 1.18fr) 420px minmax(0, 1.08fr);
     --services-columns-gap: 16px;
     --services-nav-list-gap: 16px;
+    --blogs-margin-top: 0px;
     --blogs-container-max-width: 1200px;
-    --blogs-padding-y: 72px;
+    --blogs-padding-y: 32px;
     --blogs-section-gap: 72px;
     --blogs-title-size: 172px;
     --blogs-title-line-height: 204px;
@@ -2672,11 +2680,11 @@
     --team-title-box-height: 144px;
     --team-margin-top: var(--section-stack-gap);
     --team-section-gap: 0px;
-    --team-section-padding-y: 72px;
+    --team-section-padding-y: 40px;
     --team-section-scroll-vh: 100;
     --team-section-exit-vh: 0;
     --team-gallery-scale: 1;
-    --team-gallery-bottom-bleed: 176px;
+    --team-gallery-bottom-bleed: 96px;
     --team-card-padding-top: 40px;
     --team-card-content-padding-x: 28px;
     --team-card-name-size: 31px;
@@ -2685,7 +2693,7 @@
     --culture-title-size: 188px;
     --culture-title-line-height: 188px;
     --culture-title-box-height: 144px;
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: 0px;
     --culture-section-gap: 0px;
     --culture-section-scroll-vh: 220;
     --culture-section-exit-vh: 0;
@@ -2702,7 +2710,7 @@
     --projects-title-line-height: var(--services-title-line-height);
     --projects-title-box-height: var(--services-title-box-height);
     --projects-margin-top: var(--section-stack-gap);
-    --projects-title-gap: 144px;
+    --projects-title-gap: 40px;
     --projects-section-sticky-top: 160px;
     --projects-section-scroll-vh: 940;
     --projects-section-exit-vh: 60;
@@ -2831,19 +2839,21 @@
     --testimonials-title-line-height: 204px;
     --testimonials-title-box-height: 157px;
     --awards-container-max-width: 1200px;
-    --awards-padding-y: 64px;
+    --awards-padding-y: 16px;
+    --blogs-margin-top: 0px;
     --awards-cards-column-max-width: 680px;
     --awards-card-max-width: 100%;
     --awards-cards-gap: 32px;
     --awards-card-title-size: 18px;
+    --awards-card-place-size: 22px;
     --awards-card-title-height: 48px;
     --team-container-max-width: 1200px;
     --team-title-size: 160px;
     --team-title-line-height: 160px;
     --team-title-box-height: 124px;
-    --team-section-padding-y: 64px;
+    --team-section-padding-y: 36px;
     --team-gallery-scale: 1;
-    --team-gallery-bottom-bleed: 160px;
+    --team-gallery-bottom-bleed: 88px;
     --team-card-content-padding-x: 24px;
     --team-card-name-size: 28px;
     --team-card-role-size: 14px;
@@ -2851,7 +2861,7 @@
     --culture-title-size: 160px;
     --culture-title-line-height: 160px;
     --culture-title-box-height: 124px;
-    --culture-margin-top: var(--section-stack-gap);
+    --culture-margin-top: 0px;
     --culture-section-scroll-vh: 200;
     --culture-grid-gap: 24px;
     --culture-card-content-padding-x: 32px;
@@ -2864,7 +2874,7 @@
     --projects-title-size: 204px;
     --projects-title-line-height: var(--services-title-line-height);
     --projects-title-box-height: var(--services-title-box-height);
-    --projects-title-gap: 144px;
+    --projects-title-gap: 24px;
     --projects-section-scroll-vh: 820;
     --projects-section-exit-vh: 18;
     --projects-card-height: 820px;

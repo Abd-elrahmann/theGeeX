@@ -133,7 +133,7 @@ export const projects: ProjectItem[] = [
       "The Wrap Up was developed for EFGHermes as a bespoke, high-security financial summary and content management engine, ensuring seamless delivery of critical market insights to premier investors.",
     image: "/images/projects/efg.png",
     imageAlt: "EFG Hermes web application preview",
-    imagePosition: "60% 38%",
+    imagePosition: "60% 100%",
     detailImage: "/images/projects/efg_hermes.png",
     detailGallery: [
       "/images/Projects-Services/EFG.png",
@@ -197,7 +197,7 @@ export const projects: ProjectItem[] = [
       "Performr was architected to revolutionize the entertainment and creative industry, providing a high-performance talent discovery platform where actors, singers, and models can showcase their portfolios, and casting directors can seamlessly source the perfect talent.",
     image: "/images/projects/performr.png",
     imageAlt: "Performr cross-platform product preview",
-    imagePosition: "70% 42%",
+    imagePosition: "70% 62%",
     detailImage: "/images/projects/Performr.png",
     detailGallery: [
       "/images/Projects-Services/Performer.png",
@@ -263,7 +263,7 @@ export const projects: ProjectItem[] = [
       "MoreTckts was engineered as a comprehensive B2C travel ecosystem, offering seamless cross-platform booking solutions for flights, hotels, and car rentals or limousines engineered for the modern traveler.",
     image: "/images/projects/moretckts.png",
     imageAlt: "moretckts product integration preview",
-    imagePosition: "62% 45%",
+    imagePosition: "62% 75%",
     detailImage: "/images/Projects-Services/Moretickts2.png",
     detailGallery: [
       "/images/Projects-Services/Moretickts.png",
@@ -331,7 +331,7 @@ export const projects: ProjectItem[] = [
       "AstraVibe's website was designed as a digital flagship that showcases the agency's expertise in strategic marketing, cinematic production, and brand development while establishing authority and driving new business opportunities.",
     image: "/images/projects/astravibe.png",
     imageAlt: "AstraVibe web and mobile apps integration preview",
-    imagePosition: "50% 42%",
+    imagePosition: "50% 50%",
     detailImage: "/images/projects/astravibe.png",
     detailGallery: [
       "/images/Projects-Services/astravibe.png",
