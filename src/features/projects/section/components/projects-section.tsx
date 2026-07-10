@@ -54,6 +54,14 @@ function getProjectsStickyTop(): number {
   return readRootCssNumber("--projects-section-sticky-top", 0);
 }
 
+function getProjectsCardStackOffsetStep(): number {
+  return readRootCssNumber("--projects-card-stack-offset-step", 56);
+}
+
+function getProjectsCardHeight(): number {
+  return readRootCssNumber("--projects-card-height", 650);
+}
+
 function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
 }
@@ -77,6 +85,8 @@ export function ProjectsSection() {
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [mainAnimationEnd, setMainAnimationEnd] = useState(getMainAnimationEnd);
   const [stickyTopOffset, setStickyTopOffset] = useState(getProjectsStickyTop);
+  const [cardStackOffsetStep, setCardStackOffsetStep] = useState(getProjectsCardStackOffsetStep);
+  const [cardHeight, setCardHeight] = useState(getProjectsCardHeight);
   const [isCardStackHovered, setIsCardStackHovered] = useState(false);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -95,7 +105,7 @@ export function ProjectsSection() {
 
     const delayedProgress = getDelayedLiftProgress(progress, projectsFirstCardEnterProgress);
 
-    return -stickyTopOffset - delayedProgress * 320;
+    return -delayedProgress * 320;
   });
 
   const exitProgress = useTransform(scrollYProgress, (progress) => {
@@ -110,6 +120,8 @@ export function ProjectsSection() {
     const syncLayout = () => {
       setMainAnimationEnd(getMainAnimationEnd());
       setStickyTopOffset(getProjectsStickyTop());
+      setCardStackOffsetStep(getProjectsCardStackOffsetStep());
+      setCardHeight(getProjectsCardHeight());
       lenis?.resize();
     };
 
@@ -233,6 +245,8 @@ export function ProjectsSection() {
                     project={project}
                     index={index}
                     totalCards={projects.length}
+                    stackOffsetStep={cardStackOffsetStep}
+                    cardHeight={cardHeight}
                     scrollProgress={animationProgress}
                     exitProgress={exitProgress}
                   />

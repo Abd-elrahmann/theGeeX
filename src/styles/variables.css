@@ -2867,7 +2867,7 @@
     --projects-section-scroll-vh: 820;
     --projects-section-exit-vh: 18;
     --projects-card-height: 820px;
-    --projects-card-stack-offset-step: 0px;
+    --projects-card-stack-offset-step: 72px;
     --projects-card-outer-padding: 16px;
     --projects-card-padding: 24px;
     --projects-card-header-height: 40px;
