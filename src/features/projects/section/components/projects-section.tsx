@@ -13,8 +13,8 @@ import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { readRootCssNumber } from "@/lib/read-css-var";
 
-import { ProjectCard } from "@/features/projects/components/project-card";
-import { ProjectsTitle } from "@/features/projects/components/projects-title";
+import { ProjectCard } from "./project-card";
+import { ProjectsTitle } from "./projects-title";
 import {
   projects,
   projectsCursorLabel,

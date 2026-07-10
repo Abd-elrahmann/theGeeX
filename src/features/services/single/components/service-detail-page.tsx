@@ -7,7 +7,7 @@ import { Fragment, useRef, useState } from "react";
 
 import { formatIndex } from "@/lib/format-index";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
-import { StaticProjectCard } from "@/features/projects/components/static-project-card";
+import { StaticProjectCard } from "@/features/projects/shared/components/static-project-card";
 import { projects } from "@/features/projects/constants/projects";
 
 import {

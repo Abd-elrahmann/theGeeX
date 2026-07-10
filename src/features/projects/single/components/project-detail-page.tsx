@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import StickyScrollRevealText from "@/components/shared/animations/Text_Scroll";
-import { StaticProjectCard } from "@/features/projects/components/static-project-card";
+import { StaticProjectCard } from "@/features/projects/shared/components/static-project-card";
 import { projects as projectItems, type ProjectItem } from "@/features/projects/constants/projects";
 
 interface ProjectDetailPageProps {

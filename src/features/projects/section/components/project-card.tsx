@@ -8,7 +8,7 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { formatIndex } from "@/lib/format-index";
 
-import { ProjectCardArrow } from "@/features/projects/components/project-card-arrow";
+import { ProjectCardArrow } from "@/features/projects/shared/components/project-card-arrow";
 
 import {
   projectsFirstCardEnterProgress,
@@ -280,13 +280,10 @@ export function ProjectCard({
                 {category}
               </span>
             ))}
-        </span>
+          </span>
         </header>
 
-        <span
-          aria-hidden="true"
-          className="mt-(--projects-card-divider-margin-top) block h-px w-full bg-(--color-project-card-divider)"
-        />
+        <span aria-hidden="true" className="mt-(--projects-card-divider-margin-top) block h-px w-full bg-(--color-project-card-divider)" />
 
         <div className={projectCardSubheaderRowClassName}>
           <h3 className={projectCardTitleClassName}>{project.name}</h3>
@@ -299,6 +296,12 @@ export function ProjectCard({
           />
         </div>
 
+        {project.description ? (
+          <p className="mx-auto mt-(--projects-card-description-margin-top) mb-0 w-full max-w-(--projects-card-content-max-width) shrink-0 whitespace-pre-wrap wrap-break-word font-poppins text-(length:--projects-card-description-size) leading-(--projects-card-description-line-height) font-normal tracking-normal text-(--color-project-card-foreground) font-features-normal">
+            {project.description}
+          </p>
+        ) : null}
+
         <div
           className="relative mt-(--projects-card-image-margin-top) h-px min-h-(--projects-card-image-min-height) w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)"
           style={{
@@ -306,7 +309,7 @@ export function ProjectCard({
           }}
         >
           <div
-            className="absolute inset-0 overflow-hidden"
+            className="absolute inset-0 overflow-hidden rounded-(--projects-card-image-radius)"
             style={{
               borderRadius: "var(--projects-card-image-radius)",
             }}
@@ -315,19 +318,15 @@ export function ProjectCard({
               src={project.image}
               alt={project.imageAlt}
               fill
-              sizes="(min-width: 1024px) min(100vw, 1280px), 100vw"
-              loading={index === 0 ? "eager" : undefined}
-              priority={index === 0}
+              sizes="100vw"
               unoptimized
               draggable={false}
               style={{
-                objectPosition: project.imagePosition ?? "var(--projects-card-image-position)",
+                objectFit: "cover",
+                objectPosition: project.imagePosition ?? "center",
                 borderRadius: "var(--projects-card-image-radius)",
               }}
-              className={cn(
-                "absolute inset-0 block h-full w-full object-cover",
-                project.imageClassName,
-              )}
+              className="absolute inset-0 block h-full w-full object-cover"
             />
           </div>
         </div>

@@ -11,7 +11,7 @@ import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 
-import { ProjectPageCard } from "@/features/projects/components/project-page-card";
+import { ProjectPageCard } from "./project-page-card";
 import {
   projects,
   projectsCursorLabel,

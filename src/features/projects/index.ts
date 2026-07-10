@@ -1,3 +1,3 @@
-export { ProjectsSection } from "./components/projects-section";
-export { ProjectsPage } from "./components/projects-page";
-export { ProjectDetailPage } from "./components/project-detail-page";
+export { ProjectsSection } from "./section/components/projects-section";
+export { ProjectsPage } from "./page/components/projects-page";
+export { ProjectDetailPage } from "./single/components/project-detail-page";

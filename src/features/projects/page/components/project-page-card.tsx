@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { formatIndex } from "@/lib/format-index";
 
-import { ProjectCardArrow } from "@/features/projects/components/project-card-arrow";
+import { ProjectCardArrow } from "@/features/projects/shared/components/project-card-arrow";
 import type { ProjectItem } from "@/features/projects/constants/projects";
 
 interface ProjectPageCardProps {

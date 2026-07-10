@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ProjectDetailPage } from "@/features/projects/components/project-detail-page";
+import { ProjectDetailPage } from "@/features/projects/single/components/project-detail-page";
 import { getProjectBySlug, projects } from "@/features/projects/constants/projects";
 import { createPageMetadata } from "@/lib/metadata";
 
