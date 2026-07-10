@@ -22,9 +22,9 @@ export function NavbarCta({ onClick }: NavbarCtaProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "inline-flex shrink-0 items-center justify-between gap-1 whitespace-pre text-center font-poppins",
+        "inline-flex shrink-0 items-center justify-end gap-2 whitespace-pre text-center font-poppins",
         "h-(--navbar-cta-height) w-(--navbar-cta-width)",
-        "text-[length:var(--navbar-cta-font-size)] font-medium leading-[1.2] tracking-normal",
+        "text-(length:--navbar-cta-font-size) font-normal leading-[1.2] tracking-normal",
         "text-cta-text transition-colors duration-(--navbar-cta-duration) ease-(--navbar-cta-ease)",
         "hover:text-brand",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",

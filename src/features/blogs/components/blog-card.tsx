@@ -46,13 +46,13 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
           src={blog.imageSrc}
           alt={blog.imageAlt}
           fill
-          sizes="(min-width: 768px) 248px, 100vw"
+          sizes="(min-width: 800px) 248px, 100vw"
           className="object-cover"
         />
       </div>
 
       <div className="order-1 flex min-w-0 flex-col items-center md:order-0 md:min-h-(--blogs-card-image-height) md:items-start">
-        <div className={cn("flex flex-wrap items-center justify-center gap-(--blogs-card-types-gap) md:justify-start", typesClassName)}>
+        <div className={cn("order-2 mt-3 flex flex-wrap items-center justify-center gap-(--blogs-card-types-gap) md:order-0 md:mt-0 md:justify-start", typesClassName)}>
           {visibleTypes.map((type) => (
             <span
               key={type}
@@ -72,7 +72,7 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
 
         <h3
           className={cn(
-            "mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center md:text-left",
+            "order-1 mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center md:order-0 md:text-left",
             "font-cal-sans text-(length:--blogs-card-title-size)",
             "leading-(--blogs-card-title-line-height) font-black tracking-normal",
             "text-(--color-blogs-card-title)",
@@ -83,7 +83,7 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
           {blog.title}
         </h3>
 
-        <div className={cn("flex w-full flex-col", metaContainerClassName)}>
+        <div className={cn("order-3 flex w-full flex-col md:order-0", metaContainerClassName)}>
           <p
             className={cn(
               "mt-(--blogs-card-date-margin-top) h-auto w-auto whitespace-pre font-poppins",
@@ -97,7 +97,7 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
 
           <div
             className={cn(
-              "hidden items-center gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top) md:flex",
+              "flex items-center justify-start gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top)",
               footerClassName,
             )}
           >
@@ -110,13 +110,13 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
               Written by
             </p>
 
-            <div className="relative h-(--blogs-card-author-image-height) w-(--blogs-card-author-image-width) overflow-hidden">
+            <div className="relative h-(--blogs-card-author-image-height) w-(--blogs-card-author-image-width) overflow-hidden rounded-full">
               <Image
                 src={blog.author.avatar}
                 alt={blog.author.name}
                 fill
                 sizes="18px"
-                className="object-cover"
+                className="rounded-full object-cover object-top"
               />
             </div>
 

@@ -18,6 +18,7 @@ import { ProjectsTitle } from "@/features/projects/components/projects-title";
 import {
   projects,
   projectsCursorLabel,
+  projectsFirstCardEnterProgress,
 } from "@/features/projects/constants/projects";
 
 const projectCursorZoneSelector = "[data-project-cursor-zone]";
@@ -49,6 +50,10 @@ function getMainAnimationEnd(): number {
   return scrollVh / (scrollVh + exitVh);
 }
 
+function getProjectsStickyTop(): number {
+  return readRootCssNumber("--projects-section-sticky-top", 0);
+}
+
 function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
 }
@@ -71,6 +76,7 @@ export function ProjectsSection() {
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [mainAnimationEnd, setMainAnimationEnd] = useState(getMainAnimationEnd);
+  const [stickyTopOffset, setStickyTopOffset] = useState(getProjectsStickyTop);
   const [isCardStackHovered, setIsCardStackHovered] = useState(false);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -87,9 +93,9 @@ export function ProjectsSection() {
       return 0;
     }
 
-    const delayedProgress = getDelayedLiftProgress(progress, 0.015);
+    const delayedProgress = getDelayedLiftProgress(progress, projectsFirstCardEnterProgress);
 
-    return -delayedProgress * 320;
+    return -stickyTopOffset - delayedProgress * 320;
   });
 
   const exitProgress = useTransform(scrollYProgress, (progress) => {
@@ -103,6 +109,7 @@ export function ProjectsSection() {
   useEffect(() => {
     const syncLayout = () => {
       setMainAnimationEnd(getMainAnimationEnd());
+      setStickyTopOffset(getProjectsStickyTop());
       lenis?.resize();
     };
 
@@ -186,6 +193,11 @@ export function ProjectsSection() {
         "perspective-(--projects-section-perspective)",
         isDesktop && isPointerFine && "cursor-none",
       )}
+      style={
+        isDesktop && stickyTopOffset > 0
+          ? { marginTop: `calc(var(--projects-margin-top) + ${stickyTopOffset}px)` }
+          : undefined
+      }
       onMouseLeave={() => {
         setIsCardStackHovered(false);
       }}
@@ -203,7 +215,7 @@ export function ProjectsSection() {
         <div className="relative h-(--projects-section-scroll-height) w-full">
           <motion.div
             className={cn(
-              "sticky top-0 grid h-svh min-h-svh w-full overflow-visible",
+              "sticky top-(--projects-section-sticky-top) grid h-svh min-h-svh w-full overflow-visible",
               "grid-rows-[auto_minmax(0,1fr)] gap-(--projects-title-gap)",
             )}
             style={{ y: sectionLiftY }}

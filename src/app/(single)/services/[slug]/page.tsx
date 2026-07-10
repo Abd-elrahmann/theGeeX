@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ServiceDetailPage } from "@/features/services/components/service-detail-page";
+import { ServiceDetailPage } from "@/features/services/single/components/service-detail-page";
 import { getServiceBySlug, services } from "@/features/services/constants/services";
 import { createPageMetadata } from "@/lib/metadata";
 

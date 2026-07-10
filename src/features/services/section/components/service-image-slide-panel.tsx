@@ -9,7 +9,7 @@ import {
   servicesImageContainerClassName,
   servicesImageSlideLayerClassName,
 } from "@/features/services/constants/services-layout";
-import { ServiceImage } from "./service-image";
+import { ServiceImage } from "@/features/services/shared/components/service-image";
 
 interface ServiceImageSlidePanelProps {
   services: Service[];

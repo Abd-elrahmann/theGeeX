@@ -3,7 +3,7 @@
 
 @theme inline {
   --breakpoint-sm: 40rem;
-  --breakpoint-md: 48rem;
+  --breakpoint-md: 50rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 90rem;
   --color-primary: var(--color-primary);
@@ -349,7 +349,9 @@ body::before {
 
   .navbar-nav-shell--rounded {
     width: min(var(--navbar-rounded-width), calc(100% - 2rem));
-    height: auto;
+    max-width: min(var(--navbar-rounded-width), calc(100% - 2rem));
+    height: 56px;
     padding: var(--navbar-rounded-padding-y) var(--navbar-rounded-padding-x);
+    overflow: visible;
   }
 }

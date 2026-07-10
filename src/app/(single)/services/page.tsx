@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ServicesPage } from "@/features/services/components/services-page";
+import { ServicesPage } from "@/features/services/page/components/services-page";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({

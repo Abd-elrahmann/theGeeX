@@ -10,7 +10,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { OurTeamGallery } from "@/features/our-team/components/our-team-gallery";
 import { OurTeamTitle } from "@/features/our-team/components/our-team-title";
 
-const TEAM_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
+const TEAM_TABLET_MEDIA_QUERY = "(min-width: 800px) and (max-width: 1023.98px)";
 
 export function OurTeamSection() {
   const isDesktop = useDesktopBreakpoint();

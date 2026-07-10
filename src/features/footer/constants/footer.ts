@@ -10,9 +10,9 @@ export interface FooterRightItem {
 
 export const footerNavLinks: FooterLinkItem[] = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
-  { label: "Contact Us", href: "/contact-us" },
+  { label: "Services", href: "/services" },
+  { label: "Contact Us", href: "/contact-us#contactus" },
 ];
 
 export const footerSocialLinks: FooterLinkItem[] = [

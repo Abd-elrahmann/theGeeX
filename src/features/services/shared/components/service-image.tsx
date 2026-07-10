@@ -42,7 +42,7 @@ export function ServiceImage({
       fill
       loading={loading}
       sizes={
-        variant === "desktop" ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 768px) 50vw, 100vw"
+        variant === "desktop" ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 800px) 50vw, 100vw"
       }
       className={imageClassName}
       priority={eager || service.id === 1}

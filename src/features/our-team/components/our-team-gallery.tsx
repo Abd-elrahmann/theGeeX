@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { cn } from "@/lib/cn";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 import {
   ourTeamCards,
@@ -42,8 +43,13 @@ const teamCardImageBaseStyle = {
   scale: ourTeamImageBaseStyle.scale,
 } satisfies CSSProperties;
 
-function getCardSize(variant: TeamCard["variant"]) {
-  return variant === "compact" ? ourTeamCardSizes.compact : ourTeamCardSizes.standard;
+function getCardSize(card: TeamCard) {
+  const baseSize = card.variant === "compact" ? ourTeamCardSizes.compact : ourTeamCardSizes.standard;
+
+  return {
+    width: card.width ?? baseSize.width,
+    height: card.height ?? baseSize.height,
+  };
 }
 
 function getTeamCardImageStyle(card: TeamCard, isMobile = false): CSSProperties {
@@ -123,7 +129,7 @@ function OurTeamAnimatedCard({
   card: TeamCard;
   isExpanded: boolean;
 }) {
-  const size = getCardSize(card.variant);
+  const size = getCardSize(card);
 
   if (!primaryCard) {
     return null;
@@ -206,9 +212,11 @@ function OurTeamAnimatedCard({
 function OurTeamMobileCard({
   card,
   isActive,
+  isCircle = false,
 }: {
   card: TeamCard;
   isActive: boolean;
+  isCircle?: boolean;
 }) {
   const size = ourTeamCardSizes.standard;
 
@@ -216,12 +224,13 @@ function OurTeamMobileCard({
     <figure
       className={cn(
         "group relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius)",
+        isCircle && "rounded-full",
         "bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]",
       )}
       style={{
         background: "transparent",
-        aspectRatio: `${size.width} / ${size.height}`,
-        paddingTop: "var(--team-card-padding-top)",
+        aspectRatio: isCircle ? "1 / 1.18" : `${size.width} / ${size.height}`,
+        paddingTop: isCircle ? 0 : "var(--team-card-padding-top)",
       }}
       aria-label={`${card.name}, ${card.role}`}
     >
@@ -283,6 +292,7 @@ export function OurTeamGallery({
   isExpanded: boolean;
   usesScatteredLayout: boolean;
 }) {
+  const isWideMobile = useMediaQuery("(min-width: 640px) and (max-width: 799.98px)");
   const mobileAutoHoverCanRunRef = useRef(false);
   const mobileAutoHoverWasExpandedRef = useRef(false);
   const mobileScrollDirectionRef = useRef<1 | -1>(1);
@@ -387,7 +397,10 @@ export function OurTeamGallery({
 
     return (
       <motion.div
-        className="grid w-full grid-cols-2 gap-(--team-mobile-grid-gap)"
+        className={cn(
+          "grid w-full gap-(--team-mobile-grid-gap)",
+          isWideMobile ? "grid-cols-4" : "grid-cols-2",
+        )}
         initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -407,6 +420,7 @@ export function OurTeamGallery({
             <OurTeamMobileCard
               card={card}
               isActive={mobileAutoHoverState.isActive && index === mobileAutoHoverState.index}
+              isCircle={isWideMobile}
             />
           </motion.div>
         ))}

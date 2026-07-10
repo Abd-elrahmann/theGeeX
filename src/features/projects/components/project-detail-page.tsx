@@ -203,7 +203,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                 src={image}
                 alt={`${project.name} work sample ${index + 1}`}
                 fill
-                sizes="(min-width: 768px) 50vw, 100vw"
+                sizes="(min-width: 800px) 50vw, 100vw"
                 className="block object-cover object-center"
                 style={{ "--project-detail-image-position": "center" } as ProjectDetailImageStyle}
                 unoptimized

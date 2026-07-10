@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 
 import { type Service } from "@/features/services/constants/services";
 import { usePreloadServiceImages } from "@/features/services/hooks/use-preload-service-images";
-import { ServiceContent } from "./service-content";
+import { ServiceContent } from "@/features/services/shared/components/service-content";
 import { ServiceImageSlidePanel } from "./service-image-slide-panel";
 import { ServiceNavigation } from "./service-navigation";
 import { ServiceSlidePanel } from "./service-slide-panel";

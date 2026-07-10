@@ -11,9 +11,9 @@ import { formatIndex } from "@/lib/format-index";
 import { ScrollTrigger } from "@/lib/gsap";
 
 import { services } from "@/features/services/constants/services";
-import { ServiceContent } from "@/features/services/components/service-content";
-import { ServiceImage } from "@/features/services/components/service-image";
-import { ServicesSectionCursor } from "@/features/services/components/services-section-cursor";
+import { ServiceContent } from "@/features/services/shared/components/service-content";
+import { ServiceImage } from "@/features/services/shared/components/service-image";
+import { ServicesSectionCursor } from "@/features/services/shared/components/services-section-cursor";
 
 const servicesPageDescription =
   "Everything you need to launch, grow, and scale digitally-from strategy and design to engineering and growth-creating solutions that drive lasting business impact.";
@@ -121,7 +121,7 @@ export function ServicesPage() {
     >
       <section
         aria-labelledby="services-page-title"
-        className="mx-auto box-border flex h-min w-full max-w-[1120px] flex-col content-center items-center justify-center gap-(--services-page-section-gap) overflow-visible rounded-none px-[80px] pt-[48px] pb-[80px]"
+        className="mx-auto box-border flex h-min w-full max-w-(--services-page-container-max-width) flex-col content-center items-center justify-center gap-(--services-page-section-gap) overflow-visible rounded-none px-(--services-page-padding-x) pt-(--services-page-padding-top) pb-(--services-page-padding-bottom)"
       >
         <header className="flex w-full flex-col items-center gap-(--services-page-hero-gap) text-center">
           <h1

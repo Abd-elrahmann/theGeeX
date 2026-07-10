@@ -10,7 +10,7 @@ export function PackagesSection() {
       id="packages"
       aria-label="Packages"
       className={cn(
-        "relative w-full overflow-visible bg-background",
+        "relative w-full overflow-visible bg-(--color-packages-section-bg)",
         "mt-(--packages-margin-top) px-(--packages-padding-x) py-(--packages-padding-y)",
       )}
     >

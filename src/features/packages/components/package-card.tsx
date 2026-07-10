@@ -177,7 +177,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
             }}
             onMouseLeave={() => setIsHovered(false)}
             className={cn(
-              "relative mt-(--packages-card-button-margin-top) flex h-(--packages-button-height) min-h-(--packages-button-height) w-(--packages-button-width) shrink-0 self-center",
+              "relative mt-(--packages-card-button-margin-top) flex h-(--packages-button-height) min-h-(--packages-button-height) w-(--packages-button-width) shrink-0 self-center max-md:w-full md:max-lg:w-full",
               "items-center justify-center overflow-hidden rounded-(--packages-button-radius)",
               "bg-(--color-packages-button-bg) px-(--packages-button-padding-x) pt-(--packages-button-padding-top) pb-(--packages-button-padding-bottom)",
               "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",

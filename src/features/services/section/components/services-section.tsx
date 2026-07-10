@@ -18,14 +18,14 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { services } from "@/features/services/constants/services";
 import { useActiveService } from "@/features/services/hooks/use-active-service";
 import { isPointInsideElement } from "@/features/services/lib/services-cursor-zone";
+import { ServiceContent } from "@/features/services/shared/components/service-content";
+import { ServiceImage } from "@/features/services/shared/components/service-image";
+import { ServicesSectionCursor } from "@/features/services/shared/components/services-section-cursor";
+import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 import { ServicesGrid } from "./services-grid";
-import { ServiceContent } from "./service-content";
-import { ServiceImage } from "./service-image";
 import { ServiceImageSlidePanel } from "./service-image-slide-panel";
 import { ServiceSlidePanel } from "./service-slide-panel";
-import { ServicesSectionCursor } from "./services-section-cursor";
 import { ServicesTitle } from "./services-title";
-import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 
 const SERVICES_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
 const SERVICES_TABLET_STAGE_HEIGHT_PX = 780;
@@ -504,12 +504,12 @@ export function ServicesSection() {
                       motionVariant={isTablet ? "content" : "image"}
                       className="h-full"
                     >
-                        <ServiceContent
-                          service={activeService}
-                          layoutMode="flow"
-                          headerContent={renderMobileServiceHeader(activeIndex)}
-                        />
-                      </ServiceSlidePanel>
+                      <ServiceContent
+                        service={activeService}
+                        layoutMode="flow"
+                        headerContent={renderMobileServiceHeader(activeIndex)}
+                      />
+                    </ServiceSlidePanel>
                   </div>
 
                   <div
@@ -526,13 +526,13 @@ export function ServicesSection() {
                           : undefined,
                     }}
                   >
-                      <ServiceImageSlidePanel
-                        services={services}
-                        activeIndex={activeIndex}
-                        previousActiveIndex={previousActiveIndex}
-                        className="h-full"
-                        imageVariant={isTablet ? "tablet" : "mobile"}
-                      />
+                    <ServiceImageSlidePanel
+                      services={services}
+                      activeIndex={activeIndex}
+                      previousActiveIndex={previousActiveIndex}
+                      className="h-full"
+                      imageVariant={isTablet ? "tablet" : "mobile"}
+                    />
                   </div>
                 </Link>
               </div>

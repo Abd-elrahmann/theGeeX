@@ -23,7 +23,7 @@ import {
 } from "@/features/our-culture/constants/our-culture";
 
 type CultureStage = 0 | 1 | 2;
-const CULTURE_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
+const CULTURE_TABLET_MEDIA_QUERY = "(min-width: 800px) and (max-width: 1023.98px)";
 const cultureTabletFirstStageTrigger = 0.22;
 const cultureTabletSecondStageTrigger = 0.82;
 
