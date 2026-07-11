@@ -20,7 +20,7 @@ export function NavbarDesktop() {
 
   return (
     <div className="hidden h-full w-full min-w-0 flex-row flex-nowrap items-center lg:flex">
-      <div className="shrink-0">
+      <div className="flex shrink-0 items-center">
         <NavbarLogo />
       </div>
 
@@ -38,7 +38,7 @@ export function NavbarDesktop() {
         aria-hidden="true"
       />
 
-      <div className="shrink-0">
+      <div className="flex shrink-0 items-center">
         <NavbarCta />
       </div>
     </div>

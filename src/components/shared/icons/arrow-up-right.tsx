@@ -14,7 +14,7 @@ export function ArrowUpRightIcon({ className }: ArrowUpRightIconProps) {
       <path
         d="M7 17L17 7M17 7H9M17 7V15"
         stroke="currentColor"
-        strokeWidth="2.25"
+        strokeWidth="2.75"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

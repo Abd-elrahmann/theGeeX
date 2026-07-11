@@ -17,7 +17,7 @@ export function NavbarLink({ link, onClick, className }: NavbarLinkProps) {
       onClick={onClick}
       className={cn(
         "inline-block h-auto w-auto whitespace-pre font-poppins",
-        "text-[14px] font-normal leading-[160%] tracking-normal",
+        "text-[14px] font-normal leading-[160%] tracking-normal lg:text-[16px]",
         "text-(--color-nav-link) transition-colors duration-200",
         "hover:text-(--color-nav-link-hover)",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",

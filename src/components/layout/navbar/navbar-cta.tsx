@@ -24,13 +24,20 @@ export function NavbarCta({ onClick }: NavbarCtaProps) {
       className={cn(
         "inline-flex shrink-0 items-center justify-end gap-2 whitespace-pre text-center font-poppins",
         "h-(--navbar-cta-height) w-(--navbar-cta-width)",
-        "text-(length:--navbar-cta-font-size) font-normal leading-[1.2] tracking-normal",
         "text-cta-text transition-colors duration-(--navbar-cta-duration) ease-(--navbar-cta-ease)",
         "hover:text-brand",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
       )}
     >
-      <span className="min-w-0 truncate">{siteConfig.cta.label}</span>
+      <span
+        className="h-auto w-auto whitespace-pre text-center font-poppins text-[14px] leading-[1.2] font-medium tracking-normal"
+        style={{
+          color: "var(--color-cta-text)",
+          fontFeatureSettings: "normal",
+        }}
+      >
+        {siteConfig.cta.label}
+      </span>
       <NavbarCtaArrow isHovered={isHovered} />
     </Link>
   );
