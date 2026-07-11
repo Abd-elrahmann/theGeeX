@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site.config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const defaultOgImage = "/images/footerLogo.png";
+const pageTitleSuffix = "TheGeeX Digital Transformation Studio";
 
 export const siteMetadata = {
   name: siteConfig.name,
@@ -22,13 +23,12 @@ interface CreatePageMetadataOptions {
 }
 
 export function createPageMetadata({
-  title,
   description,
   path = "/",
   image = siteMetadata.ogImage,
   noIndex = false,
 }: CreatePageMetadataOptions = {}): Metadata {
-  const resolvedTitle = title ? `${title} | ${siteMetadata.name}` : siteMetadata.name;
+  const resolvedTitle = `Book a Free Strategy Call | ${pageTitleSuffix}`;
   const resolvedDescription = description ?? siteMetadata.description;
 
   return {

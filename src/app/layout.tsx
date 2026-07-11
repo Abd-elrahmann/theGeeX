@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   description: siteMetadata.description,
   applicationName: siteMetadata.name,
   icons: {
-    icon: "/images/logo.svg",
-    shortcut: "/images/logo.svg",
-    apple: "/images/logo.svg",
+    icon: "/images/favicon_logo.svg",
+    shortcut: "/images/favicon_logo.svg",
+    apple: "/images/favicon_logo.svg",
   },
   openGraph: {
     title: siteMetadata.name,

@@ -1,0 +1,44 @@
+:root {
+  --book-a-meeting-page-top-padding: calc(var(--navbar-height) + 40px);
+  --book-a-meeting-padding-x: 16px;
+  --book-a-meeting-padding-bottom: 80px;
+  --book-a-meeting-container-max-width: 1280px;
+  --book-a-meeting-section-gap: 32px;
+  --book-a-meeting-copy-gap: 20px;
+  --book-a-meeting-copy-max-width: 920px;
+  --book-a-meeting-title-size: 48px;
+  --book-a-meeting-title-line-height: 1.2;
+  --book-a-meeting-title-letter-spacing: 0em;
+  --book-a-meeting-title-icon-height: 0.5em;
+  --book-a-meeting-description-size: 10px;
+  --book-a-meeting-description-line-height: 1.6;
+  --book-a-meeting-embed-height: 1750px;
+  --book-a-meeting-embed-radius: 24px;
+  --book-a-meeting-embed-shadow: 0 24px 70px rgb(44 49 52 / 0.08);
+  --color-book-a-meeting-page-bg: #ffffff;
+  --color-book-a-meeting-title: #2c3134;
+  --color-book-a-meeting-title-accent: #2558b4;
+  --color-book-a-meeting-description: #5c5c5c;
+  --color-book-a-meeting-embed-surface: #f8f8f8;
+  --color-book-a-meeting-embed-border: rgb(44 49 52 / 0.08);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --book-a-meeting-page-top-padding: calc(var(--navbar-height) + 56px);
+    --book-a-meeting-padding-bottom: 96px;
+    --book-a-meeting-section-gap: 40px;
+    --book-a-meeting-copy-gap: 24px;
+    --book-a-meeting-title-size: 56px;
+    --book-a-meeting-description-size: 16px;
+    --book-a-meeting-embed-height: 1850px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --book-a-meeting-padding-x: 88px;
+    --book-a-meeting-padding-bottom: 112px;
+    --book-a-meeting-section-gap: 48px;
+  }
+}

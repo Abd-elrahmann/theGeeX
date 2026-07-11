@@ -67,6 +67,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const isSubDesktop = useMediaQuery(SUB_DESKTOP_MEDIA_QUERY);
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
   const pathname = usePathname();
+  const shouldDisableSmoothScroll = pathname === "/book-a-meeting";
 
   useLayoutEffect(() => {
     prepareFreshPageScrollSession();
@@ -75,6 +76,10 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       window.scrollTo(0, 0);
     }
   }, [pathname]);
+
+  if (shouldDisableSmoothScroll) {
+    return <>{children}</>;
+  }
 
   return (
     <ReactLenis
