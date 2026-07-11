@@ -23,12 +23,15 @@ interface CreatePageMetadataOptions {
 }
 
 export function createPageMetadata({
+  title,
   description,
   path = "/",
   image = siteMetadata.ogImage,
   noIndex = false,
 }: CreatePageMetadataOptions = {}): Metadata {
-  const resolvedTitle = `Book a Free Strategy Call | ${pageTitleSuffix}`;
+  const resolvedTitle = title
+    ? `${title} | ${pageTitleSuffix}`
+    : `${siteMetadata.name} | ${pageTitleSuffix}`;
   const resolvedDescription = description ?? siteMetadata.description;
 
   return {

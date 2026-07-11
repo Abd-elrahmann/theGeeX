@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ProjectItem } from "@/features/projects/constants/projects";
+import { ProjectDetailDescriptionSection } from "@/features/projects/single/components/project-detail-description-section";
 import { ProjectDetailGallerySection } from "@/features/projects/single/components/project-detail-gallery-section";
 import { ProjectDetailHeroSection } from "@/features/projects/single/components/project-detail-hero-section";
 import { ProjectDetailProcessSection } from "@/features/projects/single/components/project-detail-process-section";
@@ -20,7 +21,7 @@ interface ProjectDetailPageProps {
 }
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
-  const [activeProcessIndex, setActiveProcessIndex] = useState(0);
+  const [activeProcessIndex, setActiveProcessIndex] = useState<number | null>(null);
   const processCardRefs = useRef<Array<HTMLElement | null>>([]);
   const projectTitle = getProjectTitle(project);
   const breadcrumbLabel = getProjectBreadcrumbLabel(project);
@@ -72,6 +73,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
         breadcrumbLabel={breadcrumbLabel}
         primaryCategory={primaryCategory}
       />
+      <ProjectDetailDescriptionSection description={project.description ?? ""} />
       <ProjectDetailGallerySection project={project} />
       <ProjectDetailProcessSection
         processSteps={processSteps}

@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 import type { ServiceOutcome, ServiceOutcomesSection } from "@/features/services/constants/services";
 import { ServiceDetailStickyIntro } from "@/features/services/single/shared/components/service-detail-sticky-intro";
@@ -49,21 +49,50 @@ interface ServiceDetailOutcomesSectionProps {
 export function ServiceDetailOutcomesSection({
   outcomes,
 }: ServiceDetailOutcomesSectionProps) {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
 
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+  useEffect(() => {
     if (!outcomes) {
       return;
     }
 
-    const nextIndex = Math.round(progress * Math.max(outcomes.outcomes.length - 1, 0));
-    setActiveIndex(nextIndex);
-  });
+    const updateActiveIndex = () => {
+      const cards = cardRefs.current.filter(
+        (card): card is HTMLElement => card !== null,
+      );
+
+      if (cards.length === 0) {
+        return;
+      }
+
+      const viewportAnchor = window.innerHeight * 0.45;
+      let nextIndex = 0;
+      let smallestDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportAnchor);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          nextIndex = index;
+        }
+      });
+
+      setActiveIndex(nextIndex);
+    };
+
+    updateActiveIndex();
+    window.addEventListener("scroll", updateActiveIndex, { passive: true });
+    window.addEventListener("resize", updateActiveIndex);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveIndex);
+      window.removeEventListener("resize", updateActiveIndex);
+    };
+  }, [outcomes]);
 
   if (!outcomes) {
     return null;
@@ -71,7 +100,6 @@ export function ServiceDetailOutcomesSection({
 
   return (
     <section
-      ref={sectionRef}
       className="relative min-h-(--service-detail-outcomes-scroll-height) w-full overflow-visible bg-background px-(--service-detail-padding-x) pt-(--service-detail-outcomes-padding-top) pb-(--service-detail-outcomes-padding-bottom)"
       aria-labelledby="service-outcomes-title"
     >
@@ -88,7 +116,14 @@ export function ServiceDetailOutcomesSection({
         <div className="min-w-0">
           <div className="flex h-min w-full flex-1 flex-col flex-nowrap content-center items-stretch justify-center gap-(--service-detail-outcomes-cards-gap) overflow-clip rounded-none p-0">
             {outcomes.outcomes.map((outcome, index) => (
-              <OutcomeCard key={outcome.title} outcome={outcome} isActive={index === activeIndex} />
+              <div
+                key={outcome.title}
+                ref={(element) => {
+                  cardRefs.current[index] = element;
+                }}
+              >
+                <OutcomeCard outcome={outcome} isActive={index === activeIndex} />
+              </div>
             ))}
           </div>
         </div>

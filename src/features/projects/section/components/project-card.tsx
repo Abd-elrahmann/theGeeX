@@ -30,12 +30,12 @@ const projectCardIndexClassName = cn(
 );
 
 const projectCardCategoryBadgeClassName = cn(
-  "z-[2] flex h-min min-w-0 max-w-full shrink-0 flex-row flex-wrap items-start justify-end md:w-min md:flex-nowrap md:items-center md:justify-start",
+  "z-[2] flex h-min min-w-0 max-w-full flex-1 flex-row flex-wrap items-start justify-end",
   "gap-[var(--projects-card-category-gap)]",
 );
 
 const projectCardCategoryTextClassName = cn(
-  "block h-auto max-w-full whitespace-normal wrap-break-word rounded-[var(--projects-card-category-radius)] px-[var(--projects-card-category-padding-x)] py-[var(--projects-card-category-padding-y)] text-left md:w-auto md:whitespace-pre",
+  "block h-auto min-w-0 max-w-full whitespace-normal wrap-break-word rounded-[var(--projects-card-category-radius)] px-[var(--projects-card-category-padding-x)] py-[var(--projects-card-category-padding-y)] text-left",
   "bg-[var(--color-project-card-category-bg)]",
   "font-[family-name:var(--font-poppins)] font-[var(--projects-card-category-text-weight)] not-italic",
   "text-[length:var(--projects-card-category-text-size)] leading-[var(--projects-card-category-line-height)]",

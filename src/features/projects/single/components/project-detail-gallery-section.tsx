@@ -1,12 +1,7 @@
-import type { CSSProperties } from "react";
 import Image from "next/image";
 
 import type { ProjectItem } from "@/features/projects/constants/projects";
 import { ProjectDetailSectionIntro } from "@/features/projects/single/shared/components/project-detail-section-intro";
-
-interface ProjectDetailImageStyle extends CSSProperties {
-  "--project-detail-image-position"?: string;
-}
 
 interface ProjectDetailGallerySectionProps {
   project: ProjectItem;
@@ -16,18 +11,23 @@ export function ProjectDetailGallerySection({ project }: ProjectDetailGallerySec
   return (
     <section
       aria-labelledby="project-detail-work-title"
-      className="mx-auto box-border flex w-full max-w-(--projects-detail-container-max-width) flex-col items-center gap-(--projects-detail-work-gap) px-(--projects-detail-padding-x) py-(--projects-detail-work-padding-y)"
+      className="mx-auto box-border flex w-full flex-col items-center gap-(--projects-detail-work-gap) py-(--projects-detail-work-padding-y)"
     >
-      <ProjectDetailSectionIntro
-        id="project-detail-work-title"
-        label="How We Work"
-        titleLines={[
-          "A clear process, from first",
-          "conversation to lasting support.",
-        ]}
-      />
+      <div className="w-full max-w-(--projects-detail-container-max-width) px-(--projects-detail-padding-x)">
+        <ProjectDetailSectionIntro
+          id="project-detail-work-title"
+          label="How We Work"
+          titleLines={[
+            "A clear process, from first",
+            "conversation to lasting support.",
+          ]}
+        />
+      </div>
 
-      <div className="grid w-full grid-cols-1 gap-(--projects-detail-gallery-gap) md:grid-cols-2">
+      <div
+        className="grid w-full max-w-(--projects-detail-gallery-max-width) grid-cols-1 gap-(--projects-detail-gallery-gap) md:grid-cols-2"
+        style={{ paddingInline: "var(--projects-detail-gallery-padding-x)" }}
+      >
         {project.detailGallery.map((image, index) => (
           <div
             key={`${project.slug}-gallery-${image}-${index}`}
@@ -38,8 +38,8 @@ export function ProjectDetailGallerySection({ project }: ProjectDetailGallerySec
               alt={`${project.name} work sample ${index + 1}`}
               fill
               sizes="(min-width: 800px) 50vw, 100vw"
-              className="block object-cover object-center"
-              style={{ "--project-detail-image-position": "center" } as ProjectDetailImageStyle}
+              className="block"
+              style={{ objectFit: "cover", objectPosition: "center center" }}
               unoptimized
             />
           </div>

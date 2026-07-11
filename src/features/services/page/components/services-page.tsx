@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/cn";
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
@@ -22,10 +23,12 @@ function ServicesPageCardHeader({
   index,
   title,
   eyebrow,
+  allowWrap,
 }: {
   index: number;
   title: string;
   eyebrow: string;
+  allowWrap: boolean;
 }) {
   return (
     <div className="flex w-full flex-col gap-(--services-page-card-header-gap)">
@@ -37,7 +40,12 @@ function ServicesPageCardHeader({
         <span className="h-[31px] w-[24px] shrink-0 whitespace-pre font-cal-sans text-[26px] leading-[31px] font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off]">
           {formatIndex(index)}
         </span>
-        <h2 className="m-0 min-w-0 max-w-(--services-page-service-title-max-width) flex-1 whitespace-normal wrap-break-word font-cal-sans text-[28px] leading-[1.2] font-semibold tracking-normal text-(--color-services-page-card-title)">
+        <h2
+          className={cn(
+            "m-0 min-w-0 max-w-none flex-1 font-cal-sans text-[28px] leading-[1.2] font-semibold tracking-normal text-(--color-services-page-card-title)",
+            allowWrap ? "whitespace-normal break-normal" : "whitespace-nowrap",
+          )}
+        >
           {title}
         </h2>
       </div>
@@ -47,11 +55,12 @@ function ServicesPageCardHeader({
 
 export function ServicesPage() {
   const servicesPageRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
-  const [isPageHovered, setIsPageHovered] = useState(false);
+  const [isGridHovered, setIsGridHovered] = useState(false);
   const [isScrollArrowActive, setIsScrollArrowActive] = useState(false);
-  const isServicesCursorActive = isDesktop && isPointerFine && isPageHovered;
+  const isServicesCursorActive = isDesktop && isPointerFine && isGridHovered;
   const isArrowActive = isServicesCursorActive || isScrollArrowActive;
 
   useEffect(() => {
@@ -112,12 +121,6 @@ export function ServicesPage() {
     <main
       ref={servicesPageRef}
       className="relative z-(--page-main-z-index) min-h-svh w-full bg-background pt-(--services-page-top-padding)"
-      onMouseEnter={() => {
-        setIsPageHovered(true);
-      }}
-      onMouseLeave={() => {
-        setIsPageHovered(false);
-      }}
     >
       <section
         aria-labelledby="services-page-title"
@@ -136,13 +139,22 @@ export function ServicesPage() {
           </p>
         </header>
 
-        <div className="mt-(--services-page-grid-offset) flex w-full flex-col gap-(--services-page-cards-gap)">
+        <div
+          ref={gridRef}
+          className="mt-(--services-page-grid-offset) flex w-full flex-col gap-(--services-page-cards-gap)"
+          onMouseEnter={() => {
+            setIsGridHovered(true);
+          }}
+          onMouseLeave={() => {
+            setIsGridHovered(false);
+          }}
+        >
           {services.map((service, index) => (
             <Link
               key={service.id}
               href={`/services/${service.slug}`}
               aria-label={`Open ${service.navTitle} service page`}
-              className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:mx-auto md:h-(--services-page-grid-min-height) md:max-w-(--services-page-card-width) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-y-(--services-page-card-gap)"
+              className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:mx-auto md:h-(--services-page-grid-min-height) md:max-w-(--services-page-card-width) md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-y-(--services-page-card-gap)"
             >
               <div className="box-border flex h-auto min-h-(--services-page-grid-min-height) w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:h-(--services-page-grid-min-height) md:min-h-0 md:overflow-hidden">
                 <ServiceContent
@@ -156,6 +168,7 @@ export function ServicesPage() {
                       index={index}
                       title={service.navTitle}
                       eyebrow={service.contentTitle}
+                      allowWrap={service.id === 4 || service.id === 5}
                     />
                   }
                 />

@@ -97,6 +97,7 @@
   --service-detail-project-card-header-gap: 18px;
   --service-detail-faqs-padding-y: 64px;
   --service-detail-faqs-section-gap: 32px;
+  --service-detail-faqs-container-max-width: var(--service-detail-container-max-width);
   --service-detail-faqs-title-sticky-top: calc(var(--navbar-height) + 40px);
   --service-detail-faqs-title-column-width: 100%;
   --service-detail-faqs-title-box-height: auto;
@@ -106,7 +107,8 @@
   --service-detail-faqs-title-size: 40px;
   --service-detail-faqs-title-line-height: 1.2;
   --service-detail-faqs-title-max-width: 360px;
-  --service-detail-faqs-cards-gap: 10px;
+  --service-detail-faqs-cards-gap: 16px;
+  --service-detail-faq-card-max-width: 100%;
   --service-detail-faq-card-padding: 24px;
   --service-detail-faq-card-radius: 24px;
   --service-detail-faq-question-gap: 20px;
@@ -220,8 +222,11 @@
     --service-detail-outcomes-title-box-height: 371px;
     --service-detail-outcome-card-width: 100%;
     --service-detail-project-card-height: 810px;
+    --service-detail-faqs-container-max-width: min(1320px, calc(100vw - 72px));
+    --service-detail-faqs-section-gap: 56px;
     --service-detail-faqs-title-column-width: 46%;
     --service-detail-faqs-title-box-height: 371px;
+    --service-detail-faq-card-max-width: 760px;
   }
 }
 
@@ -231,5 +236,8 @@
     --service-detail-container-max-width: calc(100vw - 120px);
     --service-detail-padding-x: 35px;
     --service-detail-title-max-width: calc(100vw - 120px);
+    --service-detail-faqs-container-max-width: min(1400px, calc(100vw - 80px));
+    --service-detail-faqs-section-gap: 72px;
+    --service-detail-faq-card-max-width: 720px;
   }
 }

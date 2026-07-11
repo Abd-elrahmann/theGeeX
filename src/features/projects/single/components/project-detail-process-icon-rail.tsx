@@ -5,7 +5,7 @@ import type { ProjectProcessStep } from "@/features/projects/constants/projects"
 
 interface ProjectDetailProcessIconRailProps {
   processSteps: ProjectProcessStep[];
-  activeProcessIndex: number;
+  activeProcessIndex: number | null;
 }
 
 export function ProjectDetailProcessIconRail({
@@ -14,7 +14,10 @@ export function ProjectDetailProcessIconRail({
 }: ProjectDetailProcessIconRailProps) {
   return (
     <div className="sticky top-(--projects-detail-process-icons-sticky-top) z-10 order-1 box-border block h-(--projects-detail-process-icons-height) w-full rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icons-background) p-(--projects-detail-process-icons-padding) lg:order-2 lg:col-start-2 lg:row-start-1 lg:w-(--projects-detail-process-icons-width) lg:self-start">
-      <div className="grid h-full w-full grid-cols-5 items-center justify-items-center gap-(--projects-detail-process-icons-gap) lg:grid-cols-5 lg:grid-rows-1">
+      <div
+        className="flex h-full w-full items-center justify-center rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icon-background) shadow-(--projects-detail-process-icons-box-shadow)"
+        style={{ gap: 0 }}
+      >
         {processSteps.map((step, index) => {
           const isActive = activeProcessIndex === index;
 
@@ -23,8 +26,8 @@ export function ProjectDetailProcessIconRail({
               key={step.number}
               className="relative flex h-(--projects-detail-process-icon-size) w-(--projects-detail-process-icon-size) items-center justify-center overflow-visible rounded-(--projects-detail-process-icon-radius) shadow-(--projects-detail-process-icon-shadow)"
               animate={{
-                backgroundColor: step.activeColor,
-                scale: isActive ? 1 : 0.88,
+                backgroundColor: isActive ? step.activeColor : "#ffffff",
+                scale: isActive ? 1 : 0.96,
                 opacity: isActive ? 1 : 0.16,
                 y: isActive ? -10 : 0,
               }}

@@ -22,6 +22,7 @@ export interface ProjectItem {
   image: string;
   imageAlt: string;
   imagePosition?: string;
+  detailImageScale?: number;
   detailImage: string;
   detailGallery: string[];
   processSteps?: ProjectProcessStep[];
@@ -134,7 +135,8 @@ export const projects: ProjectItem[] = [
     image: "/images/projects/efg.png",
     imageAlt: "EFG Hermes web application preview",
     imagePosition: "60% 100%",
-    detailImage: "/images/projects/efg_hermes.png",
+    detailImageScale: 1.28,
+    detailImage: "/images/projects/efg.png",
     detailGallery: [
       "/images/Projects-Services/EFG.png",
       "/images/Projects-Services/EFG2.png",

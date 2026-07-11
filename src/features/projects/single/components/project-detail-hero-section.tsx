@@ -21,6 +21,7 @@ export function ProjectDetailHeroSection({
   breadcrumbLabel,
   primaryCategory,
 }: ProjectDetailHeroSectionProps) {
+  const detailImageScale = project.detailImageScale ?? 1.08;
   const chipStyle: ProjectDetailChipStyle = {
     "--project-detail-chip-background":
       project.detailChipBackground ?? "var(--projects-detail-chip-background)",
@@ -51,12 +52,14 @@ export function ProjectDetailHeroSection({
         </h1>
 
         <div className="flex flex-row flex-wrap items-center gap-(--projects-detail-chip-gap)" style={chipStyle}>
-          <span className="box-border flex h-(--projects-detail-year-chip-height) w-(--projects-detail-year-chip-width) flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-chip-inner-gap) overflow-(--overflow-clip-fallback) rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-year-chip-padding-x) py-(--projects-detail-year-chip-padding-y) font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium whitespace-nowrap text-(--projects-detail-chip-color)">
-            Year : {project.year}
-          </span>
-          <span className="box-border flex h-(--projects-detail-chip-height) min-w-(--projects-detail-chip-width) max-w-full flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-chip-inner-gap) overflow-(--overflow-clip-fallback) rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-chip-padding-x) py-(--projects-detail-chip-padding-y) font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium whitespace-nowrap text-(--projects-detail-chip-color)">
-            Category : {primaryCategory}
-          </span>
+          <div className="box-border flex h-(--projects-detail-year-chip-height) w-(--projects-detail-year-chip-width) flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-chip-inner-gap) overflow-(--overflow-clip-fallback) rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-year-chip-padding-x) py-(--projects-detail-year-chip-padding-y) whitespace-nowrap text-(--projects-detail-chip-color)">
+            <p className="m-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">Year :</p>
+            <p className="m-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">{project.year}</p>
+          </div>
+          <div className="box-border flex min-h-(--projects-detail-chip-height) w-fit max-w-full min-w-0 flex-row flex-wrap content-center items-center justify-center gap-x-(--projects-detail-chip-inner-gap) gap-y-1 overflow-hidden rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-chip-padding-x) py-(--projects-detail-chip-padding-y) text-(--projects-detail-chip-color)">
+            <p className="m-0 shrink-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">Category :</p>
+            <p className="m-0 min-w-0 max-w-full text-center font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium whitespace-normal wrap-break-word">{primaryCategory}</p>
+          </div>
         </div>
       </div>
 
@@ -67,7 +70,12 @@ export function ProjectDetailHeroSection({
           fill
           priority
           sizes="(min-width: 1440px) 1440px, 100vw"
-          className="block object-cover object-center"
+          className="block"
+          style={{
+            objectFit: "cover",
+            objectPosition: project.imagePosition ?? "center center",
+            transform: `scale(${detailImageScale})`,
+          }}
           unoptimized
         />
       </div>

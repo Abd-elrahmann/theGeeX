@@ -11,7 +11,7 @@ export function ProjectDetailSectionIntro({
 }: ProjectDetailSectionIntroProps) {
   return (
     <>
-      <span className="box-border flex h-min w-min flex-row flex-nowrap content-center items-center justify-start gap-(--projects-detail-work-chip-gap) overflow-(--overflow-clip-fallback) rounded-(--projects-detail-chip-radius) bg-(--projects-detail-work-chip-background) px-(--projects-detail-work-chip-padding-x) py-(--projects-detail-work-chip-padding-y) font-poppins text-(length:--projects-detail-work-chip-text-size) leading-(--projects-detail-work-chip-line-height) font-medium whitespace-nowrap text-(--projects-detail-chip-color)">
+      <span className="mx-auto box-border flex h-min w-min flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-work-chip-gap) overflow-(--overflow-clip-fallback) rounded-(--projects-detail-chip-radius) bg-(--projects-detail-work-chip-background) px-(--projects-detail-work-chip-padding-x) py-(--projects-detail-work-chip-padding-y) font-poppins text-(length:--projects-detail-work-chip-text-size) leading-(--projects-detail-work-chip-line-height) font-medium whitespace-nowrap text-(--projects-detail-chip-color)">
         {label}
       </span>
 

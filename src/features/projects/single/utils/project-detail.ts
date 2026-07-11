@@ -31,24 +31,24 @@ export function getClosestProcessIndex(
   cardElements: Array<HTMLElement | null>,
   viewportHeight: number,
 ) {
-  const targetY = Math.min(viewportHeight * 0.42, viewportHeight - 140);
-  let closestIndex = 0;
-  let closestDistance = Number.POSITIVE_INFINITY;
+  const activationY = Math.min(viewportHeight * 0.35, viewportHeight - 220);
+  let activeIndex: number | null = null;
 
-  cardElements.forEach((cardElement, index) => {
+  for (let index = cardElements.length - 1; index >= 0; index -= 1) {
+    const cardElement = cardElements[index];
+
     if (!cardElement) {
-      return;
+      continue;
     }
 
     const rect = cardElement.getBoundingClientRect();
-    const cardAnchorY = rect.top + rect.height * 0.35;
-    const distance = Math.abs(cardAnchorY - targetY);
+    const cardCenterY = rect.top + rect.height / 2;
 
-    if (distance < closestDistance) {
-      closestDistance = distance;
-      closestIndex = index;
+    if (cardCenterY <= activationY) {
+      activeIndex = index;
+      break;
     }
-  });
+  }
 
-  return closestIndex;
+  return activeIndex;
 }

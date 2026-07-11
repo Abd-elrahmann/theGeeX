@@ -55,7 +55,8 @@ export function ServiceDetailHeroSection({
             alt={service.imageAlt}
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover"
+            style={{ objectPosition: "center 68%" }}
             sizes="(min-width: 1440px) calc(100vw - 160px), (min-width: 1024px) calc(100vw - 80px), 100vw"
           />
         </div>

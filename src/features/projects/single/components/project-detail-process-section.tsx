@@ -5,7 +5,7 @@ import { ProjectDetailSectionIntro } from "@/features/projects/single/shared/com
 
 interface ProjectDetailProcessSectionProps {
   processSteps: ProjectProcessStep[];
-  activeProcessIndex: number;
+  activeProcessIndex: number | null;
   processCardRefs: React.MutableRefObject<Array<HTMLElement | null>>;
 }
 
@@ -21,7 +21,7 @@ export function ProjectDetailProcessSection({
   return (
     <section
       aria-labelledby="project-detail-process-title"
-      className="mx-auto box-border flex w-full max-w-(--projects-detail-container-max-width) flex-col items-center gap-(--projects-detail-process-gap) px-(--projects-detail-padding-x) py-(--projects-detail-process-padding-y)"
+      className="mx-auto box-border flex w-full max-w-(--projects-detail-container-max-width) flex-col items-center gap-(--projects-detail-process-gap) px-(--projects-detail-process-padding-x) py-(--projects-detail-process-padding-y)"
     >
       <ProjectDetailSectionIntro
         id="project-detail-process-title"

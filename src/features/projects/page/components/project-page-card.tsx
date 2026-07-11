@@ -30,7 +30,7 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
   return (
     <article
       data-project-cursor-zone=""
-      className="relative isolate flex h-(--projects-page-card-height) w-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius) bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground) shadow-(--projects-card-shadow)"
+      className="relative isolate flex h-(--projects-page-card-height) w-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius) bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground)"
       style={{ "--project-card-background": project.background } as ProjectPageCardStyle}
       onMouseEnter={() => {
         setIsCardHovered(true);
@@ -53,7 +53,7 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
           {project.categories.map((category) => (
             <span
               key={category}
-              className="block h-auto max-w-full whitespace-normal wrap-break-word rounded-(--projects-card-category-radius) bg-(--color-project-card-category-bg) px-(--projects-card-category-padding-x) py-(--projects-card-category-padding-y) text-left font-poppins text-(length:--projects-card-category-text-size) leading-(--projects-card-category-line-height) font-(--projects-card-category-text-weight) tracking-(--projects-card-category-letter-spacing) text-(--color-project-card-category-text) font-features-normal md:w-auto md:whitespace-nowrap"
+              className="block h-auto min-w-0 max-w-full whitespace-normal wrap-break-word rounded-(--projects-card-category-radius) bg-(--color-project-card-category-bg) px-(--projects-card-category-padding-x) py-(--projects-card-category-padding-y) text-left font-poppins text-(length:--projects-card-category-text-size) leading-(--projects-card-category-line-height) font-(--projects-card-category-text-weight) tracking-(--projects-card-category-letter-spacing) text-(--color-project-card-category-text) font-features-normal"
             >
               {category}
             </span>

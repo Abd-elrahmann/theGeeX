@@ -25,7 +25,12 @@ export function ProjectDetailRelatedProjectsSection({
 
         <div className="flex w-full flex-col gap-(--service-detail-projects-cards-gap)">
           {relatedProjects.map((relatedProject, index) => (
-            <StaticProjectCard key={relatedProject.id} project={relatedProject} index={index} />
+            <StaticProjectCard
+              key={relatedProject.id}
+              project={relatedProject}
+              index={index}
+              hasShadow={false}
+            />
           ))}
         </div>
       </div>

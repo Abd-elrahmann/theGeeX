@@ -12,6 +12,7 @@ export default function SinglePageLayout({
 }>) {
   const pathname = usePathname();
   const shouldHideLetsTalk = pathname.startsWith("/packages");
+  const isServiceDetailPage = pathname.startsWith("/services/");
 
   if (shouldHideLetsTalk) {
     return (
@@ -25,7 +26,14 @@ export default function SinglePageLayout({
   return (
     <>
       {children}
-      <div className="relative mt-(--lets-talk-margin-top) h-(--lets-talk-footer-reveal-height)">
+      <div
+        className="relative h-(--lets-talk-footer-reveal-height)"
+        style={{
+          marginTop: isServiceDetailPage
+            ? "calc(var(--lets-talk-margin-top) + 120px)"
+            : "var(--lets-talk-margin-top)",
+        }}
+      >
         <div className="sticky top-0 z-10">
           <LetsTalkSection revealFooterOnScroll />
         </div>
