@@ -1,0 +1,70 @@
+:root {
+  --contact-us-page-top-padding: calc(var(--navbar-height) + 32px);
+  --contact-us-content-offset-top: 24px;
+  --contact-us-padding-x: 16px;
+  --contact-us-padding-bottom: 80px;
+  --contact-us-container-max-width: 1400px;
+  --contact-us-grid-gap: 32px;
+  --contact-us-title-size: clamp(36px, 6vw, 56px);
+  --contact-us-title-line-height: 1.4;
+  --contact-us-info-gap: 32px;
+  --contact-us-item-gap: 8px;
+  --contact-us-label-size: 12px;
+  --contact-us-label-line-height: 1.4;
+  --contact-us-value-size: 18px;
+  --contact-us-value-line-height: 1.4;
+  --contact-us-form-card-radius: 16px;
+  --contact-us-form-card-padding: 12px;
+  --contact-us-form-inner-radius: 12px;
+  --contact-us-form-inner-padding: 20px;
+  --contact-us-form-gap: 18px;
+  --contact-us-field-gap: 8px;
+  --contact-us-form-blur: 18px;
+  --contact-us-input-height: 40px;
+  --contact-us-textarea-min-height: 160px;
+  --contact-us-input-radius: 10px;
+  --contact-us-input-padding-x: 12px;
+  --contact-us-input-padding-y: 12px;
+  --contact-us-input-border-width: 1px;
+  --contact-us-submit-width: 137px;
+  --contact-us-submit-height: 40px;
+  --contact-us-submit-frame-height: 17px;
+  --contact-us-submit-radius: 10px;
+  --contact-us-submit-gap: 0px;
+  --color-contact-us-page-bg: #ffffff;
+  --color-contact-us-path-stroke: rgb(92 92 92 / 0.10);
+  --color-contact-us-title: #2c3134;
+  --color-contact-us-title-accent: #2558b4;
+  --color-contact-us-label: #0aabc8;
+  --color-contact-us-value: #5c5c5c;
+  --color-contact-us-form-card-bg: rgb(255 255 255 / 0.72);
+  --color-contact-us-form-surface: rgb(248 248 248 / 0.82);
+  --color-contact-us-form-border: rgb(255 255 255 / 0.6);
+  --color-contact-us-input-text: #2c3134;
+  --color-contact-us-input-label: #888888;
+  --color-contact-us-input-border: rgb(136 136 136 / 0.1);
+  --color-contact-us-input-bg: rgb(187 187 187 / 0.15);
+  --color-contact-us-input-placeholder: #999999;
+  --color-contact-us-input-focus: #0099ff;
+  --color-contact-us-submit-bg: #333333;
+  --color-contact-us-submit-hover-bg: rgb(51 51 51 / 0.85);
+  --color-contact-us-submit-text: #ffffff;
+  --color-contact-us-submit-text-hover: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  :root {
+      --contact-us-padding-x: 88px;
+      --contact-us-grid-gap: 48px;
+      --contact-us-form-inner-padding: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+      --contact-us-page-top-padding: calc(var(--navbar-height) + 40px);
+      --contact-us-content-offset-top: 32px;
+      --contact-us-padding-bottom: 112px;
+      --contact-us-info-gap: 40px;
+  }
+}

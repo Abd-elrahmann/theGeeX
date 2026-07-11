@@ -297,12 +297,6 @@ export function ProjectCard({
           />
         </div>
 
-        {project.description ? (
-          <p className="mx-auto mt-(--projects-card-description-margin-top) mb-0 w-full max-w-(--projects-card-content-max-width) shrink-0 whitespace-pre-wrap wrap-break-word font-poppins text-(length:--projects-card-description-size) leading-(--projects-card-description-line-height) font-normal tracking-normal text-(--color-project-card-foreground) font-features-normal">
-            {project.description}
-          </p>
-        ) : null}
-
         <div
           className="relative mt-(--projects-card-image-margin-top) h-px min-h-(--projects-card-image-min-height) w-full flex-1 overflow-hidden rounded-(--projects-card-image-radius)"
           style={{

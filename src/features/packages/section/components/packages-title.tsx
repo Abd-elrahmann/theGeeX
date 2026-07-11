@@ -1,6 +1,7 @@
 import { cn } from "@/lib/cn";
 
 import { packagesSectionTitle } from "@/features/packages/constants/packages";
+import { packageFeatureTitleClassName } from "@/features/packages/shared/utils/package-styles";
 
 const packagesTitleHeadingClassName = cn(
   "relative m-0 mx-auto flex w-full justify-center p-0",
@@ -12,7 +13,7 @@ const packagesTitleTextClassName = cn(
   "font-(--packages-title-font-weight)",
   "text-[length:var(--packages-title-size)] leading-(--packages-title-line-height)",
   "tracking-[0px] text-center whitespace-nowrap",
-  "[font-feature-settings:normal]",
+  packageFeatureTitleClassName,
 );
 
 export function PackagesTitle() {

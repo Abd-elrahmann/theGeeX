@@ -1,0 +1,46 @@
+:root {
+  --not-found-page-top-padding: calc(var(--navbar-height) + 32px);
+  --not-found-page-padding-x: 24px;
+  --not-found-page-padding-bottom: 80px;
+  --not-found-container-min-height: calc(100svh - var(--not-found-page-top-padding) - var(--not-found-page-padding-bottom));
+  --not-found-content-max-width: 760px;
+  --not-found-content-gap: 20px;
+  --not-found-title-size: clamp(96px, 26vw, 190px);
+  --not-found-title-line-height: 1;
+  --not-found-title-letter-spacing: -0.01em;
+  --not-found-description-size: 18px;
+  --not-found-description-line-height: 1.2;
+  --not-found-button-width: 300px;
+  --not-found-button-height: 52px;
+  --not-found-button-radius: 99px;
+  --not-found-button-padding-x: 24px;
+  --not-found-button-padding-top: 16px;
+  --not-found-button-padding-bottom: 12px;
+  --not-found-button-gap: 4px;
+  --not-found-button-text-size: 16px;
+  --not-found-button-text-line-height: 1.2;
+  --not-found-button-text-frame-height: 20px;
+  --not-found-button-icon-size: 24px;
+  --not-found-button-orb-width: 360px;
+  --not-found-button-orb-height: 360px;
+  --color-not-found-text: #2c3134;
+  --color-not-found-button-bg: #ffe700;
+  --color-not-found-button-hover-bg: #0aabc8;
+  --color-not-found-button-text: #2c3134;
+  --color-not-found-button-text-hover: #ffffff;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --not-found-page-padding-x: 40px;
+    --not-found-page-padding-bottom: 96px;
+    --not-found-content-gap: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+      --not-found-page-top-padding: calc(var(--navbar-height) + 40px);
+      --not-found-page-padding-bottom: 112px;
+  }
+}

@@ -1,0 +1,52 @@
+:root {
+  --ai-growth-margin-top: calc(var(--section-stack-gap) + 64px);
+  --ai-growth-padding-x: 16px;
+  --ai-growth-padding-y: 56px;
+  --ai-growth-container-max-width: 1200px;
+  --ai-growth-scroll-height: calc(100svh + 420px);
+  --ai-growth-pin-scroll-distance: 420px;
+  --ai-growth-sticky-top: 0px;
+  --ai-growth-stage-min-height: calc(100svh - var(--ai-growth-sticky-top));
+  --ai-growth-stage-height: calc(100svh - var(--ai-growth-sticky-top));
+  --ai-growth-mobile-stage-height: calc(100svh + 420px);
+  --ai-growth-mobile-rows-sticky-top: calc(var(--navbar-height) + 16px);
+  --ai-growth-mobile-rows-track-height: calc(100svh + 420px);
+  --ai-growth-grid-gap: 24px;
+  --ai-growth-grid-one-min-width: 440px;
+  --ai-growth-grid-two-min-width: 560px;
+  --ai-growth-grid-two-padding-top: 0px;
+  --ai-growth-intro-gap: 32px;
+  --ai-growth-title-size: clamp(34px, 10vw, 42px);
+  --ai-growth-title-line-height: 1.2;
+  --ai-growth-description-size: 14px;
+  --ai-growth-description-line-height: 1.6;
+  --ai-growth-rows-gap: 16px;
+  --ai-growth-row-column-gap: 24px;
+  --ai-growth-row-mobile-gap: 8px;
+  --ai-growth-row-title-width: 180px;
+  --ai-growth-row-title-size: 16px;
+  --ai-growth-row-description-size: 16px;
+  --ai-growth-row-line-height: 1.6;
+  --ai-growth-row-divider-gap: 10px;
+  --ai-growth-row-divider-radius: 11px;
+  --color-ai-growth-accent: #0aabc8;
+  --color-ai-growth-title-muted: rgb(14 14 14 / 0.6);
+  --color-ai-growth-text: #2c3134;
+  --color-ai-growth-row-title: var(--color-ai-growth-accent);
+  --color-ai-growth-muted: var(--color-ai-growth-text);
+  --color-ai-growth-row-divider: #e8e8e8;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --ai-growth-title-size: 60px;
+    --ai-growth-description-size: 16px;
+    --ai-growth-grid-gap: 40px;
+    --ai-growth-margin-top: calc(var(--section-stack-gap) + 88px);
+    --ai-growth-scroll-height: calc(100svh + 260px);
+    --ai-growth-pin-scroll-distance: 420px;
+    --ai-growth-sticky-top: var(--services-sticky-top);
+    --ai-growth-mobile-stage-height: 0px;
+    --ai-growth-mobile-rows-track-height: auto;
+  }
+}

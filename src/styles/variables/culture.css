@@ -1,0 +1,221 @@
+:root {
+  --color-culture-title-gradient-start: rgb(0 0 0 / 0.48);
+  --color-culture-title-gradient-mid: rgb(0 0 0 / 0.24);
+  --color-culture-title-gradient-end: rgb(0 0 0 / 0);
+  --culture-title-gradient: linear-gradient(
+    180deg,
+    var(--color-culture-title-gradient-start) 0%,
+    var(--color-culture-title-gradient-mid) 32%,
+    var(--color-culture-title-gradient-end) 100%
+  );
+  --culture-title-mask: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0%,
+    rgb(0 0 0 / 1) 38%
+  );
+  --culture-title-font-weight: 600;
+  --culture-title-size: clamp(56px, 14vw, 96px);
+  --culture-title-line-height: 1;
+  --culture-title-box-height: clamp(56px, 14vw, 96px);
+  --culture-title-z-index: 1;
+  --culture-margin-top: calc(var(--section-stack-gap) - 28px);
+  --culture-padding-x: 16px;
+  --culture-container-max-width: 1200px;
+  --culture-section-gap: 24px;
+  --culture-section-scroll-vh: 160;
+  --culture-section-exit-vh: 16;
+  --culture-section-scroll-height: calc(var(--culture-section-scroll-vh) * 1vh);
+  --culture-section-exit-padding: calc(var(--culture-section-exit-vh) * 1vh);
+  --culture-stage-height: calc(
+    var(--culture-title-box-height) + var(--culture-section-gap) + var(--culture-split-card-min-height)
+  );
+  --culture-sticky-top: max(0px, calc((100svh - var(--culture-stage-height)) / 2));
+  --culture-grid-gap: 20px;
+  --culture-lead-card-width: 613px;
+  --culture-card-radius: 40px;
+  --culture-card-inner-radius: 32px;
+  --culture-image-radius: 32px;
+  --culture-card-padding: 8px;
+  --culture-card-inner-gap: 8px;
+  --culture-split-card-min-height: 436px;
+  --culture-split-card-content-height: 420px;
+  --culture-split-card-media-min-height: 260px;
+  --culture-stacked-card-min-height: 420px;
+  --culture-card-content-padding-x: 24px;
+  --culture-card-content-padding-y: 24px;
+  --culture-text-block-margin-top: 40px;
+  --culture-split-card-text-block-height: 266px;
+  --culture-card-text-gap: 2px;
+  --culture-card-title-size: 22px;
+  --culture-card-title-line-height: 1.2;
+  --culture-card-title-weight: 600;
+  --culture-card-title-letter-spacing: -0.03em;
+  --culture-split-card-title-max-height: 56px;
+  --culture-split-card-collapsed-title-offset: 20px;
+  --culture-split-card-title-expanded-offset: 210px;
+  --culture-card-description-size: 16px;
+  --culture-card-description-line-height: 1.6;
+  --culture-card-description-weight: 400;
+  --culture-card-description-letter-spacing: -0.02em;
+  --culture-split-card-description-height: calc(
+    var(--culture-split-card-text-block-height) - var(--culture-split-card-title-max-height) -
+      var(--culture-card-text-gap)
+  );
+  --culture-split-card-description-width: calc(
+    (var(--culture-lead-card-width) - var(--culture-card-padding) * 2 - var(--culture-card-inner-gap)) / 2 -
+      var(--culture-card-content-padding-x) * 2
+  );
+  --culture-split-card-description-exit-offset: 28px;
+  --culture-split-card-title-drop-offset: 24px;
+  --culture-icon-size: 46px;
+  --culture-pill-icon-width: 29px;
+  --culture-pill-icon-height: 47px;
+  --culture-stacked-card-padding-x: 24px;
+  --culture-stacked-card-padding-y: 24px;
+  --culture-stacked-card-title-block-height: 88px;
+  --culture-stacked-card-icon-gap: 16px;
+  --culture-stacked-card-icons-opacity: 0.6;
+  --culture-mobile-card-content-gap: 12px;
+  --culture-mobile-lead-image-height: 220px;
+  --culture-mobile-stacked-card-min-height: 120px;
+  --color-culture-card-bg: #f4f5f7;
+  --color-culture-stacked-card-bg: var(--color-culture-card-bg);
+  --color-culture-card-surface: #ffffff;
+  --color-culture-card-title: #000000;
+  --color-culture-stacked-card-title: rgb(14 14 14 / 0.6);
+  --color-culture-card-description: #6c7179;
+  --color-culture-icon: #000000;
+  --culture-card-shadow: 0 16px 40px rgb(0 0 0 / 0.06);
+}
+
+@media (max-width: 799.98px) {
+  :root {
+
+    --culture-margin-top: calc(var(--section-stack-gap) - 28px);
+    --culture-section-exit-vh: 28;
+    --culture-card-title-letter-spacing: 0px;
+    --culture-card-description-letter-spacing: 0px;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+    --culture-margin-top: calc(var(--section-stack-gap) - 28px);
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --culture-margin-top: calc(var(--section-stack-gap) - 28px);
+    --culture-padding-x: 24px;
+    --culture-section-gap: 20px;
+    --culture-section-scroll-vh: 190;
+    --culture-section-exit-vh: 0;
+    --culture-grid-gap: 12px;
+    --culture-lead-card-width: min(300px, calc(100vw - 2 * var(--culture-padding-x)));
+    --culture-card-radius: 22px;
+    --culture-card-inner-radius: 18px;
+    --culture-image-radius: 18px;
+    --culture-split-card-min-height: 310px;
+    --culture-split-card-content-height: 294px;
+    --culture-split-card-media-min-height: 170px;
+    --culture-stacked-card-min-height: 294px;
+    --culture-card-content-padding-x: 14px;
+    --culture-card-content-padding-y: 14px;
+    --culture-stacked-card-padding-x: 14px;
+    --culture-stacked-card-padding-y: 14px;
+    --culture-text-block-margin-top: 20px;
+    --culture-split-card-text-block-height: 218px;
+    --culture-split-card-title-max-height: 42px;
+    --culture-split-card-collapsed-title-offset: 10px;
+    --culture-split-card-title-expanded-offset: 168px;
+    --culture-card-title-size: 13px;
+    --culture-card-description-size: 11px;
+    --culture-card-description-line-height: 1.45;
+    --culture-icon-size: 28px;
+    --culture-pill-icon-width: 18px;
+    --culture-pill-icon-height: 30px;
+    --culture-stacked-card-title-block-height: 58px;
+    --culture-stacked-card-icon-gap: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --culture-margin-top: var(--section-stack-gap);
+    --culture-padding-x: 0px;
+    --culture-title-size: 160px;
+    --culture-title-line-height: 160px;
+    --culture-title-box-height: 124px;
+    --culture-section-gap: 0px;
+    --culture-section-scroll-vh: 200;
+    --culture-section-exit-vh: 0;
+    --culture-grid-gap: 24px;
+    --culture-card-content-padding-x: 32px;
+    --culture-card-content-padding-y: 32px;
+    --culture-stacked-card-padding-x: 32px;
+    --culture-stacked-card-padding-y: 32px;
+    --culture-text-block-margin-top: 48px;
+    --culture-split-card-media-min-height: 420px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --culture-container-max-width: 1200px;
+    --culture-title-size: 188px;
+    --culture-title-line-height: 188px;
+    --culture-title-box-height: 144px;
+    --culture-margin-top: 0px;
+    --culture-section-gap: 0px;
+    --culture-section-scroll-vh: 220;
+    --culture-section-exit-vh: 0;
+    --culture-grid-gap: 28px;
+    --culture-card-content-padding-x: 36px;
+    --culture-card-content-padding-y: 36px;
+    --culture-stacked-card-padding-x: 36px;
+    --culture-stacked-card-padding-y: 36px;
+    --culture-card-title-size: 21px;
+    --culture-card-title-line-height: 1.12;
+    --culture-card-description-size: 16px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --culture-container-max-width: 1200px;
+    --culture-title-size: 188px;
+    --culture-title-line-height: 188px;
+    --culture-title-box-height: 144px;
+    --culture-margin-top: 0px;
+    --culture-section-gap: 0px;
+    --culture-section-scroll-vh: 220;
+    --culture-section-exit-vh: 0;
+    --culture-grid-gap: 28px;
+    --culture-card-content-padding-x: 36px;
+    --culture-card-content-padding-y: 36px;
+    --culture-stacked-card-padding-x: 36px;
+    --culture-stacked-card-padding-y: 36px;
+    --culture-card-title-size: 21px;
+    --culture-card-title-line-height: 1.12;
+    --culture-card-description-size: 16px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --culture-container-max-width: 1200px;
+    --culture-title-size: 160px;
+    --culture-title-line-height: 160px;
+    --culture-title-box-height: 124px;
+    --culture-margin-top: 0px;
+    --culture-section-scroll-vh: 200;
+    --culture-grid-gap: 24px;
+    --culture-card-content-padding-x: 32px;
+    --culture-card-content-padding-y: 32px;
+    --culture-stacked-card-padding-x: 32px;
+    --culture-stacked-card-padding-y: 32px;
+    --culture-card-title-size: 22px;
+    --culture-card-description-size: 16px;
+  }
+}

@@ -1,0 +1,175 @@
+:root {
+  --process-margin-top: var(--section-stack-gap);
+  --process-padding-x: 16px;
+  --process-padding-y: 48px;
+  --process-container-max-width: 1200px;
+  --process-column-gap: 40px;
+  --process-scroll-step-vh: 85;
+  --process-pin-start-offset: 0px;
+  --process-stage-min-height: 100svh;
+  --process-stage-bottom-padding: 0px;
+  --process-title-sticky-top: var(--navbar-height);
+  --process-title-max-width: 540px;
+  --process-title-min-width: 0px;
+  --process-title-size: 34px;
+  --process-title-line-height: 1.2;
+  --process-title-weight: 600;
+  --process-title-z-index: 30;
+  --process-title-visible-height: calc(
+    var(--process-title-size) * var(--process-title-line-height) * 3
+  );
+  --process-title-mask-height: calc(
+    var(--process-title-visible-height) + var(--process-card-gap) * 2
+  );
+  --process-title-sticky-box-height: calc(
+    var(--process-card-sticky-top-5) + var(--process-card-height) -
+      var(--process-title-sticky-top)
+  );
+  --process-cards-column-max-width: 100%;
+  --process-card-width: 100%;
+  --process-card-height: 340px;
+  --process-card-gap: 8px;
+  --process-cards-bottom-padding: var(--process-padding-y);
+  --process-cards-tail-height: 0px;
+  --process-card-radius: 16px;
+  --process-card-padding-x: 40px;
+  --process-card-padding-y: 36px;
+  --process-card-content-padding-x: 24px;
+  --process-card-content-padding-y: 20px;
+  --process-card-header-gap: 28px;
+  --process-card-index-width: auto;
+  --process-card-index-height: 100%;
+  --process-card-index-max-width: 100%;
+  --process-card-index-padding-x: 24px;
+  --process-card-index-padding-y: 24px;
+  --process-card-index-gap: 10px;
+  --process-card-index-size: 59px;
+  --process-card-index-line-height: 1.2;
+  --process-card-index-weight: 600;
+  --process-card-index-letter-spacing: -0.04em;
+  --process-card-description-margin-top: 14px;
+  --process-card-copy-gap: 12px;
+  --process-card-title-size: 28px;
+  --process-card-title-line-height: 1.2;
+  --process-card-title-weight: 600;
+  --process-card-title-letter-spacing: -0.02em;
+  --process-card-description-size: 16px;
+  --process-card-description-line-height: 1.6;
+  --process-card-description-weight: 600;
+  --process-card-sticky-top-1: 56px;
+  --process-card-sticky-top-2: 150px;
+  --process-card-sticky-top-3: 250px;
+  --process-card-sticky-top-4: 350px;
+  --process-card-sticky-top-5: 286px;
+  --color-process-title-muted: rgb(14 14 14 / 0.6);
+  --color-process-title-accent: #0aabc8;
+  --color-process-card-bg: #f4f5f7;
+  --color-process-card-border: rgb(0 0 0 / 0.06);
+  --color-process-card-index: rgb(14 14 14 / 0.6);
+  --color-process-card-title: #0e0e0e;
+  --color-process-card-description: rgb(14 14 14 / 0.6);
+  --color-process-card-final-bg: #0e0e0e;
+  --color-process-card-final-index: rgb(255 255 255 / 0.82);
+  --color-process-card-final-title: #ffffff;
+  --color-process-card-final-description: rgb(255 255 255 / 0.6);
+}
+
+@media (max-width: 799.98px) {
+  :root {
+    --process-card-title-letter-spacing: 0px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --process-padding-x: 24px;
+    --process-padding-y: 52px;
+    --process-title-max-width: 680px;
+    --process-title-size: 48px;
+    --process-title-line-height: 1.04;
+    --process-cards-column-max-width: 620px;
+    --process-card-width: min(100%, 620px);
+    --process-card-height: 156px;
+    --process-card-gap: 14px;
+    --process-card-radius: 18px;
+    --process-card-content-padding-x: 24px;
+    --process-card-content-padding-y: 22px;
+    --process-card-index-padding-x: 24px;
+    --process-card-index-padding-y: 18px;
+    --process-card-index-size: 42px;
+    --process-card-title-size: 28px;
+    --process-card-description-size: 14px;
+    --process-card-description-line-height: 1.5;
+    --process-card-description-margin-top: 10px;
+    --process-cards-bottom-padding: 24px;
+    --process-card-sticky-top-1: 160px;
+    --process-card-sticky-top-2: 250px;
+    --process-card-sticky-top-3: 340px;
+    --process-card-sticky-top-4: 430px;
+    --process-card-sticky-top-5: 430px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --process-margin-top: 0px;
+    --process-padding-x: 0px;
+    --process-padding-y: 64px;
+    --process-title-max-width: 700px;
+    --process-title-min-width: 520px;
+    --process-title-size: 60px;
+    --process-title-sticky-top: 150px;
+    --process-title-z-index: 10;
+    --process-cards-column-max-width: 680px;
+    --process-card-width: min(100%, 620px);
+    --process-card-height: 250px;
+    --process-card-padding-x: 28px;
+    --process-card-padding-y: 24px;
+    --process-card-content-padding-x: 28px;
+    --process-card-content-padding-y: 24px;
+    --process-card-title-size: 34px;
+    --process-card-header-gap: 36px;
+    --process-card-index-max-width: 160px;
+    --process-card-index-padding-x: 40px;
+    --process-card-index-padding-y: 24px;
+    --process-card-description-margin-top: 24px;
+    --process-cards-bottom-padding: var(--process-padding-y);
+    --process-cards-tail-height: 0px;
+    --process-card-sticky-top-1: 150px;
+    --process-card-sticky-top-2: 270px;
+    --process-card-sticky-top-3: 390px;
+    --process-card-sticky-top-4: 510px;
+    --process-card-sticky-top-5: 510px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+
+    --process-margin-top: 0px;
+    --process-container-max-width: 1200px;
+    --process-padding-y: 72px;
+    --process-title-size: 72px;
+    --process-card-title-size: 44px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+
+    --process-margin-top: 0px;
+    --process-container-max-width: 1200px;
+    --process-padding-y: 72px;
+    --process-title-size: 72px;
+    --process-card-title-size: 44px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --process-container-max-width: 1200px;
+    --process-padding-y: 64px;
+    --process-title-size: 60px;
+    --process-card-title-size: 34px;
+  }
+}

@@ -1,0 +1,122 @@
+:root {
+  --lets-talk-container-max-width: 100%;
+  --lets-talk-margin-top: 24px;
+  --lets-talk-padding-x: 16px;
+  --lets-talk-padding-y: 48px;
+  --lets-talk-card-min-height: 680px;
+  --lets-talk-card-radius: 32px;
+  --lets-talk-card-padding-x: 24px;
+  --lets-talk-card-padding-y: 64px;
+  --lets-talk-content-max-width: 100%;
+  --lets-talk-content-gap: 24px;
+  --lets-talk-copy-gap: 12px;
+  --lets-talk-title-size: 30px;
+  --lets-talk-title-line-height: 1.2;
+  --lets-talk-subtitle-size: 13px;
+  --lets-talk-subtitle-line-height: 1.45;
+  --lets-talk-button-width: 128px;
+  --lets-talk-button-height: 38px;
+  --lets-talk-button-radius: 99px;
+  --lets-talk-button-padding-x: 16px;
+  --lets-talk-button-padding-y: 8px;
+  --lets-talk-button-gap: 4px;
+  --lets-talk-button-text-size: 13px;
+  --lets-talk-button-text-line-height: 1.2;
+  --lets-talk-button-text-frame-height: 16px;
+  --lets-talk-button-icon-size: 20px;
+  --lets-talk-button-orb-width: 360px;
+  --lets-talk-button-orb-height: 360px;
+  --lets-talk-footer-scroll-tail: 0px;
+  --lets-talk-footer-reveal-height: calc(
+    var(--lets-talk-card-min-height) +
+    var(--lets-talk-padding-y) * 2 +
+    var(--footer-reveal-gap) +
+    var(--footer-card-min-height) +
+    var(--lets-talk-footer-scroll-tail)
+  );
+  --color-lets-talk-overlay: rgb(0 0 0 / 0.24);
+  --color-lets-talk-title: #ffffff;
+  --color-lets-talk-subtitle: rgb(255 255 255 / 0.55);
+  --color-lets-talk-button-bg: #ffe700;
+  --color-lets-talk-button-hover-bg: #0aabc8;
+  --color-lets-talk-button-text: #050505;
+  --color-lets-talk-button-text-hover: #ffffff;
+}
+
+@media (min-width: 800px) {
+  :root {
+    --lets-talk-margin-top: -64px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-x: 24px;
+    --lets-talk-card-radius: 44px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-y: 64px;
+    --lets-talk-card-min-height: 560px;
+    --lets-talk-card-radius: 56px;
+    --lets-talk-card-padding-x: 24px;
+    --lets-talk-card-padding-y: 84px;
+    --lets-talk-content-max-width: 100%;
+    --lets-talk-content-gap: 36px;
+    --lets-talk-copy-gap: 18px;
+    --lets-talk-title-size: 52px;
+    --lets-talk-button-height: 40px;
+    --lets-talk-button-width: 137px;
+    --lets-talk-button-text-size: 14px;
+    --lets-talk-button-text-frame-height: 17px;
+    --lets-talk-button-icon-size: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-y: 72px;
+    --lets-talk-card-min-height: 852px;
+    --lets-talk-card-radius: 64px;
+    --lets-talk-card-padding-y: 84px;
+    --lets-talk-content-max-width: 100%;
+    --lets-talk-content-gap: 40px;
+    --lets-talk-copy-gap: 20px;
+    --lets-talk-title-size: 60px;
+    --lets-talk-button-height: 40px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-y: 72px;
+    --lets-talk-card-min-height: 620px;
+    --lets-talk-card-radius: 64px;
+    --lets-talk-card-padding-y: 84px;
+    --lets-talk-content-max-width: 100%;
+    --lets-talk-content-gap: 40px;
+    --lets-talk-copy-gap: 20px;
+    --lets-talk-title-size: 60px;
+    --lets-talk-button-height: 40px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-y: 64px;
+    --lets-talk-card-min-height: 852px;
+    --lets-talk-card-radius: 56px;
+    --lets-talk-card-padding-y: 84px;
+    --lets-talk-content-max-width: 100%;
+    --lets-talk-content-gap: 36px;
+    --lets-talk-copy-gap: 18px;
+    --lets-talk-title-size: 52px;
+  }
+}

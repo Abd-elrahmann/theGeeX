@@ -1,0 +1,267 @@
+:root {
+  --packages-margin-top: var(--section-stack-gap);
+  --color-packages-section-bg: transparent;
+  --packages-padding-x: 16px;
+  --packages-padding-y: 48px;
+  --packages-container-max-width: 1200px;
+  --packages-section-gap: 32px;
+  --packages-cards-gap: 20px;
+  --packages-title-z-index: 1;
+  --packages-title-font-weight: 700;
+  --packages-title-size: 56px;
+  --packages-title-line-height: 1.08;
+  --packages-title-box-height: 62px;
+  --packages-title-gradient-start: rgb(0 0 0 / 0.48);
+  --packages-title-gradient-mid: rgb(0 0 0 / 0.24);
+  --packages-title-gradient-end: rgb(0 0 0 / 0);
+  --packages-title-gradient: linear-gradient(
+    180deg,
+    var(--packages-title-gradient-start) 0%,
+    var(--packages-title-gradient-mid) 32%,
+    var(--packages-title-gradient-end) 100%
+  );
+  --packages-title-mask: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0%,
+    rgb(0 0 0 / 1) 38%
+  );
+  --packages-card-min-height: auto;
+  --packages-card-max-width: 100%;
+  --packages-card-radius: 24px;
+  --packages-card-padding-x: 24px;
+  --packages-card-padding-top: 24px;
+  --packages-card-padding-bottom: 24px;
+  --packages-card-shadow: 0px 16px 40px 0px rgb(0 0 0 / 0.06);
+  --packages-card-featured-shadow: 0px 12px 32px 0px rgb(0 0 0 / 0.12);
+  --packages-card-blur: 24px;
+  --packages-card-top-height: auto;
+  --packages-card-chips-margin-bottom: 20px;
+  --packages-card-chips-gap: 8px;
+  --packages-card-chip-padding-x: 12px;
+  --packages-card-chip-padding-y: 8px;
+  --packages-card-chip-gap: 8px;
+  --packages-card-chip-radius: 999px;
+  --packages-card-chip-size: 14px;
+  --packages-card-chip-line-height: 1.2;
+  --packages-card-title-min-height: 26px;
+  --packages-card-title-size: 24px;
+  --packages-card-enterprise-title-size: 20px;
+  --packages-card-title-line-height: 1.4;
+  --packages-card-description-margin-top: 6px;
+  --packages-card-description-min-height: auto;
+  --packages-card-description-size: 12px;
+  --packages-card-description-line-height: 1.35;
+  --packages-card-price-margin-top: 16px;
+  --packages-card-price-row-min-height: auto;
+  --packages-card-price-gap: 8px;
+  --packages-card-price-size: 40px;
+  --packages-card-price-line-height: 1.2;
+  --packages-card-price-letter-spacing: -2.1px;
+  --packages-card-contact-sales-size: 32px;
+  --packages-card-billing-size: 12px;
+  --packages-card-billing-line-height: 1.6;
+  --packages-card-billing-padding-bottom: 6px;
+  --packages-card-button-margin-top: 16px;
+  --packages-button-width: min(100%, 300px);
+  --packages-button-height: 52px;
+  --packages-button-radius: 99px;
+  --packages-button-padding-x: 24px;
+  --packages-button-padding-top: 16px;
+  --packages-button-padding-bottom: 12px;
+  --packages-button-text-size: 16px;
+  --packages-button-text-line-height: 1.4;
+  --packages-button-text-letter-spacing: -0.02em;
+  --packages-button-text-frame-height: 23px;
+  --packages-button-orb-width: 360px;
+  --packages-button-orb-height: 360px;
+  --packages-card-features-margin-top: 24px;
+  --packages-card-features-min-height: auto;
+  --packages-card-features-padding-x: var(--packages-card-padding-x);
+  --packages-card-features-padding-top: 0px;
+  --packages-card-features-padding-bottom: var(--packages-card-padding-bottom);
+  --packages-card-features-gap: 12px;
+  --packages-card-feature-dot-gap: 8px;
+  --packages-card-feature-row-max-width: 100%;
+  --packages-card-feature-text-width: calc(100% - var(--packages-card-feature-dot-size) - var(--packages-card-feature-dot-gap));
+  --packages-card-feature-dot-size: 6px;
+  --packages-card-feature-dot-offset: 5px;
+  --packages-card-feature-size: 14px;
+  --packages-card-feature-line-height: 18px;
+  --color-packages-card-bg: rgb(255 255 255 / 0.72);
+  --color-packages-card-featured-border: rgb(10 171 200 / 0.18);
+  --color-packages-card-title: #2c3134;
+  --color-packages-card-chip-bg: rgb(217 217 217 / 0.1);
+  --color-packages-card-chip-border: rgb(0 0 0 / 0.16);
+  --color-packages-card-chip-text: #2c3134;
+  --color-packages-card-chip-accent-bg: #0aabc8;
+  --color-packages-card-chip-accent-text: #ffffff;
+  --color-packages-card-description: #5c5c5c;
+  --color-packages-card-price: #2c3134;
+  --color-packages-card-billing: #5c5c5c;
+  --color-packages-card-feature-dot: #000000;
+  --color-packages-card-feature-text: #5c5c5c;
+  --color-packages-feature-highlight: #0aabc8;
+  --color-packages-button-bg: #ffe700;
+  --color-packages-button-hover-bg: #0aabc8;
+  --color-packages-button-text: #0c0c0c;
+  --color-packages-button-hover-text: #ffffff;
+  --packages-page-top-padding: var(--navbar-height);
+  --packages-detail-padding-x: 16px;
+  --packages-detail-padding-top: 48px;
+  --packages-detail-padding-bottom: 80px;
+  --packages-detail-container-max-width: 1200px;
+  --packages-detail-hero-gap: 32px;
+  --packages-detail-breadcrumb-gap: 8px;
+  --packages-detail-breadcrumb-size: 16px;
+  --packages-detail-breadcrumb-line-height: 1.2;
+  --packages-detail-chip-size: 16px;
+  --packages-detail-chip-line-height: 1.2;
+  --packages-detail-chip-max-width: 838px;
+  --packages-detail-title-max-width: 838px;
+  --packages-detail-title-size: clamp(42px, 7vw, 62px);
+  --packages-detail-title-line-height: 1.2;
+  --packages-detail-description-max-width: 838px;
+  --packages-detail-description-size: 16px;
+  --packages-detail-description-line-height: 1.6;
+  --packages-detail-image-height: clamp(280px, 55vw, 620px);
+  --packages-detail-image-radius: 32px;
+  --packages-detail-image-overlay: linear-gradient(180deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0.08) 100%);
+  --packages-detail-section-gap: 56px;
+  --packages-detail-included-gap: 0px;
+  --packages-detail-included-title-size: 40px;
+  --packages-detail-included-title-divider-gap: 32px;
+  --packages-detail-included-rows-gap: 24px;
+  --packages-detail-included-row-gap: 10px;
+  --packages-detail-included-first-row-padding-top: 0px;
+  --packages-detail-included-row-padding-y: 20px;
+  --packages-detail-included-row-border-color: rgb(44 49 52 / 0.12);
+  --packages-detail-included-title-column-width: 260px;
+  --packages-detail-included-item-title-size: 16px;
+  --packages-detail-included-item-title-line-height: 1.6;
+  --packages-detail-included-item-description-size: 16px;
+  --packages-detail-included-item-description-line-height: 1.6;
+  --packages-detail-cta-min-height: 460px;
+  --packages-detail-cta-radius: 32px;
+  --packages-detail-cta-overlay: rgb(0 0 0 / 0.32);
+  --packages-detail-cta-padding-x: 24px;
+  --packages-detail-cta-padding-y: 40px;
+  --packages-detail-cta-gap: 12px;
+  --packages-detail-cta-title-max-width: 776px;
+  --packages-detail-cta-title-size: 24px;
+  --packages-detail-cta-price-label-size: 16px;
+  --packages-detail-cta-price-size: clamp(42px, 8vw, 64px);
+  --packages-detail-cta-button-width: 225px;
+  --packages-detail-cta-button-height: 48px;
+  --packages-detail-cta-button-padding-x: 24px;
+  --packages-detail-cta-button-padding-y: 10px;
+  --color-packages-detail-text: #2c3134;
+  --color-packages-detail-accent: #0aabc8;
+  --color-packages-detail-surface: rgb(255 255 255 / 0.72);
+}
+
+@media (max-width: 799.98px) {
+  :root {
+    --packages-detail-breadcrumb-size: 12px;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+    --color-packages-section-bg: var(--color-background);
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --packages-title-size: 112px;
+    --packages-title-line-height: 124px;
+    --packages-title-box-height: 98px;
+    --packages-button-width: 300px;
+    --packages-card-features-gap: 18px;
+    --packages-card-feature-dot-size: 6px;
+    --packages-card-feature-dot-offset: 7px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --packages-padding-x: 0px;
+    --packages-padding-y: 64px;
+    --packages-section-gap: 40px;
+    --packages-title-size: 180px;
+    --packages-title-line-height: 204px;
+    --packages-title-box-height: 157px;
+    --packages-card-padding-x: 28px;
+    --packages-card-padding-top: 32px;
+    --packages-card-padding-bottom: 32px;
+    --packages-card-min-height: auto;
+    --packages-card-top-height: auto;
+    --packages-card-description-margin-top: 8px;
+    --packages-card-description-min-height: auto;
+    --packages-card-price-margin-top: 16px;
+    --packages-card-price-row-min-height: 56px;
+    --packages-card-price-gap: 12px;
+    --packages-card-button-margin-top: 16px;
+    --packages-card-features-margin-top: 16px;
+    --packages-card-features-min-height: auto;
+    --packages-detail-padding-x: 40px;
+    --packages-detail-padding-top: 72px;
+    --packages-detail-padding-bottom: 96px;
+    --packages-detail-hero-gap: 40px;
+    --packages-detail-image-radius: 40px;
+    --packages-detail-section-gap: 72px;
+    --packages-detail-included-gap: 0px;
+    --packages-detail-included-title-size: 52px;
+    --packages-detail-cta-min-height: 560px;
+    --packages-detail-cta-radius: 48px;
+    --packages-detail-cta-padding-x: 32px;
+    --packages-detail-cta-padding-y: 64px;
+    --packages-detail-cta-button-padding-x: 28px;
+    --packages-detail-cta-button-padding-y: 10px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --packages-container-max-width: 1200px;
+    --packages-padding-y: 72px;
+    --packages-section-gap: 48px;
+    --packages-title-size: 240px;
+    --packages-title-line-height: 240px;
+    --packages-title-box-height: 184px;
+    --packages-card-max-width: 420px;
+    --packages-card-padding-x: 32px;
+    --packages-card-feature-row-max-width: 336px;
+    --packages-card-feature-text-width: 320px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --packages-container-max-width: 1200px;
+    --packages-padding-y: 72px;
+    --packages-section-gap: 48px;
+    --packages-title-size: 240px;
+    --packages-title-line-height: 240px;
+    --packages-title-box-height: 184px;
+    --packages-card-max-width: 420px;
+    --packages-card-padding-x: 32px;
+    --packages-card-feature-row-max-width: 336px;
+    --packages-card-feature-text-width: 320px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --packages-container-max-width: 1200px;
+    --packages-padding-y: 64px;
+    --packages-section-gap: 40px;
+    --packages-title-size: 180px;
+    --packages-title-line-height: 204px;
+    --packages-title-box-height: 157px;
+    --packages-card-max-width: 420px;
+    --packages-card-padding-x: 28px;
+    --packages-card-feature-row-max-width: 336px;
+    --packages-card-feature-text-width: 320px;
+  }
+}

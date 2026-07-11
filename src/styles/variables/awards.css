@@ -1,0 +1,200 @@
+:root {
+  --awards-margin-top: var(--section-stack-gap);
+  --awards-padding-x: 16px;
+  --awards-padding-y: 48px;
+  --awards-container-max-width: 1200px;
+  --awards-column-gap: 40px;
+  --awards-section-gap: 28px;
+  --awards-cards-gap: 16px;
+  --awards-sticky-top: 18svh;
+  --awards-pin-scroll-distance: 640px;
+  --awards-title-z-index: 1;
+  --awards-title-font-weight: 600;
+  --awards-title-size: 40px;
+  --awards-title-line-height: 1.2;
+  --awards-title-sticky-top: var(--navbar-height);
+  --awards-title-min-width: 0px;
+  --awards-title-box-height: 106px;
+  --awards-title-max-width: 540px;
+  --awards-title-offset-top: 0px;
+  --awards-title-gradient: var(--services-title-gradient);
+  --awards-title-mask: var(--services-title-mask);
+  --awards-cards-column-max-width: 100%;
+  --awards-card-max-width: 100%;
+  --awards-card-radius: 32px;
+  --awards-card-padding-x: 24px;
+  --awards-card-padding-top: 24px;
+  --awards-card-padding-bottom: 24px;
+  --awards-card-shadow: 0px 1px 10px 0px rgb(0 0 0 / 0.1);
+  --awards-card-content-gap: 14px;
+  --awards-collapsed-card-content-gap: 8px;
+  --awards-icon-inset-left: 10px;
+  --awards-icon-width: 36px;
+  --awards-icon-height: 30px;
+  --awards-collapsed-icon-width: 18px;
+  --awards-collapsed-icon-height: 15px;
+  --awards-divider-width: 160px;
+  --awards-collapsed-divider-width: 80px;
+  --awards-divider-margin-y: 10px;
+  --awards-collapsed-divider-margin-y: 5px;
+  --awards-image-width: min(240px, 100%);
+  --awards-image-slot-height: 110px;
+  --awards-collapsed-image-width: min(120px, 100%);
+  --awards-collapsed-image-slot-height: 55px;
+  --awards-card-title-margin-top: 18px;
+  --awards-card-title-height: 34px;
+  --awards-card-title-size: clamp(14px, 4.4vw, 16px);
+  --awards-card-title-line-height: 1.2;
+  --awards-collapsed-card-title-size: 7px;
+  --awards-collapsed-card-title-line-height: 1.2;
+  --awards-card-title-weight: 800;
+  --awards-collapsed-card-title-weight: 500;
+  --awards-card-place-margin-top: 6px;
+  --awards-card-place-height: 18px;
+  --awards-card-place-size: clamp(18px, 6.2vw, 24px);
+  --awards-card-place-line-height: 1.2;
+  --awards-collapsed-card-place-size: 6px;
+  --awards-collapsed-card-place-line-height: 1.2;
+  --awards-card-place-weight: 500;
+  --awards-collapsed-card-place-weight: 400;
+  --awards-collapsed-card-text-opacity: 60;
+  --color-awards-title-muted: rgb(14 14 14 / 0.6);
+  --color-awards-title-accent: #0aabc8;
+  --color-awards-card-bg: #ffffff;
+  --color-awards-card-title: #5c5c5c;
+  --color-awards-card-text: #2c3134;
+}
+
+@media (max-width: 359.98px) {
+  :root {
+
+    --awards-title-size: 34px;
+    --awards-title-line-height: 1.12;
+    --awards-title-box-height: 92px;
+    --awards-card-padding-x: 18px;
+    --awards-card-padding-bottom: 20px;
+    --awards-icon-inset-left: 6px;
+    --awards-image-width: min(210px, 100%);
+    --awards-image-slot-height: 92px;
+    --awards-collapsed-image-width: min(108px, 100%);
+    --awards-collapsed-image-slot-height: 48px;
+    --awards-divider-width: min(140px, 100%);
+    --awards-collapsed-divider-width: min(74px, 100%);
+    --awards-card-title-size: clamp(13px, 4.2vw, 15px);
+    --awards-collapsed-card-title-size: 6.5px;
+    --awards-card-place-size: clamp(16px, 5.8vw, 20px);
+    --awards-collapsed-card-place-size: 6px;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+    --awards-padding-x: 32px;
+    --awards-padding-y: 52px;
+    --awards-section-gap: 32px;
+    --awards-cards-gap: 20px;
+    --awards-title-size: 60px;
+    --awards-title-line-height: 1.2;
+    --awards-title-box-height: 144px;
+    --awards-title-max-width: 540px;
+    --awards-card-padding-x: 24px;
+    --awards-card-padding-top: 24px;
+    --awards-card-padding-bottom: 24px;
+    --awards-image-width: 260px;
+    --awards-image-slot-height: 112px;
+    --awards-card-title-margin-top: 28px;
+    --awards-card-title-height: 38px;
+    --awards-card-title-size: 16px;
+    --awards-card-place-size: 13px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --awards-title-size: 60px;
+    --awards-title-line-height: 1.2;
+    --awards-title-box-height: 144px;
+    --awards-cards-column-max-width: 640px;
+    --awards-card-render-width: 340px;
+    --awards-card-max-width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --awards-padding-x: 0px;
+    --awards-padding-y: 64px;
+    --awards-section-gap: 48px;
+    --awards-cards-gap: 32px;
+    --awards-sticky-top: 16svh;
+    --awards-pin-scroll-distance: 720px;
+    --awards-title-size: 60px;
+    --awards-title-line-height: 1.2;
+    --awards-title-sticky-top: 150px;
+    --awards-title-min-width: 477px;
+    --awards-title-box-height: 144px;
+    --awards-title-max-width: 540px;
+    --awards-title-offset-top: 175px;
+    --awards-cards-column-max-width: 680px;
+    --awards-card-max-width: 100%;
+    --awards-card-radius: 32px;
+    --awards-card-padding-x: 24px;
+    --awards-card-padding-top: 24px;
+    --awards-card-padding-bottom: 24px;
+    --awards-card-content-gap: 14px;
+    --awards-collapsed-card-content-gap: 8px;
+    --awards-icon-inset-left: 24px;
+    --awards-icon-width: 36px;
+    --awards-icon-height: 30px;
+    --awards-collapsed-icon-width: 18px;
+    --awards-collapsed-icon-height: 15px;
+    --awards-divider-width: 180px;
+    --awards-collapsed-divider-width: 90px;
+    --awards-divider-margin-y: 12px;
+    --awards-collapsed-divider-margin-y: 6px;
+    --awards-image-width: 280px;
+    --awards-image-slot-height: 104px;
+    --awards-collapsed-image-width: 140px;
+    --awards-collapsed-image-slot-height: 52px;
+    --awards-card-title-margin-top: 22px;
+    --awards-card-title-height: 48px;
+    --awards-card-title-size: 18px;
+    --awards-collapsed-card-title-size: 9px;
+    --awards-collapsed-card-title-weight: 500;
+    --awards-card-place-margin-top: 14px;
+    --awards-card-place-size: 20px;
+    --awards-collapsed-card-place-size: 7.5px;
+    --awards-collapsed-card-place-weight: 400;
+    --awards-collapsed-card-text-opacity: 60;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --awards-container-max-width: 1200px;
+    --awards-padding-y: 20px;
+    --awards-title-size: 60px;
+    --awards-title-line-height: 1.2;
+    --awards-title-box-height: 144px;
+    --awards-title-max-width: 540px;
+    --awards-cards-column-max-width: 720px;
+    --awards-card-max-width: 560px;
+    --awards-cards-gap: 40px;
+    --awards-card-title-size: 24px;
+    --awards-card-place-size: 24px;
+    --awards-card-title-height: 58px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --awards-container-max-width: 1200px;
+    --awards-padding-y: 16px;
+    --awards-cards-column-max-width: 680px;
+    --awards-card-max-width: 100%;
+    --awards-cards-gap: 32px;
+    --awards-card-title-size: 18px;
+    --awards-card-place-size: 22px;
+    --awards-card-title-height: 48px;
+  }
+}

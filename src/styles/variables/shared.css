@@ -1,0 +1,111 @@
+:root {
+
+  --color-primary: #0a0a0a;
+  --color-secondary: #525252;
+  --color-background: #ffffff;
+  --color-surface: rgb(255 255 255 / 0.9);
+  --color-text: #0a0a0a;
+  --color-border: rgb(0 0 0 / 0.08);
+  --color-shadow: rgb(0 0 0 / 0.05);
+  --color-brand: #2558b4;
+  --color-brand-foreground: #ffffff;
+  --color-nav-link: #6b6b6b;
+  --color-nav-link-hover: #2c3134;
+  --color-cta-text: #2c3134;
+  --color-cursor: #ffffff;
+  --cursor-size: 16px;
+  --cursor-offset: 8px;
+  --cursor-radius: 99px;
+  --cursor-z-index: 9999;
+  --navigation-progress-height: 3px;
+  --navigation-progress-z-index: 9998;
+  --navbar-z-index: 50;
+  --navbar-mobile-menu-z-index: 60;
+  --overflow-clip-fallback: clip;
+  --navbar-blur: 5px;
+  --navbar-link-gap: 40px;
+  --navbar-cta-width: 209px;
+  --navbar-cta-height: auto;
+  --navbar-cta-icon-size: 24px;
+  --navbar-cta-font-size: 14px;
+  --navbar-cta-duration: 500ms;
+  --navbar-cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --navbar-height: 56px;
+  --navbar-primary-padding-x: 0px;
+  --navbar-hide-offset-y: -150px;
+  --navbar-scroll-duration: 0.4;
+  --navbar-scroll-delay: 0;
+  --navbar-scroll-bezier: 0.12, 0.23, 0.5, 1;
+  --navbar-variant-duration: 0.55s;
+  --navbar-variant-ease-out: power3.out;
+  --navbar-rounded-width: 864px;
+  --navbar-rounded-padding-y: 16px;
+  --navbar-rounded-padding-x: 32px;
+  --navbar-rounded-offset-top: 8px;
+  --navbar-rounded-radius: 99px;
+  --navbar-rounded-section-gap: 10px;
+  --navbar-rounded-shadow-color: rgb(0 0 0 / 0.05);
+  --navbar-rounded-shadow-x: 0;
+  --navbar-rounded-shadow-y: 0;
+  --navbar-rounded-shadow-blur: 10px;
+  --navbar-rounded-shadow: var(--navbar-rounded-shadow-x) var(--navbar-rounded-shadow-y) var(--navbar-rounded-shadow-blur) 0 var(--navbar-rounded-shadow-color);
+  --navbar-logo-width: 66px;
+  --navbar-logo-height: 24px;
+  --navbar-menu-icon-size: 24px;
+  --navbar-mobile-padding-x: 16px;
+  --navbar-mobile-menu-height: 394px;
+  --navbar-mobile-menu-padding: 16px 16px 40px 16px;
+  --navbar-mobile-menu-gap: 40px;
+  --navbar-mobile-menu-shadow: 0 1px 10px 0 var(--color-shadow);
+  --navbar-mobile-menu-rounded-radius: 32px;
+  --page-main-z-index: 1;
+  --section-stack-gap: 64px;
+  --early-section-gap: 20px;
+}
+
+@media (min-width: 640px) {
+  :root {
+
+    --section-stack-gap: 64px;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+
+    --section-stack-gap: 72px;
+    --navbar-height: 72px;
+    --navbar-primary-padding-x: 80px;
+    --navbar-rounded-width: 864px;
+    --navbar-rounded-padding-x: 32px;
+    --navbar-mobile-padding-x: 32px;
+    --navbar-logo-width: 84px;
+    --navbar-logo-height: 33px;
+    --navbar-mobile-menu-height: 418px;
+    --navbar-mobile-menu-padding: 20px 32px 40px 32px;
+    --navbar-mobile-menu-rounded-radius: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-stack-gap: 32px;
+    --navbar-height: 72px;
+    --navbar-primary-padding-x: 80px;
+    --navbar-rounded-width: 864px;
+    --navbar-logo-width: 84px;
+    --navbar-logo-height: 33px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --section-stack-gap: 32px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --section-stack-gap: 32px;
+  }
+}

@@ -1,0 +1,152 @@
+:root {
+  --testimonials-margin-top: var(--section-stack-gap);
+  --testimonials-padding-x: 16px;
+  --testimonials-padding-y: 48px;
+  --testimonials-container-max-width: 1200px;
+  --testimonials-title-max-width: calc(100vw - 2 * var(--testimonials-padding-x));
+  --testimonials-section-gap: 32px;
+  --testimonials-title-z-index: 1;
+  --testimonials-title-font-weight: 600;
+  --testimonials-title-size: 48px;
+  --testimonials-title-line-height: 1.05;
+  --testimonials-title-box-height: 52px;
+  --testimonials-title-gradient-start: rgb(0 0 0 / 0.48);
+  --testimonials-title-gradient-mid: rgb(0 0 0 / 0.24);
+  --testimonials-title-gradient-end: rgb(0 0 0 / 0);
+  --testimonials-title-gradient: linear-gradient(
+    180deg,
+    var(--testimonials-title-gradient-start) 0%,
+    var(--testimonials-title-gradient-mid) 32%,
+    var(--testimonials-title-gradient-end) 100%
+  );
+  --testimonials-title-mask: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0%,
+    rgb(0 0 0 / 1) 38%
+  );
+  --testimonials-carousel-gap: 16px;
+  --testimonials-card-width: clamp(248px, 74vw, 280px);
+  --testimonials-card-height: 388px;
+  --testimonials-card-padding: 18px;
+  --testimonials-card-radius: 18px;
+  --testimonials-card-content-gap: 16px;
+  --testimonials-card-content-min-height: 214px;
+  --testimonials-card-footer-margin-top: 10px;
+  --testimonials-card-footer-gap: 10px;
+  --testimonials-card-title-size: 21px;
+  --testimonials-card-title-line-height: 1.3;
+  --testimonials-card-title-weight: 600;
+  --testimonials-card-title-letter-spacing: -0.04em;
+  --testimonials-card-comment-size: 14px;
+  --testimonials-card-comment-line-height: 1.55;
+  --testimonials-card-comment-weight: 400;
+  --testimonials-card-comment-letter-spacing: -0.04em;
+  --testimonials-person-gap: 9px;
+  --testimonials-person-frame-size: 44px;
+  --testimonials-person-frame-padding: 4px;
+  --testimonials-person-frame-top-padding: 7px;
+  --testimonials-person-frame-radius: 12px;
+  --testimonials-person-image-size: 36px;
+  --testimonials-person-image-radius: 8px;
+  --testimonials-person-name-size: 14px;
+  --testimonials-person-name-line-height: 1.4;
+  --testimonials-person-name-weight: 600;
+  --testimonials-person-name-letter-spacing: -0.04em;
+  --testimonials-person-role-size: 11px;
+  --testimonials-person-role-line-height: 18px;
+  --testimonials-person-role-weight: 400;
+  --testimonials-person-role-letter-spacing: -0.02em;
+  --testimonials-stars-gap: 6px;
+  --testimonials-star-width: 14px;
+  --testimonials-star-height: 13px;
+  --color-testimonials-card-bg: #f8f9fb;
+  --color-testimonials-card-title: #0e0e0e;
+  --color-testimonials-card-comment: #2c3134;
+  --color-testimonials-person-name: #0e0e0e;
+  --color-testimonials-person-role: rgb(14 14 14 / 0.6);
+}
+
+@media (max-width: 799.98px) {
+  :root {
+    --testimonials-card-title-letter-spacing: 0px;
+    --testimonials-card-comment-letter-spacing: 0px;
+    --testimonials-person-name-letter-spacing: 0px;
+    --testimonials-person-role-letter-spacing: 0px;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+    --testimonials-padding-x: 32px;
+    --testimonials-padding-y: 56px;
+    --testimonials-section-gap: 36px;
+    --testimonials-title-size: 96px;
+    --testimonials-title-line-height: 108px;
+    --testimonials-title-box-height: 86px;
+    --testimonials-card-width: min(620px, calc(100vw - 2 * var(--testimonials-padding-x)));
+    --testimonials-card-height: 392px;
+    --testimonials-card-padding: 32px;
+    --testimonials-card-radius: 22px;
+    --testimonials-card-content-gap: 22px;
+    --testimonials-card-content-min-height: 236px;
+    --testimonials-card-footer-margin-top: 14px;
+    --testimonials-card-footer-gap: 14px;
+    --testimonials-card-title-size: 30px;
+    --testimonials-card-comment-size: 18px;
+    --testimonials-person-gap: 18px;
+    --testimonials-person-frame-size: 72px;
+    --testimonials-person-image-size: 64px;
+    --testimonials-person-name-size: 20px;
+    --testimonials-person-role-size: 16px;
+    --testimonials-person-role-line-height: 22px;
+    --testimonials-stars-gap: 8px;
+    --testimonials-star-width: 16px;
+    --testimonials-star-height: 15px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --testimonials-title-size: 112px;
+    --testimonials-title-line-height: 124px;
+    --testimonials-title-box-height: 98px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --testimonials-padding-x: 0px;
+    --testimonials-padding-y: 64px;
+    --testimonials-title-max-width: calc(100vw - 64px);
+    --testimonials-title-size: 180px;
+    --testimonials-title-line-height: 204px;
+    --testimonials-title-box-height: 157px;
+    --testimonials-carousel-gap: 32px;
+    --testimonials-card-padding: 40px;
+    --testimonials-card-title-size: 32px;
+    --testimonials-card-comment-size: 20px;
+    --testimonials-card-footer-margin-top: 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --testimonials-container-max-width: 1200px;
+    --testimonials-padding-y: 72px;
+    --testimonials-title-max-width: calc(100vw - 96px);
+    --testimonials-title-size: 220px;
+    --testimonials-title-line-height: 240px;
+    --testimonials-title-box-height: 184px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --testimonials-container-max-width: 1200px;
+    --testimonials-padding-y: 64px;
+    --testimonials-title-max-width: calc(100vw - 64px);
+    --testimonials-title-size: 180px;
+    --testimonials-title-line-height: 204px;
+    --testimonials-title-box-height: 157px;
+  }
+}

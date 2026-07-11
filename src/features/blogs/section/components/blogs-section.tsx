@@ -8,28 +8,13 @@ import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
-import { blogItems } from "@/features/blogs/constants/blogs";
-import { BlogCard } from "@/features/blogs/shared/components/blog-card";
+import { BlogsSectionCards } from "@/features/blogs/section/components/blogs-section-cards";
+import { getHoveredBlogCard } from "@/features/blogs/section/utils/blogs-section";
 import { BlogsSectionCursor } from "@/features/blogs/shared/components/blogs-section-cursor";
 import { BlogsTitle } from "./blogs-title";
 
 const blogCursorZoneSelector = "[data-blog-cursor-zone]";
 
-function getHoveredBlogCard(clientX: number, clientY: number, cardsElement: HTMLElement): HTMLElement | null {
-  const hoveredElement = document.elementFromPoint(clientX, clientY);
-
-  if (!(hoveredElement instanceof HTMLElement)) {
-    return null;
-  }
-
-  const hoveredBlogCard = hoveredElement.closest(blogCursorZoneSelector);
-
-  if (!(hoveredBlogCard instanceof HTMLElement)) {
-    return null;
-  }
-
-  return cardsElement.contains(hoveredBlogCard) ? hoveredBlogCard : null;
-}
 
 export function BlogsSection() {
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -124,11 +109,7 @@ export function BlogsSection() {
         </aside>
 
         <div className="min-w-0">
-          <div ref={cardsRef} className="flex flex-col gap-(--blogs-cards-gap)">
-            {blogItems.map((blog) => (
-              <BlogCard key={blog.id} blog={blog} />
-            ))}
-          </div>
+          <BlogsSectionCards ref={cardsRef} />
         </div>
       </div>
 

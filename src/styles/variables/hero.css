@@ -1,0 +1,50 @@
+:root {
+  --color-hero-headline-accent: rgb(56 56 56 / 0.6);
+  --color-hero-path-stroke: #ffe700;
+  --color-hero-path-fill: transparent;
+  --hero-path-width: min(100%, calc(100vw - 2 * var(--hero-padding-x)));
+  --hero-path-offset-y: 0px;
+  --hero-path-stroke-width: 32;
+  --hero-path-hide-padding: 4;
+  --hero-path-scroll-distance: 520;
+  --hero-path-scroll-hold-distance: 120;
+  --hero-path-scroll-offset: 0;
+  --hero-path-scroll-scrub: 1;
+  --hero-headline-max-width: 100%;
+  --hero-headline-size: var(--hero-headline-size-mobile);
+  --hero-headline-line-height: 1.25;
+  --hero-headline-line-padding-bottom: 0.1em;
+  --hero-headline-size-mobile: 40px;
+  --hero-headline-offset-y: 0px;
+  --hero-padding-x: 16px;
+  --hero-padding-y: 48px;
+  --hero-z-index: 10;
+}
+
+@media (min-width: 800px) {
+  :root {
+    --hero-path-width: min(100%, 520px);
+    --hero-path-offset-y: calc(var(--hero-path-stroke-width) * 0.5px);
+    --hero-path-scroll-distance: 640;
+    --hero-path-scroll-hold-distance: 140;
+    --hero-headline-size: 60px;
+    --hero-headline-max-width: 803px;
+    --hero-headline-offset-y: 0px;
+    --hero-padding-x: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --hero-path-width: 900px;
+    --hero-path-offset-y: calc(var(--hero-path-stroke-width) * 0.5px);
+    --hero-path-clip-path: inset(0 0 -100vh 0);
+    --hero-path-scroll-distance: 760;
+    --hero-path-scroll-hold-distance: 160;
+    --hero-headline-size: 80px;
+    --hero-headline-max-width: 803px;
+    --hero-headline-line-height: 1.25;
+    --hero-headline-offset-y: 32px;
+    --hero-padding-x: 40px;
+  }
+}

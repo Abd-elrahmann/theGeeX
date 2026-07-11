@@ -1,0 +1,235 @@
+:root {
+  --service-detail-container-max-width: 1200px;
+  --service-detail-padding-x: 16px;
+  --service-detail-hero-padding-top: 56px;
+  --service-detail-hero-gap: 32px;
+  --service-detail-breadcrumb-gap: 8px;
+  --service-detail-breadcrumb-size: 16px;
+  --service-detail-breadcrumb-line-height: 1.2;
+  --service-detail-title-max-width: 906px;
+  --service-detail-title-stack-gap: 10px;
+  --service-detail-title-types-gap: 10px;
+  --service-detail-small-title-size: 13px;
+  --service-detail-small-title-line-height: 1.2;
+  --service-detail-main-title-size: clamp(28px, 7.6vw, 38px);
+  --service-detail-main-title-line-height: 1.12;
+  --service-detail-types-gap: 16px;
+  --service-detail-types-row-gap: 8px;
+  --service-detail-type-separator-gap: 16px;
+  --service-detail-type-padding-x: 16px;
+  --service-detail-type-padding-y: 8px;
+  --service-detail-type-size: 14px;
+  --service-detail-type-line-height: 1.2;
+  --service-detail-image-container-padding-x: 0px;
+  --service-detail-image-container-padding-y: 10px;
+  --service-detail-hero-image-height: 500px;
+  --service-detail-image-radius: 24px;
+  --service-detail-section-padding-y: 64px;
+  --service-detail-section-gap: 32px;
+  --service-detail-section-label-gap: 12px;
+  --service-detail-label-size: 15px;
+  --service-detail-label-line-height: 1.4;
+  --service-detail-section-title-size: clamp(28px, 6vw, 38px);
+  --service-detail-section-title-line-height: 1.3;
+  --service-detail-overview-grid-gap: 28px;
+  --service-detail-overview-images-gap: 8px;
+  --service-detail-overview-image-height: clamp(140px, 36vw, 210px);
+  --service-detail-overview-image-radius: 16px;
+  --service-detail-overview-description-max-width: 500px;
+  --service-detail-description-min-height: 180px;
+  --service-detail-description-size: 16px;
+  --service-detail-description-line-height: 1.6;
+  --service-detail-deliver-sticky-top: var(--navbar-height);
+  --service-detail-deliver-stage-height: calc(100svh - var(--navbar-height) - 80px);
+  --service-detail-deliver-scroll-height: 220svh;
+  --service-detail-deliver-image-height: clamp(220px, 46vw, 360px);
+  --service-detail-outcomes-scroll-height: auto;
+  --service-detail-deliver-grid-gap: 28px;
+  --service-detail-deliver-content-gap: 40px;
+  --service-detail-deliver-items-gap: 24px;
+  --service-detail-deliver-row-gap: 14px;
+  --service-detail-deliver-heading-gap: 14px;
+  --service-detail-deliver-number-column-width: 30px;
+  --service-detail-deliver-number-offset-y: 0.65em;
+  --service-detail-deliver-number-size: 14px;
+  --service-detail-deliver-number-line-height: 1.2;
+  --service-detail-deliver-title-size: clamp(24px, 5vw, 32px);
+  --service-detail-deliver-title-line-height: 1.4;
+  --service-detail-deliver-description-size: 16px;
+  --service-detail-deliver-description-line-height: 1.6;
+  --service-detail-outcomes-padding-y: 64px;
+  --service-detail-outcomes-padding-top: var(--service-detail-outcomes-padding-y);
+  --service-detail-outcomes-padding-bottom: 40px;
+  --service-detail-outcomes-section-gap: 32px;
+  --service-detail-outcomes-title-sticky-top: calc(var(--navbar-height) + 40px);
+  --service-detail-outcomes-title-column-width: 100%;
+  --service-detail-outcomes-title-box-height: auto;
+  --service-detail-project-card-height: 520px;
+  --service-detail-outcomes-title-gap: 8px;
+  --service-detail-outcomes-label-size: 15px;
+  --service-detail-outcomes-label-line-height: 1.4;
+  --service-detail-outcomes-title-size: 25px;
+  --service-detail-outcomes-title-line-height: 1.2;
+  --service-detail-outcomes-title-max-width: 360px;
+  --service-detail-outcomes-cards-gap: 10px;
+  --service-detail-outcome-card-width: 100%;
+  --service-detail-outcome-card-padding: 24px;
+  --service-detail-outcome-card-gap: 10px;
+  --service-detail-outcome-card-radius: 24px;
+  --service-detail-outcome-card-title-size: 28px;
+  --service-detail-outcome-card-title-line-height: 1.2;
+  --service-detail-outcome-card-description-size: 16px;
+  --service-detail-outcome-card-description-line-height: 1.6;
+  --service-detail-projects-padding-y: 64px;
+  --service-detail-projects-padding-top: 40px;
+  --service-detail-projects-padding-bottom: var(--service-detail-projects-padding-y);
+  --service-detail-projects-section-gap: 40px;
+  --service-detail-projects-title-max-width: 760px;
+  --service-detail-projects-title-gap: 10px;
+  --service-detail-projects-label-size: 15px;
+  --service-detail-projects-label-line-height: 1.4;
+  --service-detail-projects-title-size: 22px;
+  --service-detail-projects-title-line-height: 1.2;
+  --service-detail-projects-cards-gap: 32px;
+  --service-detail-project-card-description-margin-top: 8px;
+  --service-detail-project-card-description-size: 16px;
+  --service-detail-project-card-description-line-height: 1.6;
+  --service-detail-project-card-header-gap: 18px;
+  --service-detail-faqs-padding-y: 64px;
+  --service-detail-faqs-section-gap: 32px;
+  --service-detail-faqs-title-sticky-top: calc(var(--navbar-height) + 40px);
+  --service-detail-faqs-title-column-width: 100%;
+  --service-detail-faqs-title-box-height: auto;
+  --service-detail-faqs-title-gap: 8px;
+  --service-detail-faqs-label-size: 15px;
+  --service-detail-faqs-label-line-height: 1.4;
+  --service-detail-faqs-title-size: 40px;
+  --service-detail-faqs-title-line-height: 1.2;
+  --service-detail-faqs-title-max-width: 360px;
+  --service-detail-faqs-cards-gap: 10px;
+  --service-detail-faq-card-padding: 24px;
+  --service-detail-faq-card-radius: 24px;
+  --service-detail-faq-question-gap: 20px;
+  --service-detail-faq-question-size: 18px;
+  --service-detail-faq-question-line-height: 1.4;
+  --service-detail-faq-icon-width: 36px;
+  --service-detail-faq-icon-height: 32px;
+  --service-detail-faq-icon-padding: 6px;
+  --service-detail-faq-icon-gap: 10px;
+  --service-detail-faq-icon-text-size: 24px;
+  --service-detail-faq-answer-margin-top: 16px;
+  --service-detail-faq-answer-size: 16px;
+  --service-detail-faq-answer-line-height: 1.6;
+  --color-service-detail-accent: var(--color-ai-growth-accent);
+  --color-service-detail-text: #2c3134;
+  --color-service-detail-heading: #202020;
+  --color-service-detail-muted: var(--color-ai-growth-title-muted);
+  --color-service-detail-inactive: var(--color-ai-growth-title-muted);
+  --color-service-detail-deliver-number-active: var(--black, #000000);
+  --color-service-detail-deliver-number-inactive: var(--color-service-detail-text);
+  --color-service-detail-border: #e8e8e8;
+  --color-service-detail-outcome-bg: #f7f7f7;
+  --color-service-detail-outcome-active-bg: #0aabc8;
+  --color-service-detail-outcome-active-text: #ffffff;
+  --color-service-detail-outcome-description: #5c5c5c;
+  --color-service-detail-faq-card-bg: #f7f7f7;
+  --color-service-detail-faq-icon: #2558b4;
+  --color-service-detail-faq-question: #050505;
+  --color-service-detail-faq-answer: #5c5c5c;
+}
+
+@media (max-width: 799.98px) {
+  :root {
+    --service-detail-hero-gap: 18px;
+    --service-detail-breadcrumb-size: 12px;
+    --service-detail-small-title-size: 13px;
+    --service-detail-main-title-size: clamp(24px, 7vw, 30px);
+    --service-detail-main-title-line-height: 1.2em;
+    --service-detail-types-gap: 10px;
+    --service-detail-types-row-gap: 6px;
+    --service-detail-type-separator-gap: 10px;
+    --service-detail-title-stack-gap: 8px;
+    --service-detail-overview-images-gap: 6px;
+    --service-detail-overview-image-height: clamp(128px, 38vw, 152px);
+    --service-detail-description-size: 14px;
+    --service-detail-description-min-height: 202px;
+    --service-detail-deliver-sticky-top: calc(var(--navbar-height) + 8px);
+    --service-detail-deliver-image-height: clamp(240px, 66vw, 300px);
+    --service-detail-faqs-title-size: 25px;
+    --service-detail-project-card-description-size: 13px;
+    --service-detail-project-card-description-line-height: 1.45;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --service-detail-breadcrumb-size: 16px;
+    --service-detail-small-title-size: 15px;
+    --service-detail-main-title-size: clamp(34px, 6vw, 48px);
+    --service-detail-main-title-line-height: 1.14;
+    --service-detail-section-title-size: clamp(30px, 4.5vw, 38px);
+    --service-detail-deliver-title-size: clamp(26px, 4vw, 32px);
+    --service-detail-deliver-heading-gap: 28px;
+    --service-detail-outcomes-title-size: 32px;
+    --service-detail-outcome-card-title-size: 28px;
+    --service-detail-projects-title-size: 28px;
+    --service-detail-faqs-title-size: 32px;
+    --service-detail-outcomes-title-column-width: 46%;
+    --service-detail-outcomes-title-box-height: 320px;
+    --service-detail-faqs-title-column-width: 46%;
+    --service-detail-faqs-title-box-height: 320px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --service-detail-container-max-width: calc(100vw - 100px);
+    --service-detail-padding-x: 45px;
+    --service-detail-title-max-width: 1120px;
+    --service-detail-hero-padding-top: 72px;
+    --service-detail-hero-gap: 32px;
+    --service-detail-breadcrumb-size: 16px;
+    --service-detail-small-title-size: 16px;
+    --service-detail-main-title-size: clamp(38px, 5vw, 56px);
+    --service-detail-main-title-line-height: 1.2;
+    --service-detail-title-types-gap: 10px;
+    --service-detail-type-size: 15px;
+    --service-detail-section-title-size: clamp(38px, 3vw, 44px);
+    --service-detail-deliver-title-size: 32px;
+    --service-detail-deliver-heading-gap: 28px;
+    --service-detail-outcomes-title-size: 32px;
+    --service-detail-outcome-card-title-size: 28px;
+    --service-detail-projects-title-size: 30px;
+    --service-detail-faqs-title-size: 40px;
+    --service-detail-faqs-title-max-width: 520px;
+    --service-detail-image-container-padding-x: 0px;
+    --service-detail-image-container-padding-y: 10px;
+    --service-detail-hero-image-height: 500px;
+    --service-detail-deliver-sticky-top: calc(var(--navbar-height) + 40px);
+    --service-detail-deliver-scroll-height: 260svh;
+    --service-detail-deliver-image-height: 420px;
+    --service-detail-deliver-grid-gap: 40px;
+    --service-detail-overview-grid-gap: 40px;
+    --service-detail-overview-images-gap: 16px;
+    --service-detail-overview-image-height: 240px;
+    --service-detail-overview-description-max-width: 660px;
+    --service-detail-outcomes-scroll-height: auto;
+    --service-detail-outcomes-padding-bottom: 40px;
+    --service-detail-projects-padding-top: 40px;
+    --service-detail-outcomes-title-column-width: 46%;
+    --service-detail-outcomes-title-box-height: 371px;
+    --service-detail-outcome-card-width: 100%;
+    --service-detail-project-card-height: 810px;
+    --service-detail-faqs-title-column-width: 46%;
+    --service-detail-faqs-title-box-height: 371px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+
+    --service-detail-container-max-width: calc(100vw - 120px);
+    --service-detail-padding-x: 35px;
+    --service-detail-title-max-width: calc(100vw - 120px);
+  }
+}

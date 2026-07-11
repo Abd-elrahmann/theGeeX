@@ -1,0 +1,189 @@
+:root {
+  --color-team-title-gradient-start: rgb(0 0 0 / 0.48);
+  --color-team-title-gradient-mid: rgb(0 0 0 / 0.24);
+  --color-team-title-gradient-end: rgb(0 0 0 / 0);
+  --team-title-gradient: linear-gradient(
+    180deg,
+    var(--color-team-title-gradient-start) 0%,
+    var(--color-team-title-gradient-mid) 32%,
+    var(--color-team-title-gradient-end) 100%
+  );
+  --team-title-mask: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0%,
+    rgb(0 0 0 / 1) 38%
+  );
+  --team-title-font-weight: 600;
+  --team-title-size: clamp(60px, 16vw, 68px);
+  --team-title-line-height: 1.04;
+  --team-title-box-height: clamp(64px, 17vw, 72px);
+  --team-title-z-index: 1;
+  --team-margin-top: var(--section-stack-gap);
+  --team-padding-x: 16px;
+  --team-container-max-width: 1200px;
+  --team-section-gap: 24px;
+  --team-section-padding-y: 48px;
+  --team-section-scroll-vh: 100;
+  --team-section-exit-vh: 0;
+  --team-section-scroll-height: calc(var(--team-section-scroll-vh) * 1vh);
+  --team-section-exit-padding: calc(var(--team-section-exit-vh) * 1vh);
+  --team-gallery-width: 1059px;
+  --team-gallery-height: 736px;
+  --team-gallery-scale: 0.9;
+  --team-gallery-scaled-width: calc(var(--team-gallery-width) * var(--team-gallery-scale));
+  --team-gallery-scaled-height: calc(var(--team-gallery-height) * var(--team-gallery-scale));
+  --team-gallery-bottom-bleed: 120px;
+  --team-mobile-collapsed-card-width: min(150px, 42vw);
+  --team-mobile-card-min-width: 156px;
+  --team-mobile-grid-gap: 12px;
+  --team-card-standard-width: 199px;
+  --team-card-standard-height: 280px;
+  --team-card-compact-width: 199px;
+  --team-card-compact-height: 190px;
+  --team-card-radius: 999px;
+  --team-card-padding-top: 40px;
+  --team-card-content-padding-x: 20px;
+  --team-card-copy-offset: 18px;
+  --team-card-copy-gap: 0px;
+  --team-card-name-block-height: 72px;
+  --team-card-hover-padding-bottom: 40px;
+  --team-card-kicker-size: 12px;
+  --team-card-kicker-weight: 500;
+  --team-card-kicker-letter-spacing: 0.14em;
+  --team-card-role-size: 14px;
+  --team-card-role-line-height: 1.4;
+  --team-card-role-weight: 400;
+  --team-card-role-letter-spacing: -0.02em;
+  --team-card-name-size: 26px;
+  --team-card-name-line-height: 1.05;
+  --team-card-name-weight: 600;
+  --team-card-name-letter-spacing: -0.04em;
+  --team-card-image-opacity: 1;
+  --team-collapsed-card-padding: 32px;
+  --team-collapsed-card-gap: 10px;
+  --team-collapsed-logo-width: 83px;
+  --team-collapsed-logo-height: 87px;
+  --color-team-card-border: transparent;
+  --color-team-collapsed-card-bg: #2558b4;
+  --color-team-card-text: #ffffff;
+  --color-team-card-role: rgb(255 255 255 / 0.82);
+  --color-team-card-kicker: rgb(255 255 255 / 0.72);
+  --team-card-gradient-01: linear-gradient(180deg, #53d7ee 0%, #0aabc8 42%, #04677b 100%);
+  --team-card-gradient-02: linear-gradient(180deg, #6d96e2 0%, #2558b4 42%, #16346c 100%);
+  --team-card-gradient-03: linear-gradient(180deg, #dce8ff 0%, #88a9e8 45%, #4f72b7 100%);
+  --team-card-gradient-04: linear-gradient(180deg, #79a5ea 0%, #3a70c2 42%, #22457a 100%);
+  --team-card-gradient-05: linear-gradient(180deg, #f2e669 0%, #d2bf05 35%, #887b02 100%);
+  --team-card-gradient-06: linear-gradient(180deg, #ddd587 0%, #bdb34d 44%, #7a7331 100%);
+  --team-card-gradient-07: linear-gradient(180deg, #f4f8ff 0%, #c2d5f8 45%, #829dcd 100%);
+  --team-card-gradient-08: linear-gradient(180deg, #283343 0%, #050b16 46%, #000000 100%);
+  --team-card-gradient-09: linear-gradient(180deg, #a8e5ff 0%, #59c7f6 30%, #0d5f84 100%);
+  --team-card-gradient-10: linear-gradient(180deg, #66a3ff 0%, #0066ff 42%, #003d99 100%);
+  --team-card-gradient-11: linear-gradient(180deg, #e2edff 0%, #9ab7f0 45%, #607fb9 100%);
+  --team-card-gradient-12: linear-gradient(180deg, #32508b 0%, #00205a 44%, #000c22 100%);
+}
+
+@media (max-width: 799.98px) {
+  :root {
+    --team-margin-top: calc(var(--section-stack-gap) + 64px);
+    --team-card-name-letter-spacing: 0px;
+    --team-card-role-letter-spacing: 0px;
+    --team-card-name-line-height: 1.14;
+  }
+}
+
+@media (min-width: 800px) {
+  :root {
+    --team-collapsed-card-padding: 64px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --team-margin-top: var(--section-stack-gap);
+    --team-padding-x: 16px;
+    --team-title-size: 96px;
+    --team-title-line-height: 96px;
+    --team-title-box-height: 76px;
+    --team-section-gap: 0px;
+    --team-section-padding-y: 44px;
+    --team-gallery-scale: 0.64;
+    --team-gallery-bottom-bleed: 48px;
+    --team-card-padding-top: 30px;
+    --team-card-content-padding-x: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --team-collapsed-card-padding: 80px;
+    --team-margin-top: var(--section-stack-gap);
+    --team-padding-x: 0px;
+    --team-title-size: 160px;
+    --team-title-line-height: 160px;
+    --team-title-box-height: 124px;
+    --team-section-gap: 0px;
+    --team-section-padding-y: 64px;
+    --team-section-scroll-vh: 100;
+    --team-section-exit-vh: 0;
+    --team-gallery-scale: 1;
+    --team-gallery-bottom-bleed: 160px;
+    --team-card-padding-top: 40px;
+    --team-card-content-padding-x: 24px;
+    --team-card-name-size: 28px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --team-container-max-width: 1200px;
+    --team-title-size: 188px;
+    --team-title-line-height: 188px;
+    --team-title-box-height: 144px;
+    --team-margin-top: var(--section-stack-gap);
+    --team-section-gap: 0px;
+    --team-section-padding-y: 40px;
+    --team-section-scroll-vh: 100;
+    --team-section-exit-vh: 0;
+    --team-gallery-scale: 1;
+    --team-gallery-bottom-bleed: 96px;
+    --team-card-padding-top: 40px;
+    --team-card-content-padding-x: 28px;
+    --team-card-name-size: 31px;
+    --team-card-role-size: 15px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --team-container-max-width: 1200px;
+    --team-title-size: 188px;
+    --team-title-line-height: 188px;
+    --team-title-box-height: 144px;
+    --team-margin-top: var(--section-stack-gap);
+    --team-section-gap: 0px;
+    --team-section-padding-y: 40px;
+    --team-section-scroll-vh: 100;
+    --team-section-exit-vh: 0;
+    --team-gallery-scale: 1;
+    --team-gallery-bottom-bleed: 96px;
+    --team-card-padding-top: 40px;
+    --team-card-content-padding-x: 28px;
+    --team-card-name-size: 31px;
+    --team-card-role-size: 15px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --team-container-max-width: 1200px;
+    --team-title-size: 160px;
+    --team-title-line-height: 160px;
+    --team-title-box-height: 124px;
+    --team-section-padding-y: 36px;
+    --team-gallery-scale: 1;
+    --team-gallery-bottom-bleed: 88px;
+    --team-card-content-padding-x: 24px;
+    --team-card-name-size: 28px;
+    --team-card-role-size: 14px;
+  }
+}

@@ -1,0 +1,114 @@
+:root {
+  --storytelling-stage-z-index: 1;
+  --storytelling-section-z-index: 20;
+  --color-storytelling-text-inactive: #5c5c5c;
+  --color-storytelling-text-active: #ffffff;
+  --color-storytelling-caption: #ffffff;
+  --color-storytelling-background-dark: #000000;
+  --storytelling-page-background-opacity: 0;
+  --color-storytelling-path-stroke: #262626;
+  --storytelling-padding: 24px;
+  --storytelling-section-padding-x: 24px;
+  --storytelling-content-padding: 24px;
+  --storytelling-gap: 80px;
+  --storytelling-content-z-index: 2;
+  --storytelling-path-z-index: 1;
+  --storytelling-stage-min-height: 100svh;
+  --storytelling-stage-bottom-padding: 48px;
+  --storytelling-margin-top: var(--section-stack-gap);
+  --storytelling-section-padding-y: 48px;
+  --storytelling-scroll-distance: 2800;
+  --storytelling-scroll-offset: 300;
+  --storytelling-mobile-scroll-distance: 1800px;
+  --storytelling-mobile-scroll-offset: 240px;
+  --storytelling-mobile-background-extension: 120px;
+  --storytelling-mobile-background-fade-distance: 220px;
+  --storytelling-mobile-path-bleed-y: 120px;
+  --storytelling-mobile-path-top: var(--storytelling-section-padding-y);
+  --storytelling-mobile-path-offset-x: calc(100vw - var(--storytelling-section-padding-x));
+  --storytelling-scroll-scrub: 1;
+  --storytelling-path-stroke-width: 45;
+  --storytelling-path-hide-padding: 4;
+  --storytelling-path-width: 118vw;
+  --storytelling-path-height: calc(var(--storytelling-path-width) * 1290 / 1946);
+  --storytelling-path-inset-y: var(--storytelling-section-padding-y);
+  --storytelling-path-offset-x: 0px;
+  --storytelling-path-offset-y: 0px;
+  --storytelling-image-radius: 12px;
+  --storytelling-media-width: 240px;
+  --storytelling-media-height: 335px;
+  --storytelling-media-offset-y: 0px;
+  --storytelling-lines-width: max-content;
+  --storytelling-lines-padding-left: 0px;
+  --storytelling-caption-size: 14px;
+  --storytelling-caption-line-height: 1.6;
+  --storytelling-caption-height: 77px;
+  --storytelling-caption-margin-top: 16px;
+  --storytelling-line-size: clamp(22px, 6vw, 28px);
+  --storytelling-line-font-weight: 600;
+  --storytelling-line-line-height: 1.2;
+  --storytelling-line-letter-spacing: -0.04em;
+  --storytelling-line-gap: 10px;
+  --storytelling-content-max-width: min(1200px, 100%);
+}
+
+@media (min-width: 800px) {
+  :root {
+    --storytelling-margin-top: 16px;
+    --storytelling-gap: 40px;
+    --storytelling-media-width: 180px;
+    --storytelling-media-height: 300px;
+    --storytelling-caption-height: 92px;
+    --storytelling-caption-margin-top: 18px;
+    --storytelling-lines-width: min(
+      620px,
+      calc(
+        100vw - 2 * var(--storytelling-section-padding-x) - var(--storytelling-media-width) -
+          var(--storytelling-gap) - 8px
+      )
+    );
+    --storytelling-line-size: clamp(24px, 4vw, 34px);
+    --storytelling-content-max-width: calc(100vw - 2 * var(--storytelling-section-padding-x));
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --storytelling-margin-top: var(--section-stack-gap);
+    --storytelling-section-padding-x: 48px;
+    --storytelling-gap: 40px;
+    --storytelling-media-width: 180px;
+    --storytelling-media-height: 300px;
+    --storytelling-caption-height: 92px;
+    --storytelling-caption-margin-top: 18px;
+    --storytelling-lines-width: min(
+      620px,
+      calc(
+        100vw - 2 * var(--storytelling-section-padding-x) - var(--storytelling-media-width) -
+          var(--storytelling-gap) - 8px
+      )
+    );
+    --storytelling-line-size: clamp(24px, 4vw, 34px);
+    --storytelling-content-max-width: calc(100vw - 2 * var(--storytelling-section-padding-x));
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --storytelling-media-width: 240px;
+    --storytelling-media-height: 335px;
+    --storytelling-media-width: 260px;
+    --storytelling-media-height: 362px;
+    --storytelling-margin-top: var(--section-stack-gap);
+    --storytelling-section-padding-y: 0px;
+    --storytelling-line-size: 49px;
+    --storytelling-gap: 150px;
+    --storytelling-media-offset-y: 0px;
+    --storytelling-content-padding: 0px;
+    --storytelling-content-max-width: min(
+      1200px,
+      calc(100vw - 2 * var(--storytelling-section-padding-x))
+    );
+    --storytelling-caption-margin-top: 20px;
+  }
+}

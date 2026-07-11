@@ -1,0 +1,390 @@
+:root {
+  --color-services-title: rgb(0 0 0 / 0.12);
+  --color-services-title-gradient-start: rgb(0 0 0 / 0.48);
+  --color-services-title-gradient-mid: rgb(0 0 0 / 0.24);
+  --color-services-title-gradient-end: rgb(0 0 0 / 0);
+  --services-title-gradient: linear-gradient(
+    180deg,
+    var(--color-services-title-gradient-start) 0%,
+    var(--color-services-title-gradient-mid) 32%,
+    var(--color-services-title-gradient-end) 100%
+  );
+  --services-title-font-weight: 600;
+  --services-title-box-height: auto;
+  --services-title-mask: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0%,
+    rgb(0 0 0 / 1) 38%
+  );
+  --color-services-nav-active-text: #0e0e0e;
+  --color-services-nav-inactive-text: rgb(14 14 14 / 0.6);
+  --color-services-nav-index: rgb(14 14 14 / 0.6);
+  --color-services-nav-active-bg: #f7f7f7;
+  --color-services-content-bg: var(--color-services-nav-active-bg);
+  --color-services-content-accent: var(--color-brand);
+  --color-services-content-text: #0e0e0e;
+  --color-services-content-arrow: var(--color-cta-text);
+  --color-services-section-cursor-bg: #ffffff;
+  --color-services-section-cursor-text: #2c3134;
+  --services-container-max-width: 1200px;
+  --services-padding-x: 16px;
+  --services-padding-y: 48px;
+  --services-title-size: clamp(72px, 18vw, 120px);
+  --services-title-line-height: 1;
+  --services-title-height: auto;
+  --services-title-heading-z-index: 1;
+  --services-title-text-z-index: 4;
+  --services-title-perspective: 1200px;
+  --services-title-top: calc(var(--navbar-height) + 32px);
+  --services-grid-top: calc(var(--navbar-height) + 104px);
+  --services-margin-top: var(--section-stack-gap);
+  --services-stage-height: auto;
+  --services-stage-bottom-padding: 32px;
+  --services-mobile-pin-clearance: 0px;
+  --services-scroll-step-vh: 60;
+  --services-pin-start-offset: 0px;
+  --services-ai-cover-buffer: 900px;
+  --services-sticky-top: 0px;
+  --services-sticky-padding-bottom: 48px;
+  --services-content-z-index: 5;
+  --services-grid-height: auto;
+  --services-grid-min-height: auto;
+  --services-grid-width: 100%;
+  --services-grid-template-columns: minmax(0, 1fr);
+  --services-nav-column-min-width: 0px;
+  --services-nav-width: 100%;
+  --services-nav-list-gap: 14px;
+  --services-nav-offset-top: 0px;
+  --services-nav-offset-bottom: 0px;
+  --services-nav-item-gap: 12px;
+  --services-nav-item-padding-x: 24px;
+  --services-nav-item-padding-y: 12px;
+  --services-nav-item-height: 70px;
+  --services-nav-item-radius: 12px;
+  --services-nav-index-size: 20px;
+  --services-nav-index-width: 16px;
+  --services-nav-index-height: 22px;
+  --services-nav-index-line-height: 1;
+  --services-nav-index-letter-spacing: -0.04em;
+  --services-nav-index-font-features: "blwf" on, "cv09" on, "cv03" on, "cv04" on, "cv11" on;
+  --services-nav-title-offset: 56px;
+  --services-content-offset-left: 0px;
+  --services-content-column-width: 100%;
+  --services-image-column-width: 100%;
+  --services-columns-gap: 12px;
+  --services-nav-min-height: 120px;
+  --services-nav-gap: 12px;
+  --services-nav-title-size: 16px;
+  --services-nav-title-line-height: 1.2;
+  --services-content-min-height: 180px;
+  --services-content-offset-top: 0px;
+  --services-image-offset-top: 0px;
+  --services-content-gap: 10px;
+  --services-content-margin: 5px;
+  --services-content-radius: 16px;
+  --services-content-padding-top: 16px;
+  --services-content-padding-left: 16px;
+  --services-content-padding-right: 12px;
+  --services-content-padding-bottom: 12px;
+  --services-content-header-desc-gap: 24px;
+  --services-content-bullet-size: 4px;
+  --services-content-header-size: 20px;
+  --services-content-header-line-height: 1.2;
+  --services-content-description-size: 16px;
+  --services-content-description-line-height: 1.6;
+  --services-content-font-features: "blwf" on, "cv09" on, "cv03" on, "cv04" on, "cv11" on;
+  --services-content-arrow-size: 40px;
+  --services-content-arrow-gap: 10px;
+  --services-content-header-gap: 12px;
+  --services-content-title-size: 28px;
+  --services-content-title-line-height: 1.2;
+  --services-index-size: 14px;
+  --services-description-max-width: 420px;
+  --services-description-size: 16px;
+  --services-description-line-height: 1.6;
+  --services-image-min-height: 280px;
+  --services-mobile-image-height: clamp(190px, 54vw, 240px);
+  --services-image-max-width: 100%;
+  --services-image-radius: var(--services-content-radius);
+  --services-section-cursor-z-index: 10000;
+  --services-section-cursor-radius: 99px;
+  --services-section-cursor-width: 160px;
+  --services-section-cursor-height: 31px;
+  --services-section-cursor-padding-x: 12px;
+  --services-section-cursor-padding-y: 6px;
+  --services-section-cursor-gap: 4px;
+  --services-section-cursor-font-size: 14px;
+  --services-section-cursor-arrow-size: 14px;
+  --services-mobile-gap: 64px;
+  --services-mobile-title-spacing: 120px;
+  --services-mobile-stack-offset: 0px;
+  --services-page-top-padding: var(--navbar-height);
+  --services-page-container-max-width: 1200px;
+  --services-page-padding-x: 16px;
+  --services-page-padding-top: 48px;
+  --services-page-padding-bottom: 80px;
+  --services-page-section-gap: 40px;
+  --services-page-hero-gap: 16px;
+  --services-page-hero-max-width: 700px;
+  --services-page-title-size: clamp(34px, 10vw, 44px);
+  --services-page-title-line-height: 1.2;
+  --services-page-description-size: 14px;
+  --services-page-description-line-height: 1.5;
+  --services-page-grid-offset: 28px;
+  --services-page-card-width: 900px;
+  --services-page-cards-gap: 24px;
+  --services-page-card-radius: 0px;
+  --services-page-card-gap: 0px;
+  --services-page-mobile-card-row-gap: 12px;
+  --services-page-grid-padding: 24px;
+  --services-page-grid-min-height: 400px;
+  --services-page-content-gap: 32px;
+  --services-page-service-copy-max-width: 560px;
+  --services-page-service-kicker-size: 16px;
+  --services-page-service-kicker-line-height: 1.6;
+  --services-page-card-header-gap: 12px;
+  --services-page-service-heading-gap: 12px;
+  --services-page-service-eyebrow-size: 12px;
+  --services-page-service-eyebrow-line-height: 1.2;
+  --services-page-service-title-row-gap: 12px;
+  --services-page-service-index-size: 17px;
+  --services-page-service-index-line-height: 1.2;
+  --services-page-service-title-max-width: 100%;
+  --services-page-service-title-size: 15px;
+  --services-page-service-title-line-height: 1.15;
+  --services-content-header-desc-gap: 24px;
+  --services-page-features-gap: 12px;
+  --services-page-feature-item-gap: 10px;
+  --services-page-feature-size: 13px;
+  --services-page-feature-line-height: 1.45;
+  --services-page-feature-dot-size: 6px;
+  --services-page-feature-dot-offset: 8px;
+  --services-page-image-height: 400px;
+  --services-page-image-radius: 0px;
+  --color-services-page-text: #2c3134;
+  --color-services-page-muted: rgb(44 49 52 / 0.72);
+  --color-services-page-accent: var(--color-brand);
+  --color-services-page-eyebrow: #0aabc8;
+  --color-services-page-index: #5c5c5c;
+  --color-services-page-card-title: #2c3134;
+  --color-services-page-card-bg: #ffffff;
+  --color-services-page-card-border: rgb(0 0 0 / 0.08);
+  --color-services-page-image-bg: rgb(37 88 180 / 0.04);
+}
+
+@media (min-width: 800px) {
+  :root {
+    --services-margin-top: var(--section-stack-gap);
+    --services-page-padding-x: 80px;
+    --services-page-title-size: 70px;
+    --services-page-service-title-max-width: 100%;
+    --services-page-grid-min-height: 400px;
+    --services-page-image-height: 400px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+
+    --services-grid-width: 760px;
+    --services-page-padding-x: 32px;
+    --services-page-padding-top: 40px;
+    --services-page-padding-bottom: 64px;
+    --services-page-section-gap: 32px;
+    --services-page-card-width: 760px;
+    --services-page-title-size: 50px;
+    --services-page-description-size: 15px;
+    --services-page-description-line-height: 1.5;
+    --services-page-grid-offset: 24px;
+    --services-page-cards-gap: 18px;
+    --services-page-mobile-card-row-gap: 0px;
+    --services-page-image-height: 400px;
+    --services-page-grid-min-height: 400px;
+    --services-page-service-title-max-width: 100%;
+    --services-page-service-title-size: 14px;
+    --services-page-service-index-size: 16px;
+    --services-page-service-eyebrow-size: 11px;
+    --services-page-card-header-gap: 10px;
+    --services-page-service-title-row-gap: 8px;
+    --services-content-header-desc-gap: 16px;
+    --services-content-padding-top: 16px;
+    --services-content-padding-left: 16px;
+    --services-content-padding-right: 14px;
+    --services-content-padding-bottom: 14px;
+    --services-content-description-size: 12px;
+    --services-content-description-line-height: 1.35;
+    --services-content-arrow-size: 30px;
+    --services-mobile-pin-clearance: calc(var(--navbar-height) + 16px);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --services-padding-x: 0px;
+    --services-page-description-size: 16px;
+    --services-page-description-line-height: 1.6;
+    --services-page-service-title-max-width: 100%;
+    --services-page-service-title-size: 19px;
+    --services-page-service-index-size: 22px;
+    --services-page-service-eyebrow-size: 14px;
+    --services-content-header-desc-gap: 24px;
+    --services-page-mobile-card-row-gap: 0px;
+    --services-page-grid-min-height: 400px;
+    --services-page-image-height: 400px;
+    --services-title-size: 204px;
+    --services-title-line-height: 204px;
+    --services-title-height: 157px;
+    --services-title-box-height: 157px;
+    --services-title-top: 0px;
+    --services-grid-top: calc(var(--services-title-top) + 160px);
+    --services-margin-top: var(--section-stack-gap);
+    --services-stage-bottom-padding: 48px;
+    --services-scroll-step-vh: 72;
+    --services-ai-cover-buffer: 900px;
+    --services-grid-width: 1070px;
+    --services-content-margin: 0px;
+    --services-nav-offset-top: 0px;
+    --services-nav-offset-bottom: 0px;
+    --services-content-header-desc-gap: 24px;
+    --services-content-bullet-size: 4px;
+    --services-grid-template-columns: minmax(0, 1.1fr) 347px minmax(0, 1fr);
+    --services-columns-gap: 8px;
+    --services-nav-column-min-width: 0px;
+    --services-nav-item-padding-x: 24px;
+    --services-nav-item-padding-y: 0px;
+    --services-nav-item-height: 70px;
+    --services-grid-min-height: calc(
+      5 * var(--services-nav-item-height) + 4 * var(--services-nav-list-gap)
+    );
+    --services-grid-height: calc(
+      5 * var(--services-nav-item-height) + 4 * var(--services-nav-list-gap)
+    );
+    --services-sticky-top: max(
+      0px,
+      calc(
+        (
+          100svh -
+            (
+              var(--services-grid-top) +
+              var(--services-grid-height) +
+              var(--services-stage-bottom-padding)
+            )
+        ) / 2
+      )
+    );
+    --services-nav-item-radius: 16px;
+    --services-nav-index-size: 18px;
+    --services-nav-title-size: 18px;
+    --services-content-padding-top: 20px;
+    --services-content-padding-left: 20px;
+    --services-content-padding-right: 16px;
+    --services-content-padding-bottom: 16px;
+    --services-content-description-size: 16px;
+    --services-content-description-line-height: 1.6;
+    --services-image-radius: var(--services-content-radius);
+    --services-image-max-width: 100%;
+    --services-image-min-height: auto;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --services-container-max-width: 1200px;
+    --services-title-size: 240px;
+    --services-title-line-height: 240px;
+    --services-title-height: 184px;
+    --services-title-box-height: 184px;
+    --services-title-top: 0px;
+    --services-grid-top: calc(var(--services-title-top) + 188px);
+    --services-margin-top: var(--section-stack-gap);
+    --services-stage-bottom-padding: 64px;
+    --services-grid-width: min(1200px, calc(100vw - 112px));
+    --services-grid-template-columns: minmax(0, 1.18fr) 420px minmax(0, 1.08fr);
+    --services-columns-gap: 16px;
+    --services-nav-list-gap: 16px;
+    --services-nav-item-padding-x: 28px;
+    --services-nav-item-height: 80px;
+    --services-nav-item-radius: 20px;
+    --services-nav-index-size: 20px;
+    --services-nav-index-width: 20px;
+    --services-nav-index-height: 24px;
+    --services-nav-title-size: 22px;
+    --services-content-radius: 20px;
+    --services-content-padding-top: 28px;
+    --services-content-padding-left: 28px;
+    --services-content-padding-right: 24px;
+    --services-content-padding-bottom: 24px;
+    --services-content-header-desc-gap: 32px;
+    --services-content-header-size: 22px;
+    --services-content-description-size: 18px;
+    --services-description-max-width: 520px;
+    --services-image-radius: var(--services-content-radius);
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --services-container-max-width: 1200px;
+    --services-title-size: 240px;
+    --services-title-line-height: 240px;
+    --services-title-height: 184px;
+    --services-title-box-height: 184px;
+    --services-title-top: 0px;
+    --services-grid-top: calc(var(--services-title-top) + 188px);
+    --services-margin-top: var(--section-stack-gap);
+    --services-stage-bottom-padding: 64px;
+    --services-grid-width: min(1200px, calc(100vw - 112px));
+    --services-grid-template-columns: minmax(0, 1.18fr) 420px minmax(0, 1.08fr);
+    --services-columns-gap: 16px;
+    --services-nav-list-gap: 16px;
+    --services-nav-item-padding-x: 28px;
+    --services-nav-item-height: 80px;
+    --services-nav-item-radius: 20px;
+    --services-nav-index-size: 20px;
+    --services-nav-index-width: 20px;
+    --services-nav-index-height: 24px;
+    --services-nav-title-size: 22px;
+    --services-content-radius: 20px;
+    --services-content-padding-top: 28px;
+    --services-content-padding-left: 28px;
+    --services-content-padding-right: 24px;
+    --services-content-padding-bottom: 24px;
+    --services-content-header-desc-gap: 32px;
+    --services-content-header-size: 22px;
+    --services-content-description-size: 18px;
+    --services-description-max-width: 520px;
+    --services-image-radius: var(--services-content-radius);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --services-container-max-width: 1200px;
+    --services-title-size: 204px;
+    --services-title-line-height: 204px;
+    --services-title-height: 157px;
+    --services-title-box-height: 157px;
+    --services-grid-top: calc(var(--services-title-top) + 160px);
+    --services-stage-bottom-padding: 48px;
+    --services-grid-width: 1070px;
+    --services-grid-template-columns: minmax(0, 1.1fr) 347px minmax(0, 1fr);
+    --services-columns-gap: 8px;
+    --services-nav-list-gap: 14px;
+    --services-nav-item-padding-x: 24px;
+    --services-nav-item-height: 70px;
+    --services-nav-item-radius: 16px;
+    --services-nav-index-size: 18px;
+    --services-nav-index-width: 16px;
+    --services-nav-index-height: 22px;
+    --services-nav-title-size: 18px;
+    --services-content-radius: 16px;
+    --services-content-padding-top: 20px;
+    --services-content-padding-left: 20px;
+    --services-content-padding-right: 16px;
+    --services-content-padding-bottom: 16px;
+    --services-content-header-desc-gap: 24px;
+    --services-content-header-size: 20px;
+    --services-content-description-size: 16px;
+    --services-description-max-width: 420px;
+  }
+}

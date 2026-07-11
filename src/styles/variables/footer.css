@@ -1,0 +1,202 @@
+:root {
+  --footer-reveal-gap: 180px;
+  --footer-reveal-bottom-gap: 0px;
+  --footer-container-max-width: 100%;
+  --footer-margin-top: calc(var(--section-stack-gap) + 40px);
+  --footer-padding-x: 12px;
+  --footer-padding-top: 0px;
+  --footer-padding-bottom: 48px;
+  --footer-card-min-height: var(--lets-talk-card-min-height);
+  --footer-card-radius: 34px;
+  --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
+  --footer-card-padding-x: 28px;
+  --footer-card-padding-top: 0px;
+  --footer-card-padding-bottom: 0px;
+  --footer-top-row-gap: 24px;
+  --footer-top-row-desktop-gap: 8px;
+  --footer-link-column-gap: 12px;
+  --footer-link-desktop-gap: 20px;
+  --footer-link-size: 14px;
+  --footer-link-line-height: 1.4;
+  --footer-link-letter-spacing: -0.03em;
+  --footer-newsletter-gap: 16px;
+  --footer-newsletter-copy-gap: 8px;
+  --footer-newsletter-max-width: 680px;
+  --footer-newsletter-title-size: 22px;
+  --footer-newsletter-title-line-height: 1.2;
+  --footer-newsletter-subtitle-size: 22px;
+  --footer-newsletter-subtitle-line-height: 1.2;
+  --footer-newsletter-form-gap: 12px;
+  --footer-input-height: 56px;
+  --footer-input-radius: 8px;
+  --footer-input-padding-x: 20px;
+  --footer-input-padding-y: 16px;
+  --footer-input-size: 15px;
+  --footer-input-line-height: 1.2;
+  --footer-subscribe-button-height: 56px;
+  --footer-subscribe-button-radius: var(--footer-input-radius);
+  --footer-subscribe-button-padding-x: 24px;
+  --footer-subscribe-button-padding-y: 16px;
+  --footer-subscribe-button-size: 15px;
+  --footer-subscribe-button-line-height: 1.2;
+  --footer-rights-margin-top: 44px;
+  --footer-rights-padding-top: 18px;
+  --footer-rights-padding-bottom: 64px;
+  --footer-rights-max-width: 1066px;
+  --footer-rights-line-gap: 4px;
+  --footer-rights-line-width: 112px;
+  --footer-rights-gap: 10px;
+  --footer-rights-mobile-row-gap: 6px;
+  --footer-rights-size: 14px;
+  --footer-rights-line-height: 1.4;
+  --footer-logo-margin-top: 44px;
+  --footer-logo-height: 120px;
+  --color-footer-surface: #2558b4;
+  --color-footer-link: #ffffff;
+  --color-footer-link-hover: #ffffff;
+  --color-footer-title: #ffffff;
+  --color-footer-subtitle: #ffffff;
+  --color-footer-subtitle-highlight: #ffe700;
+  --color-footer-input-bg: rgb(255 255 255 / 0.3);
+  --color-footer-input-border: rgb(255 255 255 / 0.18);
+  --color-footer-input-text: #ffffff;
+  --color-footer-input-placeholder: rgb(255 255 255 / 0.6);
+  --color-footer-subscribe-button-bg: #ffffff;
+  --color-footer-subscribe-button-hover-bg: #ffffff;
+  --color-footer-subscribe-button-text: #2558b4;
+  --color-footer-rights: #ffffff;
+  --color-footer-rights-divider: rgb(255 255 255 / 0.4);
+  --color-footer-rights-line: rgb(255 255 255 / 0.28);
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --footer-reveal-gap: calc(var(--footer-margin-top) + 180px);
+    --footer-container-max-width: 1648px;
+    --footer-padding-x: 16px;
+    --footer-padding-bottom: 56px;
+    --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-card-radius: 64px;
+    --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
+    --footer-card-padding-x: 40px;
+    --footer-card-padding-top: 0px;
+    --footer-card-padding-bottom: 0px;
+    --footer-top-row-gap: 28px;
+    --footer-top-row-desktop-gap: 8px;
+    --footer-link-column-gap: 18px;
+    --footer-link-desktop-gap: 20px;
+    --footer-newsletter-gap: 18px;
+    --footer-newsletter-copy-gap: 10px;
+    --footer-newsletter-max-width: 680px;
+    --footer-newsletter-title-size: 38px;
+    --footer-newsletter-title-line-height: 1.08;
+    --footer-newsletter-tablet-title-size: 31px;
+    --footer-newsletter-tablet-title-line-height: 1.16;
+    --footer-newsletter-subtitle-size: 16px;
+    --footer-newsletter-tablet-subtitle-size: 26px;
+    --footer-newsletter-tablet-subtitle-line-height: 1.16;
+    --footer-newsletter-form-gap: 14px;
+    --footer-input-height: 56px;
+    --footer-subscribe-button-height: 56px;
+    --footer-rights-margin-top: 40px;
+    --footer-rights-padding-top: 10px;
+    --footer-rights-padding-bottom: 36px;
+    --footer-rights-line-width: 96px;
+    --footer-rights-size: 14px;
+    --footer-logo-margin-top: 40px;
+    --footer-logo-height: 160px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --footer-reveal-gap: calc(var(--footer-margin-top) + 180px);
+    --footer-container-max-width: 1648px;
+    --footer-padding-bottom: 64px;
+    --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-card-radius: 64px;
+    --footer-card-padding-x: 40px;
+    --footer-card-padding-top: 0px;
+    --footer-card-padding-bottom: 0px;
+    --footer-reveal-bottom-gap: 24px;
+    --footer-top-row-gap: 32px;
+    --footer-top-row-desktop-gap: 8px;
+    --footer-link-column-gap: 20px;
+    --footer-link-desktop-gap: 20px;
+    --footer-newsletter-max-width: 680px;
+    --footer-newsletter-title-size: 44px;
+    --footer-newsletter-form-gap: 14px;
+    --footer-rights-margin-top: 32px;
+    --footer-rights-padding-top: 18px;
+    --footer-rights-padding-bottom: 44px;
+    --footer-logo-margin-top: 12px;
+    --footer-logo-height: 300px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --footer-container-max-width: 100%;
+    --footer-padding-bottom: 56px;
+    --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-card-radius: 64px;
+    --footer-card-padding-x: 40px;
+    --footer-card-padding-top: 0px;
+    --footer-top-row-gap: 32px;
+    --footer-top-row-desktop-gap: 8px;
+    --footer-newsletter-gap: 18px;
+    --footer-newsletter-copy-gap: 10px;
+    --footer-newsletter-max-width: 680px;
+    --footer-newsletter-title-size: 52px;
+    --footer-logo-height: 240px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --footer-container-max-width: 1648px;
+    --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-card-radius: 64px;
+    --footer-padding-bottom: 64px;
+    --footer-card-padding-x: 40px;
+    --footer-card-padding-top: 0px;
+    --footer-card-padding-bottom: 0px;
+    --footer-reveal-bottom-gap: 24px;
+    --footer-top-row-gap: 32px;
+    --footer-top-row-desktop-gap: 8px;
+    --footer-link-column-gap: 20px;
+    --footer-link-desktop-gap: 20px;
+    --footer-newsletter-max-width: 680px;
+    --footer-newsletter-title-size: 44px;
+    --footer-newsletter-form-gap: 14px;
+    --footer-rights-margin-top: 180px;
+    --footer-rights-padding-top: 0px;
+    --footer-rights-padding-bottom: 40px;
+    --footer-logo-margin-top: 180px;
+    --footer-logo-height: 300px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --footer-container-max-width: 1648px;
+    --footer-padding-bottom: 64px;
+    --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-card-radius: 64px;
+    --footer-card-padding-x: 40px;
+    --footer-card-padding-top: 0px;
+    --footer-card-padding-bottom: 0px;
+    --footer-top-row-gap: 32px;
+    --footer-top-row-desktop-gap: 8px;
+    --footer-link-column-gap: 20px;
+    --footer-link-desktop-gap: 20px;
+    --footer-newsletter-max-width: 680px;
+    --footer-newsletter-title-size: 44px;
+    --footer-newsletter-form-gap: 14px;
+    --footer-rights-margin-top: 180px;
+    --footer-rights-padding-top: 0px;
+    --footer-rights-padding-bottom: 40px;
+    --footer-logo-margin-top: 180px;
+    --footer-logo-height: 300px;
+  }
+}

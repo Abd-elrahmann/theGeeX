@@ -1,0 +1,163 @@
+:root {
+  --blogs-margin-top: var(--section-stack-gap);
+  --blogs-padding-x: 16px;
+  --blogs-padding-y: 48px;
+  --blogs-container-max-width: 1200px;
+  --blogs-section-gap: 32px;
+  --blogs-title-column-width: 32%;
+  --blogs-title-sticky-top: 0px;
+  --blogs-title-column-gap: 10px;
+  --blogs-title-z-index: 1;
+  --blogs-title-font-weight: 600;
+  --blogs-title-size: clamp(72px, 18vw, 120px);
+  --blogs-title-line-height: 1.12;
+  --blogs-title-box-height: clamp(84px, 20vw, 134px);
+  --blogs-title-gradient-start: rgb(0 0 0 / 0.48);
+  --blogs-title-gradient-mid: rgb(0 0 0 / 0.24);
+  --blogs-title-gradient-end: rgb(0 0 0 / 0);
+  --blogs-title-gradient: linear-gradient(
+    180deg,
+    var(--blogs-title-gradient-start) 0%,
+    var(--blogs-title-gradient-mid) 32%,
+    var(--blogs-title-gradient-end) 100%
+  );
+  --blogs-title-mask: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0%,
+    rgb(0 0 0 / 1) 38%
+  );
+  --blogs-cards-gap: 32px;
+  --blogs-card-max-width: 100%;
+  --blogs-card-radius: 20px;
+  --blogs-card-padding: 16px;
+  --blogs-card-shadow: 0 16px 40px 0 rgb(0 0 0 / 0.06);
+  --blogs-card-gap: 20px;
+  --blogs-card-image-width: 248px;
+  --blogs-card-image-height: 300px;
+  --blogs-card-image-radius: 16px;
+  --blogs-card-badge-padding-x: 12px;
+  --blogs-card-badge-padding-y: 4px;
+  --blogs-card-badge-radius: 32px;
+  --blogs-card-badge-size: 12px;
+  --blogs-card-badge-line-height: 1.6;
+  --blogs-card-badge-blur: 68px;
+  --blogs-card-types-gap: 8px;
+  --blogs-card-title-margin-top: 20px;
+  --blogs-card-title-size: 24px;
+  --blogs-card-title-line-height: 1.4;
+  --blogs-card-date-margin-top: 16px;
+  --blogs-card-meta-size: 12px;
+  --blogs-card-meta-line-height: 1.2;
+  --blogs-card-footer-gap: 12px;
+  --blogs-card-footer-padding-top: 24px;
+  --blogs-card-author-image-width: 24px;
+  --blogs-card-author-image-height: 24px;
+  --color-blogs-title: rgb(12 12 12 / 0.82);
+  --color-blogs-card-badge-bg: #ffe700;
+  --color-blogs-card-bg: #ffffff;
+  --color-blogs-card-border: rgb(0 0 0 / 0.08);
+  --color-blogs-card-badge-text: #2558b4;
+  --color-blogs-detail-title: #2c3134;
+  --color-blogs-card-title: #2c3134;
+  --color-blogs-card-meta: #5c5c5c;
+  --color-blogs-detail-callout-bg: #fafafa;
+  --color-blogs-detail-callout-border: rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 800px) {
+  :root {
+    --blogs-padding-x: 32px;
+    --blogs-padding-y: 56px;
+    --blogs-section-gap: 40px;
+    --blogs-title-column-width: 36%;
+    --blogs-title-sticky-top: 116px;
+    --blogs-title-size: 68px;
+    --blogs-title-line-height: 1.08;
+    --blogs-title-box-height: 72px;
+    --blogs-cards-gap: 36px;
+    --blogs-card-max-width: 100%;
+    --blogs-card-gap: 20px;
+    --blogs-card-image-width: 220px;
+    --blogs-card-image-height: 270px;
+    --blogs-card-title-size: 24px;
+    --blogs-card-title-line-height: 1.4;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1023.98px) {
+  :root {
+    --blogs-padding-x: 24px;
+    --blogs-padding-y: 56px;
+    --blogs-section-gap: 28px;
+    --blogs-title-column-width: 32%;
+    --blogs-title-sticky-top: 116px;
+    --blogs-title-size: 68px;
+    --blogs-title-line-height: 1.08;
+    --blogs-title-box-height: 72px;
+    --blogs-cards-gap: 28px;
+    --blogs-card-max-width: 100%;
+    --blogs-card-padding: 14px;
+    --blogs-card-gap: 16px;
+    --blogs-card-image-width: 190px;
+    --blogs-card-image-height: 238px;
+    --blogs-card-title-margin-top: 8px;
+    --blogs-card-title-size: 24px;
+    --blogs-card-title-line-height: 1.4;
+    --blogs-card-date-margin-top: 18px;
+    --blogs-card-footer-padding-top: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --blogs-padding-x: 0px;
+    --blogs-padding-y: 64px;
+    --blogs-section-gap: 64px;
+    --blogs-title-column-width: 40%;
+    --blogs-title-sticky-top: 148px;
+    --blogs-title-size: clamp(120px, 12vw, 172px);
+    --blogs-title-line-height: 1.1860465116;
+    --blogs-title-box-height: 157px;
+    --blogs-cards-gap: 48px;
+    --blogs-card-max-width: 600px;
+    --blogs-card-gap: 24px;
+    --blogs-card-title-size: 24px;
+    --blogs-card-title-line-height: 1.4;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --blogs-margin-top: 0px;
+    --blogs-container-max-width: 1200px;
+    --blogs-padding-y: 32px;
+    --blogs-section-gap: 72px;
+    --blogs-title-size: 172px;
+    --blogs-title-line-height: 204px;
+    --blogs-title-box-height: 157px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --blogs-margin-top: 0px;
+    --blogs-container-max-width: 1200px;
+    --blogs-padding-y: 32px;
+    --blogs-section-gap: 72px;
+    --blogs-title-size: 172px;
+    --blogs-title-line-height: 204px;
+    --blogs-title-box-height: 157px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --blogs-container-max-width: 1200px;
+    --blogs-padding-y: 64px;
+    --blogs-section-gap: 64px;
+    --blogs-title-size: clamp(120px, 12vw, 172px);
+    --blogs-title-line-height: 1.1860465116;
+    --blogs-title-box-height: 157px;
+    --blogs-margin-top: 0px;
+  }
+}
