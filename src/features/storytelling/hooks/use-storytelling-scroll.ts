@@ -201,8 +201,8 @@ export function useStorytellingScroll({
         const mobileSectionBackgroundTrigger =
           !mobileBackgroundEnabled && backgroundEnabled
             ? ScrollTrigger.create({
-                trigger: stageElement,
-              start: () => `top top+=${getMobileBackgroundStartOffset()}`,
+                trigger: pinStartElement,
+                start: () => `top top+=${getMobileBackgroundStartOffset() + window.innerHeight * 0.2}`,
                 endTrigger: containerElement,
                 end: "bottom top",
                 invalidateOnRefresh: true,
