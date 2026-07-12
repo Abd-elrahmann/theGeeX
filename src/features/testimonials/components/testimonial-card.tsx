@@ -28,35 +28,13 @@ function TestimonialStar() {
 export function TestimonialCard({ item }: TestimonialCardProps) {
   return (
     <article
+      style={{ backgroundColor: "var(--color-testimonials-card-bg)" }}
       className={cn(
         "relative box-border flex h-(--testimonials-card-height) w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
-        "border border-(--color-testimonials-card-border) p-(--testimonials-card-padding)",
+        "border border-(--color-testimonials-card-border) bg-(--color-testimonials-card-bg) p-(--testimonials-card-padding)",
       )}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-(--testimonials-card-accent-height) bg-(image:--testimonials-card-accent-gradient) opacity-(--testimonials-card-accent-opacity)"
-      />
-
       <div className="flex min-h-(--testimonials-card-content-min-height) w-full flex-1 flex-col gap-(--testimonials-card-content-gap)">
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-(--color-testimonials-card-quote) font-cal-sans text-(length:--testimonials-card-quote-size) leading-none">
-            “
-          </span>
-
-          <motion.div
-            className="flex items-center gap-(--testimonials-stars-gap) lg:hidden"
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.4, ease: [0.42, 0, 0.58, 1] }}
-          >
-            {Array.from({ length: item.rating }, (_, index) => (
-              <TestimonialStar key={`${item.id}-star-mobile-${index + 1}`} />
-            ))}
-          </motion.div>
-        </div>
-
         <h3
           className={cn(
             "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
@@ -82,8 +60,8 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
         </p>
       </div>
 
-      <div className="mt-auto flex w-full items-start justify-between gap-(--testimonials-card-footer-gap) pt-(--testimonials-card-footer-margin-top) lg:items-center">
-        <div className="flex min-w-0 flex-1 items-start gap-(--testimonials-person-gap) lg:items-center">
+      <div className="mt-auto flex w-full items-center justify-between gap-(--testimonials-card-footer-gap) pt-(--testimonials-card-footer-margin-top)">
+        <div className="flex min-w-0 flex-1 items-center gap-(--testimonials-person-gap)">
           <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-center justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-padding) pb-(--testimonials-person-frame-padding)">
             <Image
               src={item.personImageSrc}
@@ -118,6 +96,18 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
             >
               {item.personRole}
             </p>
+
+            <motion.div
+              className="mt-2 flex items-center gap-(--testimonials-stars-gap) lg:hidden"
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.4, ease: [0.42, 0, 0.58, 1] }}
+            >
+              {Array.from({ length: item.rating }, (_, index) => (
+                <TestimonialStar key={`${item.id}-star-mobile-${index + 1}`} />
+              ))}
+            </motion.div>
           </div>
         </div>
 

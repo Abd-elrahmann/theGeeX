@@ -25,13 +25,13 @@
     rgb(0 0 0 / 1) 38%
   );
   --testimonials-carousel-gap: 16px;
-  --testimonials-card-width: calc(100vw - 2 * var(--testimonials-padding-x));
+  --testimonials-card-width: calc(100vw - 2 * var(--testimonials-padding-x) - 36px);
   --testimonials-card-height: 344px;
   --testimonials-card-padding: 18px;
   --testimonials-card-radius: 18px;
   --testimonials-card-accent-height: 56px;
   --testimonials-card-accent-opacity: 1;
-  --testimonials-card-accent-gradient: linear-gradient(180deg, rgb(44 103 221 / 0.12) 0%, rgb(44 103 221 / 0) 100%);
+  --testimonials-card-accent-gradient: none;
   --testimonials-card-content-gap: 16px;
   --testimonials-card-content-min-height: 172px;
   --testimonials-card-footer-margin-top: 10px;
@@ -41,7 +41,7 @@
   --testimonials-card-title-line-height: 1.3;
   --testimonials-card-title-weight: 600;
   --testimonials-card-title-letter-spacing: -0.04em;
-  --testimonials-card-comment-size: 14px;
+  --testimonials-card-comment-size: 13px;
   --testimonials-card-comment-line-height: 1.55;
   --testimonials-card-comment-weight: 400;
   --testimonials-card-comment-letter-spacing: -0.04em;
@@ -63,7 +63,7 @@
   --testimonials-stars-gap: 6px;
   --testimonials-star-width: 14px;
   --testimonials-star-height: 13px;
-  --color-testimonials-card-bg: transparent;
+  --color-testimonials-card-bg: rgb(247 248 250);
   --color-testimonials-card-border: rgb(12 28 61 / 0.14);
   --color-testimonials-card-quote: rgb(44 103 221 / 0.5);
   --color-testimonials-card-title: #0e0e0e;
@@ -103,7 +103,7 @@
     --testimonials-card-footer-margin-top: 14px;
     --testimonials-card-footer-gap: 14px;
     --testimonials-card-title-size: 30px;
-    --testimonials-card-comment-size: 18px;
+    --testimonials-card-comment-size: 16px;
     --testimonials-person-gap: 18px;
     --testimonials-person-frame-size: 72px;
     --testimonials-person-image-size: 64px;
@@ -135,8 +135,8 @@
     --testimonials-carousel-gap: 32px;
     --testimonials-card-padding: 40px;
     --testimonials-card-title-size: 32px;
-    --testimonials-card-comment-size: 20px;
-    --testimonials-card-footer-margin-top: 32px;
+    --testimonials-card-comment-size: 18px;
+    --testimonials-card-footer-margin-top: 28px;
   }
 }
 
