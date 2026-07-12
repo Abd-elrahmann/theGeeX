@@ -24,11 +24,12 @@ export function ServiceImage({
 }: ServiceImageProps) {
   const isMobile = variant === "mobile";
   const isPage = variant === "page";
+  const isDesktop = variant === "desktop";
   const resolvedImageSrc = imageSrc ?? service.image;
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
   const imageClassName = cn(
-    isMobile ? "object-contain object-center" : "object-cover object-center",
+    isMobile || isDesktop ? "object-contain object-center" : "object-cover object-center",
     "rounded-(--services-image-radius)",
     isPage && "md:rounded-l-none",
     isPlaceholder && "object-contain p-8",
@@ -87,7 +88,7 @@ export function ServiceImage({
   }
 
   return (
-    <div className="relative h-full min-h-(--services-image-min-height) w-85 max-w-full overflow-hidden rounded-(--services-image-radius)">
+    <div className="relative h-(--services-image-height) min-h-(--services-image-min-height) w-(--services-image-column-width) max-w-full overflow-hidden rounded-(--services-image-radius)">
       <div
         className={cn(
           "relative h-full min-h-full w-full min-w-0",

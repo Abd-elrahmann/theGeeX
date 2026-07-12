@@ -21,7 +21,7 @@ export function ProjectDetailHeroSection({
   breadcrumbLabel,
   primaryCategory,
 }: ProjectDetailHeroSectionProps) {
-  const detailImageScale = project.detailImageScale ?? 1;
+  const detailImageScale = project.detailImageScale;
   const chipStyle: ProjectDetailChipStyle = {
     "--project-detail-chip-background":
       project.detailChipBackground ?? "var(--projects-detail-chip-background)",
@@ -74,7 +74,7 @@ export function ProjectDetailHeroSection({
           style={{
             objectFit: "cover",
             objectPosition: project.imagePosition ?? "center center",
-            transform: `scale(${detailImageScale})`,
+            ...(detailImageScale ? { transform: `scale(${detailImageScale})` } : {}),
           }}
           unoptimized
         />

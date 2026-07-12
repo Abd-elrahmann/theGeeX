@@ -13,8 +13,8 @@ import { TestimonialCard } from "@/features/testimonials/components/testimonial-
 import { TestimonialsTitle } from "@/features/testimonials/components/testimonials-title";
 
 type TickerDirection = "left" | "right";
-const TICKER_SPEED_PX_PER_SECOND = 36;
-const TICKER_INTERACTION_PAUSE_MS = 1200;
+const TICKER_SPEED_PX_PER_SECOND = 56;
+const TICKER_INTERACTION_PAUSE_MS = 700;
 
 export function TestimonialsSection() {
   const isDesktop = useDesktopBreakpoint();
@@ -22,6 +22,7 @@ export function TestimonialsSection() {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const directionRef = useRef<TickerDirection>("left");
   const pauseUntilRef = useRef(0);
+  const tickerOffsetRef = useRef(0);
   const [tickerDirection, setTickerDirection] = useState<TickerDirection>("left");
   const items = isDesktop ? [...testimonialItems, ...testimonialItems] : testimonialItems;
 
@@ -33,12 +34,38 @@ export function TestimonialsSection() {
 
   const scrollTestimonials = (direction: TickerDirection) => {
     const viewportElement = viewportRef.current;
+    const trackElement = trackRef.current;
 
     if (!viewportElement) {
       return;
     }
 
     handleTickerDirectionChange(direction);
+
+    if (isDesktop && trackElement) {
+      const firstDuplicateElement = trackElement.children[testimonialItems.length] as HTMLElement | undefined;
+      const loopWidth = firstDuplicateElement?.offsetLeft ?? trackElement.scrollWidth / 2;
+
+      if (loopWidth > 0) {
+        const delta = viewportElement.clientWidth * 0.8;
+        const directionMultiplier = direction === "left" ? 1 : -1;
+
+        tickerOffsetRef.current += directionMultiplier * delta;
+
+        while (tickerOffsetRef.current >= loopWidth) {
+          tickerOffsetRef.current -= loopWidth;
+        }
+
+        while (tickerOffsetRef.current < 0) {
+          tickerOffsetRef.current += loopWidth;
+        }
+
+        trackElement.style.transform = `translate3d(${-tickerOffsetRef.current}px, 0, 0)`;
+      }
+
+      return;
+    }
+
     viewportElement.scrollBy({
       left: direction === "left" ? viewportElement.clientWidth * 0.8 : -viewportElement.clientWidth * 0.8,
       behavior: "smooth",
@@ -47,33 +74,41 @@ export function TestimonialsSection() {
 
   useEffect(() => {
     const viewportElement = viewportRef.current;
+    const trackElement = trackRef.current;
 
-    if (!viewportElement || !isDesktop) {
+    if (!viewportElement || !trackElement || !isDesktop) {
+      if (trackElement) {
+        trackElement.style.transform = "";
+      }
+
       return;
     }
 
     let previousTime = performance.now();
     let frameId = 0;
 
-    const normalizeScroll = () => {
-      const firstDuplicateElement = trackRef.current?.children[testimonialItems.length] as HTMLElement | undefined;
-      const loopWidth = firstDuplicateElement?.offsetLeft ?? viewportElement.scrollWidth / 2;
+    const getLoopWidth = () => {
+      const firstDuplicateElement = trackElement.children[testimonialItems.length] as HTMLElement | undefined;
+
+      return firstDuplicateElement?.offsetLeft ?? trackElement.scrollWidth / 2;
+    };
+
+    const applyOffset = () => {
+      const loopWidth = getLoopWidth();
 
       if (loopWidth <= 0) {
         return;
       }
 
-      if (viewportElement.scrollLeft >= loopWidth) {
-        viewportElement.scrollLeft -= loopWidth;
+      while (tickerOffsetRef.current >= loopWidth) {
+        tickerOffsetRef.current -= loopWidth;
       }
 
-      if (viewportElement.scrollLeft <= 0 && directionRef.current === "right") {
-        viewportElement.scrollLeft += loopWidth;
+      while (tickerOffsetRef.current < 0) {
+        tickerOffsetRef.current += loopWidth;
       }
-    };
 
-    const handleManualScroll = () => {
-      normalizeScroll();
+      trackElement.style.transform = `translate3d(${-tickerOffsetRef.current}px, 0, 0)`;
     };
 
     const tick = (time: number) => {
@@ -82,20 +117,20 @@ export function TestimonialsSection() {
 
       if (Date.now() >= pauseUntilRef.current) {
         const directionMultiplier = directionRef.current === "left" ? 1 : -1;
-        viewportElement.scrollLeft += directionMultiplier * TICKER_SPEED_PX_PER_SECOND * deltaSeconds;
-        normalizeScroll();
+        tickerOffsetRef.current += directionMultiplier * TICKER_SPEED_PX_PER_SECOND * deltaSeconds;
+        applyOffset();
       }
 
       frameId = requestAnimationFrame(tick);
     };
 
-    normalizeScroll();
-    viewportElement.addEventListener("scroll", handleManualScroll, { passive: true });
+    tickerOffsetRef.current = 0;
+    applyOffset();
     frameId = requestAnimationFrame(tick);
 
     return () => {
-      viewportElement.removeEventListener("scroll", handleManualScroll);
       cancelAnimationFrame(frameId);
+      trackElement.style.transform = "";
     };
   }, [isDesktop]);
 
@@ -141,8 +176,8 @@ export function TestimonialsSection() {
           <div
             ref={viewportRef}
             className={cn(
-              "w-full scroll-smooth overflow-x-auto overflow-y-hidden overscroll-x-contain bg-transparent pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden",
-              isDesktop ? "touch-pan-x" : "[touch-action:pan-x_pan-y] snap-x snap-mandatory",
+              "w-full overflow-y-hidden overscroll-x-contain bg-transparent pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden",
+              isDesktop ? "overflow-x-hidden" : "scroll-smooth overflow-x-auto [touch-action:pan-x_pan-y] snap-x snap-mandatory",
             )}
             onPointerDown={() => {
               pauseUntilRef.current = Date.now() + TICKER_INTERACTION_PAUSE_MS;

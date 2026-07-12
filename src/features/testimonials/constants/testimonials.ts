@@ -13,42 +13,32 @@ export const testimonialsSectionTitle = "Testimonials";
 export const testimonialItems: TestimonialItem[] = [
   {
     id: 1,
-    title: "Sharp product thinking.",
+    title: "MoreTckts",
     comment:
-      "They understood the business problem quickly, translated it into a clear product direction, and kept every decision grounded in outcomes that actually mattered.",
-    personName: "Muhanned Ehab",
-    personRole: "Business Manager",
-    personImageSrc: "/images/ourTeam/muhannad2.png",
+      '"They have a rare ability to listen to complex requirements and distill them into reality. TheGeeX took the time to understand our needs, helping us map out a robust, scalable ecosystem. Their technical depth and product intuition were vital to our success."',
+    personName: "Amr Abdelmohsen",
+    personRole: "Founder of MoreTckts",
+    personImageSrc: "https://framerusercontent.com/images/t8YWTjd8oKk3gPQHJoETO1XO47c.png?width=380&height=282",
     rating: 5,
   },
   {
     id: 2,
-    title: "Reliable from strategy to launch.",
+    title: "TravX",
     comment:
-      "What stood out was the consistency. The team moved from discovery into execution without losing the original vision, and the delivery quality stayed high throughout.",
-    personName: "Sandra Atef",
-    personRole: "UI/UX Designer",
-    personImageSrc: "/images/ourTeam/sandra3.png",
+      '"TheGeeX completely transformed our brand identity and digital footprint. They built a cohesive, modern presence that truly reflects who we are as a company. Their strategic design approach made the entire rebranding process smooth and highly impactful."',
+    personName: "John Raouf",
+    personRole: "Operations Manager at TravX",
+    personImageSrc: "https://framerusercontent.com/images/DTMma6oEwsPuDXpBRmUovGh6G6g.png?width=380&height=282",
     rating: 5,
   },
   {
     id: 3,
-    title: "Fast, focused, and collaborative.",
+    title: "AstraVibe",
     comment:
-      "Communication was direct, timelines were respected, and feedback loops were smooth. It felt like working with a product partner, not just an external vendor.",
-    personName: "Sandy Maged",
-    personRole: "Project Manager",
-    personImageSrc: "/images/ourTeam/sandy7.png",
-    rating: 5,
-  },
-  {
-    id: 4,
-    title: "Execution with real attention to detail.",
-    comment:
-      "Design quality, interaction polish, and technical discipline were all visible in the final product. The experience felt considered at every layer.",
-    personName: "Ahmed Tawfik",
-    personRole: "Mobile Developer",
-    personImageSrc: "/images/ourTeam/ahmed9.png",
+      '"Working with TheGeeX on our website was an exceptional, hassle-free experience. They captured our vision perfectly and translated it into a stunning, high-performing platform. The project was delivered exactly as expected, completely on time, and without compromises."',
+    personName: "Tamer Zeitoun",
+    personRole: "Founder & Creative Director of AstraVibe",
+    personImageSrc: "https://framerusercontent.com/images/3msJQguOn6SgrnqmDsYfHaLv40A.png?width=640&height=800",
     rating: 5,
   },
 ];

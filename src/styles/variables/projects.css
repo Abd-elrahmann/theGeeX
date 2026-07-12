@@ -415,8 +415,9 @@
     --projects-card-category-text-size: 16px;
     --projects-card-category-line-height: 1.6;
     --projects-card-title-size: 40px;
-    --projects-detail-container-max-width: 1224px;
-    --projects-detail-padding-x: 0px;
+    --projects-detail-container-max-width: calc(100vw - 120px);
+    --projects-detail-padding-x: var(--service-detail-padding-x);
+    --projects-detail-description-max-width: calc(100vw - 280px);
     --projects-card-title-height: 54px;
     --projects-card-title-letter-spacing: 0px;
     --projects-card-content-max-width: 100%;
@@ -525,6 +526,9 @@
     --projects-card-category-text-size: 16px;
     --projects-card-category-line-height: 1.6;
     --projects-card-title-size: 40px;
+    --projects-detail-container-max-width: calc(100vw - 120px);
+    --projects-detail-padding-x: var(--service-detail-padding-x);
+    --projects-detail-description-max-width: calc(100vw - 280px);
     --projects-card-title-height: 54px;
     --projects-card-title-letter-spacing: 0px;
     --projects-card-arrow-size: 40px;

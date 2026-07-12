@@ -27,23 +27,23 @@ export default function SinglePageLayout({
     <>
       {children}
       <div
-        className="relative h-(--lets-talk-footer-reveal-height)"
+        className="relative min-h-(--lets-talk-footer-reveal-height)"
         style={{
           marginTop: isServiceDetailPage
             ? "calc(var(--lets-talk-margin-top) + 120px)"
             : "var(--lets-talk-margin-top)",
         }}
       >
-        <div className="sticky top-0 z-10">
+        <div className="sticky top-(--navbar-height) z-10 md:top-0">
           <LetsTalkSection revealFooterOnScroll />
         </div>
 
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 z-15 h-(--footer-overlap-bleed-height) bg-(--color-footer-surface)"
+          className="absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-15 h-(--footer-overlap-bleed-height) bg-(--color-footer-surface)"
         />
 
-        <div className="absolute inset-x-0 bottom-0 z-20">
+        <div className="absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-20">
           <SiteFooter revealFromPreviousSection />
         </div>
       </div>

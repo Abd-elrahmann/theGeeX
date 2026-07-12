@@ -71,6 +71,7 @@
   --services-content-offset-left: 0px;
   --services-content-column-width: 100%;
   --services-image-column-width: 100%;
+  --services-image-height: auto;
   --services-columns-gap: 12px;
   --services-nav-min-height: 120px;
   --services-nav-gap: 12px;
@@ -249,10 +250,11 @@
     --services-content-bullet-size: 4px;
     --services-grid-template-columns: minmax(0, 1.1fr) 347px minmax(0, 1fr);
     --services-columns-gap: 8px;
+    --services-image-column-width: 347px;
     --services-nav-column-min-width: 0px;
     --services-nav-item-padding-x: 24px;
     --services-nav-item-padding-y: 0px;
-    --services-nav-item-height: 70px;
+    --services-nav-item-height: 58px;
     --services-grid-min-height: calc(
       5 * var(--services-nav-item-height) + 4 * var(--services-nav-list-gap)
     );
@@ -283,6 +285,7 @@
     --services-content-description-line-height: 1.6;
     --services-image-radius: var(--services-content-radius);
     --services-image-max-width: 100%;
+    --services-image-height: var(--services-grid-height);
     --services-image-min-height: auto;
   }
 }

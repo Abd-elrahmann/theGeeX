@@ -15,6 +15,7 @@
   --footer-standalone-card-padding-top: 24px;
   --footer-top-row-gap: 24px;
   --footer-top-row-desktop-gap: 8px;
+  --footer-nav-edge-padding: 0px;
   --footer-link-column-gap: 12px;
   --footer-link-desktop-gap: 20px;
   --footer-link-size: 14px;
@@ -130,16 +131,18 @@
   :root {
     --footer-reveal-gap: calc(var(--footer-margin-top) + 180px);
     --footer-container-max-width: 1648px;
+    --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-card-radius: 64px;
-    --footer-card-padding-x: 40px;
+    --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
     --footer-standalone-card-padding-top: 32px;
     --footer-reveal-bottom-gap: 24px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
+    --footer-nav-edge-padding: 12px;
     --footer-link-column-gap: 20px;
     --footer-link-desktop-gap: 20px;
     --footer-newsletter-max-width: 680px;
@@ -155,36 +158,42 @@
 
 @media (min-width: 1440px) {
   :root {
+    --footer-reveal-gap: calc(var(--footer-margin-top) + 96px);
     --footer-container-max-width: 100%;
+    --footer-padding-x: 24px;
     --footer-padding-bottom: 56px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-card-radius: 64px;
-    --footer-card-padding-x: 40px;
+    --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-standalone-card-padding-top: 32px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
+    --footer-nav-edge-padding: 16px;
     --footer-newsletter-gap: 18px;
     --footer-newsletter-copy-gap: 10px;
     --footer-newsletter-max-width: 680px;
     --footer-newsletter-title-size: 52px;
-    --footer-logo-height: 240px;
+    --footer-rights-size: 15px;
+    --footer-logo-height: 340px;
   }
 }
 
 @media (min-width: 1920px) {
   :root {
     --footer-container-max-width: 1648px;
+    --footer-padding-x: 24px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-card-radius: 64px;
     --footer-padding-bottom: 64px;
-    --footer-card-padding-x: 40px;
+    --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
     --footer-standalone-card-padding-top: 32px;
     --footer-reveal-bottom-gap: 24px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
+    --footer-nav-edge-padding: 16px;
     --footer-link-column-gap: 20px;
     --footer-link-desktop-gap: 20px;
     --footer-newsletter-max-width: 680px;
@@ -200,25 +209,29 @@
 
 @media (min-width: 1440px) {
   :root {
-    --footer-container-max-width: 1648px;
+    --footer-reveal-gap: calc(var(--footer-margin-top) + 96px);
+    --footer-container-max-width: 100%;
+    --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-card-radius: 64px;
-    --footer-card-padding-x: 40px;
+    --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
     --footer-standalone-card-padding-top: 32px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
-    --footer-link-column-gap: 20px;
-    --footer-link-desktop-gap: 20px;
+    --footer-nav-edge-padding: 16px;
+    --footer-newsletter-gap: 18px;
+    --footer-newsletter-copy-gap: 10px;
     --footer-newsletter-max-width: 680px;
-    --footer-newsletter-title-size: 44px;
+    --footer-newsletter-title-size: 52px;
     --footer-newsletter-form-gap: 14px;
-    --footer-rights-margin-top: 180px;
+    --footer-rights-size: 15px;
+    --footer-rights-margin-top: 88px;
     --footer-rights-padding-top: 0px;
     --footer-rights-padding-bottom: 40px;
-    --footer-logo-margin-top: 180px;
-    --footer-logo-height: 300px;
+    --footer-logo-margin-top: 88px;
+    --footer-logo-height: 340px;
   }
 }

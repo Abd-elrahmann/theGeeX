@@ -84,13 +84,13 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
 
       <div className="mt-auto flex w-full items-start justify-between gap-(--testimonials-card-footer-gap) pt-(--testimonials-card-footer-margin-top) lg:items-center">
         <div className="flex min-w-0 flex-1 items-start gap-(--testimonials-person-gap) lg:items-center">
-          <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-end justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-top-padding) pb-(--testimonials-person-frame-padding)">
+          <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-center justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-padding) pb-(--testimonials-person-frame-padding)">
             <Image
               src={item.personImageSrc}
               alt={item.personName}
               width={72}
               height={72}
-              className="h-(--testimonials-person-image-size) w-(--testimonials-person-image-size) shrink-0 rounded-(--testimonials-person-image-radius) object-contain"
+              className="h-(--testimonials-person-image-size) w-(--testimonials-person-image-size) shrink-0 rounded-(--testimonials-person-image-radius) object-cover object-top"
             />
           </div>
 

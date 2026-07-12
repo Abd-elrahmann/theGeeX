@@ -60,6 +60,7 @@
 @media (min-width: 1024px) {
   :root {
     --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-x: 24px;
     --lets-talk-padding-y: 64px;
     --lets-talk-card-min-height: 560px;
     --lets-talk-card-radius: 56px;
@@ -80,8 +81,9 @@
 @media (min-width: 1440px) {
   :root {
     --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-x: 24px;
     --lets-talk-padding-y: 72px;
-    --lets-talk-card-min-height: 852px;
+    --lets-talk-card-min-height: 720px;
     --lets-talk-card-radius: 64px;
     --lets-talk-card-padding-y: 84px;
     --lets-talk-content-max-width: 100%;
@@ -89,12 +91,14 @@
     --lets-talk-copy-gap: 20px;
     --lets-talk-title-size: 60px;
     --lets-talk-button-height: 40px;
+    --lets-talk-footer-scroll-tail: 240px;
   }
 }
 
 @media (min-width: 1920px) {
   :root {
     --lets-talk-container-max-width: 100%;
+    --lets-talk-padding-x: 24px;
     --lets-talk-padding-y: 72px;
     --lets-talk-card-min-height: 620px;
     --lets-talk-card-radius: 64px;
@@ -110,13 +114,15 @@
 @media (min-width: 1440px) {
   :root {
     --lets-talk-container-max-width: 100%;
-    --lets-talk-padding-y: 64px;
-    --lets-talk-card-min-height: 852px;
-    --lets-talk-card-radius: 56px;
+    --lets-talk-padding-x: 24px;
+    --lets-talk-padding-y: 72px;
+    --lets-talk-card-min-height: 720px;
+    --lets-talk-card-radius: 64px;
     --lets-talk-card-padding-y: 84px;
     --lets-talk-content-max-width: 100%;
-    --lets-talk-content-gap: 36px;
-    --lets-talk-copy-gap: 18px;
-    --lets-talk-title-size: 52px;
+    --lets-talk-content-gap: 40px;
+    --lets-talk-copy-gap: 20px;
+    --lets-talk-title-size: 60px;
+    --lets-talk-footer-scroll-tail: 240px;
   }
 }

@@ -44,7 +44,7 @@ function ServiceNavItemContent({ service, index, isActive }: ServiceNavItemConte
           "text-(length:--services-nav-title-size) leading-(--services-nav-title-line-height)",
           "tracking-normal",
           isActive
-            ? "font-bold text-(--color-services-nav-active-text) [text-shadow:0_0_0.45px_currentColor,0_0_0.45px_currentColor]"
+            ? "font-medium text-(--color-services-nav-active-text)"
             : "font-semibold text-(--color-services-nav-inactive-text)",
         )}
       >

@@ -16,7 +16,7 @@ export default function BookAMeetingRoute() {
     <>
       <BookAMeetingPage />
       <div
-        className="relative mt-(--lets-talk-margin-top) h-[calc(var(--footer-card-min-height)+var(--book-a-meeting-footer-reveal-gap)+var(--footer-padding-bottom)+var(--footer-overlap-bleed-height))]"
+        className="relative mt-(--lets-talk-margin-top) min-h-[calc(var(--footer-card-min-height)+var(--book-a-meeting-footer-reveal-gap)+var(--footer-padding-bottom)+var(--footer-overlap-bleed-height))]"
         style={{
           ['--book-a-meeting-footer-reveal-gap' as string]: '72px',
         }}

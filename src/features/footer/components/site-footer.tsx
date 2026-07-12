@@ -143,7 +143,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
 
         <div
           className={cn(
-            "relative z-10 flex h-(--footer-card-min-height) w-full flex-col overflow-hidden rounded-(--footer-card-radius)",
+            "relative z-10 flex min-h-(--footer-card-min-height) w-full flex-col overflow-hidden rounded-(--footer-card-radius)",
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
             !revealFromPreviousSection && "pt-(--footer-standalone-card-padding-top)",
             "md:items-center md:overflow-clip md:pb-0",
@@ -167,7 +167,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
           >
             <nav
               aria-label="Footer navigation"
-              className="order-2 flex flex-col items-start gap-(--footer-link-column-gap) md:order-1 md:h-min md:w-px md:flex-1 md:justify-center md:gap-(--footer-link-desktop-gap) md:overflow-visible md:p-0"
+              className="order-2 flex flex-col items-start gap-(--footer-link-column-gap) md:order-1 md:h-min md:w-px md:flex-1 md:justify-center md:gap-(--footer-link-desktop-gap) md:overflow-visible md:px-(--footer-nav-edge-padding) md:py-0"
             >
               {footerNavLinks.map((link) => (
                 <Link
@@ -186,7 +186,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
 
             <nav
               aria-label="Footer social links"
-              className="order-3 flex flex-col items-start gap-(--footer-link-column-gap) md:order-2 md:h-min md:w-px md:flex-1 md:justify-center md:gap-(--footer-link-desktop-gap) md:overflow-visible md:p-0"
+              className="order-3 flex flex-col items-start gap-(--footer-link-column-gap) md:order-2 md:h-min md:w-px md:flex-1 md:justify-center md:gap-(--footer-link-desktop-gap) md:overflow-visible md:px-(--footer-nav-edge-padding) md:py-0"
             >
               {footerSocialLinks.map((link) => (
                 <Link

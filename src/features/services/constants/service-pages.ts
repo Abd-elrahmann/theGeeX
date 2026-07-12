@@ -157,7 +157,7 @@ export const servicePageConfigs = {
       "/images/Projects-Services/Product Strategy & Consultancy3.png",
     ],
     deliverTitle: "What We Deliver",
-    deliverMainTitle: "Everything You Need to Connect and Scale",
+    deliverMainTitle: "Everything You Need to Build with Confidence",
     deliverables: [
       {
         title: "Product Roadmapping",
@@ -226,7 +226,7 @@ export const servicePageConfigs = {
       "/images/Projects-Services/UIUX & Product Design3.png",
     ],
     deliverTitle: "What We Deliver",
-    deliverMainTitle: "Everything You Need to Connect and Scale",
+    deliverMainTitle: "Everything You Need to Build with Confidence",
     deliverables: [
       {
         title: "User Research & Wireframing",
@@ -290,7 +290,7 @@ export const servicePageConfigs = {
       "/images/Projects-Services/EFG2.png",
     ],
     deliverTitle: "What We Deliver",
-    deliverMainTitle: "Everything You Need to Connect and Scale",
+    deliverMainTitle: "Everything You Need to Build with Confidence",
     deliverables: [
       {
         title: "Scalable Backend Architecture",
@@ -354,7 +354,7 @@ export const servicePageConfigs = {
       "/images/Projects-Services/travx1.png",
     ],
     deliverTitle: "What We Deliver",
-    deliverMainTitle: "Everything You Need to Connect and Scale",
+    deliverMainTitle: "Everything You Need to Build with Confidence",
     deliverables: [
       {
         title: "High-Performance Web Apps",
@@ -418,7 +418,7 @@ export const servicePageConfigs = {
       "/images/Projects-Services/UIUX & Product Design3.png",
     ],
     deliverTitle: "What We Deliver",
-    deliverMainTitle: "Everything You Need to Connect and Scale",
+    deliverMainTitle: "Everything You Need to Build with Confidence",
     deliverables: [
       {
         title: "Custom API Development",

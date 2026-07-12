@@ -13,6 +13,8 @@ export function ProjectDetailDescriptionSection({
 
   const productionCalSansFontStack =
     '"Cal Sans", CalSansText, "CalSansText Fallback", ui-sans-serif, sans-serif';
+  const projectsDetailDescriptionMaxWidth = "var(--projects-detail-description-max-width)";
+  const projectsDetailDescriptionPadding = "0 var(--projects-detail-padding-x)";
 
   return (
     <div className="mt-28">
@@ -31,8 +33,8 @@ export function ProjectDetailDescriptionSection({
         speed={1.1}
         alignY="Center"
         startPaddingVh={12}
-        maxWidth={1080}
-        paddingVw={4}
+        maxWidth={projectsDetailDescriptionMaxWidth}
+        padding={projectsDetailDescriptionPadding}
         wordGapEm={0}
         canvasPreview="Full"
         ghostEnabled

@@ -268,8 +268,8 @@ export const projects: ProjectItem[] = [
     imagePosition: "62% 75%",
     detailImage: "/images/Projects-Services/Moretickts2.png",
     detailGallery: [
-      "/images/Projects-Services/Moretickts.png",
-      "/images/Projects-Services/Moretickts2.png",
+      "/images/Projects-Services/moretickts_mock.png",
+      "/images/Projects-Services/Product Strategy & Consultancy1.png",
       "/images/Projects-Services/moretickts3.png",
       "/images/Projects-Services/moretickts 2.png",
       "/images/Projects-Services/moretickts(1).png",
