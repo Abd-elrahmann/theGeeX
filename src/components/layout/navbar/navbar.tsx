@@ -95,6 +95,14 @@ export function Navbar() {
         "fixed inset-x-0 top-0 z-(--navbar-z-index) box-border h-(--navbar-height) w-full max-w-full",
         isMobileMenuOpen ? "overflow-visible" : "overflow-hidden lg:overflow-visible",
       )}
+      style={
+        isDesktop && isRoundedNav
+          ? {
+              height:
+                "calc(var(--navbar-height) + var(--navbar-rounded-offset-top) + 2 * var(--navbar-rounded-padding-y))",
+            }
+          : undefined
+      }
     >
       <div
         ref={animatedRef}
