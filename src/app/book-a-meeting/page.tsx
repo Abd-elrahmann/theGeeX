@@ -23,7 +23,7 @@ export default function BookAMeetingRoute() {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-15 h-(--footer-overlap-bleed-height) bg-(--color-footer-surface)"
+          className="absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-15 h-(--footer-reveal-cover-height) bg-(--color-footer-surface)"
         />
 
         <div className="absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-20">

@@ -48,6 +48,11 @@ export interface ServiceDetail {
   smallTitle: string;
   mainTitle: string;
   mobileMainTitle?: string;
+  heroImageFit?: "cover" | "contain";
+  heroImageFitDesktopLarge?: "cover" | "contain";
+  heroImageObjectPosition?: string;
+  heroImageObjectPositionDesktopLarge?: string;
+  heroImageMaxWidthDesktopLarge?: string;
   categories: string[];
   overviewTitle: string;
   overviewDescription: string;
@@ -216,6 +221,11 @@ export const servicePageConfigs = {
     assetFolder: "UI-UX & Product Design",
     smallTitle: "UI/UX & Product Design",
     mainTitle: "Digital Experiences\nEngineered with Intent.",
+    heroImageFit: "cover",
+    heroImageFitDesktopLarge: "cover",
+    heroImageObjectPosition: "center 68%",
+    heroImageObjectPositionDesktopLarge: "center 82%",
+    heroImageMaxWidthDesktopLarge: "100%",
     categories: ["User Research", "Interface Design", "User Experience Design", "Interactive Prototyping"],
     overviewTitle: "Designing Experiences People Love to Use",
     overviewDescription:

@@ -41,9 +41,9 @@ export function BlogDetailRelatedSection({ article }: BlogDetailRelatedSectionPr
             blog={blog}
             articleClassName="h-full md:max-w-none md:grid-cols-[168px_minmax(0,1fr)]"
             dateClassName="self-center text-center md:self-start md:text-left"
-            footerClassName="pt-0"
+            footerClassName="pt-0 lg:mt-auto"
             imageClassName="h-75 md:h-75 md:w-42"
-            metaContainerClassName="order-3 mt-auto"
+            metaContainerClassName="order-3 mt-3 lg:mt-2 lg:flex-1"
             typesClassName="order-2 mt-4"
             titleClassName="order-1 text-[20px] leading-[1.35] md:text-[24px] md:leading-[1.4]"
             maxTypes={1}

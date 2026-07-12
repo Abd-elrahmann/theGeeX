@@ -19,9 +19,10 @@ interface BlogCardProps {
   titleClassName?: string;
   maxTypes?: number;
   dateClassName?: string;
+  authorImageAfterText?: boolean;
 }
 
-export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, typeChipClassName, titleClassName, maxTypes }: BlogCardProps) {
+export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, typeChipClassName, titleClassName, maxTypes, authorImageAfterText = false }: BlogCardProps) {
   const visibleTypes = typeof maxTypes === "number" ? blog.types.slice(0, maxTypes) : blog.types;
 
   return (
@@ -56,7 +57,7 @@ export function BlogCard({ blog, articleClassName, dateClassName, footerClassNam
           {blog.title}
         </h3>
 
-        <BlogCardMeta date={blog.date} author={blog.author} dateClassName={dateClassName} footerClassName={footerClassName} metaContainerClassName={metaContainerClassName} />
+        <BlogCardMeta date={blog.date} author={blog.author} dateClassName={dateClassName} footerClassName={footerClassName} metaContainerClassName={metaContainerClassName} authorImageAfterText={authorImageAfterText} />
       </div>
     </Link>
   );

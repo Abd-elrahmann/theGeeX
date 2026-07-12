@@ -28,7 +28,7 @@ export function StaticProjectCard({
 
   return (
     <article
-      className={`relative isolate flex h-(--service-detail-project-card-height) w-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius) bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground) ${hasShadow ? "shadow-(--projects-card-shadow)" : "shadow-none"}`}
+      className={`relative isolate mx-auto flex h-(--service-detail-project-card-height) w-full max-w-(--projects-card-max-width) min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius) bg-(--project-card-background) px-(--projects-card-padding-inline) py-(--projects-card-padding-block) text-(--color-project-card-foreground) ${hasShadow ? "shadow-(--projects-card-shadow)" : "shadow-none"}`}
       style={{ "--project-card-background": project.background } as StaticProjectCardStyle}
       onMouseEnter={() => {
         setIsCardHovered(true);

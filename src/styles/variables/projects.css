@@ -26,7 +26,10 @@
   --projects-title-z-index: 20;
   --projects-card-stack-z-index: 10;
   --projects-card-radius: 8px;
+  --projects-card-max-width: 100%;
   --projects-card-padding: 24px;
+  --projects-card-padding-block: 24px;
+  --projects-card-padding-inline: 24px;
   --color-project-card-border: rgb(255 255 255 / 0.1);
   --projects-card-border-width: 1px;
   --color-project-card-shadow: rgb(0 0 0 / 0.05);
@@ -210,6 +213,8 @@
     --projects-card-stack-offset-step: 40px;
     --projects-card-outer-padding: 12px;
     --projects-card-padding: 24px;
+    --projects-card-padding-block: 24px;
+    --projects-card-padding-inline: 24px;
     --projects-card-header-height: 32px;
     --projects-card-category-padding-x: 8px;
     --projects-card-category-padding-y: 4px;
@@ -273,6 +278,8 @@
     --projects-page-card-description-size: 13px;
     --projects-page-card-description-line-height: 1.45;
     --projects-card-padding: 24px;
+    --projects-card-padding-block: 24px;
+    --projects-card-padding-inline: 24px;
     --projects-card-header-height: 32px;
     --projects-card-category-padding-x: 8px;
     --projects-card-category-padding-y: 4px;
@@ -367,6 +374,8 @@
     --projects-title-gap: 24px;
     --projects-card-height: 820px;
     --projects-card-padding: 24px;
+    --projects-card-padding-block: 24px;
+    --projects-card-padding-inline: 24px;
     --projects-card-header-height: 48px;
     --projects-card-index-size: 16px;
     --projects-card-category-padding-x: 16px;
@@ -407,6 +416,8 @@
     --projects-card-stack-offset-step: 84px;
     --projects-card-outer-padding: 28px;
     --projects-card-padding: 24px;
+    --projects-card-padding-block: 24px;
+    --projects-card-padding-inline: 36px;
     --projects-card-header-height: 48px;
     --projects-card-index-size: 16px;
     --projects-card-category-padding-x: 16px;
@@ -474,6 +485,8 @@
     --projects-card-stack-offset-step: 72px;
     --projects-card-outer-padding: 36px;
     --projects-card-padding: 24px;
+    --projects-card-padding-block: 24px;
+    --projects-card-padding-inline: 40px;
     --projects-card-header-height: 52px;
     --projects-card-index-size: 18px;
     --projects-card-category-padding-x: 16px;
@@ -516,8 +529,11 @@
     --projects-section-exit-vh: 18;
     --projects-card-height: 820px;
     --projects-card-stack-offset-step: 72px;
-    --projects-card-outer-padding: 16px;
+    --projects-card-outer-padding: 120px;
+    --projects-card-max-width: 100%;
     --projects-card-padding: 24px;
+    --projects-card-padding-block: 24px;
+    --projects-card-padding-inline: 36px;
     --projects-card-header-height: 40px;
     --projects-card-index-size: 14px;
     --projects-card-category-padding-x: 16px;

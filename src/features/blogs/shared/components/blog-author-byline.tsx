@@ -15,6 +15,7 @@ interface BlogAuthorBylineProps {
   labelClassName?: string;
   nameClassName?: string;
   label?: string;
+  imageAfterText?: boolean;
 }
 
 export function BlogAuthorByline({
@@ -25,23 +26,41 @@ export function BlogAuthorByline({
   labelClassName,
   nameClassName,
   label = "Written by",
+  imageAfterText = false,
 }: BlogAuthorBylineProps) {
-  return (
-    <div className={containerClassName}>
-      <div className={cn("relative overflow-hidden rounded-full", imageWrapperClassName)}>
-        <Image
-          src={author.avatar}
-          alt={author.name}
-          fill
-          sizes="18px"
-          className="object-cover object-top"
-        />
-      </div>
+  const authorImage = (
+    <div className={cn("relative overflow-hidden rounded-full", imageWrapperClassName)}>
+      <Image
+        src={author.avatar}
+        alt={author.name}
+        fill
+        sizes="18px"
+        className="object-cover object-top"
+      />
+    </div>
+  );
 
-      <div className={textContainerClassName}>
+  const authorText = (
+    <div className={textContainerClassName}>
+      <p className={cn(blogMetaEyebrowClassName, labelClassName)}>{label}</p>
+      <p className={cn(blogAuthorNameClassName, nameClassName)}>{author.name}</p>
+    </div>
+  );
+
+  if (imageAfterText) {
+    return (
+      <div className={containerClassName}>
         <p className={cn(blogMetaEyebrowClassName, labelClassName)}>{label}</p>
+        {authorImage}
         <p className={cn(blogAuthorNameClassName, nameClassName)}>{author.name}</p>
       </div>
+    );
+  }
+
+  return (
+    <div className={containerClassName}>
+      {authorImage}
+      {authorText}
     </div>
   );
 }

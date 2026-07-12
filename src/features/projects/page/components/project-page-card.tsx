@@ -30,7 +30,7 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
   return (
     <article
       data-project-cursor-zone=""
-      className="relative isolate flex h-(--projects-page-card-height) w-full min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius) bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground)"
+      className="relative isolate mx-auto flex h-(--projects-page-card-height) w-full max-w-(--projects-card-max-width) min-w-0 flex-col overflow-hidden rounded-(--projects-card-radius) bg-(--project-card-background) px-(--projects-card-padding-inline) py-(--projects-card-padding-block) text-(--color-project-card-foreground)"
       style={{ "--project-card-background": project.background } as ProjectPageCardStyle}
       onMouseEnter={() => {
         setIsCardHovered(true);

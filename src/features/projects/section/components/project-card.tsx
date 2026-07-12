@@ -245,7 +245,7 @@ export function ProjectCard({
       data-project-card=""
       data-project-cursor-zone=""
       className={cn(
-        "pointer-events-auto absolute inset-x-0 top-0 isolate h-(--projects-card-height) w-full min-w-0 origin-top",
+        "pointer-events-auto absolute inset-x-0 top-0 isolate mx-auto h-(--projects-card-height) w-full max-w-(--projects-card-max-width) min-w-0 origin-top",
         "transform-gpu will-change-transform backface-hidden",
       )}
       style={articleStyle}
@@ -260,7 +260,7 @@ export function ProjectCard({
       <motion.div
         className={cn(
           "relative box-border flex h-full min-w-0 flex-col items-start justify-start overflow-hidden rounded-(--projects-card-radius) border-solid",
-          "bg-(--project-card-background) p-(--projects-card-padding) text-(--color-project-card-foreground)",
+          "bg-(--project-card-background) px-(--projects-card-padding-inline) py-(--projects-card-padding-block) text-(--color-project-card-foreground)",
           "shadow-(--projects-card-shadow) transform-gpu will-change-transform backface-hidden",
         )}
         style={{

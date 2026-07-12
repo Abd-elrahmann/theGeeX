@@ -8,6 +8,7 @@ interface BlogCardMetaProps {
   dateClassName?: string;
   footerClassName?: string;
   metaContainerClassName?: string;
+  authorImageAfterText?: boolean;
 }
 
 export function BlogCardMeta({
@@ -16,6 +17,7 @@ export function BlogCardMeta({
   dateClassName,
   footerClassName,
   metaContainerClassName,
+  authorImageAfterText = false,
 }: BlogCardMetaProps) {
   return (
     <div className={cn("order-3 flex w-full flex-col items-center md:order-0 md:items-start", metaContainerClassName)}>
@@ -43,6 +45,7 @@ export function BlogCardMeta({
           textContainerClassName="contents"
           labelClassName="whitespace-pre !text-(length:--blogs-card-meta-size) !leading-(--blogs-card-meta-line-height) normal-case !tracking-normal text-(--color-blogs-card-meta)"
           nameClassName="whitespace-pre !text-(length:--blogs-card-meta-size) !leading-(--blogs-card-meta-line-height) !font-normal text-(--color-blogs-card-meta)"
+          imageAfterText={authorImageAfterText}
         />
       </div>
     </div>

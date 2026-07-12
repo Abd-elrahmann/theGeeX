@@ -9,6 +9,7 @@
   --footer-card-min-height: var(--lets-talk-card-min-height);
   --footer-card-radius: 34px;
   --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
+  --footer-reveal-cover-height: var(--footer-overlap-bleed-height);
   --footer-card-padding-x: 28px;
   --footer-card-padding-top: 0px;
   --footer-card-padding-bottom: 0px;
@@ -164,6 +165,7 @@
     --footer-padding-bottom: 56px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-card-radius: 64px;
+    --footer-reveal-cover-height: calc(var(--footer-card-radius) + 120px);
     --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-standalone-card-padding-top: 32px;
@@ -215,6 +217,7 @@
     --footer-padding-bottom: 64px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-card-radius: 64px;
+    --footer-reveal-cover-height: calc(var(--footer-card-radius) + 120px);
     --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
