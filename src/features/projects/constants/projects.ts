@@ -402,10 +402,10 @@ export const projects: ProjectItem[] = [
     imagePosition: "58% 46%",
     detailImage: "/images/projects/zamalkawy.png",
     detailGallery: [
-      "/images/Projects-Services/zamalek.png",
-      "/images/Projects-Services/Product Strategy & Consultancy3.png",
       "/images/Projects-Services/zamalkawy (1).png",
-      "/images/projects/zamalkawy.png",
+      "/images/Projects-Services/Product Strategy & Consultancy3.png",
+      "/images/Projects-Services/zamalek.png",
+      "/images/Projects-Services/gamehub.png",
       "/images/Projects-Services/zamalek2.png",
       "/images/Projects-Services/UIUX & Product Design3.png",
     ],
