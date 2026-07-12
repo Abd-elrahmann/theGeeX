@@ -145,6 +145,10 @@ export function useStorytellingScroll({
           mobileBackgroundEnabled
             ? readRootCssNumber("--storytelling-mobile-background-extension", 0)
             : 0;
+        const getMobileProgressStartOffset = () =>
+          readRootCssNumber("--storytelling-mobile-progress-start-offset", 0);
+        const getMobileBackgroundStartOffset = () =>
+          readRootCssNumber("--storytelling-mobile-background-start-offset", 0);
         const getMobileBackgroundFadeDistance = () =>
           Math.max(
             readRootCssNumber("--storytelling-mobile-background-fade-distance", 240),
@@ -198,7 +202,7 @@ export function useStorytellingScroll({
           !mobileBackgroundEnabled && backgroundEnabled
             ? ScrollTrigger.create({
                 trigger: stageElement,
-                start: "top 55%",
+              start: () => `top top+=${getMobileBackgroundStartOffset()}`,
                 endTrigger: containerElement,
                 end: "bottom top",
                 invalidateOnRefresh: true,
@@ -220,7 +224,7 @@ export function useStorytellingScroll({
                 fastScrollEnd: false,
                 refreshPriority: -1,
               }),
-          start: "top top",
+          start: () => `top top+=${getMobileProgressStartOffset()}`,
           end: () => {
             return `+=${getMobileProgressDistance() + getMobileBackgroundExtension()}`;
           },

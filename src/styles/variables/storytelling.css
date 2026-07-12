@@ -21,6 +21,8 @@
   --storytelling-scroll-offset: 300;
   --storytelling-mobile-scroll-distance: 1800px;
   --storytelling-mobile-scroll-offset: 240px;
+  --storytelling-mobile-progress-start-offset: 48px;
+  --storytelling-mobile-background-start-offset: 120px;
   --storytelling-mobile-background-extension: 120px;
   --storytelling-mobile-background-fade-distance: 220px;
   --storytelling-mobile-path-bleed-y: 120px;

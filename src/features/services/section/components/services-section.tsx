@@ -284,6 +284,8 @@ export function ServicesSection() {
       const pinClearance =
         parseFloat(rootStyles.getPropertyValue("--services-mobile-pin-clearance")) || 0;
       const scrollStepVh = parseFloat(rootStyles.getPropertyValue("--services-scroll-step-vh")) || 100;
+      const mobileScrollTailVh =
+        parseFloat(rootStyles.getPropertyValue("--services-mobile-scroll-tail-vh")) || 0;
       const viewportHeight = window.innerHeight;
       const titleHeight = mobileTitleRef.current?.offsetHeight ?? 0;
       const contentHeight = Math.max(
@@ -307,7 +309,8 @@ export function ServicesSection() {
         imageHeight,
         scrollHeight:
           stageHeight +
-          Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100),
+          Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100) +
+          viewportHeight * (mobileScrollTailVh / 100),
       });
     };
 

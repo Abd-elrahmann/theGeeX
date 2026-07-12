@@ -42,6 +42,7 @@
   --services-stage-bottom-padding: 32px;
   --services-mobile-pin-clearance: 0px;
   --services-scroll-step-vh: 60;
+  --services-mobile-scroll-tail-vh: 42;
   --services-pin-start-offset: 0px;
   --services-ai-cover-buffer: 900px;
   --services-sticky-top: 0px;
