@@ -88,7 +88,7 @@ export function ServiceImage({
   }
 
   return (
-    <div className="relative h-(--services-image-height) min-h-(--services-image-min-height) w-(--services-image-column-width) max-w-full overflow-hidden rounded-(--services-image-radius)">
+    <div className="relative h-full min-h-full w-full max-w-full overflow-hidden rounded-(--services-image-radius)">
       <div
         className={cn(
           "relative h-full min-h-full w-full min-w-0",

@@ -49,7 +49,7 @@ export function ServiceImageSlidePanel({
   }
 
   return (
-    <div className={cn("relative h-full w-full overflow-hidden", className)}>
+    <div className={cn("relative h-full w-full overflow-hidden rounded-(--services-image-radius)", className)}>
       {services.map((service, index) => {
         const isActive = index === activeIndex;
         const isTransitioning = index === previousActiveIndex && previousActiveIndex !== activeIndex;
