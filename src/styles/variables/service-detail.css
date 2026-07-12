@@ -27,10 +27,9 @@
   --service-detail-hero-image-fit: cover;
   --service-detail-hero-image-fit-desktop-large: var(--service-detail-hero-image-fit);
   --service-detail-hero-image-fit-current: var(--service-detail-hero-image-fit);
-  --service-detail-hero-image-object-position: center 68%;
+  --service-detail-hero-image-object-position: center 72%;
   --service-detail-hero-image-object-position-desktop-large: var(--service-detail-hero-image-object-position);
   --service-detail-hero-image-object-position-current: var(--service-detail-hero-image-object-position);
-  --service-detail-hero-image-max-width-current: 100%;
   --service-detail-image-radius: 24px;
   --service-detail-section-padding-y: 64px;
   --service-detail-section-gap: 32px;
@@ -250,43 +249,10 @@
     --service-detail-hero-image-height: 500px;
     --service-detail-hero-image-aspect-ratio: auto;
     --service-detail-hero-image-fit-current: var(--service-detail-hero-image-fit-desktop-large);
+    --service-detail-hero-image-object-position-desktop-large: center 50%;
     --service-detail-hero-image-object-position-current: var(--service-detail-hero-image-object-position-desktop-large);
-    --service-detail-hero-image-max-width-current: var(--service-detail-hero-image-max-width-desktop-large, 100%);
     --service-detail-faqs-container-max-width: min(1400px, calc(100vw - 80px));
     --service-detail-faqs-section-gap: 72px;
     --service-detail-faq-card-max-width: 720px;
-  }
-
-  [data-service-slug="ui-ux-product-design"] .service-detail-hero-image {
-    object-fit: cover !important;
-    object-position: center 52% !important;
-  }
-
-    [data-service-slug="product-strategy-consultancy"] .service-detail-hero-image {
-    object-fit: cover !important;
-    object-position: center 55% !important;
-  }
-
-
-    [data-service-slug="frontend-mobile-app-development"] .service-detail-hero-image {
-    object-fit: cover !important;
-    object-position: center 42% !important;
-  }
-
-  [data-service-slug="backend-cloud-engineering"] .service-detail-hero-image {
-    object-fit: cover !important;
-    object-position: center 52% !important;
-  }
-
-  [data-service-slug="api-design-ecosystem-integration"] .service-detail-hero-image {
-    object-fit: cover !important;
-    object-position: center 50% !important;
-  }
-
-
-  [data-service-slug="ui-ux-product-design"] {
-    max-width: calc(100vw - 100px) !important;
-    padding-left: 45px !important;
-    padding-right: 45px !important;
   }
 }

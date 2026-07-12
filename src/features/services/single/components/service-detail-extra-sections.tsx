@@ -53,7 +53,7 @@ export function ServiceDetailExtraSections({
         <div className="grid w-full grid-cols-1 gap-(--service-detail-overview-images-gap) sm:grid-cols-3">
           {section.images.map((image, index) => (
             <div key={image} className="relative h-(--service-detail-overview-image-height) w-full overflow-hidden rounded-(--service-detail-overview-image-radius) bg-surface">
-              <Image src={image} alt={`${section.title} ${index + 1}`} fill className="object-cover" sizes="(min-width: 1024px) 360px, 100vw" />
+                <Image src={image} alt={`${section.title} ${index + 1}`} fill className="object-cover object-center" sizes="(min-width: 1440px) 390px, (min-width: 1024px) 350px, 100vw" />
             </div>
           ))}
         </div>

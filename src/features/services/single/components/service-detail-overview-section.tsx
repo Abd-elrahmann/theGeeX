@@ -13,9 +13,13 @@ export function ServiceDetailOverviewSection({
 }: ServiceDetailOverviewSectionProps) {
   return (
     <section className="mx-auto grid w-full max-w-(--service-detail-container-max-width) grid-cols-1 gap-(--service-detail-section-gap) px-(--service-detail-padding-x) py-(--service-detail-section-padding-y)">
-      <ServiceDetailSectionHeading label="Overview" title={service.page.overviewTitle} />
+      <ServiceDetailSectionHeading
+        label="Overview"
+        title={service.page.overviewTitle}
+        titleClassName="text-[calc(var(--service-detail-section-title-size)-2px)]"
+      />
 
-      <div className="grid w-full grid-cols-1 gap-(--service-detail-overview-grid-gap) md:grid-cols-2 md:items-start">
+      <div className="grid w-full grid-cols-1 gap-(--service-detail-overview-grid-gap) md:grid-cols-2 md:items-start lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
         <div className="grid w-full grid-cols-3 gap-(--service-detail-overview-images-gap)">
           {service.page.overviewImages.map((image, index) => (
             <motion.div
@@ -30,8 +34,8 @@ export function ServiceDetailOverviewSection({
                 src={image}
                 alt={`${service.navTitle} overview ${index + 1}`}
                 fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 180px, 33vw"
+                  className="object-cover object-center"
+                sizes="(min-width: 1440px) 228px, (min-width: 1024px) 200px, 33vw"
               />
             </motion.div>
           ))}

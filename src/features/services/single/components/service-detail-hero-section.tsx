@@ -12,27 +12,13 @@ interface ServiceDetailHeroSectionProps {
 export function ServiceDetailHeroSection({
   service,
 }: ServiceDetailHeroSectionProps) {
-  const heroImageFit = service.page.heroImageFit ?? "cover";
-  const heroImageFitDesktopLarge = service.page.heroImageFitDesktopLarge ?? heroImageFit;
-  const heroImageObjectPosition = service.page.heroImageObjectPosition ?? "center 68%";
-  const heroImageObjectPositionDesktopLarge =
-    service.page.heroImageObjectPositionDesktopLarge ?? heroImageObjectPosition;
-  const heroImageMaxWidthDesktopLarge = service.page.heroImageMaxWidthDesktopLarge ?? "100%";
   const heroImageStyle = {
     objectFit: "var(--service-detail-hero-image-fit-current)" as CSSProperties["objectFit"],
     objectPosition: "var(--service-detail-hero-image-object-position-current)",
-    "--service-detail-hero-image-fit": heroImageFit,
-    "--service-detail-hero-image-fit-desktop-large": heroImageFitDesktopLarge,
-    "--service-detail-hero-image-object-position": heroImageObjectPosition,
-    "--service-detail-hero-image-object-position-desktop-large":
-      heroImageObjectPositionDesktopLarge,
   } as CSSProperties;
 
   return (
-    <section
-      data-service-slug={service.slug}
-      className="mx-auto flex w-full max-w-(--service-detail-container-max-width) flex-col items-start gap-(--service-detail-hero-gap) px-(--service-detail-padding-x) pt-(--service-detail-hero-padding-top)"
-    >
+    <section className="mx-auto flex w-full max-w-(--service-detail-container-max-width) flex-col items-start gap-(--service-detail-hero-gap) px-(--service-detail-padding-x) pt-(--service-detail-hero-padding-top)">
       <DetailBreadcrumb
         items={[
           { label: "Home", href: "/" },
@@ -74,9 +60,6 @@ export function ServiceDetailHeroSection({
           style={{
             height: "var(--service-detail-hero-image-height)",
             aspectRatio: "var(--service-detail-hero-image-aspect-ratio)",
-            maxWidth: "var(--service-detail-hero-image-max-width-current)",
-            ["--service-detail-hero-image-max-width-desktop-large" as string]:
-              heroImageMaxWidthDesktopLarge,
           }}
         >
           <Image
@@ -84,9 +67,10 @@ export function ServiceDetailHeroSection({
             alt={service.imageAlt}
             fill
             priority
+            unoptimized
             className="service-detail-hero-image"
             style={heroImageStyle}
-            sizes="(min-width: 1440px) 1024px, (min-width: 1024px) calc(100vw - 80px), 100vw"
+            sizes="(min-width: 1024px) calc(100vw - 80px), 100vw"
           />
         </div>
       </div>

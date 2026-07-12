@@ -48,11 +48,6 @@ export interface ServiceDetail {
   smallTitle: string;
   mainTitle: string;
   mobileMainTitle?: string;
-  heroImageFit?: "cover" | "contain";
-  heroImageFitDesktopLarge?: "cover" | "contain";
-  heroImageObjectPosition?: string;
-  heroImageObjectPositionDesktopLarge?: string;
-  heroImageMaxWidthDesktopLarge?: string;
   categories: string[];
   overviewTitle: string;
   overviewDescription: string;
@@ -221,11 +216,6 @@ export const servicePageConfigs = {
     assetFolder: "UI-UX & Product Design",
     smallTitle: "UI/UX & Product Design",
     mainTitle: "Digital Experiences\nEngineered with Intent.",
-    heroImageFit: "cover",
-    heroImageFitDesktopLarge: "cover",
-    heroImageObjectPosition: "center 68%",
-    heroImageObjectPositionDesktopLarge: "center 82%",
-    heroImageMaxWidthDesktopLarge: "100%",
     categories: ["User Research", "Interface Design", "User Experience Design", "Interactive Prototyping"],
     overviewTitle: "Designing Experiences People Love to Use",
     overviewDescription:
@@ -306,13 +296,13 @@ export const servicePageConfigs = {
         title: "Scalable Backend Architecture",
         description:
           "Custom, clean-coded server applications leveraging high-performance frameworks (Laravel/PHP, Node.js).",
-        imageFile: "Cloud Infrastructure Management.png",
+        imageFile: "Scalable Backend Architecture.png",
       },
       {
         title: "Cloud Infrastructure Management",
         description:
           "Enterprise-grade cloud deployment, monitoring, and auto-scaling automated via AWS.",
-        imageFile: "Database Design & Optimization.png",
+        imageFile: "Cloud Infrastructure Management.png",
       },
       {
         title: "Database Design & Optimization",
@@ -370,7 +360,7 @@ export const servicePageConfigs = {
         title: "High-Performance Web Apps",
         description:
           "Clean, highly interactive frontends built with modern JavaScript frameworks (React, Next.js).",
-        imageFile: "High-Performance Web Apps.png",
+        imageFile: "Performance Optimization.png",
       },
       {
         title: "Native & Cross-Platform Mobile Apps",
@@ -382,7 +372,7 @@ export const servicePageConfigs = {
         title: "Performance Optimization",
         description:
           "Compressing load times, streamlining rendering, and optimizing for flawless SEO and Core Web Vitals.",
-        imageFile: "Performance Optimization.png",
+        imageFile: "High-Performance Web Apps.png",
       },
     ],
     outcomes: {
