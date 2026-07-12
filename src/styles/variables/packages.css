@@ -88,6 +88,7 @@
   --packages-card-feature-size: 14px;
   --packages-card-feature-line-height: 18px;
   --color-packages-card-bg: rgb(255 255 255 / 0.72);
+  --color-packages-card-border: rgb(44 49 52 / 0.12);
   --color-packages-card-featured-border: rgb(10 171 200 / 0.18);
   --color-packages-card-title: #2c3134;
   --color-packages-card-chip-bg: rgb(217 217 217 / 0.1);
@@ -162,12 +163,6 @@
 @media (max-width: 799.98px) {
   :root {
     --packages-detail-breadcrumb-size: 12px;
-  }
-}
-
-@media (min-width: 800px) {
-  :root {
-    --color-packages-section-bg: var(--color-background);
   }
 }
 

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
-import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
+import { POINTER_FINE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { isPointInsideElement } from "@/features/services/lib/services-cursor-zone";
 
@@ -16,16 +16,15 @@ import { StorytellingBackground } from "./storytelling-background";
 import { StorytellingContent } from "./storytelling-content";
 import { StorytellingPath } from "./storytelling-path";
 
-const STORYTELLING_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
-
 export function StorytellingSection() {
   const isDesktop = useDesktopBreakpoint();
-  const isTablet = useMediaQuery(STORYTELLING_TABLET_MEDIA_QUERY);
+  const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
+  const isMobile = !isDesktop && !isTablet;
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const usesDesktopVisualLayout = isDesktop || isTablet;
   const layoutMode = isDesktop ? "desktop" : isTablet ? "tablet" : "mobile";
   const [isLayoutReady, setIsLayoutReady] = useState(false);
-  const isBackgroundActiveRef = useRef(false);
+  const isDesktopBackgroundActiveRef = useRef(false);
   const lastPointerRef = useRef({ x: -1, y: -1 });
   usePreloadStorytellingImages(storytellingItems);
   const {
@@ -43,8 +42,8 @@ export function StorytellingSection() {
       itemCount: storytellingItems.length,
       layoutMode,
       pinEnabled: isLayoutReady,
-      backgroundEnabled: false,
-      mobileBackgroundEnabled: false,
+      backgroundEnabled: isMobile,
+      mobileBackgroundEnabled: !isMobile,
     });
 
   useEffect(() => {
@@ -58,37 +57,32 @@ export function StorytellingSection() {
   }, []);
 
   useEffect(() => {
-    if (!isLayoutReady) {
+    if (!isLayoutReady || !isDesktop) {
       return;
     }
 
     let frameId = 0;
     const backgroundElement = backgroundRef.current;
 
-    const applyBackgroundState = (isActive: boolean) => {
-      if (isBackgroundActiveRef.current === isActive) {
+    const applyDesktopBackgroundState = (isActive: boolean) => {
+      if (isDesktopBackgroundActiveRef.current === isActive) {
         return;
       }
 
-      isBackgroundActiveRef.current = isActive;
+      isDesktopBackgroundActiveRef.current = isActive;
 
       if (backgroundElement) {
-        backgroundElement.style.opacity = isDesktop && isActive ? "1" : "0";
+        backgroundElement.style.opacity = isActive ? "1" : "0";
       }
-
-      document.documentElement.style.setProperty(
-        "--storytelling-page-background-opacity",
-        !isDesktop && isActive ? "1" : "0",
-      );
     };
 
-    const syncBackgroundState = () => {
+    const syncDesktopBackgroundState = () => {
       frameId = 0;
 
       const triggerElement = stageRef.current ?? containerRef.current;
 
       if (!triggerElement) {
-        applyBackgroundState(false);
+        applyDesktopBackgroundState(false);
         return;
       }
 
@@ -96,7 +90,7 @@ export function StorytellingSection() {
       const viewportCenter = window.innerHeight / 2;
       const isActive = rect.top <= viewportCenter && rect.bottom >= viewportCenter;
 
-      applyBackgroundState(isActive);
+      applyDesktopBackgroundState(isActive);
     };
 
     const requestSync = () => {
@@ -104,7 +98,7 @@ export function StorytellingSection() {
         return;
       }
 
-      frameId = window.requestAnimationFrame(syncBackgroundState);
+      frameId = window.requestAnimationFrame(syncDesktopBackgroundState);
     };
 
     requestSync();
@@ -118,7 +112,7 @@ export function StorytellingSection() {
 
       window.removeEventListener("scroll", requestSync);
       window.removeEventListener("resize", requestSync);
-      isBackgroundActiveRef.current = false;
+      isDesktopBackgroundActiveRef.current = false;
 
       if (backgroundElement) {
         backgroundElement.style.opacity = "0";
@@ -130,6 +124,24 @@ export function StorytellingSection() {
       );
     };
   }, [backgroundRef, containerRef, isDesktop, isLayoutReady, stageRef]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      return;
+    }
+
+    document.documentElement.style.setProperty(
+      "--storytelling-page-background-opacity",
+      "0",
+    );
+
+    return () => {
+      document.documentElement.style.setProperty(
+        "--storytelling-page-background-opacity",
+        "0",
+      );
+    };
+  }, [isMobile]);
 
   useEffect(() => {
     if (!isDesktop || !isPointerFine) {
@@ -181,7 +193,7 @@ export function StorytellingSection() {
       )}
       aria-label="Storytelling"
     >
-      {isDesktop ? <StorytellingBackground ref={backgroundRef} /> : null}
+      {isDesktop || isMobile ? <StorytellingBackground ref={backgroundRef} /> : null}
 
       {isDesktop ? (
         <div
@@ -219,7 +231,10 @@ export function StorytellingSection() {
 
           <div
             ref={stageRef}
-            className="relative h-svh overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)"
+            className={cn(
+              "relative h-svh overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)",
+              isMobile && "sticky top-0",
+            )}
           >
             <div
               className={cn(

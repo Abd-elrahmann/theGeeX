@@ -104,14 +104,14 @@ export function TestimonialsSection() {
       id="testimonials"
       aria-label="Testimonials"
       className={cn(
-        "relative w-full overflow-visible",
+        "relative w-full overflow-visible bg-transparent",
         "mt-(--testimonials-margin-top) px-(--testimonials-padding-x) py-(--testimonials-padding-y)",
       )}
     >
-      <div className="flex w-full flex-col gap-(--testimonials-section-gap)">
+      <div className="flex w-full flex-col gap-(--testimonials-section-gap) bg-transparent">
         <TestimonialsTitle />
 
-        <div className="relative -mx-(--testimonials-padding-x) w-[calc(100%+2*var(--testimonials-padding-x))] overflow-visible px-(--testimonials-padding-x)">
+        <div className="relative -mx-(--testimonials-padding-x) w-[calc(100%+2*var(--testimonials-padding-x))] overflow-visible bg-transparent px-(--testimonials-padding-x)">
           <button
             type="button"
             aria-label="Move testimonials left"
@@ -141,7 +141,7 @@ export function TestimonialsSection() {
           <div
             ref={viewportRef}
             className={cn(
-              "w-full overflow-x-auto overflow-y-hidden overscroll-x-contain pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden",
+              "w-full scroll-smooth overflow-x-auto overflow-y-hidden overscroll-x-contain bg-transparent pb-2 select-none scrollbar-none [&::-webkit-scrollbar]:hidden",
               isDesktop ? "touch-pan-x" : "[touch-action:pan-x_pan-y] snap-x snap-mandatory",
             )}
             onPointerDown={() => {
@@ -156,13 +156,13 @@ export function TestimonialsSection() {
           >
             <div
               ref={trackRef}
-              className="flex w-max gap-(--testimonials-carousel-gap)"
+              className="flex w-max gap-(--testimonials-carousel-gap) bg-transparent"
             >
               {items.map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
                   aria-hidden={isDesktop && index >= testimonialItems.length}
-                  className="shrink-0 snap-start"
+                  className="shrink-0 snap-start bg-transparent"
                 >
                   <TestimonialCard item={item} />
                 </div>

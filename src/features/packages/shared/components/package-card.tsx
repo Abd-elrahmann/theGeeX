@@ -41,13 +41,13 @@ export function PackageCard({ item, index }: PackageCardProps) {
       className={cn(
         "box-border flex h-full min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
         "min-[1440px]:mx-auto",
-        "rounded-(--packages-card-radius) bg-(--color-packages-card-bg)",
+        "rounded-(--packages-card-radius) border border-(--color-packages-card-border) bg-(--color-packages-card-bg) md:bg-transparent",
         item.featured
           ? "shadow-(--packages-card-featured-shadow)"
           : "shadow-(--packages-card-shadow)",
-        "backdrop-blur-(--packages-card-blur)",
+        "backdrop-blur-(--packages-card-blur) md:backdrop-blur-none",
         "p-0",
-        item.featured && "border border-(--color-packages-card-featured-border)",
+        item.featured && "border-(--color-packages-card-featured-border)",
       )}
     >
       <div className="flex h-(--packages-card-top-height) w-full flex-col px-(--packages-card-padding-x) pt-(--packages-card-padding-top)">

@@ -235,6 +235,7 @@
 
 @media (max-width: 799.98px) {
   :root {
+    --projects-section-exit-vh: 4;
     --projects-detail-breadcrumb-size: 12px;
     --projects-detail-hero-padding-top: 32px;
     --projects-detail-hero-padding-bottom: 28px;

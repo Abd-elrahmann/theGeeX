@@ -82,14 +82,13 @@ export function ProjectsSection() {
   );
 
   const sectionLiftY = useTransform(animationProgress, (progress) => {
-    if (!isDesktop) {
-      return 0;
-    }
-
     const firstCardLiftProgress = Math.max(projectsFirstCardEnterProgress, Number.EPSILON);
     const liftProgress = Math.min(progress / firstCardLiftProgress, 1);
+    const liftDistance = isDesktop
+      ? projectsFirstCardLiftDistance
+      : projectsFirstCardLiftDistance * 0.28;
 
-    return -easeOutCubic(liftProgress) * projectsFirstCardLiftDistance;
+    return -easeOutCubic(liftProgress) * liftDistance;
   });
 
   const exitProgress = useTransform(scrollYProgress, (progress) => {
@@ -188,9 +187,11 @@ export function ProjectsSection() {
         isDesktop && isPointerFine && "cursor-none",
       )}
       style={
-        isDesktop && stickyTopOffset > 0
-          ? { marginTop: `calc(var(--projects-margin-top) + ${stickyTopOffset}px)` }
-          : undefined
+        isDesktop
+          ? stickyTopOffset > 0
+            ? { marginTop: `calc(var(--projects-margin-top) + ${stickyTopOffset}px)` }
+            : undefined
+          : { touchAction: "pan-y" }
       }
       onMouseLeave={() => {
         setIsCardStackHovered(false);

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 import { cn } from "@/lib/cn";
 
@@ -28,11 +29,34 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
   return (
     <article
       className={cn(
-        "box-border flex h-(--testimonials-card-height) w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
-        "bg-(--color-testimonials-card-bg) p-(--testimonials-card-padding)",
+        "relative box-border flex h-(--testimonials-card-height) w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
+        "border border-(--color-testimonials-card-border) p-(--testimonials-card-padding)",
       )}
     >
-      <div className="flex min-h-(--testimonials-card-content-min-height) w-full flex-col gap-(--testimonials-card-content-gap)">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-(--testimonials-card-accent-height) bg-(image:--testimonials-card-accent-gradient) opacity-(--testimonials-card-accent-opacity)"
+      />
+
+      <div className="flex min-h-(--testimonials-card-content-min-height) w-full flex-1 flex-col gap-(--testimonials-card-content-gap)">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-(--color-testimonials-card-quote) font-cal-sans text-(length:--testimonials-card-quote-size) leading-none">
+            “
+          </span>
+
+          <motion.div
+            className="flex items-center gap-(--testimonials-stars-gap) lg:hidden"
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.4, ease: [0.42, 0, 0.58, 1] }}
+          >
+            {Array.from({ length: item.rating }, (_, index) => (
+              <TestimonialStar key={`${item.id}-star-mobile-${index + 1}`} />
+            ))}
+          </motion.div>
+        </div>
+
         <h3
           className={cn(
             "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
@@ -50,7 +74,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
             "w-full whitespace-pre-wrap wrap-break-word font-poppins",
             "text-(length:--testimonials-card-comment-size) leading-(--testimonials-card-comment-line-height)",
             "font-(--testimonials-card-comment-weight) tracking-(--testimonials-card-comment-letter-spacing)",
-            "text-(--color-testimonials-card-comment)",
+            "text-(--color-testimonials-card-comment) text-balance",
             "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
           )}
         >
@@ -58,7 +82,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
         </p>
       </div>
 
-      <div className="mt-(--testimonials-card-footer-margin-top) flex w-full items-start justify-between gap-(--testimonials-card-footer-gap) lg:mt-auto lg:pt-(--testimonials-card-footer-margin-top) lg:items-center">
+      <div className="mt-auto flex w-full items-start justify-between gap-(--testimonials-card-footer-gap) pt-(--testimonials-card-footer-margin-top) lg:items-center">
         <div className="flex min-w-0 flex-1 items-start gap-(--testimonials-person-gap) lg:items-center">
           <div className="flex h-(--testimonials-person-frame-size) w-(--testimonials-person-frame-size) shrink-0 items-end justify-center overflow-hidden rounded-(--testimonials-person-frame-radius) px-(--testimonials-person-frame-padding) pt-(--testimonials-person-frame-top-padding) pb-(--testimonials-person-frame-padding)">
             <Image
@@ -73,7 +97,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
           <div className="min-w-0 flex-1">
             <p
               className={cn(
-                "w-full break-words whitespace-normal font-cal-sans lg:truncate lg:whitespace-nowrap",
+                "w-full wrap-break-word whitespace-normal font-cal-sans lg:truncate lg:whitespace-nowrap",
                 "text-(length:--testimonials-person-name-size) leading-(--testimonials-person-name-line-height)",
                 "font-(--testimonials-person-name-weight) tracking-(--testimonials-person-name-letter-spacing)",
                 "text-(--color-testimonials-person-name)",
@@ -85,7 +109,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
 
             <p
               className={cn(
-                "w-full break-words whitespace-normal font-poppins lg:truncate lg:whitespace-nowrap",
+                "w-full wrap-break-word whitespace-normal font-poppins lg:truncate lg:whitespace-nowrap",
                 "text-(length:--testimonials-person-role-size) leading-(--testimonials-person-role-line-height)",
                 "font-(--testimonials-person-role-weight) tracking-(--testimonials-person-role-letter-spacing)",
                 "text-(--color-testimonials-person-role)",
@@ -94,20 +118,20 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
             >
               {item.personRole}
             </p>
-
-            <div className="mt-1 flex items-center gap-(--testimonials-stars-gap) lg:hidden">
-              {Array.from({ length: item.rating }, (_, index) => (
-                <TestimonialStar key={`${item.id}-star-mobile-${index + 1}`} />
-              ))}
-            </div>
           </div>
         </div>
 
-        <div className="hidden shrink-0 items-center gap-(--testimonials-stars-gap) lg:flex">
+        <motion.div
+          className="hidden shrink-0 items-center gap-(--testimonials-stars-gap) lg:flex"
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.4, ease: [0.42, 0, 0.58, 1] }}
+        >
           {Array.from({ length: item.rating }, (_, index) => (
             <TestimonialStar key={`${item.id}-star-${index + 1}`} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </article>
   );

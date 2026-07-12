@@ -5,6 +5,7 @@ import { motion, type MotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { cn } from "@/lib/cn";
 import { formatIndex } from "@/lib/format-index";
 
@@ -217,6 +218,7 @@ export function ProjectCard({
   totalCards,
   scrollProgress,
 }: ProjectCardProps) {
+  const isDesktop = useDesktopBreakpoint();
   const [isCardHovered, setIsCardHovered] = useState(false);
   const { enterStart, enterEnd } = getCardEnterRange(index, totalCards);
   const nextEnterStart =
@@ -318,7 +320,7 @@ export function ProjectCard({
               draggable={false}
               style={{
                 objectFit: "cover",
-                objectPosition: project.imagePosition ?? "center",
+                objectPosition: isDesktop ? (project.imagePosition ?? "center") : "center center",
                 borderRadius: "var(--projects-card-image-radius)",
               }}
               className="absolute inset-0 block h-full w-full object-cover"

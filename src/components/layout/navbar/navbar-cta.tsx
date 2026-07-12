@@ -30,9 +30,8 @@ export function NavbarCta({ onClick }: NavbarCtaProps) {
       )}
     >
       <span
-        className="h-auto w-auto whitespace-pre text-center font-poppins text-[14px] leading-[1.2] font-medium tracking-normal"
+        className="h-auto w-auto whitespace-pre text-center font-poppins text-[14px] leading-[1.2] font-medium tracking-normal text-inherit"
         style={{
-          color: "var(--color-cta-text)",
           fontFeatureSettings: "normal",
         }}
       >

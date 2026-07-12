@@ -68,6 +68,7 @@ export function ServicesSection() {
     serviceCount: services.length,
     enabled: false,
   });
+  const [canSyncMobileServices, setCanSyncMobileServices] = useState(false);
   const shouldTrackMobileScroll = hasHydrated && !isDesktop;
   const { scrollYProgress } = useScroll({
     target: shouldTrackMobileScroll ? mobileScrollRef : undefined,
@@ -121,8 +122,36 @@ export function ServicesSection() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isDesktop) {
+      return;
+    }
+
+    const sectionElement = containerRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setCanSyncMobileServices(entry.isIntersecting);
+      },
+      {
+        rootMargin: "-20% 0px -20% 0px",
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [containerRef, isDesktop]);
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (!shouldTrackMobileScroll) {
+    if (!shouldTrackMobileScroll || isDesktop || !canSyncMobileServices) {
       return;
     }
 
@@ -278,7 +307,7 @@ export function ServicesSection() {
         imageHeight,
         scrollHeight:
           stageHeight +
-          Math.max(services.length, 1) * viewportHeight * (scrollStepVh / 100),
+          Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100),
       });
     };
 
@@ -445,7 +474,7 @@ export function ServicesSection() {
               minHeight:
                 mobileStageMetrics.scrollHeight > 0
                   ? `${mobileStageMetrics.scrollHeight}px`
-                  : `${services.length * 100}svh`,
+                  : `calc(100svh + ${Math.max(services.length - 1, 0) * 100}svh)`,
             }}
           >
             <div
