@@ -32,7 +32,7 @@ export function ProjectDetailProcessSection({
         ]}
       />
 
-      <div className="grid w-full grid-cols-1 gap-(--projects-detail-process-grid-gap) lg:grid-cols-[minmax(0,1fr)_var(--projects-detail-process-icons-width)] lg:items-start">
+      <div className="mx-auto grid w-full max-w-(--projects-detail-process-grid-max-width) grid-cols-1 gap-(--projects-detail-process-grid-gap) lg:grid-cols-[minmax(0,1fr)_var(--projects-detail-process-icons-width)] lg:items-start">
         <ProjectDetailProcessCards
           processSteps={processSteps}
           processCardRefs={processCardRefs}
