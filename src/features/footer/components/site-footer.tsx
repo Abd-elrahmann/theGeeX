@@ -22,6 +22,9 @@ type MailchimpResponse = {
   msg: string;
 };
 
+type MailchimpCallback = (response: MailchimpResponse) => void;
+type MailchimpCallbackHost = Record<string, MailchimpCallback | undefined>;
+
 const MAILCHIMP_URL =
   "https://echoes.us19.list-manage.com/subscribe/post?u=379fc32fa962d980fe92be245&id=66f63f57eb&f_id=00ebc2e1f0";
 
@@ -38,13 +41,14 @@ function subscribeToMailchimp(email: string): Promise<MailchimpResponse> {
   return new Promise((resolve, reject) => {
     const callbackName = `mailchimpCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const script = document.createElement("script");
+    const callbackHost = window as unknown as MailchimpCallbackHost;
 
     const cleanup = () => {
       script.remove();
-      delete (window as Window & Record<string, unknown>)[callbackName];
+      delete callbackHost[callbackName];
     };
 
-    (window as Window & Record<string, unknown>)[callbackName] = (response: MailchimpResponse) => {
+    callbackHost[callbackName] = (response: MailchimpResponse) => {
       cleanup();
       resolve(response);
     };
