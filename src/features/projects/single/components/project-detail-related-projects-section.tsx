@@ -10,10 +10,10 @@ export function ProjectDetailRelatedProjectsSection({
 }: ProjectDetailRelatedProjectsSectionProps) {
   return (
     <section
-      className="relative w-full bg-background px-(--service-detail-padding-x) pt-(--service-detail-projects-padding-top) pb-(--service-detail-projects-padding-bottom)"
+      className="relative w-full bg-background pt-(--service-detail-projects-padding-top) pb-(--service-detail-projects-padding-bottom)"
       aria-labelledby="project-detail-related-title"
     >
-      <div className="mx-auto flex w-full max-w-(--service-detail-container-max-width) flex-col items-center gap-(--service-detail-projects-section-gap)">
+      <div className="mx-auto flex w-full flex-col items-center gap-(--service-detail-projects-section-gap)">
         <header className="flex w-full max-w-(--service-detail-projects-title-max-width) flex-col items-center gap-(--service-detail-projects-title-gap) text-center">
           <p className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-projects-label-size) leading-(--service-detail-projects-label-line-height) font-bold tracking-[-0.02em] text-(--color-service-detail-accent)">
             Projects
@@ -23,7 +23,10 @@ export function ProjectDetailRelatedProjectsSection({
           </h2>
         </header>
 
-        <div className="flex w-full flex-col gap-(--service-detail-projects-cards-gap)">
+        <div
+          className="mx-auto flex w-full max-w-(--projects-detail-gallery-max-width) flex-col gap-(--service-detail-projects-cards-gap)"
+          style={{ paddingInline: "var(--projects-detail-gallery-padding-x)" }}
+        >
           {relatedProjects.map((relatedProject, index) => (
             <StaticProjectCard
               key={relatedProject.id}

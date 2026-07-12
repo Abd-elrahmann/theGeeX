@@ -32,18 +32,19 @@ function ServicesPageCardHeader({
 }) {
   return (
     <div className="flex w-full flex-col gap-(--services-page-card-header-gap)">
-      <p className="m-0 h-auto w-auto min-w-0 whitespace-pre font-poppins text-(length:--services-page-service-eyebrow-size) leading-(--services-page-service-eyebrow-line-height) font-medium tracking-normal text-(--color-services-page-eyebrow) font-features-normal">
+      <p className="m-0 h-auto w-full min-w-0 whitespace-normal wrap-break-word font-poppins text-[12px] leading-[1.3] font-medium tracking-normal text-(--color-services-page-eyebrow) font-features-normal sm:text-(length:--services-page-service-eyebrow-size) sm:leading-(--services-page-service-eyebrow-line-height)">
         {eyebrow}
       </p>
 
-      <div className="flex w-full min-w-0 items-baseline gap-(--services-page-service-title-row-gap)">
-        <span className="h-[31px] w-[24px] shrink-0 whitespace-pre font-cal-sans text-[26px] leading-[31px] font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off]">
+      <div className="flex w-full min-w-0 items-baseline gap-2 sm:gap-(--services-page-service-title-row-gap)">
+        <span className="h-[24px] w-[18px] shrink-0 whitespace-pre font-cal-sans text-[20px] leading-[24px] font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off] sm:h-[31px] sm:w-[24px] sm:text-[26px] sm:leading-[31px]">
           {formatIndex(index)}
         </span>
         <h2
           className={cn(
-            "m-0 min-w-0 max-w-none flex-1 font-cal-sans text-[28px] leading-[1.2] font-semibold tracking-normal text-(--color-services-page-card-title)",
-            allowWrap ? "whitespace-normal break-normal" : "whitespace-nowrap",
+            "m-0 min-w-0 max-w-none flex-1 font-cal-sans text-[20px] leading-[1.1] font-semibold tracking-normal text-(--color-services-page-card-title) sm:text-[28px] sm:leading-[1.2]",
+            "whitespace-normal wrap-break-word sm:break-normal",
+            allowWrap ? "sm:whitespace-normal" : "sm:whitespace-nowrap",
           )}
         >
           {title}
@@ -59,9 +60,9 @@ export function ServicesPage() {
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [isGridHovered, setIsGridHovered] = useState(false);
+  const [hoveredServiceId, setHoveredServiceId] = useState<number | null>(null);
   const [isScrollArrowActive, setIsScrollArrowActive] = useState(false);
   const isServicesCursorActive = isDesktop && isPointerFine && isGridHovered;
-  const isArrowActive = isServicesCursorActive || isScrollArrowActive;
 
   useEffect(() => {
     setExploreCursorZone(isServicesCursorActive ? "services" : "none");
@@ -155,12 +156,20 @@ export function ServicesPage() {
               href={`/services/${service.slug}`}
               aria-label={`Open ${service.navTitle} service page`}
               className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:mx-auto md:h-(--services-page-grid-min-height) md:max-w-(--services-page-card-width) md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-y-(--services-page-card-gap)"
+              onMouseEnter={() => {
+                setHoveredServiceId(service.id);
+              }}
+              onMouseLeave={() => {
+                setHoveredServiceId((currentHoveredServiceId) =>
+                  currentHoveredServiceId === service.id ? null : currentHoveredServiceId,
+                );
+              }}
             >
-              <div className="box-border flex h-auto min-h-(--services-page-grid-min-height) w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:h-(--services-page-grid-min-height) md:min-h-0 md:overflow-hidden">
+              <div className="order-2 box-border flex h-auto min-h-0 w-full flex-1 flex-col content-start items-start justify-between overflow-visible rounded-none p-0 md:order-1 md:h-(--services-page-grid-min-height) md:min-h-0 md:overflow-hidden">
                 <ServiceContent
                   service={service}
                   variant="page"
-                  isGridHovered={isArrowActive}
+                  isGridHovered={hoveredServiceId === service.id || isScrollArrowActive}
                   showContentTitle={false}
                   descriptionItems={service.pageDescription ?? service.description}
                   headerContent={
@@ -174,8 +183,8 @@ export function ServicesPage() {
                 />
               </div>
 
-              <div className="box-border flex h-(--services-page-grid-min-height) min-h-0 w-full flex-1 flex-col content-start items-start justify-between overflow-hidden rounded-none p-0">
-                <div className="relative h-(--services-page-grid-min-height) w-full overflow-hidden rounded-(--services-image-radius) md:rounded-l-none">
+              <div className="order-1 box-border flex h-(--services-page-image-height) min-h-0 w-full flex-1 flex-col content-start items-start justify-between overflow-hidden rounded-none p-0 md:order-2 md:h-(--services-page-grid-min-height)">
+                <div className="relative h-(--services-page-image-height) w-full overflow-hidden rounded-(--services-image-radius) md:rounded-l-none md:h-(--services-page-grid-min-height)">
                   <ServiceImage
                     service={service}
                     variant="page"

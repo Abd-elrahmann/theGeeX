@@ -67,6 +67,7 @@ export function ServiceDetailOutcomesSection({
       }
 
       const viewportAnchor = window.innerHeight * 0.45;
+      const switchThreshold = window.innerHeight * 0.08;
       let nextIndex = 0;
       let smallestDistance = Number.POSITIVE_INFINITY;
 
@@ -81,7 +82,22 @@ export function ServiceDetailOutcomesSection({
         }
       });
 
-      setActiveIndex(nextIndex);
+      setActiveIndex((currentActiveIndex) => {
+        const currentCard = cards[currentActiveIndex];
+
+        if (!currentCard || currentActiveIndex === nextIndex) {
+          return nextIndex;
+        }
+
+        const currentRect = currentCard.getBoundingClientRect();
+        const currentDistance = Math.abs(
+          currentRect.top + currentRect.height / 2 - viewportAnchor,
+        );
+
+        return smallestDistance + switchThreshold < currentDistance
+          ? nextIndex
+          : currentActiveIndex;
+      });
     };
 
     updateActiveIndex();

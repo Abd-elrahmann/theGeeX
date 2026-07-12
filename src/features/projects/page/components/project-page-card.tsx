@@ -103,7 +103,6 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
             draggable={false}
             style={{
               objectFit: "cover",
-              objectPosition: project.imagePosition ?? "center",
               borderRadius: "var(--projects-card-image-radius)",
             }}
             className="absolute inset-0 block h-full w-full object-cover"

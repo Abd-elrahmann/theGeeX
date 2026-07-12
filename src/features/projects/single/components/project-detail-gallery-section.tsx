@@ -13,7 +13,7 @@ export function ProjectDetailGallerySection({ project }: ProjectDetailGallerySec
       aria-labelledby="project-detail-work-title"
       className="mx-auto box-border flex w-full flex-col items-center gap-(--projects-detail-work-gap) py-(--projects-detail-work-padding-y)"
     >
-      <div className="w-full max-w-(--projects-detail-container-max-width) px-(--projects-detail-padding-x)">
+      <div className="flex w-full max-w-(--projects-detail-container-max-width) flex-col items-center gap-(--projects-detail-process-gap) px-(--projects-detail-padding-x) md:block">
         <ProjectDetailSectionIntro
           id="project-detail-work-title"
           label="How We Work"

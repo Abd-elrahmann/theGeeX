@@ -86,9 +86,9 @@
   --projects-page-title-max-width: 600px;
   --projects-page-description-top: 126px;
   --projects-page-description-max-width: 700px;
-  --projects-page-title-size: clamp(32px, 9vw, 54px);
+  --projects-page-title-size: 48px;
   --projects-page-title-line-height: 1.4;
-  --projects-page-description-size: 16px;
+  --projects-page-description-size: 14px;
   --projects-page-description-line-height: 1.6;
   --projects-page-hero-text-color: var(--Text_Color, #2c3134);
   --projects-page-cards-gap: 32px;
@@ -174,12 +174,12 @@
   --projects-detail-process-icons-radius: 16px;
   --projects-detail-process-icons-sticky-top: calc(var(--navbar-height) + 12px);
   --projects-detail-process-icons-background: #fafafa;
-  --projects-detail-process-icons-box-shadow: 0 4px 14px 0 rgb(0 0 0 / 0.12);
-  --projects-detail-process-icon-size: 67px;
+  --projects-detail-process-icons-box-shadow: 0 2px 8px 0 rgb(0 0 0 / 0.06);
+  --projects-detail-process-icon-size: 54px;
   --projects-detail-process-icon-radius: 10px;
   --projects-detail-process-icon-image-size: 24px;
   --projects-detail-process-icon-background: #ffffff;
-  --projects-detail-process-icon-shadow: 0.44458393117674855px 0.44458393117674855px 0.6287366250833045px -0.2px rgb(0 0 0 / 0.05), 1.2107201073158649px 1.2107201073158649px 1.7122167960039052px -0.4px rgb(0 0 0 / 0.06), 2.658303156997136px 2.658303156997136px 3.759408377524564px -0.6px rgb(0 0 0 / 0.08), 5.900826050459001px 5.900826050459001px 8.345028229763585px -0.8px rgb(0 0 0 / 0.11), 15px 15px 21.213203435596427px -1px rgb(0 0 0 / 0.2);
+  --projects-detail-process-icon-shadow: 0 1px 2px rgb(0 0 0 / 0.03), 0 2px 6px rgb(0 0 0 / 0.06);
   --projects-detail-text-color: var(--Text_Color, #2c3134);
   --projects-detail-muted-color: rgb(44 49 52 / 0.62);
   --projects-detail-accent-color: #e63b51;
@@ -287,6 +287,15 @@
     --projects-card-subheader-margin-top: 8px;
     --projects-card-image-margin-top: 8px;
     --projects-card-image-min-height: 220px;
+    --projects-page-padding-top: 48px;
+    --projects-page-padding-bottom: 80px;
+    --projects-page-hero-height: 160px;
+    --projects-page-section-gap: 32px;
+    --projects-page-hero-gap: 16px;
+    --projects-page-title-size: 48px;
+    --projects-page-description-size: 14px;
+    --projects-page-cards-gap: 32px;
+    --projects-page-card-height: 760px;
   }
 }
 
@@ -348,6 +357,7 @@
     --projects-detail-process-icons-sticky-top: calc(var(--navbar-height) + 64px);
     --projects-detail-process-icon-size: 67px;
     --projects-detail-process-icon-image-size: 32px;
+    --projects-page-title-size: 70px;
     --projects-margin-top: var(--section-stack-gap);
     --projects-padding-x: 0px;
     --projects-title-size: 204px;
@@ -521,13 +531,5 @@
     --projects-card-subheader-margin-top: 8px;
     --projects-card-image-margin-top: 8px;
     --projects-card-image-min-height: 420px;
-    --projects-page-padding-top: 48px;
-    --projects-page-padding-bottom: 80px;
-    --projects-page-section-gap: 16px;
-    --projects-page-hero-gap: 16px;
-    --projects-page-title-size: 70px;
-    --projects-page-description-size: 16px;
-    --projects-page-cards-gap: 32px;
-    --projects-page-card-height: 760px;
   }
 }

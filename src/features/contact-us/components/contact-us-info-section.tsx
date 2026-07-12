@@ -15,16 +15,19 @@ export function ContactUsInfoSection() {
             label={contactUsContent.emailLabel}
             value={contactUsContent.emailValue}
             href={`mailto:${contactUsContent.emailValue}`}
+            icon="email"
           />
           <ContactInfoItem
             label={contactUsContent.phoneLabel}
             value={contactUsContent.phoneValue}
             href="tel:+201108828385"
+            icon="phone"
           />
           <ContactInfoItem
             label={contactUsContent.locationLabel}
             value={contactUsContent.locationValue}
             multiline
+            icon="location"
           />
         </div>
       </div>

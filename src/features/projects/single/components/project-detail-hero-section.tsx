@@ -21,7 +21,7 @@ export function ProjectDetailHeroSection({
   breadcrumbLabel,
   primaryCategory,
 }: ProjectDetailHeroSectionProps) {
-  const detailImageScale = project.detailImageScale ?? 1.08;
+  const detailImageScale = project.detailImageScale ?? 1;
   const chipStyle: ProjectDetailChipStyle = {
     "--project-detail-chip-background":
       project.detailChipBackground ?? "var(--projects-detail-chip-background)",

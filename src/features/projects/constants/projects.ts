@@ -200,7 +200,7 @@ export const projects: ProjectItem[] = [
     image: "/images/projects/performr.png",
     imageAlt: "Performr cross-platform product preview",
     imagePosition: "70% 62%",
-    detailImage: "/images/projects/Performr.png",
+    detailImage: "/images/projects/performr.png",
     detailGallery: [
       "/images/Projects-Services/Performer.png",
       "/images/Projects-Services/Performer 2.png",

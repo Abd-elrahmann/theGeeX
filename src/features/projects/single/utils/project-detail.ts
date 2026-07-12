@@ -22,9 +22,20 @@ export function getProjectProcessSteps(project: ProjectItem): ProjectProcessStep
 }
 
 export function getRelatedProjects(project: ProjectItem): ProjectItem[] {
-  return projectItems.filter(
+  const preferredProjects = projectItems.filter(
     (projectItem) => relatedProjectIds.includes(projectItem.id) && projectItem.id !== project.id,
   );
+
+  if (preferredProjects.length === relatedProjectIds.length) {
+    return preferredProjects;
+  }
+
+  const fallbackProjects = projectItems.filter(
+    (projectItem) =>
+      projectItem.id !== project.id && !preferredProjects.some((preferredProject) => preferredProject.id === projectItem.id),
+  );
+
+  return [...preferredProjects, ...fallbackProjects].slice(0, relatedProjectIds.length);
 }
 
 export function getClosestProcessIndex(

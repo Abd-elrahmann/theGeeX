@@ -169,13 +169,13 @@ export const servicePageConfigs = {
         title: "Technology Strategy",
         description:
           "Select the right technologies, frameworks, and architecture to build a scalable, secure, and future-ready digital product.",
-        imageFile: "Market & Technical Feasibility.png",
+        imageFile: "Tech Stack Selection.png",
       },
       {
         title: "Market & Technical Feasibility",
         description:
           "Evaluate business viability, technical requirements, and potential risks before development begins, enabling informed decisions and reducing costly mistakes.",
-        imageFile: "Tech Stack Selection.png",
+        imageFile: "Market & Technical Feasibility.png",
       },
     ],
     outcomes: {

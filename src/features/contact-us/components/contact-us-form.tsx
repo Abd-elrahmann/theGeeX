@@ -53,6 +53,7 @@ export function ContactUsForm() {
     message: "",
   });
   const [errors, setErrors] = useState<ContactUsFormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function updateField<K extends keyof ContactUsFormValues>(field: K, value: ContactUsFormValues[K]) {
     setValues((currentValues) => ({
@@ -76,11 +77,25 @@ export function ContactUsForm() {
     <div className="w-full rounded-(--contact-us-form-card-radius) border border-(--color-contact-us-form-border) bg-(--color-contact-us-form-card-bg) px-(--contact-us-form-card-padding) pt-(--contact-us-form-card-padding) pb-(--contact-us-form-card-padding) backdrop-blur-(--contact-us-form-blur) md:max-w-[min(100%,576px)]">
       <form
         className="flex w-full flex-col gap-(--contact-us-form-gap) rounded-(--contact-us-form-inner-radius) bg-(--color-contact-us-form-surface) px-(--contact-us-form-inner-padding) pt-(--contact-us-form-inner-padding) pb-(--contact-us-form-inner-padding)"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
 
           const nextErrors = validateContactUsForm(values);
           setErrors(nextErrors);
+
+          if (Object.keys(nextErrors).length > 0) {
+            return;
+          }
+
+          setIsSubmitting(true);
+
+          try {
+            await new Promise((resolve) => {
+              setTimeout(resolve, 1200);
+            });
+          } finally {
+            setIsSubmitting(false);
+          }
         }}
       >
         <ContactFormField htmlFor={fullNameField.id} label={fullNameField.label} error={errors.fullName}>
@@ -143,7 +158,7 @@ export function ContactUsForm() {
           />
         </ContactFormField>
 
-        <ContactFormSubmitButton label={contactUsContent.submitLabel} />
+        <ContactFormSubmitButton label={contactUsContent.submitLabel} isSubmitting={isSubmitting} />
       </form>
     </div>
   );

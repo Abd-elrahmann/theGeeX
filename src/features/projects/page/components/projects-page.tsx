@@ -73,9 +73,12 @@ export function ProjectsPage() {
     >
       <section
         aria-labelledby="projects-page-title"
-        className="box-border flex h-min w-full flex-col content-center items-center justify-center gap-(--projects-page-section-gap) overflow-visible rounded-none px-(--projects-page-padding-x) pt-(--projects-page-padding-top) pb-(--projects-page-padding-bottom)"
+        className="box-border flex h-min w-full flex-col content-center items-center justify-center gap-8 overflow-visible rounded-none pt-(--projects-page-padding-top) pb-(--projects-page-padding-bottom) md:gap-(--projects-page-section-gap)"
       >
-        <header className="relative mx-auto flex min-h-(--projects-page-hero-height) w-full max-w-(--projects-page-container-max-width) flex-col items-center justify-start gap-(--projects-page-hero-gap)">
+        <header
+          className="relative mx-auto flex min-h-0 w-full max-w-(--projects-page-container-max-width) flex-col items-center justify-start gap-(--projects-page-hero-gap)"
+          style={{ paddingInline: "var(--projects-page-padding-x)" }}
+        >
           <h1
             id="projects-page-title"
             className="m-0 h-auto w-full max-w-(--projects-page-title-max-width) whitespace-pre-wrap wrap-break-word text-center font-cal-sans text-(length:--projects-page-title-size) leading-(--projects-page-title-line-height) font-semibold tracking-normal text-(--projects-page-hero-text-color) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]"
@@ -91,6 +94,7 @@ export function ProjectsPage() {
         <div
           ref={cardStackRef}
           className="mx-auto flex w-full max-w-(--projects-page-container-max-width) flex-col gap-(--projects-page-cards-gap)"
+          style={{ paddingInline: "var(--projects-page-padding-x)" }}
           onMouseMove={(event) => {
             const cardStackElement = cardStackRef.current;
 

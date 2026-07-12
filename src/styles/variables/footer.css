@@ -12,6 +12,7 @@
   --footer-card-padding-x: 28px;
   --footer-card-padding-top: 0px;
   --footer-card-padding-bottom: 0px;
+  --footer-standalone-card-padding-top: 24px;
   --footer-top-row-gap: 24px;
   --footer-top-row-desktop-gap: 8px;
   --footer-link-column-gap: 12px;
@@ -34,11 +35,15 @@
   --footer-input-size: 15px;
   --footer-input-line-height: 1.2;
   --footer-subscribe-button-height: 56px;
+  --footer-subscribe-button-min-width: 132px;
   --footer-subscribe-button-radius: var(--footer-input-radius);
   --footer-subscribe-button-padding-x: 24px;
   --footer-subscribe-button-padding-y: 16px;
   --footer-subscribe-button-size: 15px;
   --footer-subscribe-button-line-height: 1.2;
+  --footer-subscribe-spinner-size: 18px;
+  --footer-subscribe-error-size: 13px;
+  --footer-subscribe-error-line-height: 1.4;
   --footer-rights-margin-top: 44px;
   --footer-rights-padding-top: 18px;
   --footer-rights-padding-bottom: 64px;
@@ -51,6 +56,12 @@
   --footer-rights-line-height: 1.4;
   --footer-logo-margin-top: 44px;
   --footer-logo-height: 120px;
+  --footer-success-overlay-max-width: 360px;
+  --footer-success-overlay-gap: 12px;
+  --footer-success-icon-size: 44px;
+  --footer-success-icon-text-size: 22px;
+  --footer-success-title-size: 22px;
+  --footer-success-title-line-height: 1.2;
   --color-footer-surface: #2558b4;
   --color-footer-link: #ffffff;
   --color-footer-link-hover: #ffffff;
@@ -64,9 +75,15 @@
   --color-footer-subscribe-button-bg: #ffffff;
   --color-footer-subscribe-button-hover-bg: #ffffff;
   --color-footer-subscribe-button-text: #2558b4;
+  --color-footer-subscribe-spinner: #2558b4;
+  --color-footer-subscribe-error: #dbe7ff;
   --color-footer-rights: #ffffff;
   --color-footer-rights-divider: rgb(255 255 255 / 0.4);
   --color-footer-rights-line: rgb(255 255 255 / 0.28);
+  --color-footer-success-overlay: rgb(37 88 180 / 0.94);
+  --color-footer-success-icon-bg: rgb(255 255 255 / 0.18);
+  --color-footer-success-icon-text: #ffffff;
+  --color-footer-success-text: #ffffff;
 }
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
@@ -81,6 +98,7 @@
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
+    --footer-standalone-card-padding-top: 32px;
     --footer-top-row-gap: 28px;
     --footer-top-row-desktop-gap: 8px;
     --footer-link-column-gap: 18px;
@@ -118,6 +136,7 @@
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
+    --footer-standalone-card-padding-top: 32px;
     --footer-reveal-bottom-gap: 24px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
@@ -142,6 +161,7 @@
     --footer-card-radius: 64px;
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 0px;
+    --footer-standalone-card-padding-top: 32px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
     --footer-newsletter-gap: 18px;
@@ -161,6 +181,7 @@
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
+    --footer-standalone-card-padding-top: 32px;
     --footer-reveal-bottom-gap: 24px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
@@ -186,6 +207,7 @@
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
+    --footer-standalone-card-padding-top: 32px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
     --footer-link-column-gap: 20px;
