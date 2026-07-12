@@ -262,6 +262,12 @@
     object-position: center 52% !important;
   }
 
+    [data-service-slug="product-strategy-consultancy"] .service-detail-hero-image {
+    object-fit: cover !important;
+    object-position: center 55% !important;
+  }
+
+
     [data-service-slug="frontend-mobile-app-development"] .service-detail-hero-image {
     object-fit: cover !important;
     object-position: center 42% !important;
