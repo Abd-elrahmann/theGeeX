@@ -25,6 +25,7 @@ export function ServiceImage({
   const isMobile = variant === "mobile";
   const isPage = variant === "page";
   const isDesktop = variant === "desktop";
+  const isTablet = variant === "tablet";
   const resolvedImageSrc = imageSrc ?? service.image;
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
