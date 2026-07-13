@@ -29,7 +29,7 @@ export function ServiceImage({
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
   const imageClassName = cn(
-    isMobile || isDesktop ? "object-contain object-center" : "object-cover object-center",
+    isMobile ? "object-contain object-center" : "object-cover object-center",
     "rounded-(--services-image-radius)",
     isPage && "md:rounded-l-none",
     isPlaceholder && "object-contain p-8",
@@ -52,17 +52,21 @@ export function ServiceImage({
 
   if (isMobile) {
     return (
-      <div className="relative w-full min-w-0 overflow-hidden rounded-(--services-image-radius)">
-        <div className={cn("relative w-full min-w-0", servicesImageContainerVisualClassName)}>
+      <div className="relative h-full min-h-(--services-mobile-image-height) w-full min-w-0 overflow-hidden rounded-(--services-image-radius)">
+        <div
+          className={cn(
+            "relative h-full min-h-(--services-mobile-image-height) w-full min-w-0",
+            servicesImageContainerVisualClassName,
+          )}
+        >
           <Image
             src={resolvedImageSrc}
             alt={resolvedImageAlt}
-            width={1254}
-            height={1254}
+            fill
             loading={loading}
             sizes="100vw"
             className={cn(
-              "h-auto w-full object-contain object-center rounded-(--services-image-radius)",
+              "object-contain object-center rounded-(--services-image-radius)",
               isPlaceholder && "object-contain p-8",
             )}
             priority={eager || service.id === 1}
