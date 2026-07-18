@@ -13,14 +13,14 @@ export const awardsSectionTitleLines = ["Award-Winning", "Excellence."] as const
 export const awardItems: AwardItem[] = [
   {
     id: 1,
-    imageSrc: "/images/GiteXLogo.png",
+    imageSrc: "/images/GiteXLogo.webp",
     imageAlt: "GITEX Global logo",
     awardName: "GITEX 2018",
     awardType: "Best Mobile App",
   },
   {
     id: 2,
-    imageSrc: "/images/ElearningAfrica.png",
+    imageSrc: "/images/ElearningAfrica.webp",
     imageAlt: "E-Learning Africa logo",
     awardName: "E-Learning Africa",
     awardType: "Best Online Quizzes App",

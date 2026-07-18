@@ -20,15 +20,15 @@
   --team-title-z-index: 1;
   --team-margin-top: var(--section-stack-gap);
   --team-padding-x: 16px;
-  --team-container-max-width: 1200px;
+  --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
   --team-section-gap: 24px;
   --team-section-padding-y: 48px;
   --team-section-scroll-vh: 100;
   --team-section-exit-vh: 0;
   --team-section-scroll-height: calc(var(--team-section-scroll-vh) * 1vh);
   --team-section-exit-padding: calc(var(--team-section-exit-vh) * 1vh);
-  --team-gallery-width: 1059px;
-  --team-gallery-height: 736px;
+  --team-gallery-width: 932px;
+  --team-gallery-height: 653px;
   --team-gallery-scale: 0.9;
   --team-gallery-scaled-width: calc(var(--team-gallery-width) * var(--team-gallery-scale));
   --team-gallery-scaled-height: calc(var(--team-gallery-height) * var(--team-gallery-scale));
@@ -36,9 +36,9 @@
   --team-mobile-collapsed-card-width: min(150px, 42vw);
   --team-mobile-card-min-width: 156px;
   --team-mobile-grid-gap: 12px;
-  --team-card-standard-width: 199px;
+  --team-card-standard-width: 168px;
   --team-card-standard-height: 280px;
-  --team-card-compact-width: 199px;
+  --team-card-compact-width: 182px;
   --team-card-compact-height: 190px;
   --team-card-radius: 999px;
   --team-card-padding-top: 40px;
@@ -117,10 +117,11 @@
   :root {
     --team-collapsed-card-padding: 80px;
     --team-margin-top: var(--section-stack-gap);
-    --team-padding-x: 0px;
-    --team-title-size: 160px;
-    --team-title-line-height: 160px;
-    --team-title-box-height: 124px;
+    --team-padding-x: 24px;
+    --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
+    --team-title-size: 204px;
+    --team-title-line-height: 204px;
+    --team-title-box-height: 156px;
     --team-section-gap: 0px;
     --team-section-padding-y: 64px;
     --team-section-scroll-vh: 100;
@@ -135,10 +136,11 @@
 
 @media (min-width: 1440px) {
   :root {
-    --team-container-max-width: 1200px;
-    --team-title-size: 188px;
-    --team-title-line-height: 188px;
-    --team-title-box-height: 144px;
+    --team-padding-x: 24px;
+    --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
+    --team-title-size: 204px;
+    --team-title-line-height: 204px;
+    --team-title-box-height: 156px;
     --team-margin-top: var(--section-stack-gap);
     --team-section-gap: 0px;
     --team-section-padding-y: 40px;
@@ -155,10 +157,11 @@
 
 @media (min-width: 1920px) {
   :root {
-    --team-container-max-width: 1200px;
-    --team-title-size: 188px;
-    --team-title-line-height: 188px;
-    --team-title-box-height: 144px;
+    --team-padding-x: 24px;
+    --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
+    --team-title-size: 204px;
+    --team-title-line-height: 204px;
+    --team-title-box-height: 156px;
     --team-margin-top: var(--section-stack-gap);
     --team-section-gap: 0px;
     --team-section-padding-y: 40px;
@@ -175,10 +178,11 @@
 
 @media (min-width: 1440px) {
   :root {
-    --team-container-max-width: 1200px;
-    --team-title-size: 160px;
-    --team-title-line-height: 160px;
-    --team-title-box-height: 124px;
+    --team-padding-x: 24px;
+    --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
+    --team-title-size: 204px;
+    --team-title-line-height: 204px;
+    --team-title-box-height: 156px;
     --team-section-padding-y: 36px;
     --team-gallery-scale: 1;
     --team-gallery-bottom-bleed: 88px;

@@ -358,7 +358,7 @@ export default function StickyScrollRevealText(props: StickyScrollRevealTextProp
         resolvedAlignY === "Top"
             ? `${resolvedStickyOffsetPx}px`
             : resolvedAlignY === "Bottom"
-              ? `calc(100vh - ${resolvedStickyOffsetPx}px)`
+              ? `calc(var(--viewport-height) - ${resolvedStickyOffsetPx}px)`
               : `calc(50vh + ${resolvedStickyOffsetPx}px)`
 
     const transform =

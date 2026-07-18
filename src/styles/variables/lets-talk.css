@@ -110,19 +110,3 @@
     --lets-talk-button-height: 40px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --lets-talk-container-max-width: 100%;
-    --lets-talk-padding-x: 24px;
-    --lets-talk-padding-y: 72px;
-    --lets-talk-card-min-height: 720px;
-    --lets-talk-card-radius: 64px;
-    --lets-talk-card-padding-y: 84px;
-    --lets-talk-content-max-width: 100%;
-    --lets-talk-content-gap: 40px;
-    --lets-talk-copy-gap: 20px;
-    --lets-talk-title-size: 60px;
-    --lets-talk-footer-scroll-tail: 240px;
-  }
-}

@@ -36,7 +36,10 @@ function getContainerClassName(slideVariant: "content" | "image"): string {
 
 function getSlideLayerClassName(slideVariant: "content" | "image"): string {
   return slideVariant === "content"
-    ? cn("absolute inset-0 will-change-transform", servicesContentContainerClassName)
+    ? cn(
+        "absolute inset-0 transform-gpu will-change-transform backface-hidden",
+        servicesContentContainerClassName,
+      )
     : servicesImageSlideLayerClassName;
 }
 
@@ -61,7 +64,7 @@ export function ServiceSlidePanel({
   }
 
   return (
-    <div className={cn("relative h-full w-full overflow-hidden", className)}>
+    <div className={cn("relative h-full w-full overflow-hidden transform-gpu backface-hidden", className)}>
       <AnimatePresence initial={false} custom={direction} mode="sync">
         <motion.div
           key={panelKey}

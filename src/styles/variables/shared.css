@@ -1,5 +1,13 @@
 :root {
 
+  --viewport-height: 100vh;
+  --viewport-height-stable: 100svh;
+  --viewport-height-dynamic: 100dvh;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+
   --color-primary: #0a0a0a;
   --color-secondary: #525252;
   --color-background: #ffffff;
@@ -54,13 +62,25 @@
   --navbar-menu-icon-size: 24px;
   --navbar-mobile-padding-x: 16px;
   --navbar-mobile-menu-height: 394px;
-  --navbar-mobile-menu-padding: 16px 16px 40px 16px;
+  --navbar-mobile-menu-padding: 16px 16px calc(40px + var(--safe-area-bottom)) 16px;
   --navbar-mobile-menu-gap: 40px;
   --navbar-mobile-menu-shadow: 0 1px 10px 0 var(--color-shadow);
   --navbar-mobile-menu-rounded-radius: 32px;
   --page-main-z-index: 1;
   --section-stack-gap: 64px;
   --early-section-gap: 20px;
+}
+
+@supports (height: 100svh) {
+  :root {
+    --viewport-height: var(--viewport-height-stable);
+  }
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --viewport-height: var(--viewport-height-dynamic);
+  }
 }
 
 @media (min-width: 640px) {
@@ -82,7 +102,7 @@
     --navbar-logo-width: 84px;
     --navbar-logo-height: 33px;
     --navbar-mobile-menu-height: 418px;
-    --navbar-mobile-menu-padding: 20px 32px 40px 32px;
+    --navbar-mobile-menu-padding: 20px 32px calc(40px + var(--safe-area-bottom)) 32px;
     --navbar-mobile-menu-rounded-radius: 40px;
   }
 }

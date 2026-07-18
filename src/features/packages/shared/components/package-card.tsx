@@ -34,20 +34,19 @@ export function PackageCard({ item, index }: PackageCardProps) {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 80 }}
+      initial={{ opacity: 0, y: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ ...packageEnterTransition, delay: index * 0.1 }}
       className={cn(
         "box-border flex h-full min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
         "min-[1440px]:mx-auto",
-        "rounded-(--packages-card-radius) border border-(--color-packages-card-border) bg-(--color-packages-card-bg) md:bg-transparent",
+        "rounded-(--packages-card-radius) bg-(--color-packages-card-bg) md:bg-transparent",
         item.featured
           ? "shadow-(--packages-card-featured-shadow)"
           : "shadow-(--packages-card-shadow)",
         "backdrop-blur-(--packages-card-blur) md:backdrop-blur-none",
         "p-0",
-        item.featured && "border-(--color-packages-card-featured-border)",
       )}
     >
       <div className="flex h-(--packages-card-top-height) w-full flex-col px-(--packages-card-padding-x) pt-(--packages-card-padding-top)">
@@ -91,6 +90,11 @@ export function PackageCard({ item, index }: PackageCardProps) {
           onHoverEnd={() => setIsHovered(false)}
         />
       </div>
+
+      <div
+        aria-hidden="true"
+        className="mt-(--packages-card-divider-margin-top) h-px w-full bg-(--color-packages-card-divider)"
+      />
 
       <PackageCardFeatures features={item.features} itemId={item.id} />
     </motion.article>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site.config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const defaultOgImage = "/images/footerLogo.png";
+const defaultOgImage = "/images/footer_logo.webp";
 const pageTitleSuffix = "TheGeeX Digital Transformation Studio";
 
 export const siteMetadata = {

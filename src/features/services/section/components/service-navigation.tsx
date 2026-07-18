@@ -40,12 +40,12 @@ function ServiceNavItemContent({ service, index, isActive }: ServiceNavItemConte
 
       <span
         className={cn(
-          "relative z-1 min-w-0 flex-1 whitespace-nowrap font-cal-sans not-italic",
+          "relative z-1 min-w-0 flex-1 whitespace-nowrap font-cal-sans font-semibold not-italic",
           "text-(length:--services-nav-title-size) leading-(--services-nav-title-line-height)",
           "tracking-normal",
           isActive
-            ? "font-medium text-(--color-services-nav-active-text)"
-            : "font-semibold text-(--color-services-nav-inactive-text)",
+            ? "text-(--color-services-nav-active-text)"
+            : "text-(--color-services-nav-inactive-text)",
         )}
       >
         {service.navTitle}

@@ -38,6 +38,14 @@ export const blogsHomeSectionTitle = "Blogs";
 export const blogsPageTitle = "TheGeeX Mind";
 export const blogsCursorLabel = "Read Article";
 
+const blogAuthorAvatars = {
+  cherifBadawi: "/images/blogs/authors/cherif-badawi.webp",
+  sandraAtef: "/images/blogs/authors/sandra-atef.webp",
+  ahmedTawfek: "/images/blogs/authors/ahmed-tawfek.webp",
+  gasserAmr: "/images/blogs/authors/gasser-amr.webp",
+  cherifBadawy: "/images/blogs/authors/cherif-badawy-alt.webp",
+} as const;
+
 export const blogItems: BlogItem[] = [
   {
     id: 1,
@@ -45,11 +53,11 @@ export const blogItems: BlogItem[] = [
     types: ["Digital transformation", "Tech startups Cairo"],
     title: "Beyond the Buzzword: How Digital Transformation is Reshaping Egypt’s Business Ecosystem in 2026",
     date: "May 9, 2026",
-    imageSrc: "/images/blogs/Blog%201.png",
+    imageSrc: "/images/blogs/Blog 1.webp",
     imageAlt: "Blog cover image for digital transformation in Egypt",
     author: {
       name: "Cherif Badawi",
-      avatar: "https://framerusercontent.com/images/OqmBJs4LnMzJmbYhG5HndEKehc.png?width=180&height=180",
+      avatar: blogAuthorAvatars.cherifBadawi,
     },
   },
   {
@@ -58,11 +66,11 @@ export const blogItems: BlogItem[] = [
     types: ["Website design and development", "Mobile"],
     title: "AI-Driven UX: The Next Frontier in Website Design and Development for Egyptian E-Commerce",
     date: "Jun 5, 2026",
-    imageSrc: "https://framerusercontent.com/images/XkaLP9zpjvVIxEDD8MLpFR53XjU.png?width=1080&height=1920",
+    imageSrc: "/images/blogs/Blog2.webp",
     imageAlt: "Fountain pen on a spiral notebook",
     author: {
       name: "Sandra Atef",
-      avatar: "https://framerusercontent.com/images/pOgaHLpnGwl7uwLVaYUpuYtv2Go.png?width=180&height=180",
+      avatar: blogAuthorAvatars.sandraAtef,
     },
   },
   {
@@ -71,11 +79,11 @@ export const blogItems: BlogItem[] = [
     types: ["Mobile apps design and development", "App developers Cairo"],
     title: "Native vs. Flutter in 2026: Choosing the Right Mobile Apps Design and Development Strategy in Egypt",
     date: "Mar 23, 2026",
-    imageSrc: "https://framerusercontent.com/images/d8Kqe8XJERWN5rExqOzjhSq22Ik.png?width=1080&height=1920",
+    imageSrc: "/images/blogs/Blog3.webp",
     imageAlt: "Fountain pen on a spiral notebook",
     author: {
       name: "Ahmed Tawfek",
-      avatar: "https://framerusercontent.com/images/ekRrUowZtZrw3532QcZyRLXtAfU.png?width=180&height=180",
+      avatar: blogAuthorAvatars.ahmedTawfek,
     },
   },
   {
@@ -84,11 +92,11 @@ export const blogItems: BlogItem[] = [
     types: ["Website design and development", "Arabic UI design"],
     title: "Designing for the Egyptian User: Best Practices in Arabic UI/UX and Localized Development",
     date: "Apr 14, 2026",
-    imageSrc: "https://framerusercontent.com/images/QKij1EqAHUUAg7rIxqSvDdqSsxw.png?width=1080&height=1920",
+    imageSrc: "/images/blogs/Blog 4.webp",
     imageAlt: "Fountain pen on a spiral notebook",
     author: {
       name: "Gasser Amr",
-      avatar: "https://framerusercontent.com/images/pQpsevDWLJSHLRLu9ood9waSezc.png?width=180&height=180",
+      avatar: blogAuthorAvatars.gasserAmr,
     },
   },
   {
@@ -97,11 +105,11 @@ export const blogItems: BlogItem[] = [
     types: ["Digital transformation", "Mobile apps design and development"],
     title: "The InstaPay Effect: Integrating Next-Gen Payment Gateways into Egypt’s E-Commerce Platforms",
     date: "Feb 12, 2026",
-    imageSrc: "https://framerusercontent.com/images/wVQbxVQvV8RAhHs7PXTFePH8v2U.png?width=1080&height=1920",
+    imageSrc: "/images/blogs/Blog5.webp",
     imageAlt: "Fountain pen on a spiral notebook",
     author: {
       name: "Cherif Badawy",
-      avatar: "https://framerusercontent.com/images/OqmBJs4LnMzJmbYhG5HndEKehc.png?width=180&height=180",
+      avatar: blogAuthorAvatars.cherifBadawi,
     },
   },
   {
@@ -110,11 +118,11 @@ export const blogItems: BlogItem[] = [
     types: ["Website design and development", "Digital transformation"],
     title: "From Concept to App Store: The Tech Stack Egyptian Startups Need to Scale Fast",
     date: "Jan 18, 2026",
-    imageSrc: "https://framerusercontent.com/images/QBzfcodMZZtSkcucV4RTABKlwYc.png?width=1920&height=1080",
+    imageSrc: "/images/blogs/Blog6.webp",
     imageAlt: "Team collaborating around a startup product roadmap",
     author: {
       name: "Cherif Badawy",
-      avatar: "https://framerusercontent.com/images/ZETFiiXqoD6hDw3t8d413XaKU.png?width=876&height=1596",
+      avatar: blogAuthorAvatars.cherifBadawy,
     },
   },
 ];
@@ -132,11 +140,11 @@ export const blogArticles: BlogArticleDetail[] = [
       "Tech startups Cairo",
     ],
     readingTime: "5 min read",
-    imageSrc: blogItems[0]?.imageSrc ?? "/images/blogs/Blog%201.png",
+    imageSrc: blogItems[0]?.imageSrc ?? "/images/blogs/Blog 1.webp",
     imageAlt: blogItems[0]?.imageAlt ?? "Blog cover image for digital transformation in Egypt",
     author: blogItems[0]?.author ?? {
       name: "Cherif Badawi",
-      avatar: "https://framerusercontent.com/images/OqmBJs4LnMzJmbYhG5HndEKehc.png?width=180&height=180",
+      avatar: blogAuthorAvatars.cherifBadawi,
     },
     detailBlocks: [
       {
@@ -246,11 +254,11 @@ export const blogArticles: BlogArticleDetail[] = [
       "AI user experience",
     ],
     readingTime: "4 min read",
-    imageSrc: blogItems[1]?.imageSrc ?? "https://framerusercontent.com/images/XkaLP9zpjvVIxEDD8MLpFR53XjU.png?width=1080&height=1920",
+    imageSrc: blogItems[1]?.imageSrc ?? "/images/blogs/Blog2.webp",
     imageAlt: blogItems[1]?.imageAlt ?? "Fountain pen on a spiral notebook",
     author: blogItems[1]?.author ?? {
       name: "Sandra Atef",
-      avatar: "https://framerusercontent.com/images/pOgaHLpnGwl7uwLVaYUpuYtv2Go.png?width=180&height=180",
+      avatar: blogAuthorAvatars.sandraAtef,
     },
     detailBlocks: [
       {
@@ -350,11 +358,11 @@ export const blogArticles: BlogArticleDetail[] = [
       "App developers Cairo",
     ],
     readingTime: "4 min read",
-    imageSrc: blogItems[2]?.imageSrc ?? "https://framerusercontent.com/images/d8Kqe8XJERWN5rExqOzjhSq22Ik.png?width=1080&height=1920",
+    imageSrc: blogItems[2]?.imageSrc ?? "/images/blogs/Blog3.webp",
     imageAlt: blogItems[2]?.imageAlt ?? "Fountain pen on a spiral notebook",
     author: blogItems[2]?.author ?? {
       name: "Ahmed Tawfek",
-      avatar: "https://framerusercontent.com/images/ekRrUowZtZrw3532QcZyRLXtAfU.png?width=180&height=180",
+      avatar: blogAuthorAvatars.ahmedTawfek,
     },
     detailBlocks: [
       {
@@ -466,11 +474,11 @@ export const blogArticles: BlogArticleDetail[] = [
       "Arabic UI design",
     ],
     readingTime: "4 min read",
-    imageSrc: blogItems[3]?.imageSrc ?? "https://framerusercontent.com/images/QKij1EqAHUUAg7rIxqSvDdqSsxw.png?width=1080&height=1920",
+    imageSrc: blogItems[3]?.imageSrc ?? "/images/blogs/Blog 4.webp",
     imageAlt: blogItems[3]?.imageAlt ?? "Fountain pen on a spiral notebook",
     author: blogItems[3]?.author ?? {
       name: "Gasser Amr",
-      avatar: "https://framerusercontent.com/images/pQpsevDWLJSHLRLu9ood9waSezc.png?width=180&height=180",
+      avatar: blogAuthorAvatars.gasserAmr,
     },
     detailBlocks: [
       {
@@ -542,11 +550,11 @@ export const blogArticles: BlogArticleDetail[] = [
       "Egypt",
     ],
     readingTime: "8 min read",
-    imageSrc: blogItems[4]?.imageSrc ?? "https://framerusercontent.com/images/wVQbxVQvV8RAhHs7PXTFePH8v2U.png?width=1080&height=1920",
+    imageSrc: blogItems[4]?.imageSrc ?? "/images/blogs/Blog5.webp",
     imageAlt: blogItems[4]?.imageAlt ?? "Fountain pen on a spiral notebook",
     author: blogItems[4]?.author ?? {
       name: "Cherif Badawy",
-      avatar: "https://framerusercontent.com/images/OqmBJs4LnMzJmbYhG5HndEKehc.png?width=180&height=180",
+      avatar: blogAuthorAvatars.cherifBadawi,
     },
     detailBlocks: [
       {
@@ -641,11 +649,11 @@ export const blogArticles: BlogArticleDetail[] = [
       "Egypt",
     ],
     readingTime: "8 min read",
-    imageSrc: blogItems[5]?.imageSrc ?? "https://framerusercontent.com/images/QBzfcodMZZtSkcucV4RTABKlwYc.png?width=1920&height=1080",
+    imageSrc: blogItems[5]?.imageSrc ?? "/images/blogs/Blog6.webp",
     imageAlt: blogItems[5]?.imageAlt ?? "Team collaborating around a startup product roadmap",
     author: blogItems[5]?.author ?? {
       name: "Cherif Badawy",
-      avatar: "https://framerusercontent.com/images/ZETFiiXqoD6hDw3t8d413XaKU.png?width=876&height=1596",
+      avatar: blogAuthorAvatars.cherifBadawy,
     },
     detailBlocks: [
       {

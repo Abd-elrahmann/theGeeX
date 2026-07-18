@@ -4,6 +4,7 @@
   --packages-padding-x: 16px;
   --packages-padding-y: 48px;
   --packages-container-max-width: 1200px;
+  --packages-grid-max-width: 100%;
   --packages-section-gap: 32px;
   --packages-cards-gap: 20px;
   --packages-title-z-index: 1;
@@ -11,13 +12,13 @@
   --packages-title-size: 56px;
   --packages-title-line-height: 1.08;
   --packages-title-box-height: 62px;
-  --packages-title-gradient-start: rgb(0 0 0 / 0.48);
-  --packages-title-gradient-mid: rgb(0 0 0 / 0.24);
-  --packages-title-gradient-end: rgb(0 0 0 / 0);
+  --packages-title-gradient-start: rgb(0 0 0 / 0.36);
+  --packages-title-gradient-mid: rgb(0 0 0 / 0.18);
+  --packages-title-gradient-end: rgb(0 0 0 / 0.08);
   --packages-title-gradient: linear-gradient(
     180deg,
     var(--packages-title-gradient-start) 0%,
-    var(--packages-title-gradient-mid) 32%,
+    var(--packages-title-gradient-mid) 48%,
     var(--packages-title-gradient-end) 100%
   );
   --packages-title-mask: linear-gradient(
@@ -47,11 +48,11 @@
   --packages-card-title-size: 24px;
   --packages-card-enterprise-title-size: 20px;
   --packages-card-title-line-height: 1.4;
-  --packages-card-description-margin-top: 6px;
+  --packages-card-description-margin-top: 8px;
   --packages-card-description-min-height: auto;
   --packages-card-description-size: 12px;
   --packages-card-description-line-height: 1.35;
-  --packages-card-price-margin-top: 16px;
+  --packages-card-price-margin-top: 32px;
   --packages-card-price-row-min-height: auto;
   --packages-card-price-gap: 8px;
   --packages-card-price-size: 40px;
@@ -61,7 +62,7 @@
   --packages-card-billing-size: 12px;
   --packages-card-billing-line-height: 1.6;
   --packages-card-billing-padding-bottom: 6px;
-  --packages-card-button-margin-top: 16px;
+  --packages-card-button-margin-top: 32px;
   --packages-button-width: min(100%, 300px);
   --packages-button-height: 52px;
   --packages-button-radius: 99px;
@@ -74,7 +75,8 @@
   --packages-button-text-frame-height: 23px;
   --packages-button-orb-width: 360px;
   --packages-button-orb-height: 360px;
-  --packages-card-features-margin-top: 24px;
+  --packages-card-divider-margin-top: 32px;
+  --packages-card-features-margin-top: 32px;
   --packages-card-features-min-height: auto;
   --packages-card-features-padding-x: var(--packages-card-padding-x);
   --packages-card-features-padding-top: 0px;
@@ -99,6 +101,7 @@
   --color-packages-card-description: #5c5c5c;
   --color-packages-card-price: #2c3134;
   --color-packages-card-billing: #5c5c5c;
+  --color-packages-card-divider: rgb(44 49 52 / 0.12);
   --color-packages-card-feature-dot: #000000;
   --color-packages-card-feature-text: #5c5c5c;
   --color-packages-feature-highlight: #0aabc8;
@@ -182,10 +185,12 @@
   :root {
     --packages-padding-x: 0px;
     --packages-padding-y: 64px;
+    --packages-grid-max-width: 1140px;
     --packages-section-gap: 40px;
     --packages-title-size: 180px;
     --packages-title-line-height: 204px;
     --packages-title-box-height: 157px;
+    --packages-card-title-size: 24px;
     --packages-card-padding-x: 28px;
     --packages-card-padding-top: 32px;
     --packages-card-padding-bottom: 32px;
@@ -193,12 +198,16 @@
     --packages-card-top-height: auto;
     --packages-card-description-margin-top: 8px;
     --packages-card-description-min-height: auto;
-    --packages-card-price-margin-top: 16px;
+    --packages-card-description-size: 14px;
+    --packages-card-price-margin-top: 32px;
     --packages-card-price-row-min-height: 56px;
     --packages-card-price-gap: 12px;
-    --packages-card-button-margin-top: 16px;
-    --packages-card-features-margin-top: 16px;
+    --packages-card-price-size: 48px;
+    --packages-card-button-margin-top: 32px;
+    --packages-card-divider-margin-top: 32px;
+    --packages-card-features-margin-top: 32px;
     --packages-card-features-min-height: auto;
+    --packages-card-feature-size: 17px;
     --packages-detail-padding-x: 40px;
     --packages-detail-padding-top: 72px;
     --packages-detail-padding-bottom: 96px;
@@ -219,12 +228,13 @@
 @media (min-width: 1440px) {
   :root {
     --packages-container-max-width: 1200px;
+    --packages-grid-max-width: 1140px;
     --packages-padding-y: 72px;
     --packages-section-gap: 48px;
     --packages-title-size: 240px;
     --packages-title-line-height: 240px;
     --packages-title-box-height: 184px;
-    --packages-card-max-width: 420px;
+    --packages-card-max-width: 450px;
     --packages-card-padding-x: 32px;
     --packages-card-feature-row-max-width: 336px;
     --packages-card-feature-text-width: 320px;
@@ -234,12 +244,13 @@
 @media (min-width: 1920px) {
   :root {
     --packages-container-max-width: 1200px;
+    --packages-grid-max-width: 1140px;
     --packages-padding-y: 72px;
     --packages-section-gap: 48px;
     --packages-title-size: 240px;
     --packages-title-line-height: 240px;
     --packages-title-box-height: 184px;
-    --packages-card-max-width: 420px;
+    --packages-card-max-width: 450px;
     --packages-card-padding-x: 32px;
     --packages-card-feature-row-max-width: 336px;
     --packages-card-feature-text-width: 320px;
@@ -249,12 +260,13 @@
 @media (min-width: 1440px) {
   :root {
     --packages-container-max-width: 1200px;
+    --packages-grid-max-width: 1140px;
     --packages-padding-y: 64px;
     --packages-section-gap: 40px;
     --packages-title-size: 180px;
     --packages-title-line-height: 204px;
     --packages-title-box-height: 157px;
-    --packages-card-max-width: 420px;
+    --packages-card-max-width: 450px;
     --packages-card-padding-x: 28px;
     --packages-card-feature-row-max-width: 336px;
     --packages-card-feature-text-width: 320px;

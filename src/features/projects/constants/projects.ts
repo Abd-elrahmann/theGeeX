@@ -64,17 +64,17 @@ export const projects: ProjectItem[] = [
     detailChipBackground: "var(--projects-detail-chip-travx-background)",
     description:
       "TravX was built to modernize and streamline the travel technology ecosystem through a high-performance digital platform designed for speed, scalability, and seamless connectivity.",
-    image: "/images/projects/travx.png",
+    image: "/images/projects/travx.webp",
     imageAlt: "TravX mobile and website experience preview",
     imagePosition: "58% 42%",
-    detailImage: "/images/Projects-Services/TravxCover.png",
+    detailImage: "/images/Projects-Services/TravxCover.webp",
     detailGallery: [
-      "/images/Projects-Services/travx mock.png",
-      "/images/Projects-Services/travxmoc2.png",
-      "/images/Projects-Services/travx1.png",
-      "/images/Projects-Services/travx2.png",
-      "/images/Projects-Services/travx3.png",
-      "/images/Projects-Services/travx4.png",
+      "/images/Projects-Services/travx mock.webp",
+      "/images/Projects-Services/travxmoc2.webp",
+      "/images/Projects-Services/travx1.webp",
+      "/images/Projects-Services/travx2.webp",
+      "/images/Projects-Services/travx3.webp",
+      "/images/Projects-Services/travx4.webp",
     ],
     processSteps: [
       {
@@ -132,14 +132,14 @@ export const projects: ProjectItem[] = [
     detailChipBackground: "var(--projects-detail-chip-efg-background)",
     description:
       "The Wrap Up was developed for EFGHermes as a bespoke, high-security financial summary and content management engine, ensuring seamless delivery of critical market insights to premier investors.",
-    image: "/images/projects/efg.png",
+    image: "/images/projects/efg.webp",
     imageAlt: "EFG Hermes web application preview",
     imagePosition: "60% 70%",
     detailImageScale: 1,
-    detailImage: "/images/projects/efg.png",
+    detailImage: "/images/projects/efg.webp",
     detailGallery: [
-      "/images/Projects-Services/EFG.png",
-      "/images/Projects-Services/EFG2.png",
+      "/images/Projects-Services/EFG.webp",
+      "/images/Projects-Services/EFG2.webp",
     ],
     processSteps: [
       {
@@ -197,15 +197,15 @@ export const projects: ProjectItem[] = [
     detailChipBackground: "var(--projects-detail-chip-performr-background)",
     description:
       "Performr was architected to revolutionize the entertainment and creative industry, providing a high-performance talent discovery platform where actors, singers, and models can showcase their portfolios, and casting directors can seamlessly source the perfect talent.",
-    image: "/images/projects/performr.png",
+    image: "/images/projects/performr.webp",
     imageAlt: "Performr cross-platform product preview",
     imagePosition: "70% 42%",
-    detailImage: "/images/projects/performr.png",
+    detailImage: "/images/projects/performr.webp",
     detailGallery: [
-      "/images/Projects-Services/Performer.png",
-      "/images/Projects-Services/Performer 2.png",
-      "/images/Projects-Services/Product Strategy & Consultancy2.png",
-      "/images/Projects-Services/UIUX & Product Design2.png",
+      "/images/Projects-Services/Performer.webp",
+      "/images/Projects-Services/Performer 2.webp",
+      "/images/Projects-Services/Product Strategy & Consultancy2.webp",
+      "/images/Projects-Services/UIUX & Product Design2.webp",
     ],
     processSteps: [
       {
@@ -263,17 +263,17 @@ export const projects: ProjectItem[] = [
     detailChipBackground: "var(--projects-detail-chip-moretckts-background)",
     description:
       "MoreTckts was engineered as a comprehensive B2C travel ecosystem, offering seamless cross-platform booking solutions for flights, hotels, and car rentals or limousines engineered for the modern traveler.",
-    image: "/images/projects/moretckts.png",
+    image: "/images/projects/moretckts.webp",
     imageAlt: "moretckts product integration preview",
     imagePosition: "62% 60%",
-    detailImage: "/images/Projects-Services/Moretickts2.png",
+    detailImage: "/images/Projects-Services/Moretickts2.webp",
     detailGallery: [
-      "/images/Projects-Services/moretickts_mock.png",
-      "/images/Projects-Services/Product Strategy & Consultancy1.png",
-      "/images/Projects-Services/moretickts3.png",
-      "/images/Projects-Services/moretickts 2.png",
-      "/images/Projects-Services/moretickts(1).png",
-      "/images/Projects-Services/Moretickts (1).png",
+      "/images/Projects-Services/moretickts_mock.webp",
+      "/images/Projects-Services/Product Strategy & Consultancy1.webp",
+      "/images/Projects-Services/moretickts3.webp",
+      "/images/Projects-Services/moretickts 2.webp",
+      "/images/Projects-Services/moretickts(1).webp",
+      "/images/Projects-Services/Moretickts (1).webp",
     ],
     processSteps: [
       {
@@ -331,15 +331,15 @@ export const projects: ProjectItem[] = [
     detailChipBackground: "var(--projects-detail-chip-astravibe-background)",
     description:
       "AstraVibe's website was designed as a digital flagship that showcases the agency's expertise in strategic marketing, cinematic production, and brand development while establishing authority and driving new business opportunities.",
-    image: "/images/projects/astravibe.png",
+    image: "/images/projects/astravibe.webp",
     imageAlt: "AstraVibe web and mobile apps integration preview",
     imagePosition: "50% 50%",
-    detailImage: "/images/projects/astravibe.png",
+    detailImage: "/images/projects/astravibe.webp",
     detailGallery: [
-      "/images/Projects-Services/astravibe.png",
-      "/images/Projects-Services/astravibe2.png",
-      "/images/Projects-Services/astravibe4.png",
-      "/images/projects/astravibe.png",
+      "/images/Projects-Services/astravibe.webp",
+      "/images/Projects-Services/astravibe2.webp",
+      "/images/Projects-Services/astravibe4.webp",
+      "/images/projects/astravibe.webp",
     ],
     processSteps: [
       {
@@ -397,17 +397,17 @@ export const projects: ProjectItem[] = [
     detailChipBackground: "var(--projects-detail-chip-zamalkawy-background)",
     description:
       "Zamalkawy was engineered as the ultimate digital hub for millions of El Zamalek Sporting Club supporters, seamlessly bridging sports culture with dynamic feature hubs, interactive games, and custom digital retail modules.",
-    image: "/images/projects/zamalkawy.png",
+    image: "/images/projects/zamalkawy.webp",
     imageAlt: "Zamalkawy mobile and website platform preview",
     imagePosition: "58% 46%",
-    detailImage: "/images/projects/zamalkawy.png",
+    detailImage: "/images/projects/zamalkawy.webp",
     detailGallery: [
-      "/images/Projects-Services/zamalkawy (1).png",
-      "/images/Projects-Services/Product Strategy & Consultancy3.png",
-      "/images/Projects-Services/zamalek.png",
-      "/images/Projects-Services/gamehub.png",
-      "/images/Projects-Services/zamalek2.png",
-      "/images/Projects-Services/UIUX & Product Design3.png",
+      "/images/Projects-Services/zamalkawy (1).webp",
+      "/images/Projects-Services/Product Strategy & Consultancy3.webp",
+      "/images/Projects-Services/zamalek.webp",
+      "/images/Projects-Services/gamehub.webp",
+      "/images/Projects-Services/zamalek2.webp",
+      "/images/Projects-Services/UIUX & Product Design3.webp",
     ],
     processSteps: [
       {

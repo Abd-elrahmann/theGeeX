@@ -27,7 +27,7 @@ export function BlogsTitle({ title = blogsHomeSectionTitle }: BlogsTitleProps) {
           className={blogsTitleTextClassName}
           style={{
             display: "inline-block",
-            backgroundImage: "linear-gradient(180deg, rgb(0 0 0 / 48%) 0%, rgb(0 0 0 / 12%) 100%)",
+            backgroundImage: "linear-gradient(180deg, rgb(0 0 0 / 36%) 0%, rgb(0 0 0 / 8%) 100%)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "100% 100%",
             WebkitBackgroundClip: "text",

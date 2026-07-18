@@ -33,6 +33,15 @@ export interface PackageItem {
   featured?: boolean;
 }
 
+export interface PackageBookingContent {
+  slug: string;
+  breadcrumbLabel: string;
+  headingLabel: string;
+  packageTitle: string;
+  description: string;
+  bookingPath: string;
+}
+
 export const packagesSectionTitle = "Packages";
 
 export const packageItems: PackageItem[] = [
@@ -48,9 +57,10 @@ export const packageItems: PackageItem[] = [
     ],
     description: "Build a professional foundation with everything you need to launch confidently. From branding and your website to essential business tools, we create a seamless digital presence built for growth.",
     cardDescription: "For startups launching with confidence",
-    price: "12,000",
+    price: "EGP 49,999",
+    detailPrice: "EGP 49,999",
     detailPriceLabel: "Package Price",
-    billingCycle: "EGP / month",
+    billingCycle: "",
     features: [
       { text: "Build credibility from day one" },
       { text: "Fast go-to-market execution", highlightedWords: ["Fast"] },
@@ -59,7 +69,7 @@ export const packageItems: PackageItem[] = [
       { text: "Website or landing page", highlightedWords: ["Website"] },
       { text: "Professional brand identity", highlightedWords: ["brand identity"] },
     ],
-    detailImage: "/images/services/One.png",
+    detailImage: "/images/services/One.webp",
     detailImageAlt: "Startup Launcher package preview",
     includedItems: [
       {
@@ -103,10 +113,10 @@ export const packageItems: PackageItem[] = [
     ],
     description: "Build a connected digital ecosystem with advanced branding, a high-performance website, a mobile app, and smart automation-giving your business the tools it needs to scale with confidence.",
     cardDescription: "for growing buisnessed ready to grow",
-    price: "25,000",
-    detailPrice: "79,999 EGP",
+    price: "EGP 79,999",
+    detailPrice: "EGP 79,999",
     detailPriceLabel: "Package Price",
-    billingCycle: "EGP / month",
+    billingCycle: "",
     featured: true,
     features: [
       { text: "Content strategy & growth tools" },
@@ -116,7 +126,7 @@ export const packageItems: PackageItem[] = [
       { text: "Advanced SEO-ready website" },
       { text: "Complete brand guidelines", highlightedWords: ["Complete"] },
     ],
-    detailImage: "/images/services/Two.png",
+    detailImage: "/images/services/Two.webp",
     detailImageAlt: "Digital Ecosystem package preview",
     includedItems: [
       {
@@ -169,7 +179,7 @@ export const packageItems: PackageItem[] = [
       { text: "Custom web platforms" },
       { text: "Premium branding & design systems", highlightedWords: ["Premium"] },
     ],
-    detailImage: "/images/services/Three.png",
+    detailImage: "/images/services/Three.webp",
     detailImageAlt: "Enterprise Transformation package preview",
     includedItems: [
       {
@@ -203,4 +213,21 @@ export const packageItems: PackageItem[] = [
 
 export function getPackageBySlug(slug: string) {
   return packageItems.find((item) => item.slug === slug);
+}
+
+export function getPackageBookingContentBySlug(slug: string): PackageBookingContent {
+  const packageItem = getPackageBySlug(slug);
+
+  if (!packageItem) {
+    throw new Error(`Package booking content not found for slug: ${slug}`);
+  }
+
+  return {
+    slug: packageItem.slug,
+    breadcrumbLabel: packageItem.name.trim(),
+    headingLabel: packageItem.chips[0]?.label ?? "Package",
+    packageTitle: packageItem.name.trim(),
+    description: packageItem.description,
+    bookingPath: `/${packageItem.chips[0]?.label.toLowerCase() ?? "packages"}/book-package`,
+  };
 }

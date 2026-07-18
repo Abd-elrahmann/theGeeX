@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { usePathname } from "next/navigation";
+import type { LenisOptions } from "lenis";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
@@ -12,6 +13,55 @@ import {
   prepareFreshPageScrollSession,
   syncScrollTriggersAfterReset,
 } from "@/lib/scroll-session";
+
+const LENIS_WHEEL_DELTA_LIMIT = 120;
+const LENIS_TOUCH_DELTA_LIMIT = 80;
+const NORMALIZED_SCROLL_MOMENTUM = 0.35;
+const DESKTOP_WHEEL_MULTIPLIER = 0.45;
+const DESKTOP_TOUCH_MULTIPLIER = 0.55;
+
+function clampGestureDelta(value: number, maxDelta: number): number {
+  if (value === 0) {
+    return 0;
+  }
+
+  return Math.sign(value) * Math.min(Math.abs(value), maxDelta);
+}
+
+function isTouchLikeEvent(event: Event): boolean {
+  if (event.type.startsWith("touch")) {
+    return true;
+  }
+
+  return event instanceof PointerEvent && event.pointerType === "touch";
+}
+
+interface ScrollInputNormalizerProps {
+  enabled: boolean;
+}
+
+function ScrollInputNormalizer({ enabled }: ScrollInputNormalizerProps) {
+  useEffect(() => {
+    if (!enabled) {
+      ScrollTrigger.normalizeScroll(false);
+      return;
+    }
+
+    const normalizer = ScrollTrigger.normalizeScroll({
+      allowNestedScroll: true,
+      lockAxis: true,
+      momentum: NORMALIZED_SCROLL_MOMENTUM,
+      type: "touch,wheel,pointer",
+    });
+
+    return () => {
+      normalizer?.kill();
+      ScrollTrigger.normalizeScroll(false);
+    };
+  }, [enabled]);
+
+  return null;
+}
 
 function LenisScrollTriggerSync() {
   const lenis = useLenis();
@@ -67,7 +117,17 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const isSubDesktop = useMediaQuery(SUB_DESKTOP_MEDIA_QUERY);
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
   const pathname = usePathname();
-  const shouldDisableSmoothScroll = pathname === "/book-a-meeting";
+  const shouldDisableSmoothScroll = pathname === "/book-a-meeting" || isSubDesktop;
+
+  const normalizeLenisInput: NonNullable<LenisOptions["virtualScroll"]> = (data) => {
+    const isTouchEvent = isTouchLikeEvent(data.event);
+    const deltaLimit = isTouchEvent ? LENIS_TOUCH_DELTA_LIMIT : LENIS_WHEEL_DELTA_LIMIT;
+
+    data.deltaX = clampGestureDelta(data.deltaX, deltaLimit);
+    data.deltaY = clampGestureDelta(data.deltaY, deltaLimit);
+
+    return true;
+  };
 
   useLayoutEffect(() => {
     prepareFreshPageScrollSession();
@@ -78,7 +138,12 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   }, [pathname]);
 
   if (shouldDisableSmoothScroll) {
-    return <>{children}</>;
+    return (
+      <>
+        <ScrollInputNormalizer enabled={false} />
+        {children}
+      </>
+    );
   }
 
   return (
@@ -87,11 +152,14 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       root
       options={{
         autoRaf: false,
+        syncTouch: false,
         lerp: isSubDesktop ? 0.02 : 0.08,
-        touchMultiplier: isSubDesktop ? 0.12 : 0.85,
-        wheelMultiplier: 0.62,
+        touchMultiplier: isSubDesktop ? 0.12 : DESKTOP_TOUCH_MULTIPLIER,
+        wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
+        virtualScroll: normalizeLenisInput,
       }}
     >
+      <ScrollInputNormalizer enabled />
       <LenisScrollTriggerSync />
       {children}
     </ReactLenis>

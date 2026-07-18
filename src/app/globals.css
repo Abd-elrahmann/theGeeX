@@ -32,10 +32,20 @@
 html,
 body {
   max-width: 100%;
+  min-height: 100%;
+  overscroll-behavior: none;
+  touch-action: pan-y;
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
+html {
+  min-height: -webkit-fill-available;
+}
+
 body {
+  min-height: var(--viewport-height);
+  min-height: -webkit-fill-available;
   position: relative;
   background-color: var(--color-background);
   color: var(--color-text);
@@ -49,10 +59,10 @@ body {
 body::before {
   content: "";
   position: fixed;
-  top: calc(-1 * env(safe-area-inset-top, 0px));
-  right: 0;
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-  left: 0;
+  top: calc(-1 * var(--safe-area-top));
+  right: calc(-1 * var(--safe-area-right));
+  bottom: calc(-1 * var(--safe-area-bottom));
+  left: calc(-1 * var(--safe-area-left));
   z-index: 0;
   pointer-events: none;
   background-color: var(--color-storytelling-background-dark);
@@ -291,7 +301,7 @@ body::before {
   justify-content: center;
   align-items: flex-start;
   overflow: visible;
-  max-width: var(--team-container-max-width);
+  max-width: var(--team-gallery-scaled-width);
   text-align: center;
   -webkit-mask-image: var(--team-title-mask);
   mask-image: var(--team-title-mask);
@@ -314,12 +324,24 @@ body::before {
 }
 
 .navbar-nav-shell {
+  -webkit-backdrop-filter: blur(var(--navbar-blur));
+  backdrop-filter: blur(var(--navbar-blur));
   transition:
     border-radius var(--navbar-variant-duration) var(--navbar-variant-ease-out),
     box-shadow var(--navbar-variant-duration) var(--navbar-variant-ease-out),
     width var(--navbar-variant-duration) var(--navbar-variant-ease-out),
     max-width var(--navbar-variant-duration) var(--navbar-variant-ease-out),
     padding var(--navbar-variant-duration) var(--navbar-variant-ease-out);
+}
+
+.navbar-mobile-menu-surface {
+  -webkit-backdrop-filter: blur(var(--navbar-blur));
+  backdrop-filter: blur(var(--navbar-blur));
+}
+
+.safari-overflow-x-clip {
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .navbar-nav-shell--primary {

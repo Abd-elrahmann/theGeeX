@@ -24,8 +24,14 @@ export function ServiceImage({
 }: ServiceImageProps) {
   const isMobile = variant === "mobile";
   const isPage = variant === "page";
-  const isDesktop = variant === "desktop";
-  const isTablet = variant === "tablet";
+  const imageSizes =
+    variant === "desktop"
+      ? "(min-width: 1024px) 347px, (min-width: 800px) 50vw, calc(100vw - 32px)"
+      : variant === "tablet"
+        ? "(min-width: 800px) calc((100vw - 64px - 12px) / 2), calc(100vw - 32px)"
+        : variant === "page"
+          ? "(min-width: 800px) 50vw, calc(100vw - 32px)"
+          : "calc(100vw - 32px)";
   const resolvedImageSrc = imageSrc ?? service.image;
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
@@ -43,9 +49,7 @@ export function ServiceImage({
       alt={resolvedImageAlt}
       fill
       loading={loading}
-      sizes={
-        variant === "desktop" ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 800px) 50vw, 100vw"
-      }
+      sizes={imageSizes}
       className={imageClassName}
       priority={eager || service.id === 1}
     />
@@ -65,9 +69,9 @@ export function ServiceImage({
             alt={resolvedImageAlt}
             fill
             loading={loading}
-            sizes="100vw"
+            sizes={imageSizes}
             className={cn(
-              "object-contain object-center rounded-(--services-image-radius)",
+              "object-cover object-center rounded-(--services-image-radius)",
               isPlaceholder && "object-contain p-8",
             )}
             priority={eager || service.id === 1}

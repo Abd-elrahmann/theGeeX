@@ -128,6 +128,7 @@ export function useStorytellingScroll({
         }
 
         const mobileScrollElement = pinStartElement.parentElement ?? stageElement;
+        const mobileBackgroundStartTrigger = containerElement.previousElementSibling ?? containerElement;
         const usesNativeStickyMobileStage = layoutMode === "mobile";
         const getMobileProgressDistance = () => {
           const distance = readRootCssNumber(
@@ -149,6 +150,8 @@ export function useStorytellingScroll({
           readRootCssNumber("--storytelling-mobile-progress-start-offset", 0);
         const getMobileBackgroundStartOffset = () =>
           readRootCssNumber("--storytelling-mobile-background-start-offset", 0);
+        const getMobileBackgroundViewportDelayRatio = () =>
+          readRootCssNumber("--storytelling-mobile-background-viewport-delay-ratio", 0);
         const getMobileBackgroundFadeDistance = () =>
           Math.max(
             readRootCssNumber("--storytelling-mobile-background-fade-distance", 240),
@@ -201,8 +204,11 @@ export function useStorytellingScroll({
         const mobileSectionBackgroundTrigger =
           !mobileBackgroundEnabled && backgroundEnabled
             ? ScrollTrigger.create({
-                trigger: pinStartElement,
-                start: () => `top top+=${getMobileBackgroundStartOffset() + window.innerHeight * 0.2}`,
+                trigger: mobileBackgroundStartTrigger,
+                start: () => {
+                  const viewportDelay = window.innerHeight * getMobileBackgroundViewportDelayRatio();
+                  return `bottom bottom-=${getMobileBackgroundStartOffset() + viewportDelay}`;
+                },
                 endTrigger: containerElement,
                 end: "bottom top",
                 invalidateOnRefresh: true,

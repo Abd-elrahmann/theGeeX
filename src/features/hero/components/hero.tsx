@@ -14,8 +14,8 @@ export function Hero() {
     <section
       ref={sectionRef}
       className={cn(
-        "relative isolate z-(--hero-z-index) flex h-[100svh] w-full max-w-full items-center justify-center",
-        "overflow-x-clip overflow-y-visible bg-background",
+        "relative isolate z-(--hero-z-index) flex h-svh w-full max-w-full items-center justify-center",
+        "safari-overflow-x-clip overflow-y-visible bg-background",
         "md:[clip-path:var(--hero-path-clip-path)]",
         "px-(--hero-padding-x) py-0",
       )}
@@ -23,7 +23,7 @@ export function Hero() {
     >
       <div
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 flex h-[100svh] w-full max-w-full justify-center overflow-x-clip",
+          "pointer-events-none absolute inset-x-0 top-0 flex h-svh w-full max-w-full justify-center safari-overflow-x-clip",
           "max-md:items-center max-md:overflow-y-visible",
           "md:items-start md:overflow-y-visible",
         )}

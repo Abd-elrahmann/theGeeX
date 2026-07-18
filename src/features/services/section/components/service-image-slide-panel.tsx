@@ -49,7 +49,12 @@ export function ServiceImageSlidePanel({
   }
 
   return (
-    <div className={cn("relative h-full w-full overflow-hidden rounded-(--services-image-radius)", className)}>
+    <div
+      className={cn(
+        "relative h-full w-full overflow-hidden rounded-(--services-image-radius) transform-gpu backface-hidden",
+        className,
+      )}
+    >
       {services.map((service, index) => {
         const isActive = index === activeIndex;
         const isTransitioning = index === previousActiveIndex && previousActiveIndex !== activeIndex;
@@ -58,7 +63,7 @@ export function ServiceImageSlidePanel({
           <motion.div
             key={service.id}
             aria-hidden={!isActive}
-            className={cn("will-change-transform", servicesImageSlideLayerClassName)}
+            className={cn("transform-gpu will-change-transform backface-hidden", servicesImageSlideLayerClassName)}
             initial={false}
             animate={{ y: getPanelOffset(index, activeIndex) }}
             transition={servicesImageSlideTransition}

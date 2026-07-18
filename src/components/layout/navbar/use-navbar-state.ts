@@ -18,6 +18,7 @@ interface NavbarState {
 }
 
 const NAVBAR_HIDE_SCROLL_THRESHOLD = 40;
+const NAVBAR_DIRECTION_THRESHOLD = 24;
 const NAVBAR_SCROLL_READY_DELAY_MS = 500;
 
 const INITIAL_NAVBAR_STATE: NavbarState = {
@@ -61,7 +62,9 @@ function resolveNavbarState(
 }
 
 export function useNavbarState(): NavbarState {
-  const { scrollDirection, isAtTop, scrollY } = useScrollDirection();
+  const { scrollDirection, isAtTop, scrollY } = useScrollDirection({
+    threshold: NAVBAR_DIRECTION_THRESHOLD,
+  });
   const [isScrollReady, setIsScrollReady] = useState(false);
   const [heroScrollRevision, setHeroScrollRevision] = useState(0);
 

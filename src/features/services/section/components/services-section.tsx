@@ -89,12 +89,14 @@ export function ServicesSection() {
       "--services-scroll-step-vh",
       services.length > 1 ? 100 : 0,
     );
+    const stickyTop = readRootCssNumber("--services-sticky-top", 0);
     const stepDistance = (scrollStepVh * window.innerHeight) / 100;
     const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
 
     return {
       stepDistance,
       sectionTop,
+      stickyTop,
     };
   }, [containerRef]);
 
@@ -106,7 +108,7 @@ export function ServicesSection() {
         return;
       }
 
-      const nextPosition = metrics.sectionTop + index * metrics.stepDistance;
+      const nextPosition = metrics.sectionTop - metrics.stickyTop + index * metrics.stepDistance;
       scrollToPosition(nextPosition);
     },
     [getDesktopScrollStepMetrics],
@@ -400,7 +402,7 @@ export function ServicesSection() {
       ref={containerRef}
       id="services"
       className={cn(
-        "relative z-20 w-full overflow-x-clip bg-background",
+        "relative z-20 w-full safari-overflow-x-clip bg-background",
         "mt-(--services-margin-top)",
         isDesktop && isPointerFine && "cursor-none",
       )}
@@ -481,7 +483,7 @@ export function ServicesSection() {
             }}
           >
             <div
-              className="sticky top-0 overflow-visible"
+                    className="sticky top-0 overflow-visible"
               style={{
                 height:
                   mobileStageMetrics.stageHeight > 0

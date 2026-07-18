@@ -19,7 +19,7 @@ export function PackagesSection() {
 
         <div
           className={cn(
-            "grid w-full items-start justify-center gap-(--packages-cards-gap)",
+            "mx-auto grid w-full max-w-(--packages-grid-max-width) items-start justify-center gap-(--packages-cards-gap)",
             "grid-cols-1 lg:grid-cols-3",
           )}
         >

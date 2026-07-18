@@ -4,7 +4,7 @@ import { ourTeamSectionTitle } from "@/features/our-team/constants/our-team";
 
 const ourTeamTitleHeadingClassName = cn(
   "relative m-0 mx-auto flex w-full justify-center p-0",
-  "max-w-(--team-container-max-width)",
+  "max-w-(--team-gallery-scaled-width)",
 );
 
 const ourTeamTitleTextClassName = cn(

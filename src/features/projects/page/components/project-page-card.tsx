@@ -49,7 +49,7 @@ export function ProjectPageCard({ project, index, totalCards, scrollProgress }: 
         <span className="h-auto w-auto shrink-0 whitespace-pre text-left font-cal-sans text-(length:--projects-card-index-size) leading-none font-(--projects-card-index-weight) tracking-normal text-(--color-project-card-foreground) font-features-normal">
           {formatIndex(index)}
         </span>
-        <span className="z-2 flex h-min min-w-0 flex-1 flex-row flex-wrap items-start justify-end gap-(--projects-card-category-gap)">
+        <span className="z-2 hidden h-min min-w-0 flex-1 flex-row flex-wrap items-start justify-end gap-(--projects-card-category-gap) md:flex">
           {project.categories.map((category) => (
             <span
               key={category}

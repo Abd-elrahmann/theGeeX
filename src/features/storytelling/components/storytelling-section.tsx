@@ -185,7 +185,7 @@ export function StorytellingSection() {
       ref={containerRef}
       id="storytelling"
       className={cn(
-        "relative isolate z-(--storytelling-section-z-index) w-full overflow-x-clip",
+        "relative isolate z-(--storytelling-section-z-index) w-full safari-overflow-x-clip",
         usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-visible",
         "px-(--storytelling-section-padding-x)",
         "mt-(--storytelling-margin-top)",

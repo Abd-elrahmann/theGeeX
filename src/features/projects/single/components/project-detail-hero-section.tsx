@@ -56,9 +56,9 @@ export function ProjectDetailHeroSection({
             <p className="m-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">Year :</p>
             <p className="m-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">{project.year}</p>
           </div>
-          <div className="box-border flex min-h-(--projects-detail-chip-height) w-fit max-w-full min-w-0 flex-row flex-wrap content-center items-center justify-center gap-x-(--projects-detail-chip-inner-gap) gap-y-1 overflow-hidden rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-chip-padding-x) py-(--projects-detail-chip-padding-y) text-(--projects-detail-chip-color)">
+          <div className="box-border inline-flex h-(--projects-detail-chip-height) w-auto shrink-0 self-start flex-row flex-nowrap items-center justify-start gap-x-(--projects-detail-chip-inner-gap) overflow-hidden rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-chip-padding-x) py-(--projects-detail-chip-padding-y) whitespace-nowrap text-(--projects-detail-chip-color)">
             <p className="m-0 shrink-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">Category :</p>
-            <p className="m-0 min-w-0 max-w-full text-center font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium whitespace-normal wrap-break-word">{primaryCategory}</p>
+            <p className="m-0 shrink-0 text-left font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium whitespace-nowrap">{primaryCategory}</p>
           </div>
         </div>
       </div>

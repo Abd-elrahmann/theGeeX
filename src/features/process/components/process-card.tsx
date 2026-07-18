@@ -95,7 +95,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         >
           {isFinalCard ? (
             <Image
-              src="/images/processLogo.png"
+              src="/images/processLogo.webp"
               alt="GeeX logo"
               width={104}
               height={53}

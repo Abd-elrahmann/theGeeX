@@ -21,8 +21,9 @@ export function NavbarMobileMenu({ isOpen, isRoundedNav, onClose }: NavbarMobile
     <div
       id="navbar-mobile-menu"
       className={cn(
+        "navbar-mobile-menu-surface safari-overflow-x-clip",
         "absolute inset-x-0 top-full z-(--navbar-mobile-menu-z-index) box-border",
-        "flex w-full max-w-full flex-col flex-nowrap items-center overflow-x-clip",
+        "flex w-full max-w-full flex-col flex-nowrap items-center",
         "justify-center md:justify-start",
         "bg-surface backdrop-blur-(--navbar-blur)",
         "shadow-(--navbar-mobile-menu-shadow)",

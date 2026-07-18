@@ -39,7 +39,7 @@ export default function Home() {
       <AwardsSection />
       <BlogsSection />
       <PackagesSection />
-      <div className="relative mt-(--lets-talk-margin-top) min-h-(--lets-talk-footer-reveal-height)">
+      <div className="relative mt-(--lets-talk-margin-top) min-h-(--lets-talk-footer-reveal-height) md:mt-0">
         <div className="sticky top-(--navbar-height) z-10 md:top-0">
           <LetsTalkSection revealFooterOnScroll />
         </div>

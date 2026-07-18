@@ -429,7 +429,7 @@ export function OurTeamGallery({
   }
 
   return (
-    <div className="relative mx-auto h-(--team-gallery-scaled-height) w-(--team-gallery-scaled-width) max-w-full overflow-visible">
+    <div className="relative h-(--team-gallery-scaled-height) w-full max-w-full overflow-visible">
       <div
         className={cn(
           "relative origin-top-left scale-(--team-gallery-scale) overflow-visible",

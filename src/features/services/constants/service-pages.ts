@@ -152,9 +152,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "We help businesses turn ideas into scalable digital products through strategic planning, product discovery, technology selection, and roadmap development. By aligning business goals with technical execution, we reduce risk, accelerate development, and create a clear path from concept to launch.",
     overviewImageFiles: [
-      "/images/Projects-Services/Product Strategy & Consultancy1.png",
-      "/images/Projects-Services/Product Strategy & Consultancy2.png",
-      "/images/Projects-Services/Product Strategy & Consultancy3.png",
+      "/images/Projects-Services/Product Strategy & Consultancy1.webp",
+      "/images/Projects-Services/Product Strategy & Consultancy2.webp",
+      "/images/Projects-Services/Product Strategy & Consultancy3.webp",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Build with Confidence",
@@ -163,19 +163,19 @@ export const servicePageConfigs = {
         title: "Product Roadmapping",
         description:
           "Define features, priorities, timelines, and milestones through a structured roadmap that aligns business goals with technical execution.",
-        imageFile: "Product Roadmapping & Scoping.png",
+        imageFile: "Product Roadmapping & Scoping.webp",
       },
       {
         title: "Technology Strategy",
         description:
           "Select the right technologies, frameworks, and architecture to build a scalable, secure, and future-ready digital product.",
-        imageFile: "Tech Stack Selection.png",
+        imageFile: "Tech Stack Selection.webp",
       },
       {
         title: "Market & Technical Feasibility",
         description:
           "Evaluate business viability, technical requirements, and potential risks before development begins, enabling informed decisions and reducing costly mistakes.",
-        imageFile: "Market & Technical Feasibility.png",
+        imageFile: "Market & Technical Feasibility.webp",
       },
     ],
     outcomes: {
@@ -221,9 +221,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "At TheGeeX, design is where technology meets art. We create user-centered digital experiences that balance functionality, usability, and visual excellence. Through research, strategy, and thoughtful design systems, we help businesses deliver products that users enjoy and trust.",
     overviewImageFiles: [
-      "/images/Projects-Services/UIUX & Product Design1.png",
-      "/images/Projects-Services/UIUX & Product Design2.png",
-      "/images/Projects-Services/UIUX & Product Design3.png",
+      "/images/Projects-Services/UIUX & Product Design1.webp",
+      "/images/Projects-Services/UIUX & Product Design2.webp",
+      "/images/Projects-Services/UIUX & Product Design3.webp",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Build with Confidence",
@@ -232,19 +232,19 @@ export const servicePageConfigs = {
         title: "User Research & Wireframing",
         description:
           "Mapping out frictionless user psychology and structural blueprints.",
-        imageFile: "User Research & Wireframing (1).png",
+        imageFile: "User Research & Wireframing (1).webp",
       },
       {
         title: "High-Fidelity UI Design",
         description:
           "Creating modern, dark-mode-optimized, high-end visual designs that stand out in the global market.",
-        imageFile: "High-Fidelity UI Design.png",
+        imageFile: "High-Fidelity UI Design.webp",
       },
       {
         title: "Interactive Prototyping",
         description:
           "Delivering live, clickable micro-interactions to visualize the end-user experience before coding.",
-        imageFile: "Interactive Prototyping.png",
+        imageFile: "Interactive Prototyping.webp",
       },
     ],
     outcomes: {
@@ -285,9 +285,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "A powerful user experience starts with an even stronger foundation. At TheGeeX, we design and engineer robust backend systems, cloud environments, and data architectures that ensure your applications remain fast, secure, and reliable under any level of demand. Our solutions are built to scale with your business and support long-term growth.",
     overviewImageFiles: [
-      "/images/Projects-Services/UIUX & Product Design1.png",
-      "/images/Projects-Services/UIUX & Product Design3.png",
-      "/images/Projects-Services/EFG2.png",
+      "/images/Projects-Services/UIUX & Product Design1.webp",
+      "/images/Projects-Services/UIUX & Product Design3.webp",
+      "/images/Projects-Services/EFG2.webp",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Build with Confidence",
@@ -296,19 +296,19 @@ export const servicePageConfigs = {
         title: "Scalable Backend Architecture",
         description:
           "Custom, clean-coded server applications leveraging high-performance frameworks (Laravel/PHP, Node.js).",
-        imageFile: "Scalable Backend Architecture.png",
+        imageFile: "Scalable Backend Architecture.webp",
       },
       {
         title: "Cloud Infrastructure Management",
         description:
           "Enterprise-grade cloud deployment, monitoring, and auto-scaling automated via AWS.",
-        imageFile: "Cloud Infrastructure Management.png",
+        imageFile: "Cloud Infrastructure Management.webp",
       },
       {
         title: "Database Design & Optimization",
         description:
           "Structuring high-speed, secure data pipelines built for complex querying and zero downtime.",
-        imageFile: "Database Design & Optimization.png",
+        imageFile: "Database Design & Optimization.webp",
       },
     ],
     outcomes: {
@@ -349,9 +349,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "We transform complex functionality into fast, responsive, and intuitive digital experiences. Using modern web frameworks and mobile technologies, we develop applications that deliver exceptional performance, seamless interactions, and consistent experiences across every device.",
     overviewImageFiles: [
-      "/images/Projects-Services/UIUX & Product Design2.png",
-      "/images/Projects-Services/astravibe2.png",
-      "/images/Projects-Services/travx1.png",
+      "/images/Projects-Services/UIUX & Product Design2.webp",
+      "/images/Projects-Services/astravibe2.webp",
+      "/images/Projects-Services/travx1.webp",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Build with Confidence",
@@ -360,19 +360,19 @@ export const servicePageConfigs = {
         title: "High-Performance Web Apps",
         description:
           "Clean, highly interactive frontends built with modern JavaScript frameworks (React, Next.js).",
-        imageFile: "Performance Optimization.png",
+        imageFile: "Performance Optimization.webp",
       },
       {
         title: "Native & Cross-Platform Mobile Apps",
         description:
           "Deploying premium mobile applications optimized for both iOS and Android stores.",
-        imageFile: "Native & Cross-Platform Mobile Apps.png",
+        imageFile: "Native & Cross-Platform Mobile Apps.webp",
       },
       {
         title: "Performance Optimization",
         description:
           "Compressing load times, streamlining rendering, and optimizing for flawless SEO and Core Web Vitals.",
-        imageFile: "High-Performance Web Apps.png",
+        imageFile: "High-Performance Web Apps.webp",
       },
     ],
     outcomes: {
@@ -413,9 +413,9 @@ export const servicePageConfigs = {
     overviewDescription:
       "Modern software thrives on connectivity. At TheGeeX, we design secure, scalable APIs and seamless integrations that allow systems, platforms, and third-party services to communicate effortlessly. From internal operations to external partnerships, we help businesses create connected ecosystems that improve efficiency, automation, and data flow.",
     overviewImageFiles: [
-      "/images/Projects-Services/UIUX & Product Design1.png",
-      "/images/Projects-Services/EFG2.png",
-      "/images/Projects-Services/UIUX & Product Design3.png",
+      "/images/Projects-Services/UIUX & Product Design1.webp",
+      "/images/Projects-Services/EFG2.webp",
+      "/images/Projects-Services/UIUX & Product Design3.webp",
     ],
     deliverTitle: "What We Deliver",
     deliverMainTitle: "Everything You Need to Build with Confidence",
@@ -424,19 +424,19 @@ export const servicePageConfigs = {
         title: "Custom API Development",
         description:
           "Building high-speed, highly secure internal and external API frameworks.",
-        imageFile: "Custom API Development.png",
+        imageFile: "Custom API Development.webp",
       },
       {
         title: "Enterprise Legacy Integrations",
         description:
           "Connecting modern apps seamlessly with heavy, legacy enterprise databases and software.",
-        imageFile: "Enterprise Legacy Integrations.png",
+        imageFile: "Enterprise Legacy Integrations.webp",
       },
       {
         title: "Third-Party Engine Orchestration",
         description:
           "Seamlessly integrating payment gateways, CRM engines, and global data distribution networks.",
-        imageFile: "Third-Party Engine Orchestration.png",
+        imageFile: "Third-Party Engine Orchestration.webp",
       },
     ],
     outcomes: {

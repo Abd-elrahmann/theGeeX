@@ -31,7 +31,7 @@ export function TestimonialCard({ item }: TestimonialCardProps) {
       style={{ backgroundColor: "var(--color-testimonials-card-bg)" }}
       className={cn(
         "relative box-border flex h-(--testimonials-card-height) w-(--testimonials-card-width) shrink-0 snap-start flex-col overflow-hidden rounded-(--testimonials-card-radius)",
-        "border border-(--color-testimonials-card-border) bg-(--color-testimonials-card-bg) p-(--testimonials-card-padding)",
+        "bg-(--color-testimonials-card-bg) p-(--testimonials-card-padding)",
       )}
     >
       <div className="flex min-h-(--testimonials-card-content-min-height) w-full flex-1 flex-col gap-(--testimonials-card-content-gap)">
