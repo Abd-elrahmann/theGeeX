@@ -7,9 +7,8 @@ import { useState } from "react";
 
 import { AnimatedArrowSwap } from "@/components/shared/animations/animated-arrow-swap";
 import { ArrowUpRightIcon } from "@/components/shared/icons/arrow-up-right";
-import { siteConfig } from "@/config/site.config";
 import { letsTalkContent } from "@/features/lets-talk/constants/lets-talk";
-import type { PackageItem } from "@/features/packages/constants/packages";
+import { getPackageBookingPath, type PackageItem } from "@/features/packages/constants/packages";
 import { packageDetailButtonTransition } from "@/features/packages/single/utils/package-detail";
 import { cn } from "@/lib/cn";
 
@@ -21,6 +20,7 @@ export function PackageDetailCtaSection({ item }: PackageDetailCtaSectionProps) 
   const [isHovered, setIsHovered] = useState(false);
   const packagePrice = item.detailPrice ?? (item.billingCycle ? `${item.price} EGP` : item.price);
   const packagePriceLabel = item.detailPriceLabel ?? "Package Price";
+  const packageBookingPath = getPackageBookingPath(item.slug);
 
   return (
     <section className="relative min-h-(--packages-detail-cta-min-height) overflow-hidden rounded-(--packages-detail-cta-radius)">
@@ -54,7 +54,7 @@ export function PackageDetailCtaSection({ item }: PackageDetailCtaSectionProps) 
 
           <motion.div initial="rest" animate={isHovered ? "hover" : "rest"} className="relative mt-4">
             <Link
-              href={siteConfig.cta.href}
+              href={packageBookingPath}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className={cn(

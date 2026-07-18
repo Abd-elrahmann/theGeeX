@@ -10,6 +10,16 @@ interface BlogDetailHeroSectionProps {
 }
 
 export function BlogDetailHeroSection({ article }: BlogDetailHeroSectionProps) {
+  const mobileCategoryRows = article.categories.reduce<string[][]>((rows, category, index) => {
+    if (index % 2 === 0) {
+      rows.push([category]);
+      return rows;
+    }
+
+    rows[rows.length - 1]?.push(category);
+    return rows;
+  }, []);
+
   return (
     <>
       <DetailBreadcrumb
@@ -36,19 +46,23 @@ export function BlogDetailHeroSection({ article }: BlogDetailHeroSectionProps) {
 
         <p className="m-0 font-poppins text-[16px] leading-[1.6] font-normal text-text">{article.date}</p>
 
-        <div className="flex flex-wrap items-center gap-3">
-          {article.categories.map((category) => (
-            <span
-              key={category}
-              className={cn(
-                "box-border inline-flex h-min w-auto max-w-full flex-nowrap items-center justify-start gap-2.5 overflow-hidden whitespace-nowrap rounded-4xl px-4 py-1.5",
-                "bg-(--color-ai-growth-accent) backdrop-blur-[68px]",
-                "font-poppins text-(length:--blogs-card-badge-size) leading-(--blogs-card-badge-line-height)",
-                "font-normal tracking-[-0.02em] text-brand-foreground",
-              )}
-            >
-              {category}
-            </span>
+        <div className="flex w-full flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
+          {mobileCategoryRows.map((row, rowIndex) => (
+            <div key={`${row[0]}-${rowIndex}`} className="flex flex-wrap items-center gap-3 md:contents">
+              {row.map((category) => (
+                <span
+                  key={category}
+                  className={cn(
+                    "box-border inline-flex h-min w-auto max-w-full flex-nowrap items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-4xl px-4 py-1.5 md:justify-start",
+                    "bg-(--color-ai-growth-accent) backdrop-blur-[68px]",
+                    "font-poppins text-(length:--blogs-card-badge-size) leading-(--blogs-card-badge-line-height)",
+                    "font-normal tracking-[-0.02em] text-brand-foreground",
+                  )}
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
           ))}
         </div>
       </header>

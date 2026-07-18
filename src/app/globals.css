@@ -63,7 +63,7 @@ body::before {
   right: calc(-1 * var(--safe-area-right));
   bottom: calc(-1 * var(--safe-area-bottom));
   left: calc(-1 * var(--safe-area-left));
-  z-index: 0;
+  z-index: var(--storytelling-page-background-z-index);
   pointer-events: none;
   background-color: var(--color-storytelling-background-dark);
   opacity: var(--storytelling-page-background-opacity);

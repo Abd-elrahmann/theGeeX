@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { cn } from "@/lib/cn";
-import { useMediaQuery } from "@/hooks/use-media-query";
 
 import {
   ourTeamCards,
@@ -26,6 +25,10 @@ const inactiveMobileAutoHoverState = {
   isActive: false,
   direction: 1 as 1 | -1,
 };
+const legacyMobileCardSize = {
+  width: 199,
+  height: 300,
+} as const;
 
 const teamCardImageBaseStyle = {
   width: ourTeamImageBaseStyle.width,
@@ -212,25 +215,19 @@ function OurTeamAnimatedCard({
 function OurTeamMobileCard({
   card,
   isActive,
-  isCircle = false,
 }: {
   card: TeamCard;
   isActive: boolean;
-  isCircle?: boolean;
 }) {
-  const size = ourTeamCardSizes.standard;
+  const size = legacyMobileCardSize;
 
   return (
     <figure
-      className={cn(
-        "group relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius)",
-        isCircle && "rounded-full",
-        "bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]",
-      )}
+      className="group relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius) bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]"
       style={{
         background: "transparent",
-        aspectRatio: isCircle ? "1 / 1.18" : `${size.width} / ${size.height}`,
-        paddingTop: isCircle ? 0 : "var(--team-card-padding-top)",
+        aspectRatio: `${size.width} / ${size.height}`,
+        paddingTop: "var(--team-card-padding-top)",
       }}
       aria-label={`${card.name}, ${card.role}`}
     >
@@ -262,8 +259,6 @@ function OurTeamMobileCollapsedCard() {
     return null;
   }
 
-  const size = ourTeamCardSizes.standard;
-
   return (
     <motion.div
       className="mx-auto w-full max-w-(--team-mobile-collapsed-card-width)"
@@ -272,15 +267,7 @@ function OurTeamMobileCollapsedCard() {
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
-      <figure
-        className="relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius) bg-(--color-team-collapsed-card-bg) outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]"
-        style={{
-          aspectRatio: `${size.width} / ${size.height}`,
-        }}
-        aria-label="theGeeX team logo"
-      >
-        <TeamCollapsedPrimaryArtwork />
-      </figure>
+      <OurTeamMobileCard card={primaryCard} isActive={false} />
     </motion.div>
   );
 }
@@ -292,7 +279,6 @@ export function OurTeamGallery({
   isExpanded: boolean;
   usesScatteredLayout: boolean;
 }) {
-  const isWideMobile = useMediaQuery("(min-width: 640px) and (max-width: 799.98px)");
   const mobileAutoHoverCanRunRef = useRef(false);
   const mobileAutoHoverWasExpandedRef = useRef(false);
   const mobileScrollDirectionRef = useRef<1 | -1>(1);
@@ -397,10 +383,7 @@ export function OurTeamGallery({
 
     return (
       <motion.div
-        className={cn(
-          "grid w-full gap-(--team-mobile-grid-gap)",
-          isWideMobile ? "grid-cols-4" : "grid-cols-2",
-        )}
+        className="grid w-full grid-cols-2 gap-(--team-mobile-grid-gap)"
         initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -420,7 +403,6 @@ export function OurTeamGallery({
             <OurTeamMobileCard
               card={card}
               isActive={mobileAutoHoverState.isActive && index === mobileAutoHoverState.index}
-              isCircle={isWideMobile}
             />
           </motion.div>
         ))}

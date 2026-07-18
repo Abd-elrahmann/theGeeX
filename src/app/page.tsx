@@ -25,7 +25,7 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function Home() {
   return (
-    <main className="relative z-(--page-main-z-index) flex flex-1 flex-col">
+    <main className="relative flex flex-1 flex-col">
       <Hero />
       <Ambition />
       <ServicesSection />

@@ -10,7 +10,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { OurTeamGallery } from "@/features/our-team/components/our-team-gallery";
 import { OurTeamTitle } from "@/features/our-team/components/our-team-title";
 
-const TEAM_TABLET_MEDIA_QUERY = "(min-width: 800px) and (max-width: 1023.98px)";
+const TEAM_TABLET_MEDIA_QUERY = "(min-width: 767px) and (max-width: 1023px)";
 
 export function OurTeamSection() {
   const isDesktop = useDesktopBreakpoint();
@@ -62,7 +62,7 @@ export function OurTeamSection() {
       className="relative mx-auto mt-(--team-margin-top) w-full px-(--team-padding-x)"
     >
       <div className="relative flex min-h-svh w-full items-center justify-center py-(--team-section-padding-y)">
-        <div className="mx-auto flex w-(--team-gallery-scaled-width) max-w-full flex-col items-center gap-(--team-section-gap)">
+        <div className="mx-auto flex w-full max-w-(--team-container-max-width) flex-col items-center gap-(--team-section-gap)">
             <OurTeamTitle />
 
             <div

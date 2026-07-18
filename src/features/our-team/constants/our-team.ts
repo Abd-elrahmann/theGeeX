@@ -96,7 +96,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
 
     },
       mobileImageStyle: {
-      scale: "0.95",
+      scale: "0.90",
     },
   },
   {
@@ -116,7 +116,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
     mobileImageStyle: {
-      top: "85%",
+      top: "80%",
     },
   },
   {
@@ -160,7 +160,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
           mobileImageStyle: {
-      scale: "0.9",
+      scale: "0.90",
+            transform: "translate(-60%, -50%)",
       top: "80%",
     },
   },
@@ -221,6 +222,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     },
     mobileImageStyle: {
       top: "80%",
+      transform: "translate(-65%, -65%)",
+
     },
   },
   {
@@ -239,6 +242,11 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       transform: "translate(-52%, -50%)",
       backgroundPosition: "center center",
       scale: "0.9",
+    },
+     mobileImageStyle: {
+      top: "90%",
+      transform: "translate(-55%, -60%)",
+
     },
   },
   {
@@ -275,6 +283,11 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       transform: "translate(-65%, -50%)",
       backgroundPosition: "center center",
       scale: "0.85",
+    },
+     mobileImageStyle: {
+      top: "80%",
+      transform: "translate(-65%, -55%)",
+
     },
   },
   {

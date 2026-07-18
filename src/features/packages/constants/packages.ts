@@ -42,6 +42,16 @@ export interface PackageBookingContent {
   bookingPath: string;
 }
 
+export function getPackageBookingPath(slug: string): string {
+  const packageItem = getPackageBySlug(slug);
+
+  if (!packageItem) {
+    throw new Error(`Package booking path not found for slug: ${slug}`);
+  }
+
+  return `/${packageItem.chips[0]?.label.toLowerCase() ?? "packages"}/${packageItem.slug}`;
+}
+
 export const packagesSectionTitle = "Packages";
 
 export const packageItems: PackageItem[] = [
@@ -69,7 +79,7 @@ export const packageItems: PackageItem[] = [
       { text: "Website or landing page", highlightedWords: ["Website"] },
       { text: "Professional brand identity", highlightedWords: ["brand identity"] },
     ],
-    detailImage: "/images/services/One.webp",
+    detailImage: "/images/Startup Launcher.webp",
     detailImageAlt: "Startup Launcher package preview",
     includedItems: [
       {
@@ -126,7 +136,7 @@ export const packageItems: PackageItem[] = [
       { text: "Advanced SEO-ready website" },
       { text: "Complete brand guidelines", highlightedWords: ["Complete"] },
     ],
-    detailImage: "/images/services/Two.webp",
+    detailImage: "/images/Digital Ecosystem.webp",
     detailImageAlt: "Digital Ecosystem package preview",
     includedItems: [
       {
@@ -179,7 +189,7 @@ export const packageItems: PackageItem[] = [
       { text: "Custom web platforms" },
       { text: "Premium branding & design systems", highlightedWords: ["Premium"] },
     ],
-    detailImage: "/images/services/Three.webp",
+    detailImage: "/images/Enterprise Transformation.webp",
     detailImageAlt: "Enterprise Transformation package preview",
     includedItems: [
       {
@@ -228,6 +238,6 @@ export function getPackageBookingContentBySlug(slug: string): PackageBookingCont
     headingLabel: packageItem.chips[0]?.label ?? "Package",
     packageTitle: packageItem.name.trim(),
     description: packageItem.description,
-    bookingPath: `/${packageItem.chips[0]?.label.toLowerCase() ?? "packages"}/book-package`,
+    bookingPath: getPackageBookingPath(packageItem.slug),
   };
 }

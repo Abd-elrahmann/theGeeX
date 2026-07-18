@@ -42,8 +42,8 @@ export function StorytellingSection() {
       itemCount: storytellingItems.length,
       layoutMode,
       pinEnabled: isLayoutReady,
-      backgroundEnabled: isMobile,
-      mobileBackgroundEnabled: !isMobile,
+      backgroundEnabled: false,
+      mobileBackgroundEnabled: !isDesktop,
     });
 
   useEffect(() => {
@@ -193,7 +193,7 @@ export function StorytellingSection() {
       )}
       aria-label="Storytelling"
     >
-      {isDesktop || isMobile ? <StorytellingBackground ref={backgroundRef} /> : null}
+      {isDesktop ? <StorytellingBackground ref={backgroundRef} /> : null}
 
       {isDesktop ? (
         <div

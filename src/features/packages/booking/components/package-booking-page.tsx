@@ -19,7 +19,7 @@ export function PackageBookingPage({ content }: PackageBookingPageProps) {
                 <DetailBreadcrumb
                   items={[
                     { label: "Home", href: "/" },
-                    { label: content.breadcrumbLabel },
+                    { label: content.breadcrumbLabel, href: `/packages/${content.slug}` },
                     { label: "Book package" },
                   ]}
                   className="flex w-min flex-row flex-nowrap items-center gap-(--packages-detail-breadcrumb-gap) whitespace-nowrap font-poppins text-(length:--packages-detail-breadcrumb-size) leading-(--packages-detail-breadcrumb-line-height) font-normal text-(--color-packages-detail-text)"

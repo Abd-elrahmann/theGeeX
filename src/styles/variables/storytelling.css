@@ -1,6 +1,7 @@
 :root {
   --storytelling-stage-z-index: 1;
-  --storytelling-section-z-index: 20;
+  --storytelling-section-z-index: 40;
+  --storytelling-page-background-z-index: 30;
   --color-storytelling-text-inactive: #5c5c5c;
   --color-storytelling-text-active: #ffffff;
   --color-storytelling-caption: #ffffff;
