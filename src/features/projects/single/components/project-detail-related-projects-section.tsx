@@ -23,10 +23,7 @@ export function ProjectDetailRelatedProjectsSection({
           </h2>
         </header>
 
-        <div
-          className="mx-auto flex w-full max-w-(--projects-detail-gallery-max-width) flex-col gap-(--service-detail-projects-cards-gap)"
-          style={{ paddingInline: "var(--projects-detail-gallery-padding-x)" }}
-        >
+        <div className="mx-auto flex w-full max-w-(--projects-detail-gallery-max-width) flex-col gap-(--service-detail-projects-cards-gap) [padding-inline:var(--service-detail-padding-x)] lg:[padding-inline:var(--projects-detail-gallery-padding-x)]">
           {relatedProjects.map((relatedProject, index) => (
             <StaticProjectCard
               key={relatedProject.id}

@@ -9,8 +9,6 @@ import { cn } from "@/lib/cn";
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
-import { ScrollTrigger } from "@/lib/gsap";
-
 import { services } from "@/features/services/constants/services";
 import { ServiceContent } from "@/features/services/shared/components/service-content";
 import { ServiceImage } from "@/features/services/shared/components/service-image";
@@ -36,13 +34,13 @@ function ServicesPageCardHeader({
         {eyebrow}
       </p>
 
-      <div className="flex w-full min-w-0 items-baseline gap-2 sm:gap-(--services-page-service-title-row-gap)">
+      <div className="flex w-full min-w-0 items-baseline gap-3 sm:gap-(--services-page-service-title-row-gap)">
         <span className="h-[24px] w-[18px] shrink-0 whitespace-pre font-cal-sans text-[20px] leading-[24px] font-semibold tracking-normal text-(--color-services-page-index) font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_off] sm:h-[31px] sm:w-[24px] sm:text-[26px] sm:leading-[31px]">
           {formatIndex(index)}
         </span>
         <h2
           className={cn(
-            "m-0 min-w-0 max-w-none flex-1 font-cal-sans text-[20px] leading-[1.1] font-semibold tracking-normal text-(--color-services-page-card-title) sm:text-[28px] sm:leading-[1.2]",
+            "m-0 min-w-0 max-w-none flex-1 font-cal-sans text-[18px] leading-[1.15] font-semibold tracking-normal text-(--color-services-page-card-title) sm:text-[24px] sm:leading-[1.2] md:text-[26px]",
             "whitespace-normal wrap-break-word sm:break-normal",
             allowWrap ? "sm:whitespace-normal" : "sm:whitespace-nowrap",
           )}
@@ -89,32 +87,6 @@ export function ServicesPage() {
     return () => {
       window.clearTimeout(timeoutId);
       window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const container = servicesPageRef.current;
-
-    if (!container) {
-      return;
-    }
-
-    let timeoutId = 0;
-
-    const handleWheel = (event: WheelEvent) => {
-      event.preventDefault();
-
-      window.clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 100);
-    };
-
-    container.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      container.removeEventListener("wheel", handleWheel);
-      window.clearTimeout(timeoutId);
     };
   }, []);
 

@@ -31,17 +31,19 @@ export function ProjectDetailGallerySection({ project }: ProjectDetailGallerySec
         {project.detailGallery.map((image, index) => (
           <div
             key={`${project.slug}-gallery-${image}-${index}`}
-            className="relative block h-(--projects-detail-gallery-image-height) w-full flex-1 overflow-hidden rounded-(--projects-detail-image-radius)"
+            className="relative block min-w-0 flex-1 overflow-visible h-(--projects-detail-gallery-image-height) md:h-87.5 lg:h-(--projects-detail-gallery-image-height)"
           >
-            <Image
-              src={image}
-              alt={`${project.name} work sample ${index + 1}`}
-              fill
-              sizes="(min-width: 800px) 50vw, 100vw"
-              className="block"
-              style={{ objectFit: "cover", objectPosition: "center center" }}
-              unoptimized
-            />
+            <div className="absolute inset-0 block aspect-[1.016/1] w-full overflow-visible rounded-(--projects-detail-image-radius) h-(--projects-detail-gallery-image-height) md:h-87.5 lg:h-(--projects-detail-gallery-image-height)">
+              <Image
+                src={image}
+                alt={`${project.name} work sample ${index + 1}`}
+                fill
+                sizes="(min-width: 800px) 50vw, 100vw"
+                className="block rounded-(--projects-detail-image-radius) bg-transparent bg-cover bg-no-repeat bg-center object-cover"
+                style={{ objectFit: "cover", objectPosition: "center center" }}
+                unoptimized
+              />
+            </div>
           </div>
         ))}
       </div>

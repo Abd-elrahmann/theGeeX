@@ -74,7 +74,7 @@ export function ContactUsForm() {
   }
 
   return (
-    <div className="w-full rounded-(--contact-us-form-card-radius) border border-(--color-contact-us-form-border) bg-(--color-contact-us-form-card-bg) px-(--contact-us-form-card-padding) pt-(--contact-us-form-card-padding) pb-(--contact-us-form-card-padding) backdrop-blur-(--contact-us-form-blur) md:max-w-[min(100%,576px)]">
+    <div className="w-full rounded-(--contact-us-form-card-radius) border border-(--color-contact-us-form-border) bg-(--color-contact-us-form-card-bg) px-(--contact-us-form-card-padding) pt-(--contact-us-form-card-padding) pb-(--contact-us-form-card-padding) backdrop-blur-(--contact-us-form-blur) md:max-w-[min(100%,640px)]">
       <form
         className="flex w-full flex-col gap-(--contact-us-form-gap) rounded-(--contact-us-form-inner-radius) bg-(--color-contact-us-form-surface) px-(--contact-us-form-inner-padding) pt-(--contact-us-form-inner-padding) pb-(--contact-us-form-inner-padding)"
         onSubmit={async (event) => {
@@ -113,7 +113,7 @@ export function ContactUsForm() {
           />
         </ContactFormField>
 
-        <div className="grid w-full grid-cols-1 gap-(--contact-us-form-gap) md:grid-cols-2">
+        <div className="grid w-full grid-cols-1 gap-(--contact-us-form-gap) lg:grid-cols-2">
           <ContactFormField htmlFor={emailField.id} label={emailField.label} error={errors.email}>
             <ContactFormInput
               id={emailField.id}

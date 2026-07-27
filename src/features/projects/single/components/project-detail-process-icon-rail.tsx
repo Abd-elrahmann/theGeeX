@@ -13,9 +13,9 @@ export function ProjectDetailProcessIconRail({
   activeProcessIndex,
 }: ProjectDetailProcessIconRailProps) {
   return (
-    <div className="sticky top-(--projects-detail-process-icons-sticky-top) z-10 order-1 box-border flex h-(--projects-detail-process-icons-height) w-full items-center justify-center rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icons-background) p-(--projects-detail-process-icons-padding) lg:order-2 lg:col-start-2 lg:row-start-1 lg:w-(--projects-detail-process-icons-width) lg:self-start">
+    <div className="sticky top-(--projects-detail-process-icons-sticky-top) z-10 order-1 box-border flex h-(--projects-detail-process-icons-height) w-full items-center justify-center rounded-(--projects-detail-process-icons-radius) bg-(--projects-detail-process-icons-background) p-(--projects-detail-process-icons-padding) md:order-2 md:col-start-2 md:row-start-1 md:w-full md:self-start lg:w-(--projects-detail-process-icons-width)">
       <div
-        className="absolute box-border block h-(--projects-detail-process-inner-box-height) w-(--projects-detail-process-inner-box-width) overflow-visible rounded-(--projects-detail-process-inner-box-radius) bg-(--projects-detail-process-icon-background) shadow-(--projects-detail-process-inner-box-shadow)"
+        className="absolute inset-x-0 mx-auto box-border block h-(--projects-detail-process-inner-box-height) w-(--projects-detail-process-inner-box-width) overflow-visible rounded-(--projects-detail-process-inner-box-radius) bg-(--projects-detail-process-icon-background) shadow-(--projects-detail-process-inner-box-shadow)"
       >
         <div
           className="flex h-full w-full items-center justify-center"
@@ -32,7 +32,7 @@ export function ProjectDetailProcessIconRail({
                 animate={{
                   backgroundColor: isActive ? step.activeColor : inactiveBackgroundColor,
                   scale: isActive ? 1 : 0.96,
-                  y: isActive ? -10 : 0,
+                  y: isActive ? -4 : 0,
                 }}
                 transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               >

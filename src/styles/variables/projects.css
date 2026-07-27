@@ -339,17 +339,19 @@
     --projects-detail-gallery-image-height: min(68vh, 620px);
     --projects-detail-process-padding-x: 40px;
     --projects-detail-process-padding-y: 160px;
-    --projects-detail-process-grid-max-width: 980px;
+    --projects-detail-process-grid-max-width: 100%;
     --projects-detail-process-grid-gap: 32px;
-    --projects-detail-process-icons-width: 280px;
-    --projects-detail-process-icons-height: 430px;
-    --projects-detail-process-icons-padding: 28px;
-    --projects-detail-process-icons-gap: 18px;
-    --projects-detail-process-icons-radius: 22px;
-    --projects-detail-process-icons-sticky-top: calc(var(--navbar-height) + 32px);
-    --projects-detail-process-icon-size: 64px;
+    --projects-detail-process-icons-width: 380px;
+    --projects-detail-process-icons-height: 180px;
+    --projects-detail-process-icons-padding: 38px 30px;
+    --projects-detail-process-icons-gap: 10px;
+    --projects-detail-process-icons-radius: 24px;
+    --projects-detail-process-icons-sticky-top: calc(var(--navbar-height) + 64px);
+    --projects-detail-process-inner-box-width: 360px;
+    --projects-detail-process-inner-box-height: 75px;
+    --projects-detail-process-icon-size: 60px;
     --projects-detail-process-icon-radius: 12px;
-    --projects-detail-process-icon-image-size: 30px;
+    --projects-detail-process-icon-image-size: 28px;
   }
 }
 

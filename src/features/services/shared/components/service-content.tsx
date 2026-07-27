@@ -21,7 +21,7 @@ const serviceContentTitleClassName = cn(
   "absolute left-0 top-0 m-0 h-auto w-full min-w-0",
   "whitespace-pre-wrap wrap-break-word break-words",
   "font-cal-sans text-[24px] leading-[1.4] font-semibold not-italic tracking-[0em]",
-  "text-(--Text_Color,#2c3134)",
+  "text-(--Text_Color,#2c3134) lg:text-[var(--Purple_Light,#2558b4)]",
   "[font-feature-settings:var(--services-content-font-features)]",
 );
 

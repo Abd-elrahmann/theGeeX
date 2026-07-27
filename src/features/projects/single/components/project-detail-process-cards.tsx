@@ -12,7 +12,7 @@ export function ProjectDetailProcessCards({
   processCardRefs,
 }: ProjectDetailProcessCardsProps) {
   return (
-    <div className="order-2 flex min-w-0 w-full flex-col gap-(--projects-detail-process-card-gap) lg:order-1 lg:col-start-1 lg:row-start-1">
+    <div className="order-2 flex min-w-0 w-full flex-col gap-(--projects-detail-process-card-gap) md:order-1 md:col-start-1 md:row-start-1">
       {processSteps.map((step, index) => (
         <motion.article
           key={step.number}
