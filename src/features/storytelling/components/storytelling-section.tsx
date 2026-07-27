@@ -233,7 +233,7 @@ export function StorytellingSection() {
             ref={stageRef}
             className={cn(
               "relative h-svh overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)",
-              isMobile && "sticky top-0",
+              (isMobile || isTablet) && "sticky top-0",
             )}
           >
             <div

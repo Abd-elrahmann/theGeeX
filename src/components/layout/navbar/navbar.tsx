@@ -18,7 +18,8 @@ import { useNavbarState } from "./use-navbar-state";
 export function Navbar() {
   const { variant, isVisible } = useNavbarState();
   const isDesktop = useDesktopBreakpoint();
-  const isRoundedNav = isVisible && variant === "rounded";
+  const appliedVariant = isDesktop ? variant : "primary";
+  const isRoundedNav = isVisible && appliedVariant === "rounded";
   const [isMobileMenuRequested, setIsMobileMenuRequested] = useState(false);
   const isMobileMenuOpen = isMobileMenuRequested && isVisible && !isDesktop;
   const headerRef = useRef<HTMLElement>(null);
@@ -79,13 +80,13 @@ export function Navbar() {
         { header, target },
         {
           isVisible,
-          variant,
+          variant: appliedVariant,
           isDesktop,
           isMobileMenuOpen,
         },
       );
     },
-    { dependencies: [isVisible, variant, isDesktop, isMobileMenuOpen], scope: headerRef },
+    { dependencies: [isVisible, appliedVariant, isDesktop, isMobileMenuOpen], scope: headerRef },
   );
 
   return (

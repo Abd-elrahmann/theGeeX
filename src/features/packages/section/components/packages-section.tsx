@@ -11,7 +11,7 @@ export function PackagesSection() {
       aria-label="Packages"
       className={cn(
         "relative w-full overflow-visible bg-(--color-packages-section-bg)",
-        "mt-(--packages-margin-top) px-(--packages-padding-x) py-(--packages-padding-y)",
+        "mt-(--packages-margin-top) px-(--packages-padding-x) pt-(--packages-padding-y) pb-6",
       )}
     >
       <div className="mx-auto flex w-full max-w-(--packages-container-max-width) flex-col gap-(--packages-section-gap)">
@@ -24,7 +24,12 @@ export function PackagesSection() {
           )}
         >
           {packageItems.map((item, index) => (
-            <PackageCard key={item.id} item={item} index={index} />
+            <PackageCard
+              key={item.id}
+              item={item}
+              index={index}
+              isLast={index === packageItems.length - 1}
+            />
           ))}
         </div>
       </div>

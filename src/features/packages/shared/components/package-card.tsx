@@ -18,6 +18,7 @@ import { packageFeatureTitleClassName } from "@/features/packages/shared/utils/p
 interface PackageCardProps {
   item: PackageItem;
   index: number;
+  isLast?: boolean;
 }
 
 const packageEnterTransition = {
@@ -25,7 +26,7 @@ const packageEnterTransition = {
   ease: [0.22, 1, 0.36, 1] as const,
 };
 
-export function PackageCard({ item, index }: PackageCardProps) {
+export function PackageCard({ item, index, isLast = false }: PackageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const canAnimateButtonHover = useDesktopBreakpoint();
   const isContactSalesPackage = !item.billingCycle;
@@ -91,10 +92,12 @@ export function PackageCard({ item, index }: PackageCardProps) {
         />
       </div>
 
-      <div
-        aria-hidden="true"
-        className="mt-(--packages-card-divider-margin-top) h-px w-full bg-(--color-packages-card-divider)"
-      />
+      {!isLast ? (
+        <div
+          aria-hidden="true"
+          className="mt-(--packages-card-divider-margin-top) h-px w-full bg-(--color-packages-card-divider)"
+        />
+      ) : null}
 
       <PackageCardFeatures features={item.features} itemId={item.id} />
     </motion.article>

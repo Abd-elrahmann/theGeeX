@@ -45,6 +45,8 @@
   --awards-card-title-height: 34px;
   --awards-card-title-size: clamp(14px, 4.4vw, 16px);
   --awards-card-title-line-height: 1.2;
+  --awards-active-card-title-size: clamp(16px, 4.8vw, 18px);
+  --awards-active-card-title-line-height: 1.2;
   --awards-collapsed-card-title-size: 7px;
   --awards-collapsed-card-title-line-height: 1.2;
   --awards-card-title-weight: 800;
@@ -53,6 +55,8 @@
   --awards-card-place-height: 18px;
   --awards-card-place-size: clamp(18px, 6.2vw, 24px);
   --awards-card-place-line-height: 1.2;
+  --awards-active-card-place-size: clamp(20px, 6.6vw, 26px);
+  --awards-active-card-place-line-height: 1.2;
   --awards-collapsed-card-place-size: 6px;
   --awards-collapsed-card-place-line-height: 1.2;
   --awards-card-place-weight: 500;
@@ -81,8 +85,10 @@
     --awards-divider-width: min(140px, 100%);
     --awards-collapsed-divider-width: min(74px, 100%);
     --awards-card-title-size: clamp(13px, 4.2vw, 15px);
+    --awards-active-card-title-size: clamp(15px, 4.6vw, 17px);
     --awards-collapsed-card-title-size: 6.5px;
     --awards-card-place-size: clamp(16px, 5.8vw, 20px);
+    --awards-active-card-place-size: clamp(18px, 6.2vw, 22px);
     --awards-collapsed-card-place-size: 6px;
   }
 }
@@ -105,7 +111,9 @@
     --awards-card-title-margin-top: 28px;
     --awards-card-title-height: 38px;
     --awards-card-title-size: 16px;
+    --awards-active-card-title-size: 19px;
     --awards-card-place-size: 13px;
+    --awards-active-card-place-size: 16px;
   }
 }
 
@@ -159,10 +167,12 @@
     --awards-card-title-margin-top: 22px;
     --awards-card-title-height: 48px;
     --awards-card-title-size: 18px;
+    --awards-active-card-title-size: 22px;
     --awards-collapsed-card-title-size: 9px;
     --awards-collapsed-card-title-weight: 500;
     --awards-card-place-margin-top: 14px;
     --awards-card-place-size: 20px;
+    --awards-active-card-place-size: 24px;
     --awards-collapsed-card-place-size: 7.5px;
     --awards-collapsed-card-place-weight: 400;
     --awards-collapsed-card-text-opacity: 60;
@@ -194,7 +204,9 @@
     --awards-card-max-width: 100%;
     --awards-cards-gap: 32px;
     --awards-card-title-size: 18px;
+    --awards-active-card-title-size: 24px;
     --awards-card-place-size: 22px;
+    --awards-active-card-place-size: 26px;
     --awards-card-title-height: 48px;
   }
 }

@@ -99,13 +99,13 @@
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
-    --team-margin-top: var(--section-stack-gap);
+    --team-margin-top: 24px;
     --team-padding-x: 16px;
-    --team-title-size: 96px;
-    --team-title-line-height: 96px;
+    --team-title-size: 115px;
+    --team-title-line-height: 115px;
     --team-title-box-height: 76px;
     --team-section-gap: 0px;
-    --team-section-padding-y: 44px;
+    --team-section-padding-y: 20px;
     --team-gallery-scale: 0.64;
     --team-gallery-bottom-bleed: 48px;
     --team-card-padding-top: 30px;

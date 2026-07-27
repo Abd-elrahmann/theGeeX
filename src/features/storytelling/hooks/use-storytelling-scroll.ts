@@ -129,7 +129,7 @@ export function useStorytellingScroll({
 
         const mobileScrollElement = pinStartElement.parentElement ?? stageElement;
         const mobileBackgroundStartTrigger = containerElement.previousElementSibling ?? containerElement;
-        const usesNativeStickyMobileStage = layoutMode === "mobile";
+        const usesNativeStickyMobileStage = layoutMode !== "desktop";
         const getMobileProgressDistance = () => {
           const distance = readRootCssNumber(
             "--storytelling-mobile-scroll-distance",
@@ -185,7 +185,9 @@ export function useStorytellingScroll({
         const mobileBackgroundTrigger = mobileBackgroundEnabled
           ? ScrollTrigger.create({
               trigger: mobileScrollElement,
-              start: storytellingConfig.background.mobileTriggerStart,
+              start: () => {
+                return `top top+=${getMobileProgressStartOffset() + getMobileBackgroundStartOffset()}`;
+              },
               end: storytellingConfig.background.mobileTriggerEnd,
               invalidateOnRefresh: true,
               onEnter: syncMobileBackground,

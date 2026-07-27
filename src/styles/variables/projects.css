@@ -17,7 +17,7 @@
   --projects-section-sticky-top: 160px;
   --projects-section-scroll-vh: 600;
   --projects-section-exit-vh: 32;
-  --projects-section-scroll-height: calc(var(--projects-section-scroll-vh) * 1vh);
+  --projects-section-scroll-height: calc(var(--projects-section-sticky-top) + var(--projects-section-scroll-vh) * 1vh);
   --projects-section-exit-padding: calc(var(--projects-section-exit-vh) * 1vh);
   --projects-card-stack-offset-step: 56px;
   --projects-card-outer-padding: 20px;
@@ -322,6 +322,11 @@
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
+    --projects-card-height: 760px;
+    --projects-card-title-size: 32px;
+    --projects-card-title-height: 48px;
+    --projects-card-title-line-height: 1.2;
+    --projects-card-title-letter-spacing: 0px;
     --projects-detail-title-size: clamp(34px, 5vw, 48px);
     --projects-detail-cover-height: 480px;
     --projects-detail-description-section-margin-top: 32px;

@@ -1,9 +1,13 @@
 "use client";
 
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
+import { cn } from "@/lib/cn";
+import { TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
 import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 
 import {
@@ -74,12 +78,14 @@ export function AiGrowthSection() {
   const mobileScrollRef = useRef<HTMLDivElement | null>(null);
   const mobileStageContentRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
   const [canSyncActiveRow, setCanSyncActiveRow] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
     scrollHeight: 0,
   });
   const isDesktop = useDesktopBreakpoint();
+  const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
   const { scrollYProgress } = useScroll({
     target: isDesktop ? sectionRef : mobileScrollRef,
     offset: ["start start", "end end"],
@@ -116,15 +122,18 @@ export function AiGrowthSection() {
 
     const measureMobileStage = () => {
       const rootStyles = getComputedStyle(document.documentElement);
-      const pinScrollDistance =
+      const basePinScrollDistance =
         parseFloat(rootStyles.getPropertyValue("--ai-growth-pin-scroll-distance")) || 0;
-      const viewportHeight = window.innerHeight;
       const contentHeight = mobileStageContentRef.current?.offsetHeight ?? 0;
-      const stageHeight = Math.max(viewportHeight, contentHeight);
+      const stageHeight = isTablet ? contentHeight : Math.max(window.innerHeight, contentHeight);
+      const pinScrollDistance = isTablet
+        ? basePinScrollDistance * Math.max((aiGrowthRows.length - 1) / 2, 1)
+        : basePinScrollDistance;
+      const stickyOffset = isTablet ? Math.max((window.innerHeight - stageHeight) / 2, 0) : 0;
 
       setMobileStageMetrics({
         stageHeight,
-        scrollHeight: stageHeight + pinScrollDistance,
+        scrollHeight: stageHeight + pinScrollDistance + stickyOffset,
       });
     };
 
@@ -147,7 +156,28 @@ export function AiGrowthSection() {
       resizeObserver?.disconnect();
       window.removeEventListener("resize", measureMobileStage);
     };
-  }, [isDesktop]);
+  }, [isDesktop, isTablet]);
+
+  const tabletStickyTop =
+    isTablet && mobileStageMetrics.stageHeight > 0
+      ? `max(0px, calc((100svh - ${mobileStageMetrics.stageHeight}px) / 2))`
+      : undefined;
+
+  const setActiveIndexSequentially = useCallback(
+    (index: number) => {
+      const targetIndex = clampActiveIndex(index, aiGrowthRows.length);
+      const currentIndex = activeIndexRef.current;
+
+      if (targetIndex === currentIndex) {
+        return;
+      }
+
+      const nextIndex = currentIndex + Math.sign(targetIndex - currentIndex);
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+    },
+    [],
+  );
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (!canSyncActiveRow) {
@@ -158,7 +188,7 @@ export function AiGrowthSection() {
     const normalizedProgress = delayedProgress / (1 - aiGrowthActiveTriggerDelay);
     const clampedProgress = Math.max(0, Math.min(normalizedProgress, 1));
 
-    syncActiveIndexFromProgress(clampedProgress, aiGrowthRows.length, setActiveIndex);
+    syncActiveIndexFromProgress(clampedProgress, aiGrowthRows.length, setActiveIndexSequentially);
   });
 
   return (
@@ -184,6 +214,7 @@ export function AiGrowthSection() {
           style={
             !isDesktop && mobileStageMetrics.stageHeight > 0
               ? {
+                  top: tabletStickyTop,
                   height: `${mobileStageMetrics.stageHeight}px`,
                 }
               : undefined
@@ -191,21 +222,38 @@ export function AiGrowthSection() {
         >
           <div
             ref={mobileStageContentRef}
-            className="grid min-h-(--ai-growth-stage-min-height) w-full grid-cols-1 items-start gap-(--ai-growth-grid-gap) lg:h-full lg:grid-cols-[minmax(var(--ai-growth-grid-one-min-width),1fr)_minmax(var(--ai-growth-grid-two-min-width),1fr)]"
+            className={cn(
+              "grid w-full grid-cols-1 gap-(--ai-growth-grid-gap) lg:h-full lg:grid-cols-[minmax(var(--ai-growth-grid-one-min-width),1fr)_minmax(var(--ai-growth-grid-two-min-width),1fr)]",
+              isTablet
+                ? "content-center items-center"
+                : "min-h-(--ai-growth-stage-min-height) items-start",
+            )}
           >
-            <div className="flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-intro-gap) overflow-clip rounded-none p-0 lg:min-w-(--ai-growth-grid-one-min-width)">
-              <h2 className="m-0 hidden w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:block">
+            <div className={cn(
+              "flex h-min w-full min-w-0 flex-1 flex-col content-start justify-center gap-(--ai-growth-intro-gap) overflow-clip rounded-none p-0 lg:min-w-(--ai-growth-grid-one-min-width)",
+              isTablet ? "items-center text-center" : "items-start",
+            )}>
+              <h2 className={cn(
+                "m-0 hidden w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:block",
+                isTablet && "text-center",
+              )}>
                 <span className="text-(--color-ai-growth-title-muted)">{aiGrowthTitlePrefix} </span>
                 <span className="text-(--color-ai-growth-accent)">{aiGrowthTitleAccent}</span>
               </h2>
 
-              <h2 className="m-0 block w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:hidden">
+              <h2 className={cn(
+                "m-0 block w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:hidden",
+                isTablet && "whitespace-nowrap text-center",
+              )}>
                 <span className="text-(--color-ai-growth-title-muted)">{aiGrowthCompactTitlePrefix}</span>
-                <span className="text-(--color-ai-growth-accent)">{`\n${aiGrowthCompactTitleAccent}`}</span>
+                <span className="text-(--color-ai-growth-accent)">{isTablet ? ` ${aiGrowthCompactTitleAccent}` : `\n${aiGrowthCompactTitleAccent}`}</span>
               </h2>
 
-              <p className="m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-description-size) leading-(--ai-growth-description-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal">
-                {aiGrowthDescription}
+              <p className={cn(
+                "m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-description-size) leading-(--ai-growth-description-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal",
+                isTablet && "mx-auto max-w-(--ai-growth-tablet-intro-max-width) whitespace-nowrap text-center",
+              )}>
+                {isTablet ? aiGrowthDescription.replace(/\n/g, " ") : aiGrowthDescription}
               </p>
             </div>
 

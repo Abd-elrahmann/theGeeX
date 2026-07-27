@@ -81,10 +81,13 @@
     --storytelling-margin-top: var(--section-stack-gap);
     --storytelling-section-padding-x: 48px;
     --storytelling-gap: 40px;
-    --storytelling-media-width: 180px;
-    --storytelling-media-height: 300px;
+    --storytelling-media-width: 220px;
+    --storytelling-media-height: 348px;
     --storytelling-caption-height: 92px;
     --storytelling-caption-margin-top: 18px;
+    --storytelling-mobile-background-start-offset: 420px;
+    --storytelling-mobile-background-viewport-delay-ratio: 0.28;
+    --storytelling-mobile-background-extension: 220px;
     --storytelling-lines-width: min(
       620px,
       calc(

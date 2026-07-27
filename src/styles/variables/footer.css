@@ -7,6 +7,8 @@
   --footer-padding-top: 0px;
   --footer-padding-bottom: 48px;
   --footer-card-min-height: var(--lets-talk-card-min-height);
+  --footer-reveal-card-min-height: var(--footer-card-min-height);
+  --footer-reveal-track-height: var(--footer-reveal-card-min-height);
   --footer-card-radius: 34px;
   --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
   --footer-reveal-cover-height: var(--footer-overlap-bleed-height);
@@ -90,23 +92,25 @@
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
-    --footer-reveal-gap: calc(var(--footer-margin-top) + 180px);
+    --footer-reveal-gap: 0px;
     --footer-container-max-width: 1648px;
-    --footer-padding-x: 16px;
+    --footer-padding-x: 24px;
     --footer-padding-bottom: 56px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-reveal-card-min-height: var(--footer-card-min-height);
+    --footer-reveal-track-height: 100svh;
     --footer-card-radius: 64px;
     --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
     --footer-card-padding-x: 40px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
     --footer-standalone-card-padding-top: 32px;
-    --footer-top-row-gap: 28px;
+    --footer-top-row-gap: 20px;
     --footer-top-row-desktop-gap: 8px;
-    --footer-link-column-gap: 18px;
-    --footer-link-desktop-gap: 20px;
-    --footer-newsletter-gap: 18px;
-    --footer-newsletter-copy-gap: 10px;
+    --footer-link-column-gap: 14px;
+    --footer-link-desktop-gap: 16px;
+    --footer-newsletter-gap: 12px;
+    --footer-newsletter-copy-gap: 6px;
     --footer-newsletter-max-width: 680px;
     --footer-newsletter-title-size: 38px;
     --footer-newsletter-title-line-height: 1.08;
@@ -115,16 +119,16 @@
     --footer-newsletter-subtitle-size: 16px;
     --footer-newsletter-tablet-subtitle-size: 26px;
     --footer-newsletter-tablet-subtitle-line-height: 1.16;
-    --footer-newsletter-form-gap: 14px;
+    --footer-newsletter-form-gap: 10px;
     --footer-input-height: 56px;
     --footer-subscribe-button-height: 56px;
-    --footer-rights-margin-top: 40px;
-    --footer-rights-padding-top: 10px;
-    --footer-rights-padding-bottom: 36px;
+    --footer-rights-margin-top: 24px;
+    --footer-rights-padding-top: 8px;
+    --footer-rights-padding-bottom: 24px;
     --footer-rights-line-width: 96px;
     --footer-rights-size: 14px;
-    --footer-logo-margin-top: 40px;
-    --footer-logo-height: 160px;
+    --footer-logo-margin-top: 24px;
+    --footer-logo-height: 185px;
   }
 }
 
@@ -135,6 +139,7 @@
     --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-reveal-card-min-height: var(--footer-card-min-height);
     --footer-card-radius: 64px;
     --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
@@ -164,6 +169,7 @@
     --footer-padding-x: 24px;
     --footer-padding-bottom: 56px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-reveal-card-min-height: var(--footer-card-min-height);
     --footer-card-radius: 64px;
     --footer-reveal-cover-height: calc(var(--footer-card-radius) + 120px);
     --footer-card-padding-x: 32px;
@@ -186,6 +192,7 @@
     --footer-container-max-width: 1648px;
     --footer-padding-x: 24px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-reveal-card-min-height: var(--footer-card-min-height);
     --footer-card-radius: 64px;
     --footer-padding-bottom: 64px;
     --footer-card-padding-x: 32px;
@@ -216,6 +223,7 @@
     --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
+    --footer-reveal-card-min-height: var(--footer-card-min-height);
     --footer-card-radius: 64px;
     --footer-reveal-cover-height: calc(var(--footer-card-radius) + 120px);
     --footer-card-padding-x: 32px;

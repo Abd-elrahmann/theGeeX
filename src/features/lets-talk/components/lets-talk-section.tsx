@@ -32,8 +32,11 @@ export function LetsTalkSection({ revealFooterOnScroll = false }: LetsTalkSectio
       aria-label="Let's Talk"
       className={cn(
         "relative w-full overflow-visible bg-background",
-        revealFooterOnScroll ? "mt-0" : "mt-(--lets-talk-margin-top)",
-        "px-(--lets-talk-padding-x) py-(--lets-talk-padding-y)",
+        revealFooterOnScroll ? "mt-6" : "mt-(--lets-talk-margin-top)",
+        "px-(--lets-talk-padding-x)",
+        revealFooterOnScroll
+          ? "py-0"
+          : "py-(--lets-talk-padding-y)",
       )}
     >
       <div className="mx-auto w-full max-w-(--lets-talk-container-max-width)">

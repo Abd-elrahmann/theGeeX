@@ -17,7 +17,7 @@ const ourCultureTitleTextClassName = cn(
 
 export function OurCultureTitle() {
   return (
-    <div className="pointer-events-none relative z-[var(--culture-title-z-index)] w-full overflow-visible">
+    <div className="pointer-events-none relative z-(--culture-title-z-index) w-full overflow-visible">
       <h2 className={ourCultureTitleHeadingClassName}>
         <span className="culture-title-box">
           <span className={ourCultureTitleTextClassName}>{ourCultureSectionTitle}</span>

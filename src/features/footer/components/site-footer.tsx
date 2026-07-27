@@ -148,6 +148,11 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             !revealFromPreviousSection && "pt-(--footer-standalone-card-padding-top)",
             "md:items-center md:overflow-clip md:pb-0",
           )}
+          style={{
+            minHeight: revealFromPreviousSection
+              ? "var(--footer-reveal-card-min-height)"
+              : undefined,
+          }}
         >
           {showSuccessOverlay ? (
             <div className="absolute inset-0 z-30 flex items-center justify-center bg-(--color-footer-success-overlay) px-6 text-center backdrop-blur-sm">
@@ -379,7 +384,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
           </div>
 
-          <div className="order-3 relative mt-auto pt-(--footer-logo-margin-top) h-(--footer-logo-height) w-full md:block md:h-(--footer-logo-height) md:overflow-visible md:aspect-[4.427745664739884/1]">
+          <div className="order-3 relative mt-auto pt-(--footer-logo-margin-top) h-(--footer-logo-height) w-full md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
             <Image
               src={footerContent.logoSrc}
               alt="theGeeX logo"

@@ -125,13 +125,21 @@ export function AwardCard({
 
       <motion.h3
         className="ml-(--awards-icon-inset-left) flex w-[calc(100%-var(--awards-icon-inset-left))] min-w-0 self-start whitespace-normal wrap-break-word text-left font-cal-sans font-semibold not-italic tracking-normal text-(--color-awards-card-title) font-features-normal"
+        style={{
+          fontSize: isCollapsed
+            ? "var(--awards-collapsed-card-title-size)"
+            : "var(--awards-active-card-title-size)",
+          lineHeight: isCollapsed
+            ? "var(--awards-collapsed-card-title-line-height)"
+            : "var(--awards-active-card-title-line-height)",
+          fontWeight: isCollapsed
+            ? "var(--awards-collapsed-card-title-weight)"
+            : "var(--awards-card-title-weight)",
+        }}
         animate={{
           x: contentX,
           marginTop: "var(--awards-card-title-margin-top)",
           opacity: isCollapsed ? 0.6 : 1,
-          fontSize: "var(--awards-card-title-size)",
-          lineHeight: "var(--awards-card-title-line-height)",
-          fontWeight: "var(--awards-card-title-weight)",
         }}
         transition={transition}
       >
@@ -140,13 +148,21 @@ export function AwardCard({
 
       <motion.p
         className="ml-(--awards-icon-inset-left) flex w-[calc(100%-var(--awards-icon-inset-left))] min-w-0 self-start whitespace-normal wrap-break-word text-left font-cal-sans font-semibold not-italic tracking-normal text-(--color-awards-card-text) font-features-normal"
+        style={{
+          fontSize: isCollapsed
+            ? "var(--awards-collapsed-card-place-size)"
+            : "var(--awards-active-card-place-size)",
+          lineHeight: isCollapsed
+            ? "var(--awards-collapsed-card-place-line-height)"
+            : "var(--awards-active-card-place-line-height)",
+          fontWeight: isCollapsed
+            ? "var(--awards-collapsed-card-place-weight)"
+            : "var(--awards-card-place-weight)",
+        }}
         animate={{
           x: contentX,
           marginTop: "var(--awards-card-place-margin-top)",
           opacity: isCollapsed ? 0.6 : 1,
-          fontSize: "var(--awards-card-place-size)",
-          lineHeight: "var(--awards-card-place-line-height)",
-          fontWeight: "var(--awards-card-place-weight)",
         }}
         transition={transition}
       >

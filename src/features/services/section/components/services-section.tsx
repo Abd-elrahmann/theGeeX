@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
-import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
+import { POINTER_FINE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
@@ -27,10 +27,9 @@ import { ServiceImageSlidePanel } from "./service-image-slide-panel";
 import { ServiceSlidePanel } from "./service-slide-panel";
 import { ServicesTitle } from "./services-title";
 
-const SERVICES_TABLET_MEDIA_QUERY = "(min-width: 768px) and (max-width: 1023.98px)";
-const SERVICES_TABLET_STAGE_HEIGHT_PX = 780;
-const SERVICES_TABLET_PANEL_HEIGHT_PX = 540;
-const servicesTabletPanelHeightClassName = "md:max-lg:!h-[540px]";
+const SERVICES_TABLET_STAGE_HEIGHT_PX = 560;
+const SERVICES_TABLET_PANEL_HEIGHT_PX = 346;
+const servicesTabletPanelHeightClassName = "md:max-lg:!h-[346px]";
 const SERVICES_WHEEL_MIN_DELTA = 4;
 const SERVICES_WHEEL_STEP_GUARD_MS = 180;
 
@@ -38,7 +37,7 @@ export function ServicesSection() {
   const lenis = useLenis();
   const router = useRouter();
   const isDesktop = useDesktopBreakpoint();
-  const isTablet = useMediaQuery(SERVICES_TABLET_MEDIA_QUERY);
+  const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [hasHydrated, setHasHydrated] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -298,12 +297,15 @@ export function ServicesSection() {
         0,
         ...mobileImageMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
       );
+      const tabletStageHeight =
+        titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX * 2 + columnsGap + stageBottomPadding + pinClearance;
       const stageHeight = isTablet
-        ? Math.max(viewportHeight, SERVICES_TABLET_STAGE_HEIGHT_PX)
+        ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
         : Math.max(
             viewportHeight,
             titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance,
           );
+      const stickyOffset = isTablet ? Math.max((viewportHeight - stageHeight) / 2, 0) : 0;
 
       setMobileStageMetrics({
         stageHeight,
@@ -312,7 +314,8 @@ export function ServicesSection() {
         scrollHeight:
           stageHeight +
           Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100) +
-          viewportHeight * (mobileScrollTailVh / 100),
+          viewportHeight * (mobileScrollTailVh / 100) +
+          stickyOffset,
       });
     };
 
@@ -338,6 +341,10 @@ export function ServicesSection() {
   }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
+  const tabletStickyTop =
+    isTablet && mobileStageMetrics.stageHeight > 0
+      ? `max(0px, calc((100svh - ${mobileStageMetrics.stageHeight}px) / 2))`
+      : undefined;
   const desktopScrollStepCount = Math.max(services.length, 1);
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
@@ -483,8 +490,9 @@ export function ServicesSection() {
             }}
           >
             <div
-                    className="sticky top-0 overflow-visible"
+              className="sticky top-0 overflow-visible"
               style={{
+                top: tabletStickyTop,
                 height:
                   mobileStageMetrics.stageHeight > 0
                     ? `${mobileStageMetrics.stageHeight}px`
@@ -495,7 +503,7 @@ export function ServicesSection() {
                 className={cn(
                   "relative z-(--services-content-z-index) flex h-full w-full overflow-visible",
                   isTablet
-                    ? "flex-col items-start justify-start pt-(--services-padding-y)"
+                    ? "flex-col items-start justify-center gap-(--services-columns-gap)"
                     : "flex-col items-start justify-start pt-(--services-padding-y)",
                 )}
               >
