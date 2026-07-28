@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
 import { cn } from "@/lib/cn";
@@ -17,13 +17,47 @@ export function OurTeamSection() {
   const isTablet = useMediaQuery(TEAM_TABLET_MEDIA_QUERY);
   const usesScatteredLayout = isDesktop || isTablet;
   const sectionRef = useRef<HTMLElement>(null);
+  const [isActivated, setIsActivated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start 80%", "end 35%"],
   });
 
+  useEffect(() => {
+    const sectionElement = sectionRef.current;
+
+    if (!sectionElement || isActivated) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        setIsActivated(true);
+        observer.disconnect();
+      },
+      {
+        rootMargin: "25% 0px",
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isActivated]);
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (!isActivated) {
+      return;
+    }
+
     if (usesScatteredLayout) {
       setIsExpanded(progress >= 0.18 && progress <= 0.98);
       return;

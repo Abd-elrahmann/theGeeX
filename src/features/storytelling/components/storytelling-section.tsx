@@ -10,7 +10,6 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { isPointInsideElement } from "@/features/services/lib/services-cursor-zone";
 
 import { storytellingItems } from "@/features/storytelling/constants/storytelling";
-import { usePreloadStorytellingImages } from "@/features/storytelling/hooks/use-preload-storytelling-images";
 import { useStorytellingScroll } from "@/features/storytelling/hooks/use-storytelling-scroll";
 import { StorytellingBackground } from "./storytelling-background";
 import { StorytellingContent } from "./storytelling-content";
@@ -23,10 +22,10 @@ export function StorytellingSection() {
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const usesDesktopVisualLayout = isDesktop || isTablet;
   const layoutMode = isDesktop ? "desktop" : isTablet ? "tablet" : "mobile";
+  const [isActivated, setIsActivated] = useState(false);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const isDesktopBackgroundActiveRef = useRef(false);
   const lastPointerRef = useRef({ x: -1, y: -1 });
-  usePreloadStorytellingImages(storytellingItems);
   const {
     containerRef,
     stageRef,
@@ -41,10 +40,39 @@ export function StorytellingSection() {
     useStorytellingScroll({
       itemCount: storytellingItems.length,
       layoutMode,
-      pinEnabled: isLayoutReady,
+      pinEnabled: isActivated && isLayoutReady,
       backgroundEnabled: false,
-      mobileBackgroundEnabled: !isDesktop,
+      mobileBackgroundEnabled: isActivated && !isDesktop,
     });
+
+  useEffect(() => {
+    const sectionElement = containerRef.current;
+
+    if (!sectionElement || isActivated) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        setIsActivated(true);
+        observer.disconnect();
+      },
+      {
+        rootMargin: "35% 0px",
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [containerRef, isActivated]);
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
@@ -57,7 +85,7 @@ export function StorytellingSection() {
   }, []);
 
   useEffect(() => {
-    if (!isLayoutReady || !isDesktop) {
+    if (!isActivated || !isLayoutReady || !isDesktop) {
       return;
     }
 
@@ -123,7 +151,7 @@ export function StorytellingSection() {
         "0",
       );
     };
-  }, [backgroundRef, containerRef, isDesktop, isLayoutReady, stageRef]);
+  }, [backgroundRef, containerRef, isActivated, isDesktop, isLayoutReady, stageRef]);
 
   useEffect(() => {
     if (!isMobile) {
@@ -144,7 +172,7 @@ export function StorytellingSection() {
   }, [isMobile]);
 
   useEffect(() => {
-    if (!isDesktop || !isPointerFine) {
+    if (!isActivated || !isDesktop || !isPointerFine) {
       return;
     }
 
@@ -178,7 +206,7 @@ export function StorytellingSection() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", deactivateExploreCursor);
     };
-  }, [containerRef, isDesktop, isPointerFine, isLayoutReady]);
+  }, [containerRef, isActivated, isDesktop, isPointerFine, isLayoutReady]);
 
   return (
     <section

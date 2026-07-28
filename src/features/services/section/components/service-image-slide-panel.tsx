@@ -71,7 +71,11 @@ export function ServiceImageSlidePanel({
               zIndex: isActive ? 2 : isTransitioning ? 1 : 0,
             }}
           >
-            <ServiceImage service={service} variant={imageVariant} eager />
+            <ServiceImage
+              service={service}
+              variant={imageVariant}
+              eager={isActive || isTransitioning}
+            />
           </motion.div>
         );
       })}

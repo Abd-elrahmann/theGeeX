@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation";
 
+import { FooterRevealStack } from "@/components/layout/footer-reveal-stack";
 import { SiteFooter } from "@/features/footer";
-import { LetsTalkSection } from "@/features/lets-talk";
 
 export default function SinglePageLayout({
   children,
@@ -26,22 +26,13 @@ export default function SinglePageLayout({
   return (
     <>
       {children}
-      <div
-        className="relative min-h-(--lets-talk-footer-reveal-height)"
-        style={{
-          marginTop: isServiceDetailPage
+      <FooterRevealStack
+        marginTop={
+          isServiceDetailPage
             ? "calc(var(--lets-talk-margin-top) + 120px)"
-            : "var(--lets-talk-margin-top)",
-        }}
-      >
-        <div className="sticky z-10" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
-          <LetsTalkSection revealFooterOnScroll />
-        </div>
-
-        <div className="sticky z-20 mt-(--footer-reveal-gap)" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
-          <SiteFooter revealFromPreviousSection />
-        </div>
-      </div>
+            : "var(--lets-talk-margin-top)"
+        }
+      />
     </>
   );
 }

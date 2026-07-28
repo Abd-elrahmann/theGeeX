@@ -48,6 +48,30 @@ export const ourTeamCardSizes = {
   },
 } as const;
 
+export const ourTeamMobileCardSize = {
+  width: 170,
+  height: 236,
+} as const;
+
+export const ourTeamMobileImageBaseStyle: Pick<
+  Required<OurTeamImageStyleOverride>,
+  "width" | "height" | "top"
+> = {
+  width: 208,
+  height: 372,
+  top: "18%",
+};
+
+export const ourTeamImageDesktopSizes = {
+  width: 243,
+  height: 450,
+} as const;
+
+export const ourTeamImageMobileSizes = {
+  width: 208,
+  height: 372,
+} as const;
+
 const ourTeamBottomEdge = 588;
 
 function getOurTeamCardHeight(card: Pick<OurTeamMemberCard, "variant" | "height">): number {
@@ -63,8 +87,8 @@ function getBottomAlignedTargetY(card: Pick<OurTeamMemberCard, "variant" | "heig
 }
 
 export const ourTeamImageBaseStyle: Required<OurTeamImageStyleOverride> = {
-  width: 243,
-  height: 450,
+  width: ourTeamImageDesktopSizes.width,
+  height: ourTeamImageDesktopSizes.height,
   left: "50%",
   top: "10%",
   transform: "translate(-50%, -20%)",
@@ -116,7 +140,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
     mobileImageStyle: {
-      top: "80%",
+      top: "75%",
     },
   },
   {
@@ -133,13 +157,12 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     imageStyle: {
       top: "50%",
       scale: "0.8",
-      transform: "translate(-60%, -50%)",
+      transform: "translate(-65%, -50%)",
       backgroundPosition: "center center",
    
     },
           mobileImageStyle: {
-      scale: "0.9",
-      top: "50%",
+      top: "45%",
     },
   },
   {
@@ -160,9 +183,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
           mobileImageStyle: {
-      scale: "0.90",
-            transform: "translate(-60%, -50%)",
-      top: "80%",
+      top: "60%",
     },
   },
   {
@@ -221,7 +242,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       scale: "0.8",
     },
     mobileImageStyle: {
-      top: "80%",
+      top: "75%",
       transform: "translate(-65%, -65%)",
 
     },
@@ -244,7 +265,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       scale: "0.9",
     },
      mobileImageStyle: {
-      top: "90%",
+      top: "80%",
       transform: "translate(-55%, -60%)",
 
     },

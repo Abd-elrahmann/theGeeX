@@ -232,12 +232,18 @@ export function getPackageBookingContentBySlug(slug: string): PackageBookingCont
     throw new Error(`Package booking content not found for slug: ${slug}`);
   }
 
+  const bookingDescriptionBySlug: Partial<Record<PackageItem["slug"], string>> = {
+    "startup-launcher": "You're one step away from bringing your idea to life. Share a few details about your business, and we'll reach out to kick off your Startup Launcher package and guide you through the next steps.",
+    "digital-ecosystem": "Share your goals and current challenges. We'll design a connected digital ecosystem with the tools, automation, and technology needed to support your next stage of growth.",
+    "enterprise-transformation": "You're one step away from bringing your idea to life. Share a few details about your business, and we'll reach out to kick off your Startup Launcher package and guide you through the next steps.",
+  };
+
   return {
     slug: packageItem.slug,
     breadcrumbLabel: packageItem.name.trim(),
     headingLabel: packageItem.chips[0]?.label ?? "Package",
     packageTitle: packageItem.name.trim(),
-    description: packageItem.description,
+    description: bookingDescriptionBySlug[packageItem.slug] ?? packageItem.description,
     bookingPath: getPackageBookingPath(packageItem.slug),
   };
 }
