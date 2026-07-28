@@ -33,34 +33,20 @@ export interface OurTeamMemberCard {
 export const ourTeamSectionTitle = "Our Team";
 
 export const ourTeamGalleryDimensions = {
-  width: 932,
-  height: 653,
+  width: 1059,
+  height: 736,
 } as const;
 
 export const ourTeamCardSizes = {
   standard: {
-    width: 168,
-    height: 290,
+    width: 199,
+    height: 280,
   },
   compact: {
-    width: 182,
+    width: 199,
     height: 190,
   },
 } as const;
-
-const ourTeamBottomEdge = 588;
-
-function getOurTeamCardHeight(card: Pick<OurTeamMemberCard, "variant" | "height">): number {
-  const defaultHeight = card.variant === "compact"
-    ? ourTeamCardSizes.compact.height
-    : ourTeamCardSizes.standard.height;
-
-  return card.height ?? defaultHeight;
-}
-
-function getBottomAlignedTargetY(card: Pick<OurTeamMemberCard, "variant" | "height">): number {
-  return ourTeamBottomEdge - getOurTeamCardHeight(card);
-}
 
 export const ourTeamImageBaseStyle: Required<OurTeamImageStyleOverride> = {
   width: 243,
@@ -89,14 +75,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     collapsedOffsetX: 0,
     collapsedOffsetY: 0,
     gradientVar: "--team-card-gradient-01",
-    imageStyle: {
-     scale: "0.90",
-     top: "50%",
-    transform: "translate(-55%, -50%)",
-
-    },
       mobileImageStyle: {
-      scale: "0.90",
+      scale: "0.95",
     },
   },
   {
@@ -106,7 +86,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     imageSrc: "/images/ourTeam/muhannad2.webp",
     variant: "standard",
     targetX: 0,
-    targetY: getBottomAlignedTargetY({ variant: "standard" }),
+    targetY: 312,
     collapsedOffsetX: -10,
     collapsedOffsetY: 16,
     gradientVar: "--team-card-gradient-02",
@@ -116,7 +96,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
     mobileImageStyle: {
-      top: "80%",
+      top: "85%",
     },
   },
   {
@@ -125,7 +105,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "UI/UX Designer",
     imageSrc: "/images/ourTeam/sandra3.webp",
     variant: "compact",
-    targetX: 184,
+    targetX: 215,
     targetY: 0,
     collapsedOffsetX: 10,
     collapsedOffsetY: -20,
@@ -148,8 +128,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "UI/UX Designer",
     imageSrc: "/images/ourTeam/gasser4.webp",
     variant: "compact",
-    targetX: 184,
-    targetY: 198,
+    targetX: 215,
+    targetY: 201,
     collapsedOffsetX: -16,
     collapsedOffsetY: 34,
     gradientVar: "--team-card-gradient-04",
@@ -160,8 +140,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
           mobileImageStyle: {
-      scale: "0.90",
-            transform: "translate(-60%, -50%)",
+      scale: "0.9",
       top: "80%",
     },
   },
@@ -171,8 +150,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "Graphic Designer",
     imageSrc: "/images/ourTeam/nada5.webp",
     variant: "compact",
-    targetX: 184,
-    targetY: getBottomAlignedTargetY({ variant: "compact" }),
+    targetX: 215,
+    targetY: 402,
     collapsedOffsetX: 20,
     collapsedOffsetY: 52,
     gradientVar: "--team-card-gradient-05",
@@ -190,16 +169,16 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     imageSrc: "/images/ourTeam/anas6.webp",
     variant: "standard",
     height: 300,
-    targetX: 382,
-    targetY: 4,
+    targetX: 430,
+    targetY: 8,
     collapsedOffsetX: -24,
     collapsedOffsetY: -12,
     gradientVar: "--team-card-gradient-06",
     imageStyle: {
       top: "60%",
-      transform: "translate(-55%, -50%)",
+      transform: "translate(-60%, -50%)",
       backgroundPosition: "center center",
-      scale: "0.95",
+      scale: "0.9",
     },
   },
   {
@@ -209,21 +188,19 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     imageSrc: "/images/ourTeam/sandy7.webp",
     variant: "standard",
     height: 250,
-    targetX: 382,
-    targetY: getBottomAlignedTargetY({ variant: "standard", height: 250 }),
+    targetX: 430,
+    targetY: 338,
     collapsedOffsetX: 26,
     collapsedOffsetY: 28,
     gradientVar: "--team-card-gradient-07",
     imageStyle: {
-      top: "75%",
+      top: "85%",
       transform: "translate(-60%, -60%)",
       backgroundPosition: "center center",
       scale: "0.8",
     },
     mobileImageStyle: {
       top: "80%",
-      transform: "translate(-65%, -65%)",
-
     },
   },
   {
@@ -232,8 +209,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "Front-end Developer",
     imageSrc: "/images/ourTeam/abdelrhaman8.webp",
     variant: "compact",
-    targetX: 566,
-    targetY: 198,
+    targetX: 645,
+    targetY: 201,
     collapsedOffsetX: -32,
     collapsedOffsetY: -24,
     gradientVar: "--team-card-gradient-09",
@@ -243,11 +220,6 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
       scale: "0.9",
     },
-     mobileImageStyle: {
-      top: "90%",
-      transform: "translate(-55%, -60%)",
-
-    },
   },
   {
     id: 9,
@@ -255,8 +227,8 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "Mobile Developer",
     imageSrc: "/images/ourTeam/ahmed9.webp",
     variant: "compact",
-    targetX: 566,
-    targetY: getBottomAlignedTargetY({ variant: "compact" }),
+    targetX: 645,
+    targetY: 402,
     collapsedOffsetX: 34,
     collapsedOffsetY: 40,
     gradientVar: "--team-card-gradient-10",
@@ -273,7 +245,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "Graphic Designer",
     imageSrc: "/images/ourTeam/tamer7.webp",
     variant: "compact",
-    targetX: 566,
+    targetX: 645,
     targetY: 0,
     collapsedOffsetX: -18,
     collapsedOffsetY: 60,
@@ -284,11 +256,6 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
       scale: "0.85",
     },
-     mobileImageStyle: {
-      top: "80%",
-      transform: "translate(-65%, -55%)",
-
-    },
   },
   {
     id: 10,
@@ -296,7 +263,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "Back-end Developer",
     imageSrc: "/images/ourTeam/belal10.webp",
     variant: "standard",
-    targetX: 764,
+    targetX: 860,
     targetY: 0,
     collapsedOffsetX: -36,
     collapsedOffsetY: -8,
@@ -316,16 +283,15 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     role: "Mobile Developer",
     imageSrc: "/images/ourTeam/abdelrhaman11.webp",
     variant: "standard",
-    targetX: 764,
-    targetY: getBottomAlignedTargetY({ variant: "standard" }),
+    targetX: 860,
+    targetY: 312,
     collapsedOffsetX: 38,
     collapsedOffsetY: 48,
     gradientVar: "--team-card-gradient-12",
     imageStyle: {
-      top: "50%",
-      transform: "translate(-60%, -50%)",
+      top: "75%",
+      transform: "translate(-50%, -50%)",
       backgroundPosition: "center center",
-      scale: "0.8",
     },
     mobileImageStyle: {
       top: "70%",

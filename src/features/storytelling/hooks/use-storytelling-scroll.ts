@@ -212,7 +212,7 @@ export function useStorytellingScroll({
                 trigger: mobileBackgroundStartTrigger,
                 start: () => {
                   const viewportDelay = window.innerHeight * getMobileBackgroundViewportDelayRatio();
-                  return `bottom bottom-=${getMobileBackgroundStartOffset() + viewportDelay}`;
+                  return `top bottom-=${getMobileBackgroundStartOffset() + viewportDelay}`;
                 },
                 endTrigger: containerElement,
                 end: "bottom top",
@@ -235,7 +235,7 @@ export function useStorytellingScroll({
                 fastScrollEnd: false,
                 refreshPriority: -1,
               }),
-          start: () => `top top+=${getMobileProgressStartOffset()}`,
+          start: () => `top top-=${getMobileProgressStartOffset()}`,
           end: () => {
             return `+=${getMobileProgressDistance() + getMobileBackgroundExtension()}`;
           },
