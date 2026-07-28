@@ -94,7 +94,8 @@ export function Navbar() {
       ref={headerRef}
       className={cn(
         "fixed inset-x-0 top-0 z-(--navbar-z-index) box-border h-(--navbar-height) w-full max-w-full",
-        isMobileMenuOpen ? "overflow-visible" : "overflow-hidden lg:overflow-visible",
+        "overflow-x-hidden",
+        isMobileMenuOpen ? "overflow-y-visible" : "overflow-y-hidden lg:overflow-y-visible",
       )}
       style={
         isDesktop && isRoundedNav

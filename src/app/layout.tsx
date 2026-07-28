@@ -5,9 +5,9 @@ import { CalSansUI } from "@calcom/cal-sans-ui/ui";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 
 import { Navbar } from "@/components/layout/navbar";
+import { DeferredCursor } from "@/components/providers/deferred-cursor";
 import { NavigationProgress } from "@/components/providers/navigation-progress";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
-import { Cursor } from "@/components/shared/cursor";
 import { cn } from "@/lib/cn";
 import { siteMetadata } from "@/lib/metadata";
 
@@ -76,7 +76,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <SmoothScrollProvider>
           <NavigationProgress />
-          <Cursor />
+          <DeferredCursor />
           <Navbar />
           {children}
         </SmoothScrollProvider>

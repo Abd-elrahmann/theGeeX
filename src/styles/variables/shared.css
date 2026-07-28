@@ -1,6 +1,7 @@
 :root {
 
   --viewport-height: 100vh;
+  --viewport-inline-size: calc(100vw - (100vw - 100%));
   --viewport-height-stable: 100svh;
   --viewport-height-dynamic: 100dvh;
   --safe-area-top: env(safe-area-inset-top, 0px);

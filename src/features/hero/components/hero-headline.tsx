@@ -33,7 +33,7 @@ function QuotedHeadline({ lines, keyPrefix, isInView }: QuotedHeadlineProps) {
             <motion.div
               className={cn(
                 isAccentLine
-                  ? "text-(--color-hero-headline-accent)"
+                  ? "text-hero-headline-accent"
                   : "text-primary",
               )}
               initial={initial}
@@ -72,7 +72,7 @@ export function HeroHeadline() {
     <div
       className={cn(
         "mx-auto flex h-auto w-full max-w-(--hero-headline-max-width) justify-center",
-        "max-lg:absolute max-lg:top-1/2 max-lg:left-1/2 max-lg:-translate-x-1/2 max-lg:-translate-y-1/2",
+        "max-lg:absolute max-lg:inset-x-0 max-lg:top-1/2 max-lg:-translate-y-1/2",
         "lg:relative lg:translate-x-0 lg:translate-y-0",
       )}
     >

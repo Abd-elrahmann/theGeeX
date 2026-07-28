@@ -52,12 +52,22 @@
   :root {
     --ai-growth-title-size: 60px;
     --ai-growth-description-size: 16px;
-    --ai-growth-grid-gap: 40px;
+    --ai-growth-grid-gap: 24px;
+    --ai-growth-grid-one-min-width: 360px;
+    --ai-growth-grid-two-min-width: 0px;
     --ai-growth-margin-top: calc(var(--section-stack-gap) + 88px);
     --ai-growth-scroll-height: calc(100svh + 260px);
     --ai-growth-pin-scroll-distance: 420px;
     --ai-growth-sticky-top: var(--services-sticky-top);
     --ai-growth-mobile-stage-height: 0px;
     --ai-growth-mobile-rows-track-height: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --ai-growth-grid-gap: 40px;
+    --ai-growth-grid-one-min-width: 440px;
+    --ai-growth-grid-two-min-width: 560px;
   }
 }
