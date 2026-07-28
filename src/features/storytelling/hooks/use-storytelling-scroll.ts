@@ -128,6 +128,8 @@ export function useStorytellingScroll({
         }
 
         const usesNativeStickyMobileStage = layoutMode !== "desktop";
+        const mobileScrollElement = pinStartElement.parentElement ?? stageElement;
+        const mobileBackgroundStartTrigger = containerElement.previousElementSibling ?? containerElement;
         const getMobileProgressDistance = () => {
           const distance = readRootCssNumber(
             "--storytelling-mobile-scroll-distance",
