@@ -46,6 +46,7 @@
     0px -63.8265352148px 319.1326760742px -1.875px rgb(0 0 0 / 0.05),
     0px -109.9049835267px 549.5249176337px -2.1875px rgb(0 0 0 / 0.05),
     0px -200px 1000px -2.5px rgb(0 0 0 / 0.05);
+  --projects-card-mobile-shadow: none;
   --projects-card-header-height: 40px;
   --projects-card-index-size: 14px;
   --projects-card-index-weight: 600;
@@ -246,6 +247,7 @@
 
 @media (max-width: 799.98px) {
   :root {
+    --projects-card-mobile-shadow: none;
     --projects-section-exit-vh: 4;
     --projects-detail-breadcrumb-size: 12px;
     --projects-detail-hero-padding-top: 32px;

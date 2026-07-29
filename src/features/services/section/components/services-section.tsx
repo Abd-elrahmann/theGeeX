@@ -58,6 +58,7 @@ export function ServicesSection() {
     contentHeight: 0,
     imageHeight: 0,
     scrollHeight: 0,
+    stickyTop: 0,
   });
   const {
     containerRef,
@@ -287,10 +288,12 @@ export function ServicesSection() {
         parseFloat(rootStyles.getPropertyValue("--services-stage-bottom-padding")) || 32;
       const pinClearance =
         parseFloat(rootStyles.getPropertyValue("--services-mobile-pin-clearance")) || 0;
+      const navbarHeight = parseFloat(rootStyles.getPropertyValue("--navbar-height")) || 0;
       const scrollStepVh = parseFloat(rootStyles.getPropertyValue("--services-scroll-step-vh")) || 100;
       const mobileScrollTailVh =
         parseFloat(rootStyles.getPropertyValue("--services-mobile-scroll-tail-vh")) || 0;
       const viewportHeight = window.innerHeight;
+      const availableViewportHeight = Math.max(viewportHeight - navbarHeight, 0);
       const titleHeight = mobileTitleRef.current?.offsetHeight ?? 0;
       const contentHeight = Math.max(
         0,
@@ -304,21 +307,19 @@ export function ServicesSection() {
         titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX * 2 + columnsGap + stageBottomPadding + pinClearance;
       const stageHeight = isTablet
         ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
-        : Math.max(
-            viewportHeight,
-            titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance,
-          );
-      const stickyOffset = isTablet ? Math.max((viewportHeight - stageHeight) / 2, 0) : 0;
+        : titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance;
+      const stickyTop = navbarHeight + Math.max((availableViewportHeight - stageHeight) / 2, 0);
 
       setMobileStageMetrics({
         stageHeight,
         contentHeight,
         imageHeight,
+        stickyTop,
         scrollHeight:
           stageHeight +
           Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100) +
           viewportHeight * (mobileScrollTailVh / 100) +
-          stickyOffset,
+          stickyTop,
       });
     };
 
@@ -344,10 +345,6 @@ export function ServicesSection() {
   }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
-  const tabletStickyTop =
-    isTablet && mobileStageMetrics.stageHeight > 0
-      ? `max(0px, calc((100svh - ${mobileStageMetrics.stageHeight}px) / 2))`
-      : undefined;
   const desktopScrollStepCount = Math.max(services.length, 1);
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
@@ -496,15 +493,14 @@ export function ServicesSection() {
             <div
               className="sticky top-0 overflow-visible"
               style={{
-                top: isIosSafariDevice ? "var(--navbar-height)" : tabletStickyTop,
+                top:
+                  mobileStageMetrics.stickyTop > 0
+                    ? `${mobileStageMetrics.stickyTop}px`
+                    : "var(--navbar-height)",
                 height:
                   mobileStageMetrics.stageHeight > 0
-                    ? isIosSafariDevice
-                      ? `calc(${mobileStageMetrics.stageHeight}px - var(--navbar-height))`
-                      : `${mobileStageMetrics.stageHeight}px`
-                    : isIosSafariDevice
-                      ? "calc(100svh - var(--navbar-height))"
-                      : "100svh",
+                    ? `${mobileStageMetrics.stageHeight}px`
+                    : "auto",
               }}
             >
               <div

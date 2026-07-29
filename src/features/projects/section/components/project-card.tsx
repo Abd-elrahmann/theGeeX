@@ -230,7 +230,7 @@ export function ProjectCard({
   );
 
   const cardScale = useTransform(scrollProgress, (progress) =>
-    getCardScale(progress, index, totalCards),
+    isDesktop ? getCardScale(progress, index, totalCards) : 1,
   );
 
   const articleStyle: ProjectCardArticleStyle = {
@@ -261,7 +261,8 @@ export function ProjectCard({
         className={cn(
           "relative box-border flex h-full min-w-0 flex-col items-start justify-start overflow-hidden rounded-(--projects-card-radius) border-solid",
           "bg-(--project-card-background) px-(--projects-card-padding-inline) py-(--projects-card-padding-block) text-(--color-project-card-foreground)",
-          "shadow-(--projects-card-shadow) transform-gpu will-change-transform backface-hidden",
+          isDesktop ? "shadow-(--projects-card-shadow)" : "shadow-(--projects-card-mobile-shadow)",
+          "transform-gpu will-change-transform backface-hidden",
         )}
         style={{
           scale: cardScale,
