@@ -128,6 +128,7 @@ export function useStorytellingScroll({
         }
 
         const usesNativeStickyMobileStage = layoutMode !== "desktop";
+        const projectsElement = document.getElementById("projects");
         const getMobileProgressDistance = () => {
           const distance = readRootCssNumber(
             "--storytelling-mobile-scroll-distance",
@@ -232,10 +233,6 @@ export function useStorytellingScroll({
             if (!mobileBackgroundEnabled && backgroundEnabled) {
               setBackgroundDark(false);
             }
-
-            if (mobileBackgroundEnabled) {
-              setPageBackgroundOpacity(0);
-            }
           },
           onLeaveBack: () => {
             if (!mobileBackgroundEnabled && backgroundEnabled) {
@@ -268,8 +265,29 @@ export function useStorytellingScroll({
           },
         });
 
+        const projectsHandoffTrigger =
+          mobileBackgroundEnabled && projectsElement
+            ? ScrollTrigger.create({
+                trigger: projectsElement,
+                start: "top bottom",
+                invalidateOnRefresh: true,
+                onEnter: () => setPageBackgroundOpacity(0),
+                onEnterBack: () => setPageBackgroundOpacity(0),
+                onLeaveBack: () => {
+                  if (mobilePinTrigger.isActive) {
+                    syncMobileBackground(mobilePinTrigger);
+                    return;
+                  }
+
+                  setPageBackgroundOpacity(1);
+                },
+              })
+            : null;
+
         if (mobileBackgroundEnabled) {
-          if (mobilePinTrigger.isActive) {
+          if (projectsHandoffTrigger?.isActive) {
+            setPageBackgroundOpacity(0);
+          } else if (mobilePinTrigger.isActive) {
             syncMobileBackground(mobilePinTrigger);
           } else {
             setPageBackgroundOpacity(0);
@@ -280,8 +298,12 @@ export function useStorytellingScroll({
 
         const syncMobilePinTrigger = () => {
           if (mobileBackgroundEnabled) {
-            if (mobilePinTrigger.isActive) {
+            if (projectsHandoffTrigger?.isActive) {
+              setPageBackgroundOpacity(0);
+            } else if (mobilePinTrigger.isActive) {
               syncMobileBackground(mobilePinTrigger);
+            } else if (mobilePinTrigger.progress >= 1) {
+              setPageBackgroundOpacity(1);
             } else {
               setPageBackgroundOpacity(0);
             }
@@ -301,6 +323,7 @@ export function useStorytellingScroll({
         syncScrollTriggersAfterReset();
 
         return () => {
+          projectsHandoffTrigger?.kill();
           mobilePinTrigger.kill();
 
           if (mobileBackgroundEnabled || backgroundEnabled) {
