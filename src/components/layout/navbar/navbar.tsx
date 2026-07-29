@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { navbarConfig } from "@/config/navbar.config";
 import { cn } from "@/lib/cn";
+import { isIosSafari } from "@/lib/is-ios-safari";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useGSAP } from "@/lib/gsap";
 import {
@@ -21,6 +22,7 @@ export function Navbar() {
   const appliedVariant = isDesktop ? variant : "primary";
   const isRoundedNav = isVisible && appliedVariant === "rounded";
   const [isMobileMenuRequested, setIsMobileMenuRequested] = useState(false);
+  const [isIosSafariDevice] = useState(() => isIosSafari());
   const isMobileMenuOpen = isMobileMenuRequested && isVisible && !isDesktop;
   const headerRef = useRef<HTMLElement>(null);
   const animatedRef = useRef<HTMLDivElement>(null);
@@ -109,14 +111,17 @@ export function Navbar() {
         ref={animatedRef}
         className={cn(
           "relative box-border h-full w-full max-w-full translate-y-0 opacity-100",
-          "flex justify-center will-change-transform max-lg:items-center lg:items-start",
+          "flex justify-center max-lg:items-center lg:items-start",
+          isIosSafariDevice ? "will-change-auto" : "will-change-transform",
         )}
+        style={isIosSafariDevice ? { willChange: "opacity" } : undefined}
         inert={!isVisible}
       >
         <nav
           aria-label="Main navigation"
           className={cn(
-            "navbar-nav-shell box-border flex min-w-0 max-w-full items-center bg-surface backdrop-blur-(--navbar-blur)",
+            "navbar-nav-shell box-border flex min-w-0 max-w-full items-center bg-surface",
+            isIosSafariDevice ? "navbar-nav-shell--ios-safari" : "backdrop-blur-(--navbar-blur)",
             "max-lg:justify-between lg:justify-normal",
             isRoundedNav ? "max-lg:h-full lg:h-auto" : "max-lg:h-full lg:h-full",
             isRoundedNav && "lg:mt-(--navbar-rounded-offset-top)",

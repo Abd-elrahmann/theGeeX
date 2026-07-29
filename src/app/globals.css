@@ -334,6 +334,12 @@ body::before {
     padding var(--navbar-variant-duration) var(--navbar-variant-ease-out);
 }
 
+.navbar-nav-shell--ios-safari {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background-color: var(--color-background);
+}
+
 .navbar-mobile-menu-surface {
   -webkit-backdrop-filter: blur(var(--navbar-blur));
   backdrop-filter: blur(var(--navbar-blur));
