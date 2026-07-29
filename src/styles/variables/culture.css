@@ -204,21 +204,3 @@
     --culture-card-description-size: 16px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --culture-container-max-width: 1200px;
-    --culture-title-size: 160px;
-    --culture-title-line-height: 160px;
-    --culture-title-box-height: 124px;
-    --culture-margin-top: 0px;
-    --culture-section-scroll-vh: 200;
-    --culture-grid-gap: 24px;
-    --culture-card-content-padding-x: 32px;
-    --culture-card-content-padding-y: 32px;
-    --culture-stacked-card-padding-x: 32px;
-    --culture-stacked-card-padding-y: 32px;
-    --culture-card-title-size: 22px;
-    --culture-card-description-size: 16px;
-  }
-}

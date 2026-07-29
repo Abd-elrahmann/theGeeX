@@ -28,7 +28,6 @@ export function PackagesSection() {
               key={item.id}
               item={item}
               index={index}
-              isLast={index === packageItems.length - 1}
             />
           ))}
         </div>

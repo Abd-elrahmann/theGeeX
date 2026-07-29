@@ -195,18 +195,3 @@
     --awards-card-title-height: 58px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --awards-container-max-width: 1200px;
-    --awards-padding-y: 16px;
-    --awards-cards-column-max-width: 680px;
-    --awards-card-max-width: 100%;
-    --awards-cards-gap: 32px;
-    --awards-card-title-size: 18px;
-    --awards-active-card-title-size: 24px;
-    --awards-card-place-size: 22px;
-    --awards-active-card-place-size: 26px;
-    --awards-card-title-height: 48px;
-  }
-}

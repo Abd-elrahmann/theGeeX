@@ -46,6 +46,7 @@ export function LetsTalkSection({ revealFooterOnScroll = false }: LetsTalkSectio
               src={letsTalkContent.backgroundImageSrc}
               alt="Let's Talk background"
               fill
+              loading={revealFooterOnScroll ? "lazy" : "eager"}
               className="object-cover"
               sizes="(min-width: 1440px) 1440px, 100vw"
             />

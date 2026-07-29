@@ -175,19 +175,3 @@
     --team-card-role-size: 15px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --team-padding-x: 24px;
-    --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
-    --team-title-size: 204px;
-    --team-title-line-height: 204px;
-    --team-title-box-height: 156px;
-    --team-section-padding-y: 36px;
-    --team-gallery-scale: 1;
-    --team-gallery-bottom-bleed: 88px;
-    --team-card-content-padding-x: 24px;
-    --team-card-name-size: 28px;
-    --team-card-role-size: 14px;
-  }
-}

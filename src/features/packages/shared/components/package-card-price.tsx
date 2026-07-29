@@ -3,13 +3,11 @@ import { cn } from "@/lib/cn";
 interface PackageCardPriceProps {
   price: string;
   billingCycle: string;
-  isContactSalesPackage: boolean;
 }
 
 export function PackageCardPrice({
   price,
   billingCycle,
-  isContactSalesPackage: _isContactSalesPackage,
 }: PackageCardPriceProps) {
   const hasBillingCycle = Boolean(billingCycle);
 

@@ -18,7 +18,6 @@ import { packageFeatureTitleClassName } from "@/features/packages/shared/utils/p
 interface PackageCardProps {
   item: PackageItem;
   index: number;
-  isLast?: boolean;
 }
 
 const packageEnterTransition = {
@@ -26,10 +25,9 @@ const packageEnterTransition = {
   ease: [0.22, 1, 0.36, 1] as const,
 };
 
-export function PackageCard({ item, index, isLast = false }: PackageCardProps) {
+export function PackageCard({ item, index }: PackageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const canAnimateButtonHover = useDesktopBreakpoint();
-  const isContactSalesPackage = !item.billingCycle;
   const cardChips = item.cardChips ?? item.chips;
   const cardDescription = item.cardDescription ?? item.description;
 
@@ -60,7 +58,6 @@ export function PackageCard({ item, index, isLast = false }: PackageCardProps) {
               "text-(length:--packages-card-title-size) leading-(--packages-card-title-line-height)",
               "font-semibold tracking-normal text-(--color-packages-card-title)",
               packageFeatureTitleClassName,
-              isContactSalesPackage && "whitespace-nowrap text-(length:--packages-card-enterprise-title-size)",
             )}
           >
             {item.name}
@@ -77,7 +74,7 @@ export function PackageCard({ item, index, isLast = false }: PackageCardProps) {
           </p>
         </div>
 
-        <PackageCardPrice price={item.price} billingCycle={item.billingCycle} isContactSalesPackage={isContactSalesPackage} />
+        <PackageCardPrice price={item.price} billingCycle={item.billingCycle} />
 
         <PackageCardButton
           slug={item.slug}
@@ -92,12 +89,10 @@ export function PackageCard({ item, index, isLast = false }: PackageCardProps) {
         />
       </div>
 
-      {!isLast ? (
-        <div
-          aria-hidden="true"
-          className="mt-(--packages-card-divider-margin-top) h-px w-full bg-(--color-packages-card-divider)"
-        />
-      ) : null}
+      <div
+        aria-hidden="true"
+        className="mt-(--packages-card-divider-margin-top) h-px w-full bg-(--color-packages-card-divider)"
+      />
 
       <PackageCardFeatures features={item.features} itemId={item.id} />
     </motion.article>

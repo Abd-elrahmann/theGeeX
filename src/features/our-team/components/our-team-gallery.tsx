@@ -12,8 +12,6 @@ import {
   ourTeamCardSizes,
   ourTeamGalleryDimensions,
   ourTeamImageBaseStyle,
-  ourTeamMobileCardSize,
-  ourTeamMobileImageBaseStyle,
   ourTeamPrimaryCardId,
 } from "@/features/our-team/constants/our-team";
 
@@ -27,7 +25,10 @@ const inactiveMobileAutoHoverState = {
   isActive: false,
   direction: 1 as 1 | -1,
 };
-const mobileCardSize = ourTeamMobileCardSize;
+const legacyMobileCardSize = {
+  width: 199,
+  height: 300,
+} as const;
 
 const teamCardImageBaseStyle = {
   width: ourTeamImageBaseStyle.width,
@@ -45,13 +46,6 @@ const teamCardImageBaseStyle = {
   scale: ourTeamImageBaseStyle.scale,
 } satisfies CSSProperties;
 
-const mobileTeamCardImageBaseStyle = {
-  ...teamCardImageBaseStyle,
-  width: ourTeamMobileImageBaseStyle.width,
-  height: ourTeamMobileImageBaseStyle.height,
-  top: ourTeamMobileImageBaseStyle.top,
-} as const;
-
 function getCardSize(card: TeamCard) {
   const baseSize = card.variant === "compact" ? ourTeamCardSizes.compact : ourTeamCardSizes.standard;
 
@@ -63,7 +57,8 @@ function getCardSize(card: TeamCard) {
 
 function getTeamCardImageStyle(card: TeamCard, isMobile = false): CSSProperties {
   return {
-    ...(isMobile ? mobileTeamCardImageBaseStyle : teamCardImageBaseStyle),
+    ...teamCardImageBaseStyle,
+    backgroundImage: `url(${card.imageSrc})`,
     ...card.imageStyle,
     ...(isMobile ? card.mobileImageStyle : undefined),
   };
@@ -76,8 +71,6 @@ function TeamCardArtwork({
   card: TeamCard;
   isMobile?: boolean;
 }) {
-  const imageStyle = getTeamCardImageStyle(card, isMobile);
-
   return (
     <>
       <div
@@ -87,25 +80,7 @@ function TeamCardArtwork({
         }}
       />
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute block select-none"
-        style={{
-          ...imageStyle,
-        }}
-      >
-        <Image
-          src={card.imageSrc}
-          alt=""
-          fill
-          loading="lazy"
-          sizes={isMobile ? "208px" : "243px"}
-          className="object-contain select-none"
-          style={{
-            objectPosition: imageStyle.backgroundPosition,
-          }}
-        />
-      </div>
+      <div aria-hidden="true" style={getTeamCardImageStyle(card, isMobile)} />
     </>
   );
 }
@@ -125,10 +100,10 @@ function TeamCardHoverContent({
       )}
     >
       <div className="flex min-h-10 w-full flex-col items-center justify-center gap-1 px-(--team-card-content-padding-x) text-center">
-        <h3 className="m-0 h-auto w-full max-w-full whitespace-normal wrap-break-word font-poppins text-[14px] leading-[1.15] font-normal tracking-normal text-[#ffffff] font-features-[normal] lg:text-[18px] lg:leading-[1.2]">
+        <h3 className="m-0 h-auto w-full max-w-full whitespace-normal wrap-break-word font-poppins text-[14px] leading-[1.15] font-normal tracking-normal text-(--color-text-on-dark) font-features-[normal] lg:text-[18px] lg:leading-[1.2]">
           {card.name}
         </h3>
-        <p className="m-0 h-auto w-full max-w-full whitespace-normal wrap-break-word text-center font-poppins text-[10px] leading-[1.2] font-medium italic tracking-normal text-[#e8e8e8] font-features-[normal] lg:text-[12px]">
+        <p className="m-0 h-auto w-full max-w-full whitespace-normal wrap-break-word text-center font-poppins text-[10px] leading-[1.2] font-medium italic tracking-normal text-(--color-text-on-dark-muted) font-features-[normal] lg:text-[12px]">
           {card.role}
         </p>
       </div>
@@ -223,7 +198,7 @@ function OurTeamAnimatedCard({
       {isCollapsedPrimaryCard ? <TeamCollapsedPrimaryArtwork /> : <TeamCardArtwork card={card} />}
 
       {!isCollapsedPrimaryCard ? (
-        <div className="absolute inset-0 bg-[rgb(0_0_0/0.56)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-(--color-overlay-strong) opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       ) : null}
 
       {!isCollapsedPrimaryCard ? (
@@ -244,15 +219,14 @@ function OurTeamMobileCard({
   card: TeamCard;
   isActive: boolean;
 }) {
-  const size = mobileCardSize;
+  const size = legacyMobileCardSize;
 
   return (
     <figure
-      className="group relative isolate mx-auto m-0 flex min-w-0 max-w-full box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius) bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]"
+      className="group relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius) bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]"
       style={{
         background: "transparent",
-        width: `${size.width}px`,
-        height: `${size.height}px`,
+        aspectRatio: `${size.width} / ${size.height}`,
         paddingTop: "var(--team-card-padding-top)",
       }}
       aria-label={`${card.name}, ${card.role}`}
@@ -261,7 +235,7 @@ function OurTeamMobileCard({
 
       <div
         className={cn(
-          "absolute inset-0 z-10 bg-[rgb(0_0_0/0.56)] opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+          "absolute inset-0 z-10 bg-(--color-overlay-strong) opacity-0 transition-opacity duration-300 group-hover:opacity-100",
           isActive && "opacity-100",
         )}
       />

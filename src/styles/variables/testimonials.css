@@ -150,14 +150,3 @@
     --testimonials-title-box-height: 184px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --testimonials-container-max-width: 1200px;
-    --testimonials-padding-y: 64px;
-    --testimonials-title-max-width: calc(100vw - 64px);
-    --testimonials-title-size: 180px;
-    --testimonials-title-line-height: 204px;
-    --testimonials-title-box-height: 157px;
-  }
-}

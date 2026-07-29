@@ -256,19 +256,3 @@
     --packages-card-feature-text-width: 320px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --packages-container-max-width: 1200px;
-    --packages-grid-max-width: 1140px;
-    --packages-padding-y: 64px;
-    --packages-section-gap: 40px;
-    --packages-title-size: 180px;
-    --packages-title-line-height: 204px;
-    --packages-title-box-height: 157px;
-    --packages-card-max-width: 450px;
-    --packages-card-padding-x: 28px;
-    --packages-card-feature-row-max-width: 336px;
-    --packages-card-feature-text-width: 320px;
-  }
-}

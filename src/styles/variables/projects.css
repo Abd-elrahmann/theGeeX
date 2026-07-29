@@ -431,9 +431,9 @@
     --projects-title-box-height: var(--services-title-box-height);
     --projects-margin-top: var(--section-stack-gap);
     --projects-title-gap: 20px;
-    --projects-section-scroll-vh: 860;
-    --projects-section-exit-vh: 52;
-    --projects-card-height: 760px;
+    --projects-section-scroll-vh: 800;
+    --projects-section-exit-vh: 20;
+    --projects-card-height: 850px;
     --projects-card-stack-offset-step: 84px;
     --projects-card-outer-padding: 28px;
     --projects-card-padding: 24px;
@@ -542,42 +542,5 @@
     --projects-page-card-image-margin-top: 16px;
     --projects-page-card-image-min-height: 380px;
     --projects-page-card-image-top-offset: 20px;
-  }
-}
-
-@media (min-width: 1440px) {
-  :root {
-    --projects-container-max-width: 1200px;
-    --projects-title-size: 204px;
-    --projects-title-line-height: var(--services-title-line-height);
-    --projects-title-box-height: var(--services-title-box-height);
-    --projects-title-gap: 8px;
-    --projects-section-scroll-vh: 820;
-    --projects-section-exit-vh: 18;
-    --projects-card-height: 820px;
-    --projects-card-stack-offset-step: 72px;
-    --projects-card-outer-padding: 32px;
-    --projects-card-max-width: 100%;
-    --projects-card-padding: 24px;
-    --projects-card-padding-block: 24px;
-    --projects-card-padding-inline: 36px;
-    --projects-card-header-height: 40px;
-    --projects-card-index-size: 14px;
-    --projects-card-category-padding-x: 16px;
-    --projects-card-category-padding-y: 6px;
-    --projects-card-category-gap: 10px;
-    --projects-card-category-text-size: 16px;
-    --projects-card-category-line-height: 1.6;
-    --projects-card-title-size: 40px;
-    --projects-detail-container-max-width: calc(100vw - 120px);
-    --projects-detail-padding-x: var(--service-detail-padding-x);
-    --projects-detail-description-max-width: calc(100vw - 280px);
-    --projects-card-title-height: 54px;
-    --projects-card-title-letter-spacing: 0px;
-    --projects-card-arrow-size: 40px;
-    --projects-card-divider-margin-top: 8px;
-    --projects-card-subheader-margin-top: 8px;
-    --projects-card-image-margin-top: 8px;
-    --projects-card-image-min-height: 420px;
   }
 }

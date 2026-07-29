@@ -15,10 +15,9 @@ const storytellingImageSlideTransition = {
 interface StorytellingImageProps {
   image: string;
   imageAlt: string;
-  isActive: boolean;
 }
 
-function StorytellingImage({ image, imageAlt, isActive }: StorytellingImageProps) {
+function StorytellingImage({ image, imageAlt }: StorytellingImageProps) {
   return (
     <div
       className={cn(
@@ -30,9 +29,8 @@ function StorytellingImage({ image, imageAlt, isActive }: StorytellingImageProps
         src={image}
         alt={imageAlt}
         fill
-        priority={false}
-        loading={isActive ? "eager" : "lazy"}
-        sizes="(min-width: 1280px) 420px, (min-width: 1024px) 36vw, (min-width: 768px) 70vw, 92vw"
+        priority
+        sizes="(min-width: 1024px) 240px, 100vw"
         className={cn(
           "absolute inset-0 h-full w-full object-cover",
           "rounded-(--storytelling-image-radius)",
@@ -88,11 +86,7 @@ export function StorytellingImagePanel({
               "rounded-(--storytelling-image-radius)",
             )}
           >
-            <StorytellingImage
-              image={item.image}
-              imageAlt={item.imageAlt}
-              isActive={isActive}
-            />
+            <StorytellingImage image={item.image} imageAlt={item.imageAlt} />
           </motion.div>
         );
       })}

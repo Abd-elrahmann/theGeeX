@@ -149,15 +149,3 @@
     --blogs-title-box-height: 157px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --blogs-container-max-width: 1200px;
-    --blogs-padding-y: 64px;
-    --blogs-section-gap: 64px;
-    --blogs-title-size: clamp(120px, 12vw, 172px);
-    --blogs-title-line-height: 1.1860465116;
-    --blogs-title-box-height: 157px;
-    --blogs-margin-top: 0px;
-  }
-}

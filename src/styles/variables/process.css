@@ -164,12 +164,3 @@
     --process-card-title-size: 44px;
   }
 }
-
-@media (min-width: 1440px) {
-  :root {
-    --process-container-max-width: 1200px;
-    --process-padding-y: 64px;
-    --process-title-size: 60px;
-    --process-card-title-size: 34px;
-  }
-}

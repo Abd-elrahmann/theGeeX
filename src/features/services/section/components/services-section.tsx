@@ -341,10 +341,6 @@ export function ServicesSection() {
   }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
-  const mobilePanelHeight = Math.max(
-    mobileStageMetrics.contentHeight,
-    mobileStageMetrics.imageHeight,
-  );
   const tabletStickyTop =
     isTablet && mobileStageMetrics.stageHeight > 0
       ? `max(0px, calc((100svh - ${mobileStageMetrics.stageHeight}px) / 2))`
@@ -525,8 +521,8 @@ export function ServicesSection() {
                   )}
                   style={{
                     gridTemplateRows:
-                      !isTablet && mobilePanelHeight > 0
-                        ? `${mobilePanelHeight}px ${mobilePanelHeight}px`
+                      !isTablet && mobileStageMetrics.contentHeight > 0 && mobileStageMetrics.imageHeight > 0
+                        ? `${mobileStageMetrics.contentHeight}px ${mobileStageMetrics.imageHeight}px`
                         : undefined,
                   }}
                 >
@@ -537,8 +533,8 @@ export function ServicesSection() {
                       height:
                         isTablet && tabletPanelHeight > 0
                           ? `${tabletPanelHeight}px`
-                          : mobilePanelHeight > 0
-                          ? `${mobilePanelHeight}px`
+                          : mobileStageMetrics.contentHeight > 0
+                          ? `${mobileStageMetrics.contentHeight}px`
                           : undefined,
                     }}
                   >
@@ -567,8 +563,8 @@ export function ServicesSection() {
                       height:
                         isTablet && tabletPanelHeight > 0
                           ? `${tabletPanelHeight}px`
-                          : mobilePanelHeight > 0
-                          ? `${mobilePanelHeight}px`
+                          : mobileStageMetrics.imageHeight > 0
+                          ? `${mobileStageMetrics.imageHeight}px`
                           : undefined,
                     }}
                   >

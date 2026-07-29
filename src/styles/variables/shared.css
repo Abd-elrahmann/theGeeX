@@ -18,10 +18,15 @@
   --color-shadow: rgb(0 0 0 / 0.05);
   --color-brand: #2558b4;
   --color-brand-foreground: #ffffff;
+  --color-highlight: #ffe700;
   --color-nav-link: #6b6b6b;
   --color-nav-link-hover: #2c3134;
   --color-cta-text: #2c3134;
   --color-cursor: #ffffff;
+  --color-text-muted: #5c5c5c;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #e8e8e8;
+  --color-overlay-strong: rgb(0 0 0 / 0.56);
   --cursor-size: 16px;
   --cursor-offset: 8px;
   --cursor-radius: 99px;
