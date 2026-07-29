@@ -163,64 +163,37 @@ export function useStorytellingScroll({
           syncProgress(progressEnd < 1 ? Math.min(self.progress / progressEnd, 1) : self.progress);
         };
         const syncMobileBackground = (self: ScrollTrigger) => {
-          const scrollDistance = Math.max(self.end - self.start, 1);
-          const fadeProgress = Math.min(getMobileBackgroundFadeDistance() / scrollDistance, 0.5);
+          const totalDistance = Math.max(self.end - self.start, 1);
+          const delayDistance =
+            getMobileBackgroundStartOffset() +
+            window.innerHeight * getMobileBackgroundViewportDelayRatio();
+          const startProgress = Math.min(delayDistance / totalDistance, 0.85);
+          const availableProgress = Math.max(1 - startProgress, 0.01);
+          const fadeProgress = Math.min(
+            getMobileBackgroundFadeDistance() / totalDistance,
+            availableProgress / 2,
+          );
           const progress = self.progress;
 
-          if (progress <= fadeProgress) {
-            setPageBackgroundOpacity(progress / fadeProgress);
+          if (progress <= startProgress) {
+            setPageBackgroundOpacity(0);
             return;
           }
 
-          if (progress >= 1 - fadeProgress) {
-            setPageBackgroundOpacity((1 - progress) / fadeProgress);
+          const normalizedProgress = (progress - startProgress) / availableProgress;
+
+          if (normalizedProgress <= fadeProgress) {
+            setPageBackgroundOpacity(normalizedProgress / fadeProgress);
+            return;
+          }
+
+          if (normalizedProgress >= 1 - fadeProgress) {
+            setPageBackgroundOpacity((1 - normalizedProgress) / fadeProgress);
             return;
           }
 
           setPageBackgroundOpacity(1);
         };
-
-        const mobileBackgroundTrigger = mobileBackgroundEnabled
-          ? ScrollTrigger.create({
-              trigger: pinStartElement,
-              start: () => {
-                const viewportDelay =
-                  window.innerHeight * getMobileBackgroundViewportDelayRatio();
-
-                return `top bottom-=${getMobileBackgroundStartOffset() + viewportDelay}`;
-              },
-              end: storytellingConfig.background.mobileTriggerEnd,
-              invalidateOnRefresh: true,
-              onEnter: syncMobileBackground,
-              onEnterBack: syncMobileBackground,
-              onToggle: (self) => {
-                if (self.isActive) {
-                  syncMobileBackground(self);
-                }
-              },
-              onUpdate: syncMobileBackground,
-              onLeave: () => setPageBackgroundOpacity(0),
-              onLeaveBack: () => setPageBackgroundOpacity(0),
-            })
-          : null;
-
-        const mobileSectionBackgroundTrigger =
-          !mobileBackgroundEnabled && backgroundEnabled
-            ? ScrollTrigger.create({
-                trigger: pinStartElement,
-                start: () => {
-                  const viewportDelay = window.innerHeight * getMobileBackgroundViewportDelayRatio();
-                  return `top bottom-=${getMobileBackgroundStartOffset() + viewportDelay}`;
-                },
-                endTrigger: containerElement,
-                end: "bottom top",
-                invalidateOnRefresh: true,
-                onEnter: () => setBackgroundDark(true),
-                onEnterBack: () => setBackgroundDark(true),
-                onLeave: () => setBackgroundDark(false),
-                onLeaveBack: () => setBackgroundDark(false),
-              })
-            : null;
 
         const mobilePinTrigger = ScrollTrigger.create({
           trigger: pinStartElement,
@@ -239,27 +212,43 @@ export function useStorytellingScroll({
           },
           invalidateOnRefresh: true,
           onEnter: (self) => {
-            if (!mobileBackgroundEnabled && backgroundEnabled && !mobileSectionBackgroundTrigger) {
+            if (!mobileBackgroundEnabled && backgroundEnabled) {
               setBackgroundDark(true);
+            }
+
+            if (mobileBackgroundEnabled) {
+              syncMobileBackground(self);
             }
 
             syncMobileProgress(self);
           },
           onEnterBack: (self) => {
-            if (!mobileBackgroundEnabled && backgroundEnabled && !mobileSectionBackgroundTrigger) {
+            if (!mobileBackgroundEnabled && backgroundEnabled) {
               setBackgroundDark(true);
+            }
+
+            if (mobileBackgroundEnabled) {
+              syncMobileBackground(self);
             }
 
             syncMobileProgress(self);
           },
           onLeave: () => {
-            if (!mobileBackgroundEnabled && backgroundEnabled && !mobileSectionBackgroundTrigger) {
+            if (!mobileBackgroundEnabled && backgroundEnabled) {
               setBackgroundDark(false);
+            }
+
+            if (mobileBackgroundEnabled) {
+              setPageBackgroundOpacity(0);
             }
           },
           onLeaveBack: () => {
-            if (!mobileBackgroundEnabled && backgroundEnabled && !mobileSectionBackgroundTrigger) {
+            if (!mobileBackgroundEnabled && backgroundEnabled) {
               setBackgroundDark(false);
+            }
+
+            if (mobileBackgroundEnabled) {
+              setPageBackgroundOpacity(0);
             }
 
             resetToFirstItem();
@@ -269,36 +258,40 @@ export function useStorytellingScroll({
               return;
             }
 
+            if (mobileBackgroundEnabled) {
+              syncMobileBackground(self);
+            }
+
             syncMobileProgress(self);
           },
           onUpdate: (self) => {
+            if (mobileBackgroundEnabled) {
+              syncMobileBackground(self);
+            }
+
             syncMobileProgress(self);
           },
         });
 
         if (mobileBackgroundEnabled) {
-          if (mobileBackgroundTrigger?.isActive) {
-            syncMobileBackground(mobileBackgroundTrigger);
+          if (mobilePinTrigger.isActive) {
+            syncMobileBackground(mobilePinTrigger);
           } else {
             setPageBackgroundOpacity(0);
           }
         } else if (backgroundEnabled) {
-          setBackgroundDark(
-            mobileSectionBackgroundTrigger?.isActive ?? mobilePinTrigger.isActive,
-          );
+          setBackgroundDark(mobilePinTrigger.isActive);
         }
 
         const syncMobilePinTrigger = () => {
           if (mobileBackgroundEnabled) {
-            if (mobileBackgroundTrigger?.isActive) {
-              syncMobileBackground(mobileBackgroundTrigger);
+            if (mobilePinTrigger.isActive) {
+              syncMobileBackground(mobilePinTrigger);
             } else {
               setPageBackgroundOpacity(0);
             }
           } else if (backgroundEnabled) {
-            setBackgroundDark(
-              mobileSectionBackgroundTrigger?.isActive ?? mobilePinTrigger.isActive,
-            );
+            setBackgroundDark(mobilePinTrigger.isActive);
           }
 
           if (mobilePinTrigger.isActive) {
@@ -313,8 +306,6 @@ export function useStorytellingScroll({
         syncScrollTriggersAfterReset();
 
         return () => {
-          mobileBackgroundTrigger?.kill();
-          mobileSectionBackgroundTrigger?.kill();
           mobilePinTrigger.kill();
 
           if (mobileBackgroundEnabled || backgroundEnabled) {
