@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["127.0.0.1", "localhost", "192.168.1.66"],
+  allowedDevOrigins: ["127.0.0.1","192.168.1.47"," http://192.168.1.47:3000"],
   async headers() {
     return [
       {
