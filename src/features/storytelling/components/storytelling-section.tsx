@@ -56,6 +56,25 @@ function isStorytellingBackgroundActive(backgroundElement: HTMLDivElement | null
   return Number.isFinite(elementOpacity) && elementOpacity > 0.01;
 }
 
+function isStorytellingMobileStageActive(
+  pinStartElement: HTMLDivElement | null,
+  containerElement: HTMLElement | null,
+): boolean {
+  if (typeof window === "undefined" || !pinStartElement || !containerElement) {
+    return false;
+  }
+
+  const rootStyles = getComputedStyle(document.documentElement);
+  const navbarHeight = parseFloat(rootStyles.getPropertyValue("--navbar-height")) || 0;
+  const progressStartOffset =
+    parseFloat(rootStyles.getPropertyValue("--storytelling-mobile-progress-start-offset")) || 0;
+  const activationTop = navbarHeight + progressStartOffset;
+  const pinStartRect = pinStartElement.getBoundingClientRect();
+  const containerRect = containerElement.getBoundingClientRect();
+
+  return pinStartRect.top <= activationTop && containerRect.bottom > activationTop;
+}
+
 export function StorytellingSection() {
   const isDesktop = useDesktopBreakpoint();
   const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
@@ -194,7 +213,9 @@ export function StorytellingSection() {
 
     const syncSafariThemeColor = () => {
       frameId = 0;
-      const isActive = isStorytellingBackgroundActive(backgroundRef.current);
+      const isActive = isDesktop
+        ? isStorytellingBackgroundActive(backgroundRef.current)
+        : isStorytellingMobileStageActive(pinStartRef.current, containerRef.current);
 
       setSafariThemeColor(
         isActive ? STORYTELLING_SAFARI_THEME_COLOR : DEFAULT_SAFARI_THEME_COLOR,
@@ -222,7 +243,7 @@ export function StorytellingSection() {
       window.removeEventListener("resize", requestSync);
       setSafariThemeColor(DEFAULT_SAFARI_THEME_COLOR);
     };
-  }, [backgroundRef, isIosSafariDevice]);
+  }, [backgroundRef, containerRef, isDesktop, isIosSafariDevice, pinStartRef]);
 
   useEffect(() => {
     if (!isDesktop || !isPointerFine) {
