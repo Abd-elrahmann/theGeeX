@@ -169,9 +169,9 @@ export function useStorytellingScroll({
             window.innerHeight * getMobileBackgroundViewportDelayRatio();
           const startProgress = Math.min(delayDistance / totalDistance, 0.85);
           const availableProgress = Math.max(1 - startProgress, 0.01);
-          const fadeProgress = Math.min(
+          const fadeInProgress = Math.min(
             getMobileBackgroundFadeDistance() / totalDistance,
-            availableProgress / 2,
+            availableProgress,
           );
           const progress = self.progress;
 
@@ -182,13 +182,8 @@ export function useStorytellingScroll({
 
           const normalizedProgress = (progress - startProgress) / availableProgress;
 
-          if (normalizedProgress <= fadeProgress) {
-            setPageBackgroundOpacity(normalizedProgress / fadeProgress);
-            return;
-          }
-
-          if (normalizedProgress >= 1 - fadeProgress) {
-            setPageBackgroundOpacity((1 - normalizedProgress) / fadeProgress);
+          if (normalizedProgress <= fadeInProgress) {
+            setPageBackgroundOpacity(normalizedProgress / fadeInProgress);
             return;
           }
 
