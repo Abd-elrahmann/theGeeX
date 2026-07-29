@@ -17,6 +17,21 @@ import { StorytellingBackground } from "./storytelling-background";
 import { StorytellingContent } from "./storytelling-content";
 import { StorytellingPath } from "./storytelling-path";
 
+const DEFAULT_SAFARI_THEME_COLOR = "#ffffff";
+const STORYTELLING_SAFARI_THEME_COLOR = "#000000";
+
+function setSafariThemeColor(color: string): void {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", color);
+  }
+}
+
 export function StorytellingSection() {
   const isDesktop = useDesktopBreakpoint();
   const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
@@ -145,6 +160,55 @@ export function StorytellingSection() {
       );
     };
   }, [isMobile]);
+
+  useEffect(() => {
+    if (!isIosSafariDevice) {
+      return;
+    }
+
+    let frameId = 0;
+
+    const syncSafariThemeColor = () => {
+      frameId = 0;
+
+      const triggerElement = stageRef.current ?? containerRef.current;
+
+      if (!triggerElement) {
+        setSafariThemeColor(DEFAULT_SAFARI_THEME_COLOR);
+        return;
+      }
+
+      const rect = triggerElement.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const isActive = rect.top <= viewportCenter && rect.bottom >= viewportCenter;
+
+      setSafariThemeColor(
+        isActive ? STORYTELLING_SAFARI_THEME_COLOR : DEFAULT_SAFARI_THEME_COLOR,
+      );
+    };
+
+    const requestSync = () => {
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(syncSafariThemeColor);
+    };
+
+    requestSync();
+    window.addEventListener("scroll", requestSync, { passive: true });
+    window.addEventListener("resize", requestSync);
+
+    return () => {
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener("scroll", requestSync);
+      window.removeEventListener("resize", requestSync);
+      setSafariThemeColor(DEFAULT_SAFARI_THEME_COLOR);
+    };
+  }, [containerRef, isIosSafariDevice, stageRef]);
 
   useEffect(() => {
     if (!isDesktop || !isPointerFine) {

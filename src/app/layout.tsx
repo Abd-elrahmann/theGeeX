@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fontsource/cal-sans/index.css";
 import { CalSansText } from "@calcom/cal-sans-ui/text";
 import { CalSansUI } from "@calcom/cal-sans-ui/ui";
@@ -99,6 +99,11 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
