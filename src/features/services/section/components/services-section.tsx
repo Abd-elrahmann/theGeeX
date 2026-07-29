@@ -412,7 +412,8 @@ export function ServicesSection() {
       ref={containerRef}
       id="services"
       className={cn(
-        "relative z-20 w-full safari-overflow-x-clip bg-background",
+        "relative z-20 w-full bg-background",
+        isIosSafariDevice ? "overflow-x-visible" : "safari-overflow-x-clip",
         "mt-(--services-margin-top)",
         isDesktop && isPointerFine && "cursor-none",
       )}

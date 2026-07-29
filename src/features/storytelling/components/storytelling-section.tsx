@@ -188,7 +188,8 @@ export function StorytellingSection() {
       ref={containerRef}
       id="storytelling"
       className={cn(
-        "relative isolate z-(--storytelling-section-z-index) w-full safari-overflow-x-clip",
+        "relative isolate z-(--storytelling-section-z-index) w-full",
+        isIosSafariDevice ? "overflow-x-visible" : "safari-overflow-x-clip",
         usesDesktopVisualLayout ? "overflow-y-visible lg:overflow-x-visible" : "overflow-y-visible",
         "px-(--storytelling-section-padding-x)",
         "mt-(--storytelling-margin-top)",
@@ -235,7 +236,8 @@ export function StorytellingSection() {
           <div
             ref={stageRef}
             className={cn(
-              "relative overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)",
+              "relative overflow-y-visible py-(--storytelling-section-padding-y)",
+              isIosSafariDevice ? "overflow-x-visible" : "overflow-x-clip",
               (isMobile || isTablet) && "sticky top-0",
             )}
             style={
