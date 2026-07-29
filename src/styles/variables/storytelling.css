@@ -16,7 +16,7 @@
   --storytelling-path-z-index: 1;
   --storytelling-stage-min-height: 100svh;
   --storytelling-stage-bottom-padding: 48px;
-  --storytelling-margin-top: var(--section-stack-gap);
+  --storytelling-margin-top: calc(var(--section-stack-gap) + 120px);
   --storytelling-section-padding-y: 48px;
   --storytelling-scroll-distance: 2800;
   --storytelling-scroll-offset: 300;
