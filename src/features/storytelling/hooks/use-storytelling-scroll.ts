@@ -269,7 +269,7 @@ export function useStorytellingScroll({
           mobileBackgroundEnabled && projectsElement
             ? ScrollTrigger.create({
                 trigger: projectsElement,
-                start: "top bottom",
+                start: "top top",
                 invalidateOnRefresh: true,
                 onEnter: () => setPageBackgroundOpacity(0),
                 onEnterBack: () => setPageBackgroundOpacity(0),
