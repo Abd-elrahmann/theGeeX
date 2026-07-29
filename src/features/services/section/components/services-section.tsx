@@ -508,7 +508,7 @@ export function ServicesSection() {
                   "relative z-(--services-content-z-index) flex h-full w-full overflow-visible",
                   isTablet
                     ? "flex-col items-start justify-center gap-(--services-columns-gap)"
-                    : "flex-col items-start justify-start pt-(--services-padding-y)",
+                    : "flex-col items-start justify-center gap-(--services-columns-gap)",
                 )}
               >
                 <div ref={mobileTitleRef} className="w-full shrink-0">
