@@ -17,20 +17,6 @@ interface NavbarState {
 
 type NavbarScrollDirection = "up" | "down";
 
-function isIosSafari(): boolean {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  const { userAgent, vendor, platform, maxTouchPoints } = window.navigator;
-  const isAppleDevice = /iP(ad|hone|od)/i.test(userAgent);
-  const isIpadOs = platform === "MacIntel" && maxTouchPoints > 1;
-  const isWebKitSafari = /Safari/i.test(userAgent) && /Apple/i.test(vendor);
-  const isOtherIosBrowser = /CriOS|FxiOS|EdgiOS|OPiOS/i.test(userAgent);
-
-  return (isAppleDevice || isIpadOs) && isWebKitSafari && !isOtherIosBrowser;
-}
-
 const NAVBAR_HIDE_SCROLL_THRESHOLD = 40;
 const NAVBAR_DIRECTION_THRESHOLD = 24;
 const NAVBAR_SCROLL_READY_DELAY_MS = 500;
@@ -74,11 +60,6 @@ export function useNavbarState(): NavbarState {
   const lastScrollYRef = useRef(0);
   const accumulatedDirectionDeltaRef = useRef(0);
   const lastDirectionRef = useRef<NavbarScrollDirection | null>(null);
-  const isIosSafariRef = useRef(false);
-
-  useEffect(() => {
-    isIosSafariRef.current = isIosSafari();
-  }, []);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -110,14 +91,6 @@ export function useNavbarState(): NavbarState {
     const handleScrollStateChange = () => {
       const currentScrollY = window.scrollY;
       const isAtTop = currentScrollY <= NAVBAR_DIRECTION_THRESHOLD;
-
-      if (isIosSafariRef.current) {
-        lastScrollYRef.current = currentScrollY;
-        accumulatedDirectionDeltaRef.current = 0;
-        lastDirectionRef.current = null;
-        updateNavbarState({ variant: "primary", isVisible: true });
-        return;
-      }
 
       const scrollDelta = currentScrollY - lastScrollYRef.current;
       const isScrollingUp = scrollDelta < 0;

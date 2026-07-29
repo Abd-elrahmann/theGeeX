@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
+import { isIosSafari } from "@/lib/is-ios-safari";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { POINTER_FINE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -24,6 +25,7 @@ export function StorytellingSection() {
   const usesDesktopVisualLayout = isDesktop || isTablet;
   const layoutMode = isDesktop ? "desktop" : isTablet ? "tablet" : "mobile";
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [isIosSafariDevice, setIsIosSafariDevice] = useState(false);
   const isDesktopBackgroundActiveRef = useRef(false);
   const lastPointerRef = useRef({ x: -1, y: -1 });
   usePreloadStorytellingImages(storytellingItems);
@@ -49,6 +51,7 @@ export function StorytellingSection() {
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
       setIsLayoutReady(true);
+      setIsIosSafariDevice(isIosSafari());
     });
 
     return () => {
@@ -232,9 +235,19 @@ export function StorytellingSection() {
           <div
             ref={stageRef}
             className={cn(
-              "relative h-svh overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)",
+              "relative overflow-x-clip overflow-y-visible py-(--storytelling-section-padding-y)",
               (isMobile || isTablet) && "sticky top-0",
             )}
+            style={
+              isIosSafariDevice
+                ? {
+                    top: "var(--navbar-height)",
+                    height: "calc(100svh - var(--navbar-height))",
+                  }
+                : {
+                    height: "100svh",
+                  }
+            }
           >
             <div
               className={cn(

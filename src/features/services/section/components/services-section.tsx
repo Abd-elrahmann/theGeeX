@@ -11,6 +11,7 @@ import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
 import { scrollToPosition } from "@/lib/lenis-scroll-trigger";
+import { isIosSafari } from "@/lib/is-ios-safari";
 import { readRootCssNumber } from "@/lib/read-css-var";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -40,6 +41,7 @@ export function ServicesSection() {
   const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [hasHydrated, setHasHydrated] = useState(false);
+  const [isIosSafariDevice, setIsIosSafariDevice] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const mobileMeasureRef = useRef<HTMLDivElement>(null);
@@ -116,6 +118,7 @@ export function ServicesSection() {
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
       setHasHydrated(true);
+      setIsIosSafariDevice(isIosSafari());
     });
 
     return () => {
@@ -492,11 +495,15 @@ export function ServicesSection() {
             <div
               className="sticky top-0 overflow-visible"
               style={{
-                top: tabletStickyTop,
+                top: isIosSafariDevice ? "var(--navbar-height)" : tabletStickyTop,
                 height:
                   mobileStageMetrics.stageHeight > 0
-                    ? `${mobileStageMetrics.stageHeight}px`
-                    : "100svh",
+                    ? isIosSafariDevice
+                      ? `calc(${mobileStageMetrics.stageHeight}px - var(--navbar-height))`
+                      : `${mobileStageMetrics.stageHeight}px`
+                    : isIosSafariDevice
+                      ? "calc(100svh - var(--navbar-height))"
+                      : "100svh",
               }}
             >
               <div
