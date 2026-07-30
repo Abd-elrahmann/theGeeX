@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { BlogCard } from "@/features/blogs/shared/components/blog-card";
 import { blogItems } from "@/features/blogs/constants/blogs";
 import type { BlogArticleDetail } from "@/features/blogs/constants/blogs";
@@ -25,13 +23,6 @@ export function BlogDetailRelatedSection({ article }: BlogDetailRelatedSectionPr
         >
           Explore More Thoughts
         </h2>
-
-        <Link
-          href="/blogs"
-          className="hidden shrink-0 font-poppins text-[14px] leading-[1.4] font-medium text-text transition-colors duration-200 hover:text-(--color-blogs-detail-title) md:inline-flex"
-        >
-          View all
-        </Link>
       </div>
 
       <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
@@ -39,10 +30,11 @@ export function BlogDetailRelatedSection({ article }: BlogDetailRelatedSectionPr
           <BlogCard
             key={blog.id}
             blog={blog}
-            articleClassName="h-full md:max-w-none md:grid-cols-[168px_minmax(0,1fr)]"
+            articleClassName="h-full md:max-w-none md:grid-cols-[168px_minmax(0,1fr)] lg:grid-cols-[208px_minmax(0,1fr)]"
+            authorImageAfterText
             dateClassName="self-center text-center md:self-start md:text-left"
             footerClassName="pt-0 lg:mt-auto"
-            imageClassName="h-75 md:h-75 md:w-42"
+            imageClassName="h-75 md:h-75 md:w-42 lg:w-52"
             metaContainerClassName="order-3 mt-3 lg:mt-2 lg:flex-1"
             typesClassName="order-2 mt-4"
             titleClassName="order-1 text-[20px] leading-[1.35] md:text-[24px] md:leading-[1.4]"

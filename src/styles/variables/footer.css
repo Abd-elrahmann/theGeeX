@@ -170,6 +170,7 @@
     --footer-padding-bottom: 56px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-reveal-card-min-height: var(--footer-card-min-height);
+    --footer-reveal-track-height: calc(var(--footer-card-min-height) * 0.45);
     --footer-card-radius: 64px;
     --footer-reveal-cover-height: calc(var(--footer-card-radius) + 120px);
     --footer-card-padding-x: 32px;

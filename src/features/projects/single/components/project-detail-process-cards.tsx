@@ -24,7 +24,7 @@ export function ProjectDetailProcessCards({
           <span className="font-cal-sans text-(length:--projects-detail-process-number-size) leading-(--projects-detail-process-number-line-height) font-semibold tracking-normal text-(--projects-detail-muted-color)">
             {step.number}
           </span>
-          <h3 className="m-0 h-auto w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--projects-detail-process-card-title-size) leading-(--projects-detail-process-card-title-line-height) font-semibold tracking-normal text-(--projects-detail-work-title-color) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]">
+          <h3 className="m-0 h-auto w-full max-w-[24ch] whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--projects-detail-process-card-title-size) leading-(--projects-detail-process-card-title-line-height) font-semibold tracking-normal text-(--projects-detail-work-title-color) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on] md:max-w-[22ch]">
             {step.title}
           </h3>
           <p className="m-0 h-auto w-full max-w-(--projects-detail-process-card-description-max-width) whitespace-pre-wrap wrap-break-word font-poppins text-(length:--projects-detail-process-card-description-size) leading-(--projects-detail-process-card-description-line-height) font-normal tracking-(--projects-detail-process-card-description-letter-spacing) text-(--projects-detail-process-card-description-color) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]">

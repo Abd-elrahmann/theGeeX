@@ -8,10 +8,9 @@ import type { NavbarAnimationState, NavbarElements } from "@/components/layout/n
 import { getNavbarStateKey } from "@/components/layout/navbar/navbar.types";
 
 import {
-  createNavbarHideTimeline,
-  createNavbarShowTimeline,
   getNavbarHideOffsetY,
   killNavbarTweens,
+  setHiddenNavbarTarget,
   setVisibleNavbarTarget,
 } from "./navbar-visibility";
 
@@ -46,9 +45,6 @@ export function applyNavbarAnimationState(
     return null;
   }
 
-  const previousStateKey = getNavbarScrollMemoryKey();
-  const wasHidden = previousStateKey.includes(":hidden:");
-
   setNavbarScrollMemoryKey(stateKey);
 
   const { target } = elements;
@@ -57,11 +53,8 @@ export function applyNavbarAnimationState(
   killNavbarTweens(elements);
 
   if (!state.isVisible) {
-    return createNavbarHideTimeline(target, hideOffsetY);
-  }
-
-  if (wasHidden) {
-    return createNavbarShowTimeline(target, hideOffsetY);
+    setHiddenNavbarTarget(target, hideOffsetY);
+    return null;
   }
 
   setVisibleNavbarTarget(target);

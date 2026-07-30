@@ -43,7 +43,7 @@ export function ProcessSectionTitle({ lines }: ProcessSectionTitleProps) {
         <div
           key={line}
           className={cn(
-            "overflow-hidden px-[0.15em]",
+            "overflow-hidden px-[0.15em] lg:overflow-visible",
             index > 0 && "md:inline-block lg:block",
             index === 2 && "md:ml-[-0.24em] lg:ml-0",
           )}

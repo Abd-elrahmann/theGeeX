@@ -294,10 +294,10 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     collapsedOffsetY: 60,
     gradientVar: "--team-card-gradient-08",
     imageStyle: {
-      top: "85%",
-      transform: "translate(-60%, -50%)",
+      top: "90%",
+      transform: "translate(-65%, -50%)",
       backgroundPosition: "center center",
-      scale: "0.90",
+      scale: "0.85",
     },
   },
   {

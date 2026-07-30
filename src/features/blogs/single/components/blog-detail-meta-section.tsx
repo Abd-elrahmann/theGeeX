@@ -13,9 +13,11 @@ export function BlogDetailMetaSection({ article }: BlogDetailMetaSectionProps) {
     <section className="-mt-12 flex w-full flex-row items-center justify-between gap-4 pt-6 md:gap-10">
       <BlogAuthorByline
         author={article.author}
-        containerClassName="flex items-start gap-3 lg:gap-4"
-        imageWrapperClassName="h-6.25 w-4.5 rounded-[999px]"
-        textContainerClassName="flex flex-col gap-1"
+        containerClassName="flex items-center gap-2 md:gap-3"
+        imageWrapperClassName="h-(--blogs-card-author-image-height) w-(--blogs-card-author-image-width)"
+        labelClassName="whitespace-pre !text-[14px] !leading-[1.6] normal-case !tracking-normal text-nav-link"
+        nameClassName="whitespace-pre !text-[14px] !leading-[1.6] !font-normal text-nav-link"
+        imageAfterText
       />
 
       <div className="flex items-center gap-2">

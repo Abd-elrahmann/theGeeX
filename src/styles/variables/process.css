@@ -148,7 +148,10 @@
 
     --process-margin-top: 0px;
     --process-container-max-width: 1200px;
+    --process-column-gap: 56px;
     --process-padding-y: 72px;
+    --process-title-max-width: 500px;
+    --process-title-min-width: 420px;
     --process-title-size: 72px;
     --process-card-title-size: 44px;
   }

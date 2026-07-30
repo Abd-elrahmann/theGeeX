@@ -10,7 +10,7 @@ export function BlogDetailContentSection({ article }: BlogDetailContentSectionPr
 
   return (
     <section className="flex w-full flex-col gap-8">
-      <div className="flex w-full max-w-225 flex-col gap-8">
+      <div className="flex w-full max-w-270 flex-col gap-8">
         {article.detailBlocks.map((block, index) => (
           <BlogDetailBlockView
             key={`${article.slug}-${block.type}-${index}`}

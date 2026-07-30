@@ -33,7 +33,7 @@ export function ProcessSection() {
           "flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-(--process-column-gap)",
         )}
       >
-        <div className="contents lg:flex lg:min-w-0 lg:flex-1 lg:items-start lg:self-stretch">
+        <div className="contents lg:flex lg:min-w-0 lg:flex-none lg:items-start lg:self-stretch">
           <h2
             className={cn(
               "z-(--process-title-z-index) w-full self-start whitespace-pre-wrap wrap-break-word bg-background text-left font-cal-sans md:text-center lg:sticky lg:text-left",
@@ -50,8 +50,8 @@ export function ProcessSection() {
         </div>
 
         <div
-          className="mx-auto w-full min-w-0 lg:ml-auto lg:mr-0 lg:w-full lg:self-stretch"
-          style={{ maxWidth: "var(--process-cards-column-max-width)" }}
+          className="mx-auto w-full min-w-0 lg:ml-auto lg:mr-0 lg:w-auto lg:flex-none lg:self-stretch"
+          style={{ width: "var(--process-cards-column-max-width)", maxWidth: "100%" }}
         >
           <div
             className="relative flex flex-col items-stretch gap-(--process-card-gap) overflow-visible lg:items-end"

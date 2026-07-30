@@ -1,10 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  getHeroNavbarVariant,
-  HERO_SCROLL_STATE_EVENT,
-  isHeroPinned,
-  isUpwardNavbarSession,
-} from "@/lib/hero-scroll-state";
 
 import type { NavbarVariant } from "@/components/layout/navbar/navbar.types";
 
@@ -15,10 +9,9 @@ interface NavbarState {
   isVisible: boolean;
 }
 
-type NavbarScrollDirection = "up" | "down";
-
-const NAVBAR_HIDE_SCROLL_THRESHOLD = 40;
-const NAVBAR_DIRECTION_THRESHOLD = 24;
+const NAVBAR_SCROLL_DELTA_EPSILON = 2;
+const NAVBAR_AT_TOP_THRESHOLD = 8;
+const NAVBAR_HIDE_MIN_SCROLL_Y = 80;
 const NAVBAR_SCROLL_READY_DELAY_MS = 500;
 
 const INITIAL_NAVBAR_STATE: NavbarState = {
@@ -26,40 +19,14 @@ const INITIAL_NAVBAR_STATE: NavbarState = {
   isVisible: true,
 };
 
-function resolveNavbarState(
-  currentState: NavbarState,
-  isAtTop: boolean,
-  scrollY: number,
-): NavbarState {
-  if (isUpwardNavbarSession()) {
-    return {
-      variant: getHeroNavbarVariant(),
-      isVisible: true,
-    };
-  }
-
-  if (isAtTop) {
-    return { variant: "primary", isVisible: true };
-  }
-
-  if (isHeroPinned()) {
-    return { variant: "primary", isVisible: false };
-  }
-
-  if (scrollY < NAVBAR_HIDE_SCROLL_THRESHOLD) {
-    return { variant: "primary", isVisible: true };
-  }
-
-  return currentState;
-}
-
 export function useNavbarState(): NavbarState {
   const [isScrollReady, setIsScrollReady] = useState(false);
-  const [navbarState, setNavbarState] = useState<NavbarState>(INITIAL_NAVBAR_STATE);
-  const navbarStateRef = useRef<NavbarState>(INITIAL_NAVBAR_STATE);
+  const [variant, setVariant] = useState<NavbarVariant>(INITIAL_NAVBAR_STATE.variant);
+  const [isVisible, setIsVisible] = useState(INITIAL_NAVBAR_STATE.isVisible);
+  const variantRef = useRef<NavbarVariant>(INITIAL_NAVBAR_STATE.variant);
+  const isVisibleRef = useRef(INITIAL_NAVBAR_STATE.isVisible);
   const lastScrollYRef = useRef(0);
-  const accumulatedDirectionDeltaRef = useRef(0);
-  const lastDirectionRef = useRef<NavbarScrollDirection | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -76,84 +43,72 @@ export function useNavbarState(): NavbarState {
       return;
     }
 
-    const updateNavbarState = (nextState: NavbarState) => {
-      if (
-        navbarStateRef.current.isVisible === nextState.isVisible &&
-        navbarStateRef.current.variant === nextState.variant
-      ) {
-        return;
+    const updateNavbarState = (nextVariant: NavbarVariant, nextIsVisible: boolean) => {
+      if (variantRef.current !== nextVariant) {
+        variantRef.current = nextVariant;
+        setVariant(nextVariant);
       }
 
-      navbarStateRef.current = nextState;
-      setNavbarState(nextState);
+      if (isVisibleRef.current !== nextIsVisible) {
+        isVisibleRef.current = nextIsVisible;
+        setIsVisible(nextIsVisible);
+      }
     };
 
     const handleScrollStateChange = () => {
       const currentScrollY = window.scrollY;
-      const isAtTop = currentScrollY <= NAVBAR_DIRECTION_THRESHOLD;
-
       const scrollDelta = currentScrollY - lastScrollYRef.current;
-      const isScrollingUp = scrollDelta < 0;
-      const isScrollingDown = scrollDelta > 0;
-      const nextDirection: NavbarScrollDirection | null = isScrollingUp
-        ? "up"
-        : isScrollingDown
-          ? "down"
-          : null;
+      const isScrollingUp = scrollDelta < -NAVBAR_SCROLL_DELTA_EPSILON;
+      const isScrollingDown = scrollDelta > NAVBAR_SCROLL_DELTA_EPSILON;
 
-      const resetDirectionTracking = () => {
-        accumulatedDirectionDeltaRef.current = 0;
-        lastDirectionRef.current = null;
-      };
-
-      if (isAtTop) {
-        resetDirectionTracking();
+      if (currentScrollY <= NAVBAR_AT_TOP_THRESHOLD) {
+        lastScrollYRef.current = currentScrollY;
+        updateNavbarState("primary", true);
+        return;
       }
 
-      if (isHeroPinned() || isUpwardNavbarSession()) {
-        resetDirectionTracking();
+      if (!isScrollingUp && !isScrollingDown) {
+        lastScrollYRef.current = currentScrollY;
+        return;
       }
 
-      let nextState = resolveNavbarState(
-        navbarStateRef.current,
-        isAtTop,
-        currentScrollY,
-      );
-
-      if (!isAtTop && !isHeroPinned() && !isUpwardNavbarSession() && nextDirection) {
-        if (lastDirectionRef.current !== nextDirection) {
-          lastDirectionRef.current = nextDirection;
-          accumulatedDirectionDeltaRef.current = 0;
-        }
-
-        accumulatedDirectionDeltaRef.current += Math.abs(scrollDelta);
-
-        if (nextDirection === "up") {
-          if (accumulatedDirectionDeltaRef.current >= NAVBAR_DIRECTION_THRESHOLD) {
-            nextState = { variant: "rounded", isVisible: true };
-          }
-        } else if (
-          accumulatedDirectionDeltaRef.current >= NAVBAR_DIRECTION_THRESHOLD &&
-          currentScrollY >= NAVBAR_HIDE_SCROLL_THRESHOLD
-        ) {
-          nextState = { variant: "primary", isVisible: false };
-        }
+      if (isScrollingUp) {
+        lastScrollYRef.current = currentScrollY;
+        updateNavbarState("rounded", true);
+        return;
       }
 
-      updateNavbarState(nextState);
+      if (isScrollingDown && currentScrollY >= NAVBAR_HIDE_MIN_SCROLL_Y) {
+        lastScrollYRef.current = currentScrollY;
+        updateNavbarState(variantRef.current, false);
+        return;
+      }
 
       lastScrollYRef.current = currentScrollY;
+    };
+
+    const scheduleScrollStateChange = () => {
+      if (rafIdRef.current !== null) {
+        return;
+      }
+
+      rafIdRef.current = window.requestAnimationFrame(() => {
+        rafIdRef.current = null;
+        handleScrollStateChange();
+      });
     };
 
     lastScrollYRef.current = window.scrollY;
     handleScrollStateChange();
 
-    window.addEventListener("scroll", handleScrollStateChange, { passive: true });
-    window.addEventListener(HERO_SCROLL_STATE_EVENT, handleScrollStateChange);
+    window.addEventListener("scroll", scheduleScrollStateChange, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScrollStateChange);
-      window.removeEventListener(HERO_SCROLL_STATE_EVENT, handleScrollStateChange);
+      window.removeEventListener("scroll", scheduleScrollStateChange);
+
+      if (rafIdRef.current !== null) {
+        window.cancelAnimationFrame(rafIdRef.current);
+      }
     };
   }, [isScrollReady]);
 
@@ -161,5 +116,5 @@ export function useNavbarState(): NavbarState {
     return INITIAL_NAVBAR_STATE;
   }
 
-  return navbarState;
+  return { variant, isVisible };
 }

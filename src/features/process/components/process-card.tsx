@@ -22,6 +22,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
   const isFinalCard = card.variant === "final";
   const shouldAnimateTitle = isFinalCard && Boolean(card.transitionTitle);
   const [isHovered, setIsHovered] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isScrollActivated, setIsScrollActivated] = useState(false);
 
   const finalCardTitleTransition = {
@@ -32,11 +33,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
   };
 
   useEffect(() => {
-    if (!shouldAnimateTitle) {
-      return;
-    }
-
-    const activateTitleTransition = () => {
+    const updateCardState = () => {
       const cardElement = cardRef.current;
 
       if (!cardElement) {
@@ -44,22 +41,30 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
       }
 
       const cardTop = cardElement.getBoundingClientRect().top;
-      const stickyTitleTop = processCardStickyTops[1] ?? 270;
-      const triggerOffset = 12;
+      const collapseTriggerOffset = 12;
+      const cardStickyTop = processCardStickyTops[index] ?? processCardStickyTops[processCardStickyTops.length - 1] ?? 0;
+      const hasCollapsed = window.innerWidth >= 1024 && cardTop <= cardStickyTop + collapseTriggerOffset;
 
-      setIsScrollActivated(cardTop <= stickyTitleTop + triggerOffset);
+      setIsCollapsed(hasCollapsed);
+
+      if (!shouldAnimateTitle) {
+        return;
+      }
+
+      const stickyTitleTop = processCardStickyTops[1] ?? 270;
+      setIsScrollActivated(cardTop <= stickyTitleTop + collapseTriggerOffset);
     };
 
-    activateTitleTransition();
+    updateCardState();
 
-    window.addEventListener("scroll", activateTitleTransition, { passive: true });
-    window.addEventListener("resize", activateTitleTransition);
+    window.addEventListener("scroll", updateCardState, { passive: true });
+    window.addEventListener("resize", updateCardState);
 
     return () => {
-      window.removeEventListener("scroll", activateTitleTransition);
-      window.removeEventListener("resize", activateTitleTransition);
+      window.removeEventListener("scroll", updateCardState);
+      window.removeEventListener("resize", updateCardState);
     };
-  }, [shouldAnimateTitle]);
+  }, [index, shouldAnimateTitle]);
 
   const isTitleTransitionActive = isHovered || isScrollActivated;
 
@@ -180,9 +185,9 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
             </h3>
           )}
 
-          <p
+          <motion.p
             className={cn(
-              "mt-(--process-card-description-margin-top) w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+              "mt-(--process-card-description-margin-top) w-full whitespace-pre-wrap wrap-break-word overflow-hidden font-cal-sans",
               "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
               "font-(--process-card-description-weight) tracking-normal",
               "font-features-['blwf'_on,'cv11'_on,'case'_on]",
@@ -190,9 +195,16 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
                 ? "text-(--color-process-card-final-description)"
                 : "text-(--color-process-card-description)",
             )}
+            initial={false}
+            animate={{
+              opacity: isCollapsed ? 0 : 1,
+              height: isCollapsed ? 0 : "auto",
+              marginTop: isCollapsed ? 0 : "var(--process-card-description-margin-top)",
+            }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
             {card.description}
-          </p>
+          </motion.p>
         </div>
       </div>
     </motion.article>

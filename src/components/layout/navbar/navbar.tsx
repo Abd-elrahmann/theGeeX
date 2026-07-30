@@ -1,32 +1,25 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { navbarConfig } from "@/config/navbar.config";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { isIosSafari } from "@/lib/is-ios-safari";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
-import { useGSAP } from "@/lib/gsap";
-import {
-  applyNavbarAnimationState,
-  resetNavbarScrollMemory,
-  setNavbarInitialState,
-} from "./animations/navbar-scroll";
 import { NavbarDesktop } from "./navbar-desktop";
 import { NavbarMobileBar } from "./navbar-mobile";
 import { NavbarMobileMenu } from "./navbar-mobile-menu";
 import { useNavbarState } from "./use-navbar-state";
 
+const NAVBAR_HIDE_TRANSLATE_Y = "calc(-100% - 1rem)";
+
 export function Navbar() {
   const { variant, isVisible } = useNavbarState();
   const isDesktop = useDesktopBreakpoint();
   const appliedVariant = isDesktop ? variant : "primary";
-  const isRoundedNav = isVisible && appliedVariant === "rounded";
+  const isRoundedNav = appliedVariant === "rounded";
   const [isMobileMenuRequested, setIsMobileMenuRequested] = useState(false);
   const [isIosSafariDevice] = useState(() => isIosSafari());
   const isMobileMenuOpen = isMobileMenuRequested && isVisible && !isDesktop;
   const headerRef = useRef<HTMLElement>(null);
-  const animatedRef = useRef<HTMLDivElement>(null);
-  const hasInitialized = useRef(false);
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -51,46 +44,6 @@ export function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  useLayoutEffect(() => {
-    const header = headerRef.current;
-    const target = animatedRef.current;
-
-    if (!header || !target) {
-      return;
-    }
-
-    const isDesktopOnLoad = window.matchMedia(navbarConfig.desktopMediaQuery).matches;
-
-    resetNavbarScrollMemory();
-    setNavbarInitialState(
-      { header, target },
-      { isDesktop: isDesktopOnLoad, isVisible: true, variant: "primary" },
-    );
-    hasInitialized.current = true;
-  }, []);
-
-  useGSAP(
-    () => {
-      const header = headerRef.current;
-      const target = animatedRef.current;
-
-      if (!header || !target || !hasInitialized.current) {
-        return;
-      }
-
-      applyNavbarAnimationState(
-        { header, target },
-        {
-          isVisible,
-          variant: appliedVariant,
-          isDesktop,
-          isMobileMenuOpen,
-        },
-      );
-    },
-    { dependencies: [isVisible, appliedVariant, isDesktop, isMobileMenuOpen], scope: headerRef },
-  );
-
   return (
     <header
       ref={headerRef}
@@ -99,16 +52,24 @@ export function Navbar() {
         isMobileMenuOpen ? "overflow-visible" : "overflow-hidden lg:overflow-visible",
       )}
       style={
-        isDesktop && isRoundedNav
-          ? {
-              height:
-                "calc(var(--navbar-height) + var(--navbar-rounded-offset-top) + 2 * var(--navbar-rounded-padding-y))",
-            }
-          : undefined
+        {
+          transform: isVisible
+            ? "translate3d(0, 0, 0)"
+            : `translate3d(0, ${NAVBAR_HIDE_TRANSLATE_Y}, 0)`,
+          transition: "transform 0.28s cubic-bezier(0.12, 0.23, 0.5, 1)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          WebkitFontSmoothing: "antialiased",
+          ...(isDesktop
+            ? {
+                height:
+                  "calc(var(--navbar-height) + var(--navbar-rounded-offset-top) + 2 * var(--navbar-rounded-padding-y))",
+              }
+            : null),
+        }
       }
     >
       <div
-        ref={animatedRef}
         className={cn(
           "relative box-border h-full w-full max-w-full translate-y-0 opacity-100",
           "flex justify-center max-lg:items-center lg:items-start",

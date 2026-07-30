@@ -52,38 +52,20 @@ export function killNavbarTweens({ header, target }: NavbarElements): void {
 }
 
 export function setVisibleNavbarTarget(target: HTMLElement): void {
-  const useOpacityOnly = getIosSafariValue();
-
   gsap.set(target, {
     opacity: 1,
     pointerEvents: "auto",
-    ...(useOpacityOnly
-      ? {
-          clearProps: NAVBAR_TRANSFORM_PROPS,
-        }
-      : {
-          y: 0,
-          scaleY: 1,
-          transformOrigin: "top center",
-        }),
+    y: 0,
+    clearProps: "opacity",
   });
 }
 
 export function setHiddenNavbarTarget(target: HTMLElement, hideOffsetY: number): void {
-  const useOpacityOnly = getIosSafariValue();
-
   gsap.set(target, {
-    opacity: 0,
+    opacity: 1,
     pointerEvents: "none",
-    ...(useOpacityOnly
-      ? {
-          clearProps: NAVBAR_TRANSFORM_PROPS,
-        }
-      : {
-          y: hideOffsetY,
-          scaleY: 0,
-          transformOrigin: "top center",
-        }),
+    y: hideOffsetY,
+    clearProps: "opacity",
   });
 }
 
@@ -92,22 +74,13 @@ export function createNavbarHideTimeline(
   hideOffsetY: number,
 ): gsap.core.Timeline {
   const scrollTweenDefaults = getNavbarScrollTweenDefaults(target);
-  const useOpacityOnly = getIosSafariValue();
 
   return gsap.timeline({ overwrite: true }).to(
     target,
     {
-      opacity: 0,
+      opacity: 1,
       pointerEvents: "none",
-      ...(useOpacityOnly
-        ? {
-            clearProps: "transform",
-          }
-        : {
-            y: hideOffsetY,
-            scaleY: 0,
-            transformOrigin: "top center",
-          }),
+      y: hideOffsetY,
       ...scrollTweenDefaults,
     },
     0,
@@ -116,24 +89,13 @@ export function createNavbarHideTimeline(
 
 export function createNavbarShowTimeline(target: HTMLElement, hideOffsetY: number): gsap.core.Timeline {
   const scrollTweenDefaults = getNavbarScrollTweenDefaults(target);
-  const useOpacityOnly = getIosSafariValue();
-
-  setHiddenNavbarTarget(target, hideOffsetY);
 
   return gsap.timeline({ overwrite: true }).to(
     target,
     {
       opacity: 1,
       pointerEvents: "auto",
-      ...(useOpacityOnly
-        ? {
-            clearProps: "transform",
-          }
-        : {
-            y: 0,
-            scaleY: 1,
-            transformOrigin: "top center",
-          }),
+      y: 0,
       ...scrollTweenDefaults,
     },
     0,

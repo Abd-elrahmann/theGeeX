@@ -25,13 +25,11 @@ let latchedScrollIntent: HeroScrollIntent = 1;
 let lastTrackedDrawProgress = 0;
 let isHeroSessionActive = false;
 let isUpwardSessionLocked = false;
-let navbarVariantLatched: HeroNavbarVariant | null = null;
 let upwardSessionFloorProgress = 1;
 
 const DRAW_PROGRESS_EPSILON = 0.012;
 const DRAW_INTENT_DOWN_DELTA = 0.03;
 const DRAW_INTENT_UP_DELTA = 0.004;
-const HERO_MORPH_TO_PRIMARY_AT = 0.48;
 const UPWARD_SESSION_RELEASE_DELTA = 0.08;
 
 function dispatchHeroScrollStateChange(): void {
@@ -66,20 +64,10 @@ function resolveScrollIntent(drawProgress: number): HeroScrollIntent {
 }
 
 function resolveHeroNavbarVariant(
-  drawProgress: number,
+  _drawProgress: number,
   scrollIntent: HeroScrollIntent,
 ): HeroNavbarVariant {
   if (scrollIntent !== -1) {
-    navbarVariantLatched = null;
-    return "primary";
-  }
-
-  if (navbarVariantLatched === "primary") {
-    return "primary";
-  }
-
-  if (drawProgress <= HERO_MORPH_TO_PRIMARY_AT) {
-    navbarVariantLatched = "primary";
     return "primary";
   }
 
@@ -93,7 +81,6 @@ export function releaseUpwardNavbarSession(): void {
 
   isUpwardSessionLocked = false;
   latchedScrollIntent = 1;
-  navbarVariantLatched = null;
   upwardSessionFloorProgress = 1;
 
   heroScrollState = {
@@ -127,7 +114,6 @@ export function lockUpwardNavbarSession(drawProgress = heroScrollState.drawProgr
   latchedScrollIntent = -1;
   lastTrackedDrawProgress = drawProgress;
   upwardSessionFloorProgress = drawProgress;
-  navbarVariantLatched = null;
 
   const nextNavbarVariant = resolveHeroNavbarVariant(drawProgress, -1);
 
@@ -212,7 +198,6 @@ export function resetHeroScrollState(): void {
   lastTrackedDrawProgress = 0;
   isHeroSessionActive = false;
   isUpwardSessionLocked = false;
-  navbarVariantLatched = null;
   upwardSessionFloorProgress = 1;
   heroScrollState = { ...DEFAULT_HERO_SCROLL_STATE };
   document.documentElement.classList.remove(HERO_PINNED_CLASS);

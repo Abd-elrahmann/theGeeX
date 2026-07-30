@@ -281,8 +281,8 @@
     --projects-detail-process-number-size: 16px;
     --projects-detail-process-card-title-size: clamp(18px, 5.8vw, 22px);
     --projects-detail-process-card-title-line-height: 1.12;
-    --projects-detail-process-card-description-size: 14px;
-    --projects-detail-process-card-description-line-height: 1.55;
+    --projects-detail-process-card-description-size: 16px;
+    --projects-detail-process-card-description-line-height: 1.6;
     --projects-page-card-description-size: 13px;
     --projects-page-card-description-line-height: 1.45;
     --projects-card-padding: 24px;
@@ -376,7 +376,7 @@
     --projects-detail-process-grid-max-width: 1160px;
     --projects-detail-process-grid-gap: 40px;
     --projects-detail-process-card-title-size: 34px;
-    --projects-detail-process-card-description-size: 15px;
+    --projects-detail-process-card-description-size: 16px;
     --projects-detail-process-card-description-max-width: 440px;
     --projects-detail-process-icons-width: 440px;
     --projects-detail-process-icons-height: 250px;
@@ -478,7 +478,7 @@
     --projects-detail-process-grid-max-width: 1120px;
     --projects-detail-process-grid-gap: 48px;
     --projects-detail-process-card-title-size: 36px;
-    --projects-detail-process-card-description-size: 15px;
+    --projects-detail-process-card-description-size: 16px;
     --projects-detail-process-card-description-max-width: 440px;
     --projects-detail-process-icons-width: 440px;
     --projects-detail-process-icons-height: 250px;

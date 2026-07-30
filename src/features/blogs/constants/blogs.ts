@@ -122,7 +122,7 @@ export const blogItems: BlogItem[] = [
     imageAlt: "Team collaborating around a startup product roadmap",
     author: {
       name: "Cherif Badawy",
-      avatar: blogAuthorAvatars.cherifBadawy,
+      avatar: blogAuthorAvatars.cherifBadawi,
     },
   },
 ];
@@ -653,7 +653,7 @@ export const blogArticles: BlogArticleDetail[] = [
     imageAlt: blogItems[5]?.imageAlt ?? "Team collaborating around a startup product roadmap",
     author: blogItems[5]?.author ?? {
       name: "Cherif Badawy",
-      avatar: blogAuthorAvatars.cherifBadawy,
+      avatar: blogAuthorAvatars.cherifBadawi,
     },
     detailBlocks: [
       {
