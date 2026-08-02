@@ -12,7 +12,7 @@ export function ContactUsPage() {
           <div className="flex w-full flex-col items-center justify-center gap-(--contact-us-grid-gap) md:flex-1 md:flex-row md:flex-nowrap md:items-start md:justify-center lg:items-center">
             <ContactUsInfoSection />
 
-            <div className="flex w-full flex-1 items-start justify-center md:self-start md:justify-center lg:self-center">
+            <div className="flex w-full flex-1 items-start justify-center md:self-start md:justify-center md:max-lg:flex-[1.15] lg:self-center">
               <ContactUsForm />
             </div>
           </div>

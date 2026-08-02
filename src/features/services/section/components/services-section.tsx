@@ -308,7 +308,7 @@ export function ServicesSection() {
       const stageHeight = isTablet
         ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
         : titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance;
-      const stickyTop = navbarHeight + Math.max((availableViewportHeight - stageHeight) / 2, 0);
+      const stickyTop = navbarHeight;
 
       setMobileStageMetrics({
         stageHeight,
@@ -346,6 +346,26 @@ export function ServicesSection() {
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
   const desktopScrollStepCount = Math.max(services.length, 1);
+  const mobileAvailablePanelHeight = Math.max(
+    mobileStageMetrics.stageHeight - (mobileTitleRef.current?.offsetHeight ?? 0) - mobileStageMetrics.stickyTop,
+    0,
+  );
+  const mobilePanelGap = 12;
+  const mobileVisiblePanelBudget = Math.max(
+    mobileAvailablePanelHeight - mobilePanelGap - 12,
+    0,
+  );
+  const mobileContentHeight =
+    !isTablet && mobileStageMetrics.contentHeight > 0
+      ? Math.min(mobileStageMetrics.contentHeight, Math.max(mobileVisiblePanelBudget * 0.48, 220))
+      : mobileStageMetrics.contentHeight;
+  const mobileImageHeight =
+    !isTablet && mobileStageMetrics.imageHeight > 0
+      ? Math.min(
+          mobileStageMetrics.imageHeight,
+          Math.max(mobileVisiblePanelBudget - mobileContentHeight, 260),
+        )
+      : mobileStageMetrics.imageHeight;
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
     <div
@@ -507,8 +527,8 @@ export function ServicesSection() {
                 className={cn(
                   "relative z-(--services-content-z-index) flex h-full w-full overflow-visible",
                   isTablet
-                    ? "flex-col items-start justify-center gap-(--services-columns-gap)"
-                    : "flex-col items-start justify-center gap-(--services-columns-gap)",
+                    ? "flex-col items-start justify-start gap-(--services-columns-gap)"
+                    : "flex-col items-start justify-start gap-(--services-columns-gap)",
                 )}
               >
                 <div ref={mobileTitleRef} className="w-full shrink-0">
@@ -525,8 +545,8 @@ export function ServicesSection() {
                   )}
                   style={{
                     gridTemplateRows:
-                      !isTablet && mobileStageMetrics.contentHeight > 0 && mobileStageMetrics.imageHeight > 0
-                        ? `${mobileStageMetrics.contentHeight}px ${mobileStageMetrics.imageHeight}px`
+                      !isTablet && mobileContentHeight > 0 && mobileImageHeight > 0
+                        ? `${mobileContentHeight}px ${mobileImageHeight}px`
                         : undefined,
                   }}
                 >
@@ -537,8 +557,8 @@ export function ServicesSection() {
                       height:
                         isTablet && tabletPanelHeight > 0
                           ? `${tabletPanelHeight}px`
-                          : mobileStageMetrics.contentHeight > 0
-                          ? `${mobileStageMetrics.contentHeight}px`
+                          : mobileContentHeight > 0
+                          ? `${mobileContentHeight}px`
                           : undefined,
                     }}
                   >
@@ -567,8 +587,8 @@ export function ServicesSection() {
                       height:
                         isTablet && tabletPanelHeight > 0
                           ? `${tabletPanelHeight}px`
-                          : mobileStageMetrics.imageHeight > 0
-                          ? `${mobileStageMetrics.imageHeight}px`
+                          : mobileImageHeight > 0
+                          ? `${mobileImageHeight}px`
                           : undefined,
                     }}
                   >

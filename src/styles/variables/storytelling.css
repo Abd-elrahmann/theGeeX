@@ -40,7 +40,7 @@
   --storytelling-path-offset-y: 0px;
   --storytelling-image-radius: 12px;
   --storytelling-media-width: 240px;
-  --storytelling-media-height: 335px;
+  --storytelling-media-height: 380px;
   --storytelling-media-offset-y: 0px;
   --storytelling-lines-width: max-content;
   --storytelling-lines-padding-left: 0px;
@@ -85,8 +85,8 @@
     --storytelling-media-height: 348px;
     --storytelling-caption-height: 92px;
     --storytelling-caption-margin-top: 18px;
-    --storytelling-mobile-background-start-offset: 420px;
-    --storytelling-mobile-background-viewport-delay-ratio: 0.28;
+    --storytelling-mobile-background-start-offset: 220px;
+    --storytelling-mobile-background-viewport-delay-ratio: 0.12;
     --storytelling-mobile-background-extension: 220px;
     --storytelling-lines-width: min(
       620px,

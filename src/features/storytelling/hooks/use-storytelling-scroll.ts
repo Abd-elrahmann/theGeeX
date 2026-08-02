@@ -39,12 +39,28 @@ export function useStorytellingScroll({
   const [drawProgress, setDrawProgress] = useState(0);
   const [transitionDirection, setTransitionDirection] = useState<1 | -1>(1);
   const activeIndexRef = useRef(0);
+  const hasResolvedInitialIndexRef = useRef(false);
   const backgroundDarkRef = useRef(false);
+
+  const applyInitialActiveIndex = useCallback(
+    (index: number) => {
+      const nextIndex = clampActiveIndex(index, itemCount);
+
+      hasResolvedInitialIndexRef.current = true;
+      activeIndexRef.current = nextIndex;
+      setPreviousActiveIndex(nextIndex);
+      setTransitionDirection(1);
+      setActiveIndex(nextIndex);
+    },
+    [itemCount],
+  );
 
   const setActiveIndexSafe = useCallback(
     (index: number) => {
       const nextIndex = clampActiveIndex(index, itemCount);
       const currentIndex = activeIndexRef.current;
+
+      hasResolvedInitialIndexRef.current = true;
 
       if (nextIndex === currentIndex) {
         return;
@@ -60,6 +76,7 @@ export function useStorytellingScroll({
 
   const resetToFirstItem = useCallback(() => {
     activeIndexRef.current = 0;
+    hasResolvedInitialIndexRef.current = true;
     setPreviousActiveIndex(0);
     setTransitionDirection(-1);
     setActiveIndex(0);
@@ -71,9 +88,15 @@ export function useStorytellingScroll({
     (progress: number) => {
       setDrawProgress(progress);
       onDrawProgress?.(progress);
+
+      if (!hasResolvedInitialIndexRef.current) {
+        applyInitialActiveIndex(Math.round(progress * (itemCount - 1)));
+        return;
+      }
+
       syncActiveIndexFromProgress(progress, itemCount, setActiveIndexSafe);
     },
-    [itemCount, onDrawProgress, setActiveIndexSafe],
+    [applyInitialActiveIndex, itemCount, onDrawProgress, setActiveIndexSafe],
   );
 
   const setBackgroundDark = useCallback((isActive: boolean) => {

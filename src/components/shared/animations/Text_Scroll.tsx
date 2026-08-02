@@ -229,38 +229,15 @@ function GhostLayer({
 }) {
     const color = ghostColor || textColor
 
-    const content =
-        unit === "Lines"
-            ? raw
-                  .split("\n")
-                  .map((line, i) => (
-                      <div key={`g-l-${i}`}>
-                          {line.length ? line : "\u00A0"}
-                      </div>
-                  ))
-            : raw.split("\n").map((line, li) => {
-                  const safeLine =
-                      unit === "Words"
-                          ? line.trim()
-                              ? line.trim().split(/\s+/).join(" ")
-                              : "\u00A0"
-                          : line.length
-                            ? line
-                            : "\u00A0"
+    const lineTokens = React.useMemo(() => {
+        if (unit !== "Lines") return []
+        return tokenizeLines(raw)
+    }, [raw, unit])
 
-                  return (
-                      <React.Fragment key={`g-ln-${li}`}>
-                          {li > 0 && <br />}
-                          {unit === "Letters"
-                              ? [...safeLine].map((ch, i) => (
-                                    <span key={`g-c-${li}-${i}`}>
-                                        {ch === " " ? "\u00A0" : ch}
-                                    </span>
-                                ))
-                              : safeLine}
-                      </React.Fragment>
-                  )
-              })
+    const wordOrLetterTokens = React.useMemo(() => {
+        if (unit === "Lines") return []
+        return tokenizeWordsOrLetters(raw, unit)
+    }, [raw, unit])
 
     return (
         <div
@@ -276,7 +253,23 @@ function GhostLayer({
                 textAlign,
             }}
         >
-            {content}
+            {unit === "Lines"
+                ? lineTokens.map((lineToken, index) => (
+                      <div key={`g-l-${index}`}>
+                          {lineToken.value.length ? lineToken.value : "\u00A0"}
+                      </div>
+                  ))
+                : wordOrLetterTokens.map((token, index) =>
+                      token.kind === "br" ? (
+                          <br key={`g-br-${index}`} />
+                      ) : (
+                          <span key={`g-t-${index}`}>
+                              {unit === "Letters" && token.value === " "
+                                  ? "\u00A0"
+                                  : token.value}
+                          </span>
+                      )
+                  )}
         </div>
     )
 }

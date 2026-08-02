@@ -23,7 +23,6 @@ export function ServiceImage({
   imageAlt,
 }: ServiceImageProps) {
   const isMobile = variant === "mobile";
-  const isTablet = variant === "tablet";
   const isPage = variant === "page";
   const imageSizes =
     variant === "desktop"
@@ -37,7 +36,7 @@ export function ServiceImage({
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
   const imageClassName = cn(
-    isMobile || isTablet ? "object-contain object-center" : "object-cover object-center",
+    isMobile ? "object-contain object-center" : "object-cover object-center",
     "rounded-(--services-image-radius)",
     isPage && "md:rounded-l-none",
     isPlaceholder && "object-contain p-8",

@@ -43,10 +43,25 @@ export function useActiveService({
   const [activeIndex, setActiveIndex] = useState(0);
   const [previousActiveIndex, setPreviousActiveIndex] = useState(0);
   const activeIndexRef = useRef(0);
+  const hasResolvedInitialIndexRef = useRef(false);
+
+  const applyInitialActiveIndex = useCallback(
+    (index: number) => {
+      const nextIndex = clampActiveIndex(index, serviceCount);
+
+      hasResolvedInitialIndexRef.current = true;
+      activeIndexRef.current = nextIndex;
+      setPreviousActiveIndex(nextIndex);
+      setActiveIndex(nextIndex);
+    },
+    [serviceCount],
+  );
 
   const setActiveIndexSafe = useCallback(
     (index: number) => {
       const nextIndex = clampActiveIndex(index, serviceCount);
+
+      hasResolvedInitialIndexRef.current = true;
 
       if (nextIndex === activeIndexRef.current) {
         return;
@@ -62,6 +77,7 @@ export function useActiveService({
   const resetToFirstService = useCallback(() => {
     setPreviousActiveIndex(0);
     activeIndexRef.current = 0;
+    hasResolvedInitialIndexRef.current = true;
     setActiveIndex(0);
   }, []);
 
@@ -92,6 +108,11 @@ export function useActiveService({
           const baseDistance = Math.max(getPinScrollDistance(serviceCount), 1);
           const coverDistance = Math.max(getPinCoverDistance(serviceCount), baseDistance);
           const progress = Math.min((self.progress * coverDistance) / baseDistance, 1);
+
+          if (!hasResolvedInitialIndexRef.current) {
+            applyInitialActiveIndex(Math.round(progress * (serviceCount - 1)));
+            return;
+          }
 
           syncActiveIndexFromProgress(progress, serviceCount, setActiveIndexSafe);
         };
@@ -177,7 +198,7 @@ export function useActiveService({
     },
     {
       scope: containerRef,
-      dependencies: [enabled, serviceCount, setActiveIndexSafe, resetToFirstService],
+      dependencies: [applyInitialActiveIndex, enabled, serviceCount, setActiveIndexSafe, resetToFirstService],
       revertOnUpdate: false,
     },
   );

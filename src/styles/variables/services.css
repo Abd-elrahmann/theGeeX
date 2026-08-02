@@ -73,7 +73,7 @@
   --services-content-column-width: 100%;
   --services-image-column-width: 100%;
   --services-image-height: auto;
-  --services-columns-gap: 12px;
+  --services-columns-gap: 8px;
   --services-nav-min-height: 120px;
   --services-nav-gap: 12px;
   --services-nav-title-size: 16px;
@@ -81,14 +81,14 @@
   --services-content-min-height: 180px;
   --services-content-offset-top: 0px;
   --services-image-offset-top: 0px;
-  --services-content-gap: 10px;
+  --services-content-gap: 8px;
   --services-content-margin: 5px;
   --services-content-radius: 16px;
-  --services-content-padding-top: 16px;
-  --services-content-padding-left: 16px;
-  --services-content-padding-right: 12px;
-  --services-content-padding-bottom: 12px;
-  --services-content-header-desc-gap: 24px;
+  --services-content-padding-top: 10px;
+  --services-content-padding-left: 10px;
+  --services-content-padding-right: 8px;
+  --services-content-padding-bottom: 8px;
+  --services-content-header-desc-gap: 12px;
   --services-content-bullet-size: 4px;
   --services-content-header-size: 20px;
   --services-content-header-line-height: 1.2;
@@ -96,8 +96,8 @@
   --services-content-description-line-height: 1.6;
   --services-content-font-features: "blwf" on, "cv09" on, "cv03" on, "cv04" on, "cv11" on;
   --services-content-arrow-size: 40px;
-  --services-content-arrow-gap: 10px;
-  --services-content-header-gap: 12px;
+  --services-content-arrow-gap: 6px;
+  --services-content-header-gap: 6px;
   --services-content-title-size: 28px;
   --services-content-title-line-height: 1.2;
   --services-index-size: 14px;
@@ -154,7 +154,7 @@
   --services-page-service-title-max-width: 100%;
   --services-page-service-title-size: 15px;
   --services-page-service-title-line-height: 1.15;
-  --services-content-header-desc-gap: 24px;
+  --services-content-header-desc-gap: 12px;
   --services-page-features-gap: 12px;
   --services-page-feature-item-gap: 10px;
   --services-page-feature-size: 13px;
@@ -177,6 +177,7 @@
 @media (min-width: 800px) {
   :root {
     --services-margin-top: var(--section-stack-gap);
+    --services-content-header-desc-gap: 24px;
     --services-page-padding-x: 80px;
     --services-page-title-size: 70px;
     --services-page-service-title-max-width: 100%;

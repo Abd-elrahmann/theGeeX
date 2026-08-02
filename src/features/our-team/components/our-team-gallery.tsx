@@ -12,6 +12,7 @@ import {
   ourTeamCardSizes,
   ourTeamGalleryDimensions,
   ourTeamImageBaseStyle,
+  ourTeamMobileCardSize,
   ourTeamPrimaryCardId,
 } from "@/features/our-team/constants/our-team";
 
@@ -25,11 +26,6 @@ const inactiveMobileAutoHoverState = {
   isActive: false,
   direction: 1 as 1 | -1,
 };
-const legacyMobileCardSize = {
-  width: 199,
-  height: 300,
-} as const;
-
 const teamCardImageBaseStyle = {
   width: ourTeamImageBaseStyle.width,
   height: ourTeamImageBaseStyle.height,
@@ -219,13 +215,15 @@ function OurTeamMobileCard({
   card: TeamCard;
   isActive: boolean;
 }) {
-  const size = legacyMobileCardSize;
+  const size = ourTeamMobileCardSize;
 
   return (
     <figure
       className="group relative isolate m-0 flex w-full min-w-0 box-border flex-col items-center justify-start overflow-hidden rounded-(--team-card-radius) bg-transparent outline-none [-webkit-tap-highlight-color:transparent] contain-[paint]"
       style={{
         background: "transparent",
+        width: "min(100%, 170px)",
+        maxWidth: "170px",
         aspectRatio: `${size.width} / ${size.height}`,
         paddingTop: "var(--team-card-padding-top)",
       }}
@@ -383,7 +381,7 @@ export function OurTeamGallery({
 
     return (
       <motion.div
-        className="grid w-full grid-cols-2 gap-(--team-mobile-grid-gap)"
+        className="grid w-full grid-cols-2 gap-(--team-mobile-grid-gap) min-[560px]:grid-cols-3"
         initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -391,7 +389,7 @@ export function OurTeamGallery({
         {ourTeamCards.map((card, index) => (
           <motion.div
             key={card.id}
-            className="bg-transparent outline-none [-webkit-tap-highlight-color:transparent] backface-hidden"
+            className="flex w-full justify-center bg-transparent outline-none [-webkit-tap-highlight-color:transparent] backface-hidden"
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{

@@ -1,7 +1,7 @@
 :root {
   --contact-us-page-top-padding: calc(var(--navbar-height) + 32px);
   --contact-us-content-offset-top: 24px;
-  --contact-us-padding-x: 24px;
+  --contact-us-padding-x: 12px;
   --contact-us-padding-bottom: 0px;
   --contact-us-container-max-width: 1400px;
   --contact-us-grid-gap: 32px;

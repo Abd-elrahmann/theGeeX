@@ -74,7 +74,7 @@ export function ContactUsForm() {
   }
 
   return (
-    <div className="w-full rounded-(--contact-us-form-card-radius) border border-(--color-contact-us-form-border) bg-(--color-contact-us-form-card-bg) px-(--contact-us-form-card-padding) pt-(--contact-us-form-card-padding) pb-(--contact-us-form-card-padding) backdrop-blur-(--contact-us-form-blur) md:max-w-[min(100%,640px)]">
+    <div className="w-full rounded-(--contact-us-form-card-radius) border border-(--color-contact-us-form-border) bg-(--color-contact-us-form-card-bg) px-(--contact-us-form-card-padding) pt-(--contact-us-form-card-padding) pb-(--contact-us-form-card-padding) backdrop-blur-(--contact-us-form-blur) md:max-w-[min(100%,720px)]">
       <form
         className="flex w-full flex-col gap-(--contact-us-form-gap) rounded-(--contact-us-form-inner-radius) bg-(--color-contact-us-form-surface) px-(--contact-us-form-inner-padding) pt-(--contact-us-form-inner-padding) pb-(--contact-us-form-inner-padding)"
         onSubmit={async (event) => {

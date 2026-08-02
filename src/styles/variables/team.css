@@ -91,6 +91,12 @@
   }
 }
 
+@media (min-width: 560px) and (max-width: 799.98px) {
+  :root {
+    --team-section-exit-vh: 24;
+  }
+}
+
 @media (min-width: 800px) {
   :root {
     --team-collapsed-card-padding: 64px;
@@ -101,6 +107,8 @@
   :root {
     --team-margin-top: 24px;
     --team-padding-x: 16px;
+    --team-gallery-width: 1059px;
+    --team-gallery-height: 736px;
     --team-title-size: 115px;
     --team-title-line-height: 115px;
     --team-title-box-height: 76px;
@@ -118,6 +126,8 @@
     --team-collapsed-card-padding: 80px;
     --team-margin-top: var(--section-stack-gap);
     --team-padding-x: 24px;
+    --team-gallery-width: 1059px;
+    --team-gallery-height: 736px;
     --team-container-max-width: calc(var(--team-gallery-width) + (var(--team-padding-x) * 2));
     --team-title-size: 204px;
     --team-title-line-height: 204px;

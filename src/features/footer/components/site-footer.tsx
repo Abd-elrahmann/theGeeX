@@ -126,7 +126,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
         "w-full overflow-visible bg-background",
         revealFromPreviousSection || compactSpacing ? "relative mt-0" : "relative mt-(--footer-margin-top)",
         "px-(--footer-padding-x) pt-(--footer-padding-top)",
-        revealFromPreviousSection || compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
+        "pb-0",
       )}
     >
       <div className="relative mx-auto w-full max-w-(--footer-container-max-width)">
@@ -385,13 +385,15 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
           </div>
 
           <div className="order-3 relative mt-auto pt-(--footer-logo-margin-top) h-(--footer-logo-height) w-full md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
-            <Image
-              src={footerContent.logoSrc}
-              alt="theGeeX logo"
-              fill
-              className="object-contain object-center md:object-top"
-              sizes="(min-width: 1440px) 1440px, 100vw"
-            />
+            <div className="relative h-full w-full pb-(--footer-logo-bottom-inset)">
+              <Image
+                src={footerContent.logoSrc}
+                alt="theGeeX logo"
+                fill
+                className="object-contain object-center md:object-top"
+                sizes="(min-width: 1440px) 1440px, 100vw"
+              />
+            </div>
           </div>
         </div>
       </div>

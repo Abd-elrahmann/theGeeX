@@ -24,6 +24,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isScrollActivated, setIsScrollActivated] = useState(false);
+  const shouldCollapseDescription = isCollapsed && !isFinalCard;
 
   const finalCardTitleTransition = {
     type: "spring" as const,
@@ -43,7 +44,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
       const cardTop = cardElement.getBoundingClientRect().top;
       const collapseTriggerOffset = 12;
       const cardStickyTop = processCardStickyTops[index] ?? processCardStickyTops[processCardStickyTops.length - 1] ?? 0;
-      const hasCollapsed = window.innerWidth >= 1024 && cardTop <= cardStickyTop + collapseTriggerOffset;
+      const hasCollapsed = cardTop <= cardStickyTop + collapseTriggerOffset;
 
       setIsCollapsed(hasCollapsed);
 
@@ -197,9 +198,9 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
             )}
             initial={false}
             animate={{
-              opacity: isCollapsed ? 0 : 1,
-              height: isCollapsed ? 0 : "auto",
-              marginTop: isCollapsed ? 0 : "var(--process-card-description-margin-top)",
+              opacity: shouldCollapseDescription ? 0 : 1,
+              height: shouldCollapseDescription ? 0 : "auto",
+              marginTop: shouldCollapseDescription ? 0 : "var(--process-card-description-margin-top)",
             }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >

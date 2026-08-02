@@ -48,8 +48,8 @@
   --footer-subscribe-spinner-size: 18px;
   --footer-subscribe-error-size: 13px;
   --footer-subscribe-error-line-height: 1.4;
-  --footer-rights-margin-top: 44px;
-  --footer-rights-padding-top: 18px;
+  --footer-rights-margin-top: 64px;
+  --footer-rights-padding-top: 28px;
   --footer-rights-padding-bottom: 64px;
   --footer-rights-max-width: 1066px;
   --footer-rights-line-gap: 4px;
@@ -60,6 +60,7 @@
   --footer-rights-line-height: 1.4;
   --footer-logo-margin-top: 44px;
   --footer-logo-height: 120px;
+  --footer-logo-bottom-inset: 10px;
   --footer-success-overlay-max-width: 360px;
   --footer-success-overlay-gap: 12px;
   --footer-success-icon-size: 44px;
@@ -95,18 +96,19 @@
     --footer-reveal-gap: 0px;
     --footer-container-max-width: 1648px;
     --footer-padding-x: 24px;
-    --footer-padding-bottom: 56px;
+    --footer-padding-bottom: 64px;
     --footer-card-min-height: var(--lets-talk-card-min-height);
     --footer-reveal-card-min-height: var(--footer-card-min-height);
     --footer-reveal-track-height: 100svh;
     --footer-card-radius: 64px;
     --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
-    --footer-card-padding-x: 40px;
+    --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
     --footer-standalone-card-padding-top: 32px;
-    --footer-top-row-gap: 20px;
+    --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
+    --footer-nav-edge-padding: 12px;
     --footer-link-column-gap: 14px;
     --footer-link-desktop-gap: 16px;
     --footer-newsletter-gap: 12px;
@@ -122,12 +124,12 @@
     --footer-newsletter-form-gap: 10px;
     --footer-input-height: 56px;
     --footer-subscribe-button-height: 56px;
-    --footer-rights-margin-top: 24px;
-    --footer-rights-padding-top: 8px;
-    --footer-rights-padding-bottom: 24px;
+    --footer-rights-margin-top: 56px;
+    --footer-rights-padding-top: 24px;
+    --footer-rights-padding-bottom: 44px;
     --footer-rights-line-width: 96px;
     --footer-rights-size: 14px;
-    --footer-logo-margin-top: 24px;
+    --footer-logo-margin-top: 12px;
     --footer-logo-height: 185px;
   }
 }
@@ -154,8 +156,8 @@
     --footer-newsletter-max-width: 680px;
     --footer-newsletter-title-size: 44px;
     --footer-newsletter-form-gap: 14px;
-    --footer-rights-margin-top: 32px;
-    --footer-rights-padding-top: 18px;
+    --footer-rights-margin-top: 56px;
+    --footer-rights-padding-top: 24px;
     --footer-rights-padding-bottom: 44px;
     --footer-logo-margin-top: 12px;
     --footer-logo-height: 300px;
@@ -183,6 +185,8 @@
     --footer-newsletter-copy-gap: 10px;
     --footer-newsletter-max-width: 680px;
     --footer-newsletter-title-size: 52px;
+    --footer-rights-margin-top: 64px;
+    --footer-rights-padding-top: 28px;
     --footer-rights-size: 15px;
     --footer-logo-height: 340px;
   }
