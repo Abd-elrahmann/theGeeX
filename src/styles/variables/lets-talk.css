@@ -27,12 +27,13 @@
   --lets-talk-button-orb-width: 360px;
   --lets-talk-button-orb-height: 360px;
   --lets-talk-reveal-sticky-top: var(--navbar-height);
-  --lets-talk-footer-scroll-tail: 0px;
+  --lets-talk-footer-scroll-tail: 48px;
   --lets-talk-footer-reveal-height: calc(
     var(--lets-talk-card-min-height) +
     var(--lets-talk-padding-y) * 2 +
     var(--footer-reveal-gap) +
     var(--footer-reveal-track-height) +
+    var(--footer-reveal-bottom-gap) +
     var(--lets-talk-footer-scroll-tail)
   );
   --color-lets-talk-overlay: rgb(0 0 0 / 0.24);
