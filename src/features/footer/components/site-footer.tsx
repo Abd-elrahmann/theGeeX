@@ -126,6 +126,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
         "w-full overflow-visible bg-background",
         revealFromPreviousSection || compactSpacing ? "relative mt-0" : "relative mt-(--footer-margin-top)",
         "px-(--footer-padding-x) pt-(--footer-padding-top)",
+        "lg:[--footer-card-radius:40px] lg:[--footer-rights-margin-top:32px] lg:[--footer-rights-padding-bottom:24px] lg:[--footer-logo-height:240px] lg:[--footer-logo-margin-top:24px]",
         "pb-0",
       )}
     >
@@ -143,10 +144,12 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
 
         <div
           className={cn(
-            "relative z-10 flex min-h-(--footer-card-min-height) w-full flex-col overflow-hidden rounded-(--footer-card-radius)",
+            "relative z-10 flex min-h-(--footer-card-min-height) w-full flex-col rounded-(--footer-card-radius)",
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
             !revealFromPreviousSection && "pt-(--footer-standalone-card-padding-top)",
-            "md:items-center md:overflow-clip md:pb-0",
+            "md:items-center md:pb-0",
+            compactSpacing && "lg:min-h-0",
+            "overflow-visible",
           )}
           style={{
             minHeight: revealFromPreviousSection
@@ -384,7 +387,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
           </div>
 
-          <div className="order-3 relative mt-auto pt-(--footer-logo-margin-top) h-(--footer-logo-height) w-full md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
+          <div className="order-3 relative mt-auto h-(--footer-logo-height) w-full pt-(--footer-logo-margin-top) md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
             <div className="relative h-full w-full pb-(--footer-logo-bottom-inset)">
               <Image
                 src={footerContent.logoSrc}
