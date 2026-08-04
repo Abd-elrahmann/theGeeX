@@ -127,7 +127,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
         revealFromPreviousSection || compactSpacing ? "relative mt-0" : "relative mt-(--footer-margin-top)",
         "px-(--footer-padding-x) pt-(--footer-padding-top)",
         "lg:[--footer-card-radius:40px] lg:[--footer-rights-margin-top:32px] lg:[--footer-rights-padding-bottom:24px] lg:[--footer-logo-height:240px] lg:[--footer-logo-margin-top:24px]",
-        "pb-0",
+        compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
       )}
     >
       <div className="relative mx-auto w-full max-w-(--footer-container-max-width)">
@@ -149,6 +149,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             !revealFromPreviousSection && "pt-(--footer-standalone-card-padding-top)",
             "md:items-center md:pb-0",
             compactSpacing && "lg:min-h-0",
+            !compactSpacing && "lg:pb-6",
             "overflow-visible",
           )}
           style={{
@@ -214,7 +215,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             </nav>
 
             <div className="order-1 col-span-2 flex flex-col items-start gap-(--footer-newsletter-gap) md:order-3 md:col-span-1 md:min-w-0 md:w-px md:flex-[2.2] md:pr-(--footer-card-padding-x)">
-              <div className="flex w-full flex-col items-start gap-(--footer-newsletter-copy-gap) md:ml-auto md:max-w-190">
+              <div className="flex w-full flex-col items-start gap-(--footer-newsletter-copy-gap) md:ml-auto md:max-w-190 md:max-lg:mr-10 md:max-lg:mt-4 md:max-lg:max-w-105">
                 <h2
                   className={cn(
                     "whitespace-pre-wrap font-poppins text-(length:--footer-newsletter-title-size)",
@@ -252,7 +253,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
               </div>
 
               <form
-                className="flex w-full max-w-full flex-col items-stretch gap-(--footer-newsletter-form-gap) md:ml-auto md:max-w-190 lg:flex-row lg:items-center"
+                className="flex w-full max-w-full flex-col items-stretch gap-(--footer-newsletter-form-gap) md:ml-auto md:max-w-190 md:max-lg:mr-10 md:max-lg:max-w-105 lg:flex-row lg:items-center"
                 onSubmit={handleSubscribeSubmit}
               >
                 <input
@@ -387,13 +388,16 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
           </div>
 
-          <div className="order-3 relative mt-auto h-(--footer-logo-height) w-full pt-(--footer-logo-margin-top) md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
-            <div className="relative h-full w-full pb-(--footer-logo-bottom-inset)">
+          <div className="order-3 relative mt-auto h-(--footer-logo-height) w-full pt-(--footer-logo-margin-top) md:-mb-(--footer-logo-bottom-inset) md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
+            <div
+              className="absolute inset-x-0 top-(--footer-logo-margin-top)"
+              style={{ bottom: "0px" }}
+            >
               <Image
                 src={footerContent.logoSrc}
                 alt="theGeeX logo"
                 fill
-                className="object-contain object-center md:object-top"
+                className="object-contain object-center"
                 sizes="(min-width: 1440px) 1440px, 100vw"
               />
             </div>
