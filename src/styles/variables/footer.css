@@ -146,7 +146,7 @@
     --footer-card-padding-x: 32px;
     --footer-card-padding-top: 0px;
     --footer-card-padding-bottom: 0px;
-    --footer-standalone-card-padding-top: 32px;
+    --footer-standalone-card-padding-top: 48px;
     --footer-reveal-bottom-gap: 24px;
     --footer-top-row-gap: 32px;
     --footer-top-row-desktop-gap: 8px;
@@ -160,7 +160,8 @@
     --footer-rights-padding-top: 24px;
     --footer-rights-padding-bottom: 44px;
     --footer-logo-margin-top: 12px;
-    --footer-logo-height: 300px;
+    --footer-logo-height: 260px;
+    --footer-logo-bottom-inset: 40px;
   }
 }
 
@@ -189,6 +190,7 @@
     --footer-rights-padding-top: 28px;
     --footer-rights-size: 15px;
     --footer-logo-height: 340px;
+    --footer-logo-bottom-inset: 10px;
   }
 }
 
