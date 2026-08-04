@@ -1,4 +1,5 @@
 import type { ProjectProcessStep } from "@/features/projects/constants/projects";
+import type { RefObject } from "react";
 import { ProjectDetailProcessCards } from "@/features/projects/single/components/project-detail-process-cards";
 import { ProjectDetailProcessIconRail } from "@/features/projects/single/components/project-detail-process-icon-rail";
 import { ProjectDetailSectionIntro } from "@/features/projects/single/shared/components/project-detail-section-intro";
@@ -7,12 +8,14 @@ interface ProjectDetailProcessSectionProps {
   processSteps: ProjectProcessStep[];
   activeProcessIndex: number | null;
   processCardRefs: React.MutableRefObject<Array<HTMLElement | null>>;
+  processRailRef: RefObject<HTMLDivElement | null>;
 }
 
 export function ProjectDetailProcessSection({
   processSteps,
   activeProcessIndex,
   processCardRefs,
+  processRailRef,
 }: ProjectDetailProcessSectionProps) {
   if (!processSteps.length) {
     return null;
@@ -40,6 +43,7 @@ export function ProjectDetailProcessSection({
         <ProjectDetailProcessIconRail
           processSteps={processSteps}
           activeProcessIndex={activeProcessIndex}
+          railRef={processRailRef}
         />
       </div>
     </section>

@@ -23,6 +23,7 @@ interface ProjectDetailPageProps {
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const [activeProcessIndex, setActiveProcessIndex] = useState<number | null>(null);
   const processCardRefs = useRef<Array<HTMLElement | null>>([]);
+  const processRailRef = useRef<HTMLDivElement | null>(null);
   const projectTitle = getProjectTitle(project);
   const breadcrumbLabel = getProjectBreadcrumbLabel(project);
   const primaryCategory = getProjectPrimaryCategory(project);
@@ -38,8 +39,13 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
 
     const updateActiveProcessIndex = () => {
       animationFrame = 0;
+      const railRect = processRailRef.current?.getBoundingClientRect();
+      const activationY = railRect
+        ? railRect.top + railRect.height / 2
+        : window.innerHeight / 2;
+
       setActiveProcessIndex(
-        getClosestProcessIndex(processCardRefs.current, window.innerHeight),
+        getClosestProcessIndex(processCardRefs.current, activationY),
       );
     };
 
@@ -79,6 +85,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
         processSteps={processSteps}
         activeProcessIndex={activeProcessIndex}
         processCardRefs={processCardRefs}
+        processRailRef={processRailRef}
       />
       <ProjectDetailRelatedProjectsSection relatedProjects={relatedProjects} />
     </main>

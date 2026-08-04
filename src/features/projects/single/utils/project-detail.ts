@@ -40,12 +40,12 @@ export function getRelatedProjects(project: ProjectItem): ProjectItem[] {
 
 export function getClosestProcessIndex(
   cardElements: Array<HTMLElement | null>,
-  viewportHeight: number,
+  activationY: number,
 ) {
-  const activationY = Math.min(viewportHeight * 0.35, viewportHeight - 220);
   let activeIndex: number | null = null;
+  let closestDistance = Number.POSITIVE_INFINITY;
 
-  for (let index = cardElements.length - 1; index >= 0; index -= 1) {
+  for (let index = 0; index < cardElements.length; index += 1) {
     const cardElement = cardElements[index];
 
     if (!cardElement) {
@@ -54,10 +54,11 @@ export function getClosestProcessIndex(
 
     const rect = cardElement.getBoundingClientRect();
     const cardCenterY = rect.top + rect.height / 2;
+    const distance = Math.abs(cardCenterY - activationY);
 
-    if (cardCenterY <= activationY) {
+    if (distance < closestDistance) {
+      closestDistance = distance;
       activeIndex = index;
-      break;
     }
   }
 
