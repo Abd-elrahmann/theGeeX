@@ -11,8 +11,27 @@ export const deliverTransition = {
 };
 
 export const deliverNumberColor = {
-  active: "#2c3134",
-  inactive: "#2c3134",
+  active: "var(--color-service-detail-text)",
+  inactive: "var(--color-service-detail-inactive)",
+} as const;
+
+export const deliverTextReveal = {
+  initial: {
+    opacity: 0,
+    y: 32,
+  },
+  whileInView: {
+    opacity: 1,
+    y: 0,
+  },
+  viewport: {
+    once: true,
+    amount: 0.45,
+  },
+  transition: {
+    duration: 0.65,
+    ease: "easeInOut" as const,
+  },
 } as const;
 
 export const faqTextReveal = {

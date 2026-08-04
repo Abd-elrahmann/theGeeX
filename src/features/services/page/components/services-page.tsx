@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -53,14 +53,10 @@ function ServicesPageCardHeader({
 }
 
 export function ServicesPage() {
-  const servicesPageRef = useRef<HTMLElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [hoveredServiceId, setHoveredServiceId] = useState<number | null>(null);
-  const [scrollActiveServiceId, setScrollActiveServiceId] = useState<number | null>(null);
   const isServicesCursorActive = isDesktop && isPointerFine && isGridHovered;
 
   useEffect(() => {
@@ -71,79 +67,8 @@ export function ServicesPage() {
     };
   }, [isServicesCursorActive]);
 
-  useEffect(() => {
-    let timeoutId = 0;
-    let frameId = 0;
-
-    const clearScrollActiveService = () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-        frameId = 0;
-      }
-
-      setScrollActiveServiceId(null);
-    };
-
-    const updateScrollActiveService = () => {
-      const viewportCenterY = window.innerHeight / 2;
-      let nextServiceId: number | null = null;
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      cardRefs.current.forEach((card, index) => {
-        if (!card) {
-          return;
-        }
-
-        const rect = card.getBoundingClientRect();
-        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-
-        if (!isVisible) {
-          return;
-        }
-
-        const cardCenterY = rect.top + rect.height / 2;
-        const distanceToViewportCenter = Math.abs(cardCenterY - viewportCenterY);
-
-        if (distanceToViewportCenter < closestDistance) {
-          closestDistance = distanceToViewportCenter;
-          nextServiceId = services[index]?.id ?? null;
-        }
-      });
-
-      setScrollActiveServiceId(nextServiceId);
-    };
-
-    const handleScroll = () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      frameId = window.requestAnimationFrame(() => {
-        frameId = 0;
-        updateScrollActiveService();
-      });
-
-      window.clearTimeout(timeoutId);
-
-      timeoutId = window.setTimeout(() => {
-        clearScrollActiveService();
-      }, 360);
-    };
-
-    updateScrollActiveService();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.clearTimeout(timeoutId);
-      clearScrollActiveService();
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <main
-      ref={servicesPageRef}
       className="relative z-(--page-main-z-index) min-h-svh w-full bg-background pt-(--services-page-top-padding)"
     >
       <section
@@ -164,7 +89,6 @@ export function ServicesPage() {
         </header>
 
         <div
-          ref={gridRef}
           className="mt-(--services-page-grid-offset) flex w-full flex-col gap-(--services-page-cards-gap)"
           onMouseEnter={() => {
             setIsGridHovered(true);
@@ -176,9 +100,6 @@ export function ServicesPage() {
           {services.map((service, index) => (
             <Link
               key={service.id}
-              ref={(element) => {
-                cardRefs.current[index] = element;
-              }}
               href={`/services/${service.slug}`}
               aria-label={`Open ${service.navTitle} service page`}
               className="grid w-full grid-cols-1 gap-x-(--services-page-card-gap) gap-y-(--services-page-mobile-card-row-gap) overflow-visible rounded-(--services-page-card-radius) bg-transparent md:mx-auto md:h-(--services-page-grid-min-height) md:max-w-(--services-page-card-width) md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-y-(--services-page-card-gap)"
@@ -195,10 +116,7 @@ export function ServicesPage() {
                 <ServiceContent
                   service={service}
                   variant="page"
-                  isGridHovered={
-                    hoveredServiceId === service.id ||
-                    scrollActiveServiceId === service.id
-                  }
+                  isGridHovered={hoveredServiceId === service.id}
                   showContentTitle={false}
                   descriptionItems={service.pageDescription ?? service.description}
                   headerContent={

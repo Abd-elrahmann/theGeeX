@@ -27,7 +27,7 @@
   --service-detail-hero-image-fit: cover;
   --service-detail-hero-image-fit-desktop-large: var(--service-detail-hero-image-fit);
   --service-detail-hero-image-fit-current: var(--service-detail-hero-image-fit);
-  --service-detail-hero-image-object-position: center 72%;
+  --service-detail-hero-image-object-position: center 55%;
   --service-detail-hero-image-object-position-desktop-large: var(--service-detail-hero-image-object-position);
   --service-detail-hero-image-object-position-current: var(--service-detail-hero-image-object-position);
   --service-detail-image-radius: 24px;
@@ -203,7 +203,7 @@
 @media (min-width: 1024px) {
   :root {
     --service-detail-container-max-width: calc(100vw - 100px);
-    --service-detail-padding-x: 45px;
+    --service-detail-padding-x: 80px;
     --service-detail-title-max-width: 1120px;
     --service-detail-hero-padding-top: 72px;
     --service-detail-hero-gap: 32px;
@@ -253,7 +253,7 @@
   :root {
 
     --service-detail-container-max-width: calc(100vw - 120px);
-    --service-detail-padding-x: 35px;
+    --service-detail-padding-x: 80px;
     --service-detail-title-max-width: calc(100vw - 120px);
     --service-detail-hero-image-height: 500px;
     --service-detail-hero-image-aspect-ratio: auto;

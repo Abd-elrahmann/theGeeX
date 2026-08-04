@@ -32,7 +32,8 @@ const SERVICES_TABLET_STAGE_HEIGHT_PX = 560;
 const SERVICES_TABLET_PANEL_HEIGHT_PX = 346;
 const servicesTabletPanelHeightClassName = "md:max-lg:!h-[346px]";
 const SERVICES_WHEEL_MIN_DELTA = 4;
-const SERVICES_WHEEL_STEP_GUARD_MS = 180;
+const SERVICES_WHEEL_STEP_DELTA = 140;
+const SERVICES_WHEEL_STEP_GUARD_MS = 240;
 
 export function ServicesSection() {
   const lenis = useLenis();
@@ -49,6 +50,7 @@ export function ServicesSection() {
   const mobileContentMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const mobileImageMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
   const lastPointerRef = useRef({ x: -1, y: -1 });
+  const wheelDeltaAccumulatorRef = useRef(0);
   const lastWheelStepTimeRef = useRef(0);
   const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLenisScrollingRef = useRef(false);
@@ -165,6 +167,7 @@ export function ServicesSection() {
 
   useEffect(() => {
     if (!isDesktop) {
+      wheelDeltaAccumulatorRef.current = 0;
       lastWheelStepTimeRef.current = 0;
       return;
     }
@@ -186,6 +189,22 @@ export function ServicesSection() {
         return;
       }
 
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const accumulatedDelta = wheelDeltaAccumulatorRef.current + event.deltaY;
+
+      if (
+        accumulatedDelta === 0 ||
+        Math.sign(accumulatedDelta) !== direction
+      ) {
+        wheelDeltaAccumulatorRef.current = event.deltaY;
+      } else {
+        wheelDeltaAccumulatorRef.current = accumulatedDelta;
+      }
+
+      if (Math.abs(wheelDeltaAccumulatorRef.current) < SERVICES_WHEEL_STEP_DELTA) {
+        return;
+      }
+
       const now = performance.now();
 
       if (now - lastWheelStepTimeRef.current < SERVICES_WHEEL_STEP_GUARD_MS) {
@@ -193,14 +212,15 @@ export function ServicesSection() {
         return;
       }
 
-      const direction = event.deltaY > 0 ? 1 : -1;
       const nextIndex = Math.max(0, Math.min(services.length - 1, activeIndex + direction));
 
       if (nextIndex === activeIndex) {
+        wheelDeltaAccumulatorRef.current = 0;
         return;
       }
 
       event.preventDefault();
+      wheelDeltaAccumulatorRef.current = 0;
       lastWheelStepTimeRef.current = now;
       setActiveIndex(nextIndex);
       scrollDesktopToIndex(nextIndex);
