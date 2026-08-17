@@ -7,7 +7,7 @@ interface PackageCardChipsProps {
 
 export function PackageCardChips({ chips }: PackageCardChipsProps) {
   return (
-    <div className="mb-(--packages-card-chips-margin-bottom) flex w-full flex-nowrap items-center justify-start gap-(--packages-card-chips-gap) overflow-(--overflow-clip-fallback)">
+    <div className="mb-(--packages-card-chips-margin-bottom) flex w-full flex-wrap items-center justify-start gap-(--packages-card-chips-gap) overflow-(--overflow-clip-fallback)">
       {chips.map((chip) => {
         const isAccent = chip.variant === "accent";
 

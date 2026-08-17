@@ -134,7 +134,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       backgroundPosition: "center center",
     },
     mobileImageStyle: {
-      top: "80%",
+      top: "90%",
     },
   },
   {
@@ -236,7 +236,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       scale: "0.8",
     },
     mobileImageStyle: {
-      top: "80%",
+      top: "85%",
       transform: "translate(-65%, -65%)",
 
     },
@@ -259,7 +259,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
       scale: "0.9",
     },
      mobileImageStyle: {
-      top: "85%",
+      top: "90%",
       transform: "translate(-55%, -60%)",
 
     },
@@ -294,7 +294,7 @@ export const ourTeamCards: OurTeamMemberCard[] = [
     collapsedOffsetY: 60,
     gradientVar: "--team-card-gradient-08",
     imageStyle: {
-      top: "90%",
+      top: "85%",
       transform: "translate(-65%, -50%)",
       backgroundPosition: "center center",
       scale: "0.85",

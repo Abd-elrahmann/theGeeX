@@ -90,7 +90,12 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
           : "bg-(--color-process-card-bg)",
       )}
     >
-      <div className="flex h-full w-full flex-row items-stretch md:h-auto lg:h-full">
+      <div
+        className={cn(
+          "flex h-full w-full items-stretch md:h-auto lg:h-full",
+          isFinalCard ? "flex-col md:flex-row" : "flex-row",
+        )}
+      >
         <div
           className="box-border relative flex h-auto w-auto flex-none items-start justify-start self-stretch overflow-hidden md:h-auto lg:h-full lg:min-w-px"
           style={{
