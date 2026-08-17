@@ -34,6 +34,7 @@ const servicesTabletPanelHeightClassName = "md:max-lg:!h-[346px]";
 const SERVICES_WHEEL_MIN_DELTA = 4;
 const SERVICES_WHEEL_STEP_DELTA = 140;
 const SERVICES_WHEEL_STEP_GUARD_MS = 240;
+const MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX = 1;
 
 export function ServicesSection() {
   const lenis = useLenis();
@@ -54,13 +55,16 @@ export function ServicesSection() {
   const lastWheelStepTimeRef = useRef(0);
   const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLenisScrollingRef = useRef(false);
+  const mobileViewportWidthRef = useRef(0);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
+    titleHeight: 0,
     contentHeight: 0,
     imageHeight: 0,
     scrollHeight: 0,
     stickyTop: 0,
+    activationProgressEnd: 1,
   });
   const {
     containerRef,
@@ -162,7 +166,12 @@ export function ServicesSection() {
       return;
     }
 
-    syncActiveIndexFromProgress(progress, services.length, setActiveIndex);
+    const normalizedProgress =
+      mobileStageMetrics.activationProgressEnd < 1
+        ? Math.min(progress / mobileStageMetrics.activationProgressEnd, 1)
+        : progress;
+
+    syncActiveIndexFromProgress(normalizedProgress, services.length, setActiveIndex);
   });
 
   useEffect(() => {
@@ -192,10 +201,7 @@ export function ServicesSection() {
       const direction = event.deltaY > 0 ? 1 : -1;
       const accumulatedDelta = wheelDeltaAccumulatorRef.current + event.deltaY;
 
-      if (
-        accumulatedDelta === 0 ||
-        Math.sign(accumulatedDelta) !== direction
-      ) {
+      if (accumulatedDelta === 0 || Math.sign(accumulatedDelta) !== direction) {
         wheelDeltaAccumulatorRef.current = event.deltaY;
       } else {
         wheelDeltaAccumulatorRef.current = accumulatedDelta;
@@ -313,7 +319,6 @@ export function ServicesSection() {
       const mobileScrollTailVh =
         parseFloat(rootStyles.getPropertyValue("--services-mobile-scroll-tail-vh")) || 0;
       const viewportHeight = window.innerHeight;
-      const availableViewportHeight = Math.max(viewportHeight - navbarHeight, 0);
       const titleHeight = mobileTitleRef.current?.offsetHeight ?? 0;
       const contentHeight = Math.max(
         0,
@@ -329,21 +334,55 @@ export function ServicesSection() {
         ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
         : titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance;
       const stickyTop = navbarHeight;
+      const stepScrollDistance =
+        Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100);
+      const tailScrollDistance = viewportHeight * (mobileScrollTailVh / 100);
+      const stickyReleaseBuffer = Math.max(viewportHeight - stickyTop - stageHeight, 0);
+      const totalScrollableDistance =
+        stepScrollDistance + tailScrollDistance + stickyReleaseBuffer;
+      const activationProgressEnd =
+        totalScrollableDistance > 0
+          ? Math.min(stepScrollDistance / totalScrollableDistance, 1)
+          : 1;
 
       setMobileStageMetrics({
         stageHeight,
+        titleHeight,
         contentHeight,
         imageHeight,
         stickyTop,
+        activationProgressEnd,
         scrollHeight:
           stageHeight +
-          Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100) +
-          viewportHeight * (mobileScrollTailVh / 100) +
+          stepScrollDistance +
+          tailScrollDistance +
+          stickyReleaseBuffer +
           stickyTop,
       });
     };
 
+    const shouldHandleViewportResize = () => {
+      const nextViewportWidth = window.innerWidth;
+      const previousViewportWidth = mobileViewportWidthRef.current;
+
+      mobileViewportWidthRef.current = nextViewportWidth;
+
+      return (
+        previousViewportWidth === 0 ||
+        Math.abs(nextViewportWidth - previousViewportWidth) > MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX
+      );
+    };
+
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      measureMobileStage();
+    };
+
     measureMobileStage();
+    mobileViewportWidthRef.current = window.innerWidth;
 
     const resizeObserver =
       typeof ResizeObserver !== "undefined" && mobileMeasureRef.current
@@ -356,18 +395,18 @@ export function ServicesSection() {
       resizeObserver.observe(mobileMeasureRef.current);
     }
 
-    window.addEventListener("resize", measureMobileStage);
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       resizeObserver?.disconnect();
-      window.removeEventListener("resize", measureMobileStage);
+      window.removeEventListener("resize", handleViewportResize);
     };
   }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
   const desktopScrollStepCount = Math.max(services.length, 1);
   const mobileAvailablePanelHeight = Math.max(
-    mobileStageMetrics.stageHeight - (mobileTitleRef.current?.offsetHeight ?? 0) - mobileStageMetrics.stickyTop,
+    mobileStageMetrics.stageHeight - mobileStageMetrics.titleHeight - mobileStageMetrics.stickyTop,
     0,
   );
   const mobilePanelGap = 12;

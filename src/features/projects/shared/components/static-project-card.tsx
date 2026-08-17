@@ -19,6 +19,8 @@ interface StaticProjectCardStyle extends CSSProperties {
   "--project-card-background": string;
 }
 
+const staticProjectCardImageSizes = "(max-width: 799px) calc(100vw - 40px), 1200px";
+
 export function StaticProjectCard({
   project,
   index,
@@ -99,8 +101,9 @@ export function StaticProjectCard({
             src={project.image}
             alt={project.imageAlt}
             fill
-            sizes="100vw"
-            unoptimized
+            sizes={staticProjectCardImageSizes}
+            quality={75}
+            loading={index === 0 ? "eager" : "lazy"}
             draggable={false}
             style={{
               objectFit: "cover",

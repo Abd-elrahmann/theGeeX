@@ -38,6 +38,19 @@
   --color-ai-growth-row-divider: #e8e8e8;
 }
 
+@media (max-width: 799.98px) {
+  :root {
+    --ai-growth-grid-gap: 10px;
+    --ai-growth-grid-two-padding-top: 0px;
+    --ai-growth-row-title-size: 15px;
+    --ai-growth-title-size: 28px;
+    --ai-growth-row-description-size: 12px;
+    --ai-growth-description-size: 13px;
+    --ai-growth-row-mobile-gap: 1px;
+    --ai-growth-rows-gap: 8px;
+  }
+}
+
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
     --ai-growth-grid-gap: 40px;

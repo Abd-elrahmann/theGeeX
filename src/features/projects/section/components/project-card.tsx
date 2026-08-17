@@ -76,6 +76,8 @@ interface ProjectCardArticleStyle {
   zIndex: string;
 }
 
+const projectCardImageSizes = "(max-width: 799px) calc(100vw - 40px), 1200px";
+
 function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
 }
@@ -322,8 +324,9 @@ export function ProjectCard({
               src={project.image}
               alt={project.imageAlt}
               fill
-              sizes="100vw"
-              unoptimized
+              sizes={projectCardImageSizes}
+              quality={75}
+              loading={index === 0 ? "eager" : "lazy"}
               draggable={false}
               style={{
                 objectFit: "cover",

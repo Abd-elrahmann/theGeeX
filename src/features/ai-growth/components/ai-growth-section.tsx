@@ -28,7 +28,6 @@ const aiGrowthRowTransition = {
 } as const;
 
 const aiGrowthActiveTriggerDelay = 0.18;
-
 function splitFirstWord(text: string): { firstWord: string; rest: string } {
   const [firstWord = "", ...restWords] = text.split(" ");
 
@@ -162,6 +161,12 @@ export function AiGrowthSection() {
     isTablet && mobileStageMetrics.stageHeight > 0
       ? `max(0px, calc((100svh - ${mobileStageMetrics.stageHeight}px) / 2))`
       : undefined;
+  const mobileStickyTop = !isTablet ? "var(--ai-growth-mobile-rows-sticky-top)" : undefined;
+  const mobileSectionPaddingTop =
+    !isDesktop && !isTablet
+      ? "calc(var(--ai-growth-padding-y) + var(--ai-growth-mobile-rows-sticky-top))"
+      : undefined;
+  const mobileRowsOffset = !isDesktop && !isTablet ? "-6px" : undefined;
 
   const setActiveIndexSequentially = useCallback(
     (index: number) => {
@@ -197,6 +202,7 @@ export function AiGrowthSection() {
       id="ai-growth"
       aria-label="AI for real growth"
       className="relative z-10 mt-(--ai-growth-margin-top) min-h-(--ai-growth-scroll-height) w-full bg-background px-(--ai-growth-padding-x) pt-(--ai-growth-padding-y) pb-(--ai-growth-padding-y) lg:pb-0"
+      style={mobileSectionPaddingTop ? { paddingTop: mobileSectionPaddingTop } : undefined}
     >
       <div
         ref={mobileScrollRef}
@@ -214,7 +220,7 @@ export function AiGrowthSection() {
           style={
             !isDesktop && mobileStageMetrics.stageHeight > 0
               ? {
-                  top: tabletStickyTop,
+                  top: isTablet ? tabletStickyTop : mobileStickyTop,
                   height: `${mobileStageMetrics.stageHeight}px`,
                 }
               : undefined
@@ -257,7 +263,10 @@ export function AiGrowthSection() {
               </p>
             </div>
 
-            <div className="box-border flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-rows-gap) overflow-clip rounded-none pt-(--ai-growth-grid-two-padding-top) lg:min-w-(--ai-growth-grid-two-min-width)">
+            <div
+              className="box-border flex h-min w-full min-w-0 flex-1 flex-col content-start items-start justify-center gap-(--ai-growth-rows-gap) overflow-clip rounded-none pt-(--ai-growth-grid-two-padding-top) lg:min-w-(--ai-growth-grid-two-min-width)"
+              style={mobileRowsOffset ? { marginTop: mobileRowsOffset } : undefined}
+            >
               {aiGrowthRows.map((row, index) => (
                 <Fragment key={row.id}>
                   <AiGrowthRowItem row={row} isActive={index === activeIndex} />

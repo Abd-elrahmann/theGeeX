@@ -9,9 +9,9 @@
   --packages-cards-gap: 20px;
   --packages-title-z-index: 1;
   --packages-title-font-weight: 700;
-  --packages-title-size: 44px;
-  --packages-title-line-height: 1.05;
-  --packages-title-box-height: 46px;
+  --packages-title-size: clamp(64px, 18vw, 88px);
+  --packages-title-line-height: 1;
+  --packages-title-box-height: clamp(56px, 16vw, 80px);
   --packages-title-gradient-start: rgb(0 0 0 / 0.36);
   --packages-title-gradient-mid: rgb(0 0 0 / 0.18);
   --packages-title-gradient-end: rgb(0 0 0 / 0.08);

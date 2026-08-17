@@ -11,10 +11,12 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
+import { isIosSafari } from "@/lib/is-ios-safari";
 import { readRootCssNumber } from "@/lib/read-css-var";
 
 import { ProjectCard } from "./project-card";
 import { ProjectsTitle } from "./projects-title";
+import { StaticProjectCard } from "@/features/projects/shared/components/static-project-card";
 import {
   projects,
   projectsCursorLabel,
@@ -68,6 +70,7 @@ export function ProjectsSection() {
   const lenis = useLenis();
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
+  const [isIosSafariDevice, setIsIosSafariDevice] = useState(false);
   const [mainAnimationEnd, setMainAnimationEnd] = useState(getMainAnimationEnd);
   const [stickyTopOffset, setStickyTopOffset] = useState(getProjectsStickyTop);
   const [isCardStackHovered, setIsCardStackHovered] = useState(false);
@@ -76,6 +79,7 @@ export function ProjectsSection() {
     offset: ["start start", "end end"],
   });
   const isExploreCursorActive = isDesktop && isPointerFine && isCardStackHovered;
+  const shouldUseStaticLayout = isIosSafariDevice;
 
   const animationProgress = useTransform(scrollYProgress, (progress) =>
     Math.min(progress / mainAnimationEnd, 1),
@@ -98,6 +102,16 @@ export function ProjectsSection() {
 
     return (progress - mainAnimationEnd) / (1 - mainAnimationEnd);
   });
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      setIsIosSafariDevice(isIosSafari());
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
 
   useEffect(() => {
     const syncLayout = () => {
@@ -183,11 +197,13 @@ export function ProjectsSection() {
       className={cn(
         "relative isolate z-(--projects-section-z-index) mx-auto w-full overflow-visible",
         "mt-(--projects-margin-top)",
-        "perspective-(--projects-section-perspective)",
-        isDesktop && isPointerFine && "cursor-none",
+        !shouldUseStaticLayout && "perspective-(--projects-section-perspective)",
+        !shouldUseStaticLayout && isDesktop && isPointerFine && "cursor-none",
       )}
       style={
-        isDesktop
+        shouldUseStaticLayout
+          ? undefined
+          : isDesktop
           ? stickyTopOffset > 0
             ? { marginTop: `calc(var(--projects-margin-top) + ${stickyTopOffset}px)` }
             : undefined
@@ -207,47 +223,65 @@ export function ProjectsSection() {
       }}
     >
       <div className="relative w-full">
-        <div className="relative h-(--projects-section-scroll-height) w-full">
-          <motion.div
-            className={cn(
-              "sticky top-(--projects-section-sticky-top) grid h-svh min-h-svh w-full overflow-visible",
-              "grid-rows-[auto_minmax(0,1fr)] gap-(--projects-title-gap)",
-            )}
-            style={{ y: sectionLiftY }}
-          >
+        {shouldUseStaticLayout ? (
+          <div className="mx-auto flex w-full max-w-(--projects-container-max-width) flex-col gap-4 px-(--projects-card-outer-padding)">
             <ProjectsTitle />
-
-            <div className="relative z-(--projects-card-stack-z-index) min-h-0 overflow-visible p-(--projects-card-outer-padding)">
-              <div
-                ref={cardStackRef}
-                className="pointer-events-none relative mx-auto h-(--projects-card-height) w-full"
+            {projects.map((project, index) => (
+              <StaticProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                hasShadow={false}
+              />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="relative h-(--projects-section-scroll-height) w-full">
+              <motion.div
+                className={cn(
+                  "sticky top-(--projects-section-sticky-top) grid h-svh min-h-svh w-full overflow-visible",
+                  "grid-rows-[auto_minmax(0,1fr)] gap-(--projects-title-gap)",
+                )}
+                style={{ y: sectionLiftY }}
               >
-                {projects.map((project, index) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    index={index}
-                    totalCards={projects.length}
-                    scrollProgress={animationProgress}
-                    exitProgress={exitProgress}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
+                <ProjectsTitle />
 
-        <div
-          aria-hidden
-          className="h-(--projects-section-exit-padding) w-full shrink-0"
-        />
+                <div className="relative z-(--projects-card-stack-z-index) min-h-0 overflow-visible p-(--projects-card-outer-padding)">
+                  <div
+                    ref={cardStackRef}
+                    className="pointer-events-none relative mx-auto h-(--projects-card-height) w-full"
+                  >
+                    {projects.map((project, index) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        index={index}
+                        totalCards={projects.length}
+                        scrollProgress={animationProgress}
+                        exitProgress={exitProgress}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            <div
+              aria-hidden
+              className="h-(--projects-section-exit-padding) w-full shrink-0"
+            />
+          </>
+        )}
       </div>
 
-      <ExploreSectionCursor
-        isVisible={isExploreCursorActive}
-        label={projectsCursorLabel}
-        transition={exploreCursorTransition}
-      />
+      {!shouldUseStaticLayout ? (
+        <ExploreSectionCursor
+          isVisible={isExploreCursorActive}
+          label={projectsCursorLabel}
+          transition={exploreCursorTransition}
+        />
+      ) : null}
     </section>
   );
 }

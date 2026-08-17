@@ -152,6 +152,15 @@ export function useStorytellingScroll({
 
         const usesNativeStickyMobileStage = layoutMode !== "desktop";
         const projectsElement = document.getElementById("projects");
+        const getMobileStickyTop = () => {
+          if (!usesNativeStickyMobileStage) {
+            return 0;
+          }
+
+          const stageTop = parseFloat(window.getComputedStyle(stageElement).top);
+
+          return Number.isFinite(stageTop) ? stageTop : 0;
+        };
         const getMobileProgressDistance = () => {
           const distance = readRootCssNumber(
             "--storytelling-mobile-scroll-distance",
@@ -183,8 +192,13 @@ export function useStorytellingScroll({
           const progressDistance = getMobileProgressDistance();
           const totalDistance = progressDistance + getMobileBackgroundExtension();
           const progressEnd = totalDistance > 0 ? progressDistance / totalDistance : 1;
+          const stickyActivationDistance = getMobileStickyTop() + getMobileProgressStartOffset();
+          const traveledDistance = Math.max((self.end - self.start) * self.progress, 0);
+          const activationAdjustedDistance = Math.max(traveledDistance - stickyActivationDistance, 0);
+          const adjustedProgress =
+            progressDistance > 0 ? Math.min(activationAdjustedDistance / progressDistance, 1) : 1;
 
-          syncProgress(progressEnd < 1 ? Math.min(self.progress / progressEnd, 1) : self.progress);
+          syncProgress(progressEnd < 1 ? Math.min(adjustedProgress / progressEnd, 1) : adjustedProgress);
         };
         const syncMobileBackground = (self: ScrollTrigger) => {
           const totalDistance = Math.max(self.end - self.start, 1);
