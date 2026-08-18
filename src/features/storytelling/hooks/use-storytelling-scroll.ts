@@ -120,7 +120,6 @@ export function useStorytellingScroll({
 
   const setPageBackgroundOpacity = useCallback((opacity: number) => {
     const clampedOpacity = Math.max(0, Math.min(opacity, 1));
-
     backgroundDarkRef.current = clampedOpacity > 0;
     document.documentElement.style.setProperty(
       "--storytelling-page-background-opacity",

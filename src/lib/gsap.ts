@@ -4,4 +4,9 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+ScrollTrigger.config({
+	ignoreMobileResize: true,
+	limitCallbacks: true,
+});
+
 export { gsap, ScrollTrigger, useGSAP };

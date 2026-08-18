@@ -8,6 +8,7 @@ import type { LenisOptions } from "lenis";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { isIosSafari } from "@/lib/is-ios-safari";
 import { bindLenisScrollTrigger, scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import {
   prepareFreshPageScrollSession,
@@ -16,9 +17,28 @@ import {
 
 const LENIS_WHEEL_DELTA_LIMIT = 120;
 const LENIS_TOUCH_DELTA_LIMIT = 80;
-const NORMALIZED_SCROLL_MOMENTUM = 0.35;
+const DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.35;
+const SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.28;
 const DESKTOP_WHEEL_MULTIPLIER = 0.45;
 const DESKTOP_TOUCH_MULTIPLIER = 0.55;
+const LOW_POWER_DEVICE_MEMORY_GB = 4;
+const LOW_POWER_CPU_THREADS = 4;
+
+function isLowPowerMobileDevice(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const nav = window.navigator as Navigator & {
+    deviceMemory?: number;
+  };
+
+  if (typeof nav.deviceMemory === "number" && nav.deviceMemory <= LOW_POWER_DEVICE_MEMORY_GB) {
+    return true;
+  }
+
+  return typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency <= LOW_POWER_CPU_THREADS;
+}
 
 function clampGestureDelta(value: number, maxDelta: number): number {
   if (value === 0) {
@@ -38,9 +58,10 @@ function isTouchLikeEvent(event: Event): boolean {
 
 interface ScrollInputNormalizerProps {
   enabled: boolean;
+  isSubDesktop: boolean;
 }
 
-function ScrollInputNormalizer({ enabled }: ScrollInputNormalizerProps) {
+function ScrollInputNormalizer({ enabled, isSubDesktop }: ScrollInputNormalizerProps) {
   useEffect(() => {
     if (!enabled) {
       ScrollTrigger.normalizeScroll(false);
@@ -49,16 +70,18 @@ function ScrollInputNormalizer({ enabled }: ScrollInputNormalizerProps) {
 
     const normalizer = ScrollTrigger.normalizeScroll({
       allowNestedScroll: true,
-      lockAxis: true,
-      momentum: NORMALIZED_SCROLL_MOMENTUM,
-      type: "touch,wheel,pointer",
+      lockAxis: !isSubDesktop,
+      momentum: isSubDesktop
+        ? SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM
+        : DESKTOP_NORMALIZED_SCROLL_MOMENTUM,
+      type: isSubDesktop ? "touch" : "touch,wheel,pointer",
     });
 
     return () => {
       normalizer?.kill();
       ScrollTrigger.normalizeScroll(false);
     };
-  }, [enabled]);
+  }, [enabled, isSubDesktop]);
 
   return null;
 }
@@ -118,6 +141,14 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
   const pathname = usePathname();
   const shouldDisableSmoothScroll = pathname === "/book-a-meeting" || isSubDesktop;
+  const shouldAvoidMobileInputNormalization =
+    isSubDesktop &&
+    typeof window !== "undefined" &&
+    (isIosSafari() ||
+      isLowPowerMobileDevice() ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const shouldEnableInputNormalization =
+    pathname !== "/book-a-meeting" && (!isSubDesktop || !shouldAvoidMobileInputNormalization);
 
   const normalizeLenisInput: NonNullable<LenisOptions["virtualScroll"]> = (data) => {
     const isTouchEvent = isTouchLikeEvent(data.event);
@@ -140,7 +171,10 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   if (shouldDisableSmoothScroll) {
     return (
       <>
-        <ScrollInputNormalizer enabled={false} />
+        <ScrollInputNormalizer
+          enabled={shouldEnableInputNormalization}
+          isSubDesktop={isSubDesktop}
+        />
         {children}
       </>
     );
@@ -159,7 +193,10 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         virtualScroll: normalizeLenisInput,
       }}
     >
-      <ScrollInputNormalizer enabled />
+      <ScrollInputNormalizer
+        enabled={shouldEnableInputNormalization}
+        isSubDesktop={isSubDesktop}
+      />
       <LenisScrollTriggerSync />
       {children}
     </ReactLenis>

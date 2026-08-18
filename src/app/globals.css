@@ -69,6 +69,10 @@ body::before {
   pointer-events: none;
   background-color: var(--color-storytelling-background-dark);
   opacity: var(--storytelling-page-background-opacity);
+  will-change: opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  contain: paint;
   transition: opacity 0.5s cubic-bezier(0.44, 0, 0.56, 1) 0s;
 }
 

@@ -22,7 +22,7 @@ import { isPointInsideElement } from "@/features/services/lib/services-cursor-zo
 import { ServiceContent } from "@/features/services/shared/components/service-content";
 import { ServiceImage } from "@/features/services/shared/components/service-image";
 import { ServicesSectionCursor } from "@/features/services/shared/components/services-section-cursor";
-import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
+import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
 import { ServicesGrid } from "./services-grid";
 import { ServiceImageSlidePanel } from "./service-image-slide-panel";
 import { ServiceSlidePanel } from "./service-slide-panel";
@@ -56,6 +56,8 @@ export function ServicesSection() {
   const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLenisScrollingRef = useRef(false);
   const mobileViewportWidthRef = useRef(0);
+  const mobileQueuedTargetIndexRef = useRef<number | null>(null);
+  const mobileStepFrameRef = useRef<number | null>(null);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -85,6 +87,42 @@ export function ServicesSection() {
 
   const activeService = services[activeIndex] ?? services[0];
   const isExploreCursorActive = isDesktop && isPointerFine && isGridHovered;
+
+  const syncMobileServiceProgress = useCallback(
+    (progress: number) => {
+      const targetIndex = clampActiveIndex(
+        Math.round(progress * Math.max(services.length - 1, 0)),
+        services.length,
+      );
+
+      mobileQueuedTargetIndexRef.current = targetIndex;
+
+      if (mobileStepFrameRef.current !== null) {
+        return;
+      }
+
+      const stepTowardTarget = () => {
+        mobileStepFrameRef.current = null;
+
+        const queuedTargetIndex = mobileQueuedTargetIndexRef.current;
+
+        if (queuedTargetIndex === null || queuedTargetIndex === activeIndex) {
+          return;
+        }
+
+        const nextIndex = activeIndex + Math.sign(queuedTargetIndex - activeIndex);
+
+        setActiveIndex(nextIndex);
+
+        if (nextIndex !== queuedTargetIndex) {
+          mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
+        }
+      };
+
+      mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
+    },
+    [activeIndex, setActiveIndex],
+  );
 
   const getDesktopScrollStepMetrics = useCallback(() => {
     const sectionElement = containerRef.current;
@@ -171,8 +209,31 @@ export function ServicesSection() {
         ? Math.min(progress / mobileStageMetrics.activationProgressEnd, 1)
         : progress;
 
-    syncActiveIndexFromProgress(normalizedProgress, services.length, setActiveIndex);
+    syncMobileServiceProgress(normalizedProgress);
   });
+
+  useEffect(() => {
+    if (shouldTrackMobileScroll || isDesktop) {
+      return;
+    }
+
+    mobileQueuedTargetIndexRef.current = 0;
+
+    if (mobileStepFrameRef.current !== null) {
+      window.cancelAnimationFrame(mobileStepFrameRef.current);
+      mobileStepFrameRef.current = null;
+    }
+
+    setActiveIndex(0);
+  }, [isDesktop, setActiveIndex, shouldTrackMobileScroll]);
+
+  useEffect(() => {
+    return () => {
+      if (mobileStepFrameRef.current !== null) {
+        window.cancelAnimationFrame(mobileStepFrameRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!isDesktop) {
