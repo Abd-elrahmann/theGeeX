@@ -55,9 +55,17 @@ export function ProjectCardArrow({
   const [isScrollAnimating, setIsScrollAnimating] = useState(false);
   const prevProgressRef = useRef(scrollProgress.get());
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   const triggerScrollAnimation = () => {
-    setIsScrollAnimating(true);
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    animationFrameRef.current = requestAnimationFrame(() => {
+      setIsScrollAnimating(true);
+      animationFrameRef.current = null;
+    });
 
     if (animationTimeoutRef.current) {
       clearTimeout(animationTimeoutRef.current);
@@ -73,6 +81,10 @@ export function ProjectCardArrow({
     prevProgressRef.current = scrollProgress.get();
 
     return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
       if (animationTimeoutRef.current) {
         clearTimeout(animationTimeoutRef.current);
       }

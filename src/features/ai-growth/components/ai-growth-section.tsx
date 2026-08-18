@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 import { TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
 import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 
@@ -28,6 +29,8 @@ const aiGrowthRowTransition = {
 } as const;
 
 const aiGrowthActiveTriggerDelay = 0.18;
+const AI_GROWTH_MOBILE_STEP_GUARD_MS = 220;
+
 function splitFirstWord(text: string): { firstWord: string; rest: string } {
   const [firstWord = "", ...restWords] = text.split(" ");
 
@@ -78,6 +81,9 @@ export function AiGrowthSection() {
   const mobileStageContentRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const activeIndexRef = useRef(0);
+  const queuedTargetIndexRef = useRef(0);
+  const mobileStepFrameRef = useRef<number | null>(null);
+  const lastMobileStepTimeRef = useRef(0);
   const [canSyncActiveRow, setCanSyncActiveRow] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -85,6 +91,9 @@ export function AiGrowthSection() {
   });
   const isDesktop = useDesktopBreakpoint();
   const isTablet = useMediaQuery(TABLET_MEDIA_QUERY);
+  const shouldHandleViewportResize = useMobileViewportResizeGate({
+    ignoreHeightOnlyResize: !isDesktop,
+  });
   const { scrollYProgress } = useScroll({
     target: isDesktop ? sectionRef : mobileScrollRef,
     offset: ["start start", "end end"],
@@ -149,13 +158,21 @@ export function AiGrowthSection() {
       resizeObserver.observe(mobileStageContentRef.current);
     }
 
-    window.addEventListener("resize", measureMobileStage);
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      measureMobileStage();
+    };
+
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       resizeObserver?.disconnect();
-      window.removeEventListener("resize", measureMobileStage);
+      window.removeEventListener("resize", handleViewportResize);
     };
-  }, [isDesktop, isTablet]);
+  }, [isDesktop, isTablet, shouldHandleViewportResize]);
 
   const tabletStickyTop =
     isTablet && mobileStageMetrics.stageHeight > 0
@@ -184,6 +201,46 @@ export function AiGrowthSection() {
     [],
   );
 
+  const syncMobileIndexSequentially = useCallback(
+    (index: number) => {
+      queuedTargetIndexRef.current = clampActiveIndex(index, aiGrowthRows.length);
+
+      if (mobileStepFrameRef.current !== null) {
+        return;
+      }
+
+      const stepTowardTarget = (timestamp: number) => {
+        const currentIndex = activeIndexRef.current;
+        const targetIndex = queuedTargetIndexRef.current;
+
+        if (targetIndex === currentIndex) {
+          mobileStepFrameRef.current = null;
+          return;
+        }
+
+        if (timestamp - lastMobileStepTimeRef.current < AI_GROWTH_MOBILE_STEP_GUARD_MS) {
+          mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
+          return;
+        }
+
+        const nextIndex = currentIndex + Math.sign(targetIndex - currentIndex);
+        activeIndexRef.current = nextIndex;
+        setActiveIndex(nextIndex);
+        lastMobileStepTimeRef.current = timestamp;
+
+        if (nextIndex === targetIndex) {
+          mobileStepFrameRef.current = null;
+          return;
+        }
+
+        mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
+      };
+
+      mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
+    },
+    [],
+  );
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (!canSyncActiveRow) {
       return;
@@ -193,8 +250,20 @@ export function AiGrowthSection() {
     const normalizedProgress = delayedProgress / (1 - aiGrowthActiveTriggerDelay);
     const clampedProgress = Math.max(0, Math.min(normalizedProgress, 1));
 
-    syncActiveIndexFromProgress(clampedProgress, aiGrowthRows.length, setActiveIndexSequentially);
+    syncActiveIndexFromProgress(
+      clampedProgress,
+      aiGrowthRows.length,
+      isDesktop ? setActiveIndexSequentially : syncMobileIndexSequentially,
+    );
   });
+
+  useEffect(() => {
+    return () => {
+      if (mobileStepFrameRef.current !== null) {
+        window.cancelAnimationFrame(mobileStepFrameRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section

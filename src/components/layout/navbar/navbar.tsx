@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { cn } from "@/lib/cn";
 import { isIosSafari } from "@/lib/is-ios-safari";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
@@ -11,13 +11,21 @@ import { useNavbarState } from "./use-navbar-state";
 
 const NAVBAR_HIDE_TRANSLATE_Y = "calc(-100% - 1rem)";
 
+function subscribeToEnvironmentChange(): () => void {
+  return () => undefined;
+}
+
 export function Navbar() {
   const { variant, isVisible } = useNavbarState();
   const isDesktop = useDesktopBreakpoint();
   const appliedVariant = isDesktop ? variant : "primary";
   const isRoundedNav = appliedVariant === "rounded";
   const [isMobileMenuRequested, setIsMobileMenuRequested] = useState(false);
-  const [isIosSafariDevice] = useState(() => isIosSafari());
+  const isIosSafariDevice = useSyncExternalStore(
+    subscribeToEnvironmentChange,
+    isIosSafari,
+    () => false,
+  );
   const isMobileMenuOpen = isMobileMenuRequested && isVisible && !isDesktop;
   const headerRef = useRef<HTMLElement>(null);
 

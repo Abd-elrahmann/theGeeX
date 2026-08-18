@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
+import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 import type { ProjectItem } from "@/features/projects/constants/projects";
 import { ProjectDetailDescriptionSection } from "@/features/projects/single/components/project-detail-description-section";
 import { ProjectDetailGallerySection } from "@/features/projects/single/components/project-detail-gallery-section";
@@ -21,6 +23,10 @@ interface ProjectDetailPageProps {
 }
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
+  const isDesktop = useDesktopBreakpoint();
+  const shouldHandleViewportResize = useMobileViewportResizeGate({
+    ignoreHeightOnlyResize: !isDesktop,
+  });
   const [activeProcessIndex, setActiveProcessIndex] = useState<number | null>(null);
   const processCardRefs = useRef<Array<HTMLElement | null>>([]);
   const processRailRef = useRef<HTMLDivElement | null>(null);
@@ -59,7 +65,15 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
 
     updateActiveProcessIndex();
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      requestUpdate();
+    };
+
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       if (animationFrame) {
@@ -67,9 +81,9 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
       }
 
       window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("resize", handleViewportResize);
     };
-  }, [processSteps.length]);
+  }, [processSteps.length, shouldHandleViewportResize]);
 
   return (
     <main className="relative z-(--page-main-z-index) min-h-svh w-full bg-background pt-(--projects-detail-top-padding)">

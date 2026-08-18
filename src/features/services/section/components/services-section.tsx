@@ -15,6 +15,8 @@ import { isIosSafari } from "@/lib/is-ios-safari";
 import { readRootCssNumber } from "@/lib/read-css-var";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
+import { useMobileScrollStepGuard } from "@/hooks/use-mobile-scroll-step-guard";
 
 import { services } from "@/features/services/constants/services";
 import { useActiveService } from "@/features/services/hooks/use-active-service";
@@ -34,7 +36,7 @@ const servicesTabletPanelHeightClassName = "md:max-lg:!h-[346px]";
 const SERVICES_WHEEL_MIN_DELTA = 4;
 const SERVICES_WHEEL_STEP_DELTA = 140;
 const SERVICES_WHEEL_STEP_GUARD_MS = 240;
-const MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX = 1;
+const SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX = 24;
 
 export function ServicesSection() {
   const lenis = useLenis();
@@ -55,9 +57,12 @@ export function ServicesSection() {
   const lastWheelStepTimeRef = useRef(0);
   const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLenisScrollingRef = useRef(false);
-  const mobileViewportWidthRef = useRef(0);
+  const activeIndexRef = useRef(0);
   const mobileQueuedTargetIndexRef = useRef<number | null>(null);
   const mobileStepFrameRef = useRef<number | null>(null);
+  const shouldHandleViewportResize = useMobileViewportResizeGate({
+    ignoreHeightOnlyResize: !isDesktop,
+  });
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -88,14 +93,23 @@ export function ServicesSection() {
   const activeService = services[activeIndex] ?? services[0];
   const isExploreCursorActive = isDesktop && isPointerFine && isGridHovered;
 
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
   const syncMobileServiceProgress = useCallback(
     (progress: number) => {
       const targetIndex = clampActiveIndex(
         Math.round(progress * Math.max(services.length - 1, 0)),
         services.length,
       );
+      const currentIndex = activeIndexRef.current;
+      const queuedTargetIndex =
+        isIosSafariDevice && targetIndex !== currentIndex
+          ? clampActiveIndex(currentIndex + Math.sign(targetIndex - currentIndex), services.length)
+          : targetIndex;
 
-      mobileQueuedTargetIndexRef.current = targetIndex;
+      mobileQueuedTargetIndexRef.current = queuedTargetIndex;
 
       if (mobileStepFrameRef.current !== null) {
         return;
@@ -105,13 +119,15 @@ export function ServicesSection() {
         mobileStepFrameRef.current = null;
 
         const queuedTargetIndex = mobileQueuedTargetIndexRef.current;
+        const currentIndex = activeIndexRef.current;
 
-        if (queuedTargetIndex === null || queuedTargetIndex === activeIndex) {
+        if (queuedTargetIndex === null || queuedTargetIndex === currentIndex) {
           return;
         }
 
-        const nextIndex = activeIndex + Math.sign(queuedTargetIndex - activeIndex);
+        const nextIndex = currentIndex + Math.sign(queuedTargetIndex - currentIndex);
 
+        activeIndexRef.current = nextIndex;
         setActiveIndex(nextIndex);
 
         if (nextIndex !== queuedTargetIndex) {
@@ -121,7 +137,7 @@ export function ServicesSection() {
 
       mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
     },
-    [activeIndex, setActiveIndex],
+    [isIosSafariDevice, setActiveIndex],
   );
 
   const getDesktopScrollStepMetrics = useCallback(() => {
@@ -158,6 +174,43 @@ export function ServicesSection() {
       scrollToPosition(nextPosition);
     },
     [getDesktopScrollStepMetrics],
+  );
+
+  const getMobileScrollStepMetrics = useCallback(() => {
+    const sectionElement = mobileScrollRef.current;
+
+    if (!sectionElement) {
+      return null;
+    }
+
+    const scrollStepVh = readRootCssNumber(
+      "--services-scroll-step-vh",
+      services.length > 1 ? 100 : 0,
+    );
+    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
+    const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
+
+    return {
+      stepDistance,
+      sectionTop,
+      stickyTop: mobileStageMetrics.stickyTop,
+    };
+  }, [mobileStageMetrics.stickyTop]);
+
+  const scrollMobileToIndex = useCallback(
+    (index: number) => {
+      const metrics = getMobileScrollStepMetrics();
+
+      if (!metrics) {
+        return null;
+      }
+
+      const nextPosition = metrics.sectionTop - metrics.stickyTop + index * metrics.stepDistance;
+
+      window.scrollTo({ top: nextPosition, behavior: "auto" });
+      return nextPosition;
+    },
+    [getMobileScrollStepMetrics],
   );
 
   useEffect(() => {
@@ -204,6 +257,10 @@ export function ServicesSection() {
       return;
     }
 
+    if (isIosSafariDevice && (mobileStepHandledRef.current || mobileGestureLockedRef.current)) {
+      return;
+    }
+
     const normalizedProgress =
       mobileStageMetrics.activationProgressEnd < 1
         ? Math.min(progress / mobileStageMetrics.activationProgressEnd, 1)
@@ -212,12 +269,37 @@ export function ServicesSection() {
     syncMobileServiceProgress(normalizedProgress);
   });
 
+  const {
+    isGestureLockedRef: mobileGestureLockedRef,
+    isStepHandledRef: mobileStepHandledRef,
+    releaseGestureLock: releaseMobileGestureLock,
+  } = useMobileScrollStepGuard({
+    enabled: !isDesktop && isIosSafariDevice && canSyncMobileServices,
+    elementRef: mobileScrollRef,
+    onStep: (direction) => {
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
+
+      if (nextIndex === currentIndex) {
+        return null;
+      }
+
+      mobileQueuedTargetIndexRef.current = nextIndex;
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+      return scrollMobileToIndex(nextIndex);
+    },
+    swipeThresholdPx: SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX,
+  });
+
   useEffect(() => {
     if (shouldTrackMobileScroll || isDesktop) {
       return;
     }
 
     mobileQueuedTargetIndexRef.current = 0;
+    activeIndexRef.current = 0;
+    releaseMobileGestureLock();
 
     if (mobileStepFrameRef.current !== null) {
       window.cancelAnimationFrame(mobileStepFrameRef.current);
@@ -225,15 +307,17 @@ export function ServicesSection() {
     }
 
     setActiveIndex(0);
-  }, [isDesktop, setActiveIndex, shouldTrackMobileScroll]);
+  }, [isDesktop, releaseMobileGestureLock, setActiveIndex, shouldTrackMobileScroll]);
 
   useEffect(() => {
     return () => {
       if (mobileStepFrameRef.current !== null) {
         window.cancelAnimationFrame(mobileStepFrameRef.current);
       }
+
+      releaseMobileGestureLock();
     };
-  }, []);
+  }, [releaseMobileGestureLock]);
 
   useEffect(() => {
     if (!isDesktop) {
@@ -422,18 +506,6 @@ export function ServicesSection() {
       });
     };
 
-    const shouldHandleViewportResize = () => {
-      const nextViewportWidth = window.innerWidth;
-      const previousViewportWidth = mobileViewportWidthRef.current;
-
-      mobileViewportWidthRef.current = nextViewportWidth;
-
-      return (
-        previousViewportWidth === 0 ||
-        Math.abs(nextViewportWidth - previousViewportWidth) > MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX
-      );
-    };
-
     const handleViewportResize = () => {
       if (!shouldHandleViewportResize()) {
         return;
@@ -443,7 +515,6 @@ export function ServicesSection() {
     };
 
     measureMobileStage();
-    mobileViewportWidthRef.current = window.innerWidth;
 
     const resizeObserver =
       typeof ResizeObserver !== "undefined" && mobileMeasureRef.current
@@ -462,7 +533,7 @@ export function ServicesSection() {
       resizeObserver?.disconnect();
       window.removeEventListener("resize", handleViewportResize);
     };
-  }, [isDesktop, isTablet]);
+  }, [isDesktop, isTablet, shouldHandleViewportResize]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
   const desktopScrollStepCount = Math.max(services.length, 1);
@@ -624,6 +695,7 @@ export function ServicesSection() {
             ref={mobileScrollRef}
             className="relative"
             style={{
+              touchAction: "pan-y",
               minHeight:
                 mobileStageMetrics.scrollHeight > 0
                   ? `${mobileStageMetrics.scrollHeight}px`

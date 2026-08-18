@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
+import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 import { cn } from "@/lib/cn";
 import { formatIndex } from "@/lib/format-index";
 
@@ -19,6 +21,10 @@ interface ProcessCardProps {
 
 export function ProcessCard({ card, index }: ProcessCardProps) {
   const cardRef = useRef<HTMLElement | null>(null);
+  const isDesktop = useDesktopBreakpoint();
+  const shouldHandleViewportResize = useMobileViewportResizeGate({
+    ignoreHeightOnlyResize: !isDesktop,
+  });
   const isFinalCard = card.variant === "final";
   const shouldAnimateTitle = isFinalCard && Boolean(card.transitionTitle);
   const [isHovered, setIsHovered] = useState(false);
@@ -58,14 +64,22 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
 
     updateCardState();
 
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      updateCardState();
+    };
+
     window.addEventListener("scroll", updateCardState, { passive: true });
-    window.addEventListener("resize", updateCardState);
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       window.removeEventListener("scroll", updateCardState);
-      window.removeEventListener("resize", updateCardState);
+      window.removeEventListener("resize", handleViewportResize);
     };
-  }, [index, shouldAnimateTitle]);
+  }, [index, shouldAnimateTitle, shouldHandleViewportResize]);
 
   const isTitleTransitionActive = isHovered || isScrollActivated;
 
@@ -83,7 +97,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         }
       }}
       className={cn(
-        "flex min-h-(--process-card-height) w-full overflow-hidden rounded-(--process-card-radius)",
+        "flex h-(--process-card-height) w-full overflow-hidden rounded-(--process-card-radius)",
         "border border-(--color-process-card-border)",
         isFinalCard
           ? "border-transparent bg-(--color-process-card-final-bg)"
@@ -204,8 +218,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
             initial={false}
             animate={{
               opacity: shouldCollapseDescription ? 0 : 1,
-              height: shouldCollapseDescription ? 0 : "auto",
-              marginTop: shouldCollapseDescription ? 0 : "var(--process-card-description-margin-top)",
+              y: shouldCollapseDescription ? -8 : 0,
             }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >

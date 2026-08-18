@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { isIosSafari } from "@/lib/is-ios-safari";
+import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { POINTER_FINE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -82,6 +83,9 @@ export function StorytellingSection() {
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
   const usesDesktopVisualLayout = isDesktop || isTablet;
   const layoutMode = isDesktop ? "desktop" : isTablet ? "tablet" : "mobile";
+  const shouldHandleViewportResize = useMobileViewportResizeGate({
+    ignoreHeightOnlyResize: !isDesktop,
+  });
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [isIosSafariDevice, setIsIosSafariDevice] = useState(false);
   const isDesktopBackgroundActiveRef = useRef(false);
@@ -162,9 +166,17 @@ export function StorytellingSection() {
       frameId = window.requestAnimationFrame(syncDesktopBackgroundState);
     };
 
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      requestSync();
+    };
+
     requestSync();
     window.addEventListener("scroll", requestSync, { passive: true });
-    window.addEventListener("resize", requestSync);
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       if (frameId !== 0) {
@@ -172,7 +184,7 @@ export function StorytellingSection() {
       }
 
       window.removeEventListener("scroll", requestSync);
-      window.removeEventListener("resize", requestSync);
+      window.removeEventListener("resize", handleViewportResize);
       isDesktopBackgroundActiveRef.current = false;
 
       if (backgroundElement) {
@@ -184,7 +196,7 @@ export function StorytellingSection() {
         "0",
       );
     };
-  }, [backgroundRef, containerRef, isDesktop, isLayoutReady, stageRef]);
+  }, [backgroundRef, containerRef, isDesktop, isLayoutReady, shouldHandleViewportResize, stageRef]);
 
   useEffect(() => {
     if (!isMobile) {
@@ -230,9 +242,17 @@ export function StorytellingSection() {
       frameId = window.requestAnimationFrame(syncSafariThemeColor);
     };
 
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      requestSync();
+    };
+
     requestSync();
     window.addEventListener("scroll", requestSync, { passive: true });
-    window.addEventListener("resize", requestSync);
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       if (frameId !== 0) {
@@ -240,10 +260,10 @@ export function StorytellingSection() {
       }
 
       window.removeEventListener("scroll", requestSync);
-      window.removeEventListener("resize", requestSync);
+      window.removeEventListener("resize", handleViewportResize);
       setSafariThemeColor(DEFAULT_SAFARI_THEME_COLOR);
     };
-  }, [backgroundRef, containerRef, isDesktop, isIosSafariDevice, pinStartRef]);
+  }, [backgroundRef, containerRef, isDesktop, isIosSafariDevice, pinStartRef, shouldHandleViewportResize]);
 
   useEffect(() => {
     if (!isDesktop || !isPointerFine) {

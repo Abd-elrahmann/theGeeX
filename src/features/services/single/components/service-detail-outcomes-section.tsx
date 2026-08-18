@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
+import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 
 import type { ServiceOutcome, ServiceOutcomesSection } from "@/features/services/constants/services";
 import { ServiceDetailStickyIntro } from "@/features/services/single/shared/components/service-detail-sticky-intro";
@@ -50,6 +52,10 @@ export function ServiceDetailOutcomesSection({
   outcomes,
 }: ServiceDetailOutcomesSectionProps) {
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const isDesktop = useDesktopBreakpoint();
+  const shouldHandleViewportResize = useMobileViewportResizeGate({
+    ignoreHeightOnlyResize: !isDesktop,
+  });
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -102,13 +108,21 @@ export function ServiceDetailOutcomesSection({
 
     updateActiveIndex();
     window.addEventListener("scroll", updateActiveIndex, { passive: true });
-    window.addEventListener("resize", updateActiveIndex);
+    const handleViewportResize = () => {
+      if (!shouldHandleViewportResize()) {
+        return;
+      }
+
+      updateActiveIndex();
+    };
+
+    window.addEventListener("resize", handleViewportResize);
 
     return () => {
       window.removeEventListener("scroll", updateActiveIndex);
-      window.removeEventListener("resize", updateActiveIndex);
+      window.removeEventListener("resize", handleViewportResize);
     };
-  }, [outcomes]);
+  }, [outcomes, shouldHandleViewportResize]);
 
   if (!outcomes) {
     return null;

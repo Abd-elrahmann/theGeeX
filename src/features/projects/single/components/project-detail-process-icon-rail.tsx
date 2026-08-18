@@ -26,20 +26,26 @@ export function ProjectDetailProcessIconRail({
         >
           {processSteps.map((step, index) => {
             const isActive = activeProcessIndex === index;
-            const inactiveBackgroundColor = `color-mix(in srgb, ${step.activeColor} 16%, transparent)`;
 
             return (
               <motion.div
                 key={step.number}
                 className="relative flex h-(--projects-detail-process-icon-size) w-(--projects-detail-process-icon-size) items-center justify-center overflow-visible rounded-(--projects-detail-process-icon-radius) shadow-(--projects-detail-process-icon-shadow)"
                 animate={{
-                  backgroundColor: isActive ? step.activeColor : inactiveBackgroundColor,
                   scale: isActive ? 1 : 0.96,
                   y: isActive ? -4 : 0,
                 }}
                 transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                style={{ backgroundColor: step.activeColor }}
               >
-                <div>
+                <motion.div
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-(--projects-detail-process-icon-radius)"
+                  animate={{ opacity: isActive ? 1 : 0.16 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ backgroundColor: step.activeColor }}
+                />
+                <div className="relative z-1">
                   <Image
                     src={step.icon}
                     alt=""
