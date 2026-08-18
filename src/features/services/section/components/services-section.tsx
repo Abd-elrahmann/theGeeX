@@ -276,6 +276,12 @@ export function ServicesSection() {
   } = useMobileScrollStepGuard({
     enabled: !isDesktop && isIosSafariDevice && canSyncMobileServices,
     elementRef: mobileScrollRef,
+    canHandleStep: (direction) => {
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
+
+      return nextIndex !== currentIndex;
+    },
     onStep: (direction) => {
       const currentIndex = activeIndexRef.current;
       const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
