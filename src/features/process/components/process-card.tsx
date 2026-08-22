@@ -19,7 +19,7 @@ interface ProcessCardProps {
 
 export function ProcessCard({ card, index }: ProcessCardProps) {
   const cardRef = useRef<HTMLElement | null>(null);
-  const descriptionRef = useRef<HTMLParagraphElement | null>(null);
+  const descriptionRef = useRef<HTMLDivElement | null>(null);
   const isDesktop = useDesktopBreakpoint();
   const shouldHandleViewportResize = useMobileViewportResizeGate({
     ignoreHeightOnlyResize: !isDesktop,
@@ -213,26 +213,36 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
             </h3>
           )}
 
-          <motion.p
+          <motion.div
             ref={descriptionRef}
             className={cn(
-              "mt-(--process-card-description-margin-top) w-full whitespace-pre-wrap wrap-break-word overflow-hidden font-cal-sans",
-              "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
-              "font-(--process-card-description-weight) tracking-normal",
-              "font-features-['blwf'_on,'cv11'_on,'case'_on]",
-              isFinalCard
-                ? "text-(--color-process-card-final-description)"
-                : "text-(--color-process-card-description)",
+              "w-full overflow-hidden",
             )}
             initial={false}
             animate={{
+              height: shouldCollapseDescription ? 0 : "auto",
+              marginTop: shouldCollapseDescription ? 0 : "var(--process-card-description-margin-top)",
               opacity: shouldCollapseDescription ? 0 : 1,
               y: shouldCollapseDescription ? -8 : 0,
             }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            {card.description}
-          </motion.p>
+            {!shouldCollapseDescription ? (
+              <p
+                className={cn(
+                  "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                  "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
+                  "font-(--process-card-description-weight) tracking-normal",
+                  "font-features-['blwf'_on,'cv11'_on,'case'_on]",
+                  isFinalCard
+                    ? "text-(--color-process-card-final-description)"
+                    : "text-(--color-process-card-description)",
+                )}
+              >
+                {card.description}
+              </p>
+            ) : null}
+          </motion.div>
         </div>
       </div>
     </motion.article>

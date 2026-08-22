@@ -39,13 +39,13 @@
 
 @media (min-width: 800px) {
   :root {
-    --ambition-path-gap: var(--section-stack-gap);
+    --ambition-path-gap: 40px;
     --ambition-min-height: 100svh;
     --ambition-padding-bottom: 80px;
     --ambition-margin-top: max(
-      var(--section-stack-gap),
+      var(--ambition-path-gap),
       calc(
-        min(100%, 520px) * 706 / 666 + var(--hero-path-offset-y) - 100svh +
+        var(--hero-path-width) * 706 / 666 + var(--hero-path-offset-y) - 100svh +
           var(--ambition-path-gap)
       )
     );

@@ -188,6 +188,7 @@
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
+    --services-margin-top: 40px;
 
     --services-grid-width: 760px;
     --services-page-padding-x: 32px;

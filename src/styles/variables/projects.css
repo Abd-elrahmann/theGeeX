@@ -324,7 +324,7 @@
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
-    --projects-card-height: 760px;
+    --projects-card-height: 960px;
     --projects-card-title-size: 32px;
     --projects-card-title-height: 48px;
     --projects-card-title-line-height: 1.2;

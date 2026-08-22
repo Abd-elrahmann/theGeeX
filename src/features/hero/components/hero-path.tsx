@@ -73,8 +73,8 @@ export function HeroPath({ triggerRef }: HeroPathProps) {
 
       const matchMedia = gsap.matchMedia();
 
-      const mountScrollDraw = () => {
-        const { timeline } = createHeroPathScrollDraw(trigger, svg, { pin: true });
+      const mountScrollDraw = (options?: { pin?: boolean; holdDistance?: number }) => () => {
+        const { timeline } = createHeroPathScrollDraw(trigger, svg, options);
         setIsAnimationReady(true);
 
         return () => {
@@ -84,8 +84,8 @@ export function HeroPath({ triggerRef }: HeroPathProps) {
         };
       };
 
-      matchMedia.add(DESKTOP_MEDIA_QUERY, mountScrollDraw);
-      matchMedia.add(SUB_DESKTOP_MEDIA_QUERY, mountScrollDraw);
+      matchMedia.add(DESKTOP_MEDIA_QUERY, mountScrollDraw({ pin: true }));
+      matchMedia.add(SUB_DESKTOP_MEDIA_QUERY, mountScrollDraw({ pin: true, holdDistance: 0 }));
 
       return () => {
         matchMedia.revert();

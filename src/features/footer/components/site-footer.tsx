@@ -127,7 +127,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
         revealFromPreviousSection || compactSpacing ? "relative mt-0" : "relative mt-(--footer-margin-top)",
         "px-(--footer-padding-x) pt-(--footer-padding-top)",
         "lg:[--footer-card-radius:40px] lg:[--footer-rights-margin-top:32px] lg:[--footer-rights-padding-bottom:24px] lg:[--footer-logo-height:240px] lg:[--footer-logo-margin-top:24px]",
-        compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
+        revealFromPreviousSection || compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
       )}
     >
       <div className="relative mx-auto w-full max-w-(--footer-container-max-width)">

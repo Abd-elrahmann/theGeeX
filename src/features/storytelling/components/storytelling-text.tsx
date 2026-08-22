@@ -77,7 +77,7 @@ const storytellingLineClassName = cn(
   "font-cal-sans font-semibold not-italic",
   "text-[length:var(--storytelling-line-size)] leading-(--storytelling-line-line-height)",
   "tracking-(--storytelling-line-letter-spacing)",
-  "max-lg:whitespace-normal lg:whitespace-nowrap",
+  "max-md:whitespace-normal md:whitespace-nowrap",
 );
 
 export function StorytellingLines({

@@ -93,7 +93,7 @@
 
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
-    --footer-reveal-gap: 0px;
+    --footer-reveal-gap: 32px;
     --footer-container-max-width: 1648px;
     --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;

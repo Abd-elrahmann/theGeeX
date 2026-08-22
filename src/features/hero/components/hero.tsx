@@ -31,7 +31,7 @@ export function Hero() {
         <HeroPath triggerRef={sectionRef} />
       </div>
 
-      <div className="relative z-10 w-full max-w-full max-lg:pointer-events-none lg:flex lg:justify-center">
+      <div className="relative z-10 w-full max-w-full max-md:pointer-events-none md:flex md:justify-center">
         <HeroHeadline />
       </div>
     </section>

@@ -480,11 +480,15 @@ export function ServicesSection() {
         ...mobileImageMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
       );
       const tabletStageHeight =
-        titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX * 2 + columnsGap + stageBottomPadding + pinClearance;
+        titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX + stageBottomPadding;
       const stageHeight = isTablet
         ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
         : titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance;
-      const stickyTop = navbarHeight;
+      const centeringStageHeight = isTablet
+        ? Math.max(stageHeight - stageBottomPadding, 0)
+        : stageHeight;
+      const centeredStickyTop = Math.max((viewportHeight - centeringStageHeight) / 2, 0);
+      const stickyTop = Math.max(navbarHeight, centeredStickyTop);
       const stepScrollDistance =
         Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100);
       const tailScrollDistance = viewportHeight * (mobileScrollTailVh / 100);

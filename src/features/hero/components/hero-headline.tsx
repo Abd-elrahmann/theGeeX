@@ -65,22 +65,22 @@ export function HeroHeadline() {
     "whitespace-pre-wrap break-words [word-break:break-word]",
     "text-[length:var(--hero-headline-size)] leading-(--hero-headline-line-height)",
     "text-primary [font-feature-settings:normal]",
-    "lg:translate-y-(--hero-headline-offset-y)",
+    "md:translate-y-(--hero-headline-offset-y)",
   );
 
   return (
     <div
       className={cn(
         "mx-auto flex h-auto w-full max-w-(--hero-headline-max-width) justify-center",
-        "max-lg:absolute max-lg:inset-x-0 max-lg:top-1/2 max-lg:-translate-y-1/2",
-        "lg:relative lg:translate-x-0 lg:translate-y-0",
+        "max-md:absolute max-md:inset-x-0 max-md:top-1/2 max-md:-translate-y-1/2",
+        "md:relative md:translate-x-0 md:translate-y-0",
       )}
     >
       <h1 ref={headingRef} className={headingClassName}>
-        <span className="lg:hidden">
+        <span className="md:hidden">
           <QuotedHeadline lines={lines} keyPrefix="compact" isInView={isInView} />
         </span>
-        <span className="hidden lg:block">
+        <span className="hidden md:block">
           <QuotedHeadline lines={lines} keyPrefix="desktop" isInView={isInView} />
         </span>
       </h1>
