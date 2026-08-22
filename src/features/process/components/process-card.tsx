@@ -19,6 +19,7 @@ interface ProcessCardProps {
 
 export function ProcessCard({ card, index }: ProcessCardProps) {
   const cardRef = useRef<HTMLElement | null>(null);
+  const descriptionRef = useRef<HTMLParagraphElement | null>(null);
   const isDesktop = useDesktopBreakpoint();
   const shouldHandleViewportResize = useMobileViewportResizeGate({
     ignoreHeightOnlyResize: !isDesktop,
@@ -51,7 +52,13 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         `--process-card-sticky-top-${index + 1}`,
         readRootCssNumber("--process-title-sticky-top", 0),
       );
-      const hasCollapsed = cardTop <= cardStickyTop + collapseTriggerOffset;
+      const nextCardElement = cardElement.parentElement?.nextElementSibling?.querySelector("article");
+      const descriptionTop = descriptionRef.current?.getBoundingClientRect().top ?? cardTop;
+      const hasCollapsed = isDesktop
+        ? cardTop <= cardStickyTop + collapseTriggerOffset
+        : nextCardElement instanceof HTMLElement
+          ? nextCardElement.getBoundingClientRect().top <= descriptionTop + collapseTriggerOffset
+          : false;
 
       setIsCollapsed(hasCollapsed);
 
@@ -80,7 +87,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
       window.removeEventListener("scroll", updateCardState);
       window.removeEventListener("resize", handleViewportResize);
     };
-  }, [index, shouldAnimateTitle, shouldHandleViewportResize]);
+  }, [index, isDesktop, shouldAnimateTitle, shouldHandleViewportResize]);
 
   const isTitleTransitionActive = isHovered || isScrollActivated;
 
@@ -207,6 +214,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
           )}
 
           <motion.p
+            ref={descriptionRef}
             className={cn(
               "mt-(--process-card-description-margin-top) w-full whitespace-pre-wrap wrap-break-word overflow-hidden font-cal-sans",
               "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
