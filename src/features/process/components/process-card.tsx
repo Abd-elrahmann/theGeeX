@@ -8,11 +8,9 @@ import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 import { cn } from "@/lib/cn";
 import { formatIndex } from "@/lib/format-index";
+import { readRootCssNumber } from "@/lib/read-css-var";
 
-import {
-  processCardStickyTops,
-  type ProcessCardItem,
-} from "@/features/process/constants/process";
+import { type ProcessCardItem } from "@/features/process/constants/process";
 
 interface ProcessCardProps {
   card: ProcessCardItem;
@@ -49,7 +47,10 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
 
       const cardTop = cardElement.getBoundingClientRect().top;
       const collapseTriggerOffset = 12;
-      const cardStickyTop = processCardStickyTops[index] ?? processCardStickyTops[processCardStickyTops.length - 1] ?? 0;
+      const cardStickyTop = readRootCssNumber(
+        `--process-card-sticky-top-${index + 1}`,
+        readRootCssNumber("--process-title-sticky-top", 0),
+      );
       const hasCollapsed = cardTop <= cardStickyTop + collapseTriggerOffset;
 
       setIsCollapsed(hasCollapsed);
@@ -58,7 +59,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         return;
       }
 
-      const stickyTitleTop = processCardStickyTops[1] ?? 270;
+      const stickyTitleTop = readRootCssNumber("--process-card-sticky-top-2", cardStickyTop);
       setIsScrollActivated(cardTop <= stickyTitleTop + collapseTriggerOffset);
     };
 

@@ -12,8 +12,6 @@ export const processSectionTitleLines = [
   "outcomes.",
 ] as const;
 
-export const processCardStickyTops = [150, 270, 390, 510, 510] as const;
-
 export const processCards: ProcessCardItem[] = [
   {
     id: 1,
