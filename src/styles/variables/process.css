@@ -56,11 +56,12 @@
   --process-card-description-size: 16px;
   --process-card-description-line-height: 1.6;
   --process-card-description-weight: 600;
+  --process-card-reveal-height: 64px;
   --process-card-sticky-top-1: 56px;
-  --process-card-sticky-top-2: 150px;
-  --process-card-sticky-top-3: 250px;
-  --process-card-sticky-top-4: 350px;
-  --process-card-sticky-top-5: 286px;
+  --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));
+  --process-card-sticky-top-3: calc(var(--process-card-sticky-top-2) + var(--process-card-reveal-height));
+  --process-card-sticky-top-4: calc(var(--process-card-sticky-top-3) + var(--process-card-reveal-height));
+  --process-card-sticky-top-5: calc(var(--process-card-sticky-top-4) + var(--process-card-reveal-height));
   --color-process-title-muted: rgb(14 14 14 / 0.6);
   --color-process-title-accent: #0aabc8;
   --color-process-card-bg: #f4f5f7;
@@ -102,11 +103,12 @@
     --process-card-description-line-height: 1.5;
     --process-card-description-margin-top: 10px;
     --process-cards-bottom-padding: 24px;
+    --process-card-reveal-height: 64px;
     --process-card-sticky-top-1: 160px;
-    --process-card-sticky-top-2: 250px;
-    --process-card-sticky-top-3: 340px;
-    --process-card-sticky-top-4: 430px;
-    --process-card-sticky-top-5: 430px;
+    --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));
+    --process-card-sticky-top-3: calc(var(--process-card-sticky-top-2) + var(--process-card-reveal-height));
+    --process-card-sticky-top-4: calc(var(--process-card-sticky-top-3) + var(--process-card-reveal-height));
+    --process-card-sticky-top-5: calc(var(--process-card-sticky-top-4) + var(--process-card-reveal-height));
   }
 }
 
@@ -135,11 +137,12 @@
     --process-card-description-margin-top: 24px;
     --process-cards-bottom-padding: var(--process-padding-y);
     --process-cards-tail-height: 0px;
+    --process-card-reveal-height: 84px;
     --process-card-sticky-top-1: 150px;
-    --process-card-sticky-top-2: 270px;
-    --process-card-sticky-top-3: 390px;
-    --process-card-sticky-top-4: 510px;
-    --process-card-sticky-top-5: 510px;
+    --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));
+    --process-card-sticky-top-3: calc(var(--process-card-sticky-top-2) + var(--process-card-reveal-height));
+    --process-card-sticky-top-4: calc(var(--process-card-sticky-top-3) + var(--process-card-reveal-height));
+    --process-card-sticky-top-5: calc(var(--process-card-sticky-top-4) + var(--process-card-reveal-height));
   }
 }
 
