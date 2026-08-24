@@ -32,7 +32,7 @@ export function ServicesTitle({ variant = "background" }: ServicesTitleProps) {
 
   if (!isBackground) {
     return (
-      <div className="relative mb-4 w-full overflow-visible lg:mb-8">
+      <div className="relative mb-2 w-full overflow-visible lg:mb-8">
         <h2 className={servicesTitleHeadingClassName}>
           <ServicesTitleContent />
         </h2>

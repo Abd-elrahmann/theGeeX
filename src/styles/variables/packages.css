@@ -165,6 +165,9 @@
 
 @media (max-width: 799.98px) {
   :root {
+    --packages-title-size: 72px;
+    --packages-title-line-height: 1;
+    --packages-title-box-height: 72px;
     --packages-detail-breadcrumb-size: 12px;
   }
 }

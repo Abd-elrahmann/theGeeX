@@ -77,6 +77,9 @@
 
 @media (max-width: 799.98px) {
   :root {
+    --testimonials-title-size: 56px;
+    --testimonials-title-line-height: 1;
+    --testimonials-title-box-height: 56px;
     --testimonials-card-padding: 20px;
     --testimonials-card-quote-size: 26px;
     --testimonials-card-title-letter-spacing: 0px;

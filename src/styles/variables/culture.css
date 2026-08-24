@@ -92,9 +92,32 @@
   :root {
 
     --culture-margin-top: calc(var(--section-stack-gap) - 28px);
-    --culture-section-exit-vh: 28;
+    --culture-section-exit-vh: 8;
+    --culture-section-gap: 16px;
+    --culture-grid-gap: 10px;
+    --culture-card-radius: 24px;
+    --culture-card-inner-radius: 20px;
+    --culture-image-radius: 20px;
+    --culture-card-padding: 6px;
+    --culture-card-inner-gap: 6px;
+    --culture-card-content-padding-x: 16px;
+    --culture-card-content-padding-y: 14px;
+    --culture-stacked-card-padding-x: 16px;
+    --culture-stacked-card-padding-y: 14px;
+    --culture-mobile-card-content-gap: 8px;
+    --culture-mobile-lead-image-height: 148px;
+    --culture-mobile-stacked-card-min-height: 88px;
+    --culture-card-title-size: 18px;
+    --culture-card-title-line-height: 1.15;
     --culture-card-title-letter-spacing: 0px;
+    --culture-card-description-size: 13px;
+    --culture-card-description-line-height: 1.45;
     --culture-card-description-letter-spacing: 0px;
+    --culture-icon-size: 32px;
+    --culture-pill-icon-width: 20px;
+    --culture-pill-icon-height: 32px;
+    --culture-stacked-card-title-block-height: 48px;
+    --culture-stacked-card-icon-gap: 10px;
   }
 }
 

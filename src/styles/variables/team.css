@@ -84,7 +84,10 @@
 
 @media (max-width: 799.98px) {
   :root {
-    --team-margin-top: calc(var(--section-stack-gap) + 64px);
+    --team-title-size: 72px;
+    --team-title-line-height: 1;
+    --team-title-box-height: 72px;
+    --team-margin-top: 24px;
     --team-card-name-letter-spacing: 0px;
     --team-card-role-letter-spacing: 0px;
     --team-card-name-line-height: 1.14;

@@ -20,7 +20,7 @@ interface ServiceContentProps {
 const serviceContentTitleClassName = cn(
   "absolute left-0 top-0 m-0 h-auto w-full min-w-0",
   "whitespace-pre-wrap wrap-break-word break-words",
-  "font-cal-sans text-[24px] leading-[1.4] font-semibold not-italic tracking-[0em]",
+  "font-cal-sans text-[20px] leading-(--services-content-title-line-height) md:text-[24px] font-semibold not-italic tracking-[0em]",
   "text-(--Text_Color,#2c3134) lg:text-[var(--Purple_Light,#2558b4)]",
   "[font-feature-settings:var(--services-content-font-features)]",
 );
@@ -32,7 +32,7 @@ const serviceContentFeaturesOffsetClassName = "pt-[48px] md:pt-[91.2px]";
 const serviceContentDescriptionClassName = cn(
   "absolute left-0 top-[48px] m-0 h-auto w-full min-w-0 p-0 md:top-[91.2px]",
   "whitespace-pre-wrap wrap-break-word break-words",
-  "font-poppins text-[16px] leading-[1.6] font-normal not-italic tracking-normal",
+  "font-poppins text-[14px] leading-(--services-description-line-height) md:text-[16px] font-normal not-italic tracking-normal",
   "text-(--Text_Color,#2c3134)",
   "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
 );
@@ -69,7 +69,7 @@ export function ServiceContent({
             className={cn(
               "service-content-description-list static space-y-0 md:space-y-1",
               "m-0 h-auto w-full min-w-0 p-0",
-              "font-poppins text-[16px] leading-[1.32] md:leading-[1.6] font-normal not-italic tracking-normal",
+              "font-poppins text-[14px] leading-[1.32] md:text-[16px] md:leading-(--services-description-line-height) font-normal not-italic tracking-normal",
               "text-(--Text_Color,#2c3134)",
               "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
             )}
@@ -114,7 +114,7 @@ export function ServiceContent({
           className={cn(
             "service-content-description-list static space-y-0.5 md:space-y-2",
             "m-0 h-auto w-full min-w-0 p-0",
-            "font-poppins text-[16px] leading-[1.32] md:leading-[1.6] font-normal not-italic tracking-normal",
+            "font-poppins text-[14px] leading-[1.32] md:text-[16px] md:leading-(--services-description-line-height) font-normal not-italic tracking-normal",
             "text-(--Text_Color,#2c3134)",
             "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
           )}

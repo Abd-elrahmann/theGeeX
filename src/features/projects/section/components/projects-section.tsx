@@ -1,19 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 
 import { ExploreSectionCursor } from "@/components/shared/cursor";
 import { exploreCursorTransition } from "@/components/shared/cursor/constants/cursor.config";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
-import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
-import { useMobileScrollStepGuard } from "@/hooks/use-mobile-scroll-step-guard";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { POINTER_FINE_MEDIA_QUERY } from "@/lib/breakpoints";
 import { cn } from "@/lib/cn";
 import { setExploreCursorZone } from "@/lib/explore-cursor-state";
-import { isIosSafari } from "@/lib/is-ios-safari";
 import { readRootCssNumber } from "@/lib/read-css-var";
 
 import { ProjectCard } from "./project-card";
@@ -62,66 +59,6 @@ function easeOutCubic(value: number): number {
   return 1 - Math.pow(1 - value, 3);
 }
 
-function getCardEnterRange(
-  index: number,
-  totalCards: number,
-): { enterStart: number; enterEnd: number } {
-  if (totalCards <= 1) {
-    return { enterStart: 0, enterEnd: 1 };
-  }
-
-  const firstCardSpan = Math.min(projectsFirstCardEnterProgress, 1);
-
-  if (index === 0) {
-    return { enterStart: 0, enterEnd: firstCardSpan };
-  }
-
-  const remainingCards = totalCards - 1;
-  const remainingSpan = Math.max(1 - firstCardSpan, 0) / remainingCards;
-  const enterStart = firstCardSpan + (index - 1) * remainingSpan;
-
-  return {
-    enterStart,
-    enterEnd: Math.min(enterStart + remainingSpan, 1),
-  };
-}
-
-function getProjectStepProgressPoints(totalCards: number, mainAnimationEnd: number): number[] {
-  const stepPoints = [0];
-
-  for (let index = 0; index < totalCards; index += 1) {
-    const rawProgress = Math.min(getCardEnterRange(index, totalCards).enterEnd * mainAnimationEnd, mainAnimationEnd);
-
-    if (rawProgress - stepPoints[stepPoints.length - 1] > 0.001) {
-      stepPoints.push(rawProgress);
-    }
-  }
-
-  return stepPoints;
-}
-
-function resolveProjectStepPointIndex(progress: number, stepPoints: number[]): number {
-  let resolvedIndex = 0;
-
-  for (let index = 0; index < stepPoints.length; index += 1) {
-    if (progress + 0.001 >= stepPoints[index]) {
-      resolvedIndex = index;
-      continue;
-    }
-
-    break;
-  }
-
-  return resolvedIndex;
-}
-
-function getProjectScrollTarget(sectionElement: HTMLElement, progress: number): number {
-  const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-  const scrollDistance = Math.max(sectionElement.offsetHeight - window.innerHeight, 0);
-
-  return sectionTop + progress * scrollDistance;
-}
-
 export function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardStackRef = useRef<HTMLDivElement>(null);
@@ -131,14 +68,9 @@ export function ProjectsSection() {
   const lenis = useLenis();
   const isDesktop = useDesktopBreakpoint();
   const isPointerFine = useMediaQuery(POINTER_FINE_MEDIA_QUERY);
-  const [isIosSafariDevice, setIsIosSafariDevice] = useState(false);
   const [mainAnimationEnd, setMainAnimationEnd] = useState(getMainAnimationEnd);
   const [stickyTopOffset, setStickyTopOffset] = useState(getProjectsStickyTop);
   const [isCardStackHovered, setIsCardStackHovered] = useState(false);
-  const projectStepPointIndexRef = useRef(0);
-  const shouldHandleViewportResize = useMobileViewportResizeGate({
-    ignoreHeightOnlyResize: !isDesktop,
-  });
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -168,72 +100,7 @@ export function ProjectsSection() {
   });
 
   useEffect(() => {
-    const frameId = requestAnimationFrame(() => {
-      setIsIosSafariDevice(isIosSafari());
-    });
-
-    return () => {
-      cancelAnimationFrame(frameId);
-    };
-  }, []);
-
-  const {
-    isGestureLockedRef: mobileGestureLockedRef,
-    isStepHandledRef: mobileStepHandledRef,
-    releaseGestureLock: releaseMobileGestureLock,
-  } = useMobileScrollStepGuard({
-    enabled: !isDesktop && isIosSafariDevice,
-    elementRef: sectionRef,
-    canHandleStep: (direction) => {
-      const stepPoints = getProjectStepProgressPoints(projects.length, mainAnimationEnd);
-      const currentStepPointIndex = projectStepPointIndexRef.current;
-      const nextStepPointIndex = Math.max(
-        0,
-        Math.min(stepPoints.length - 1, currentStepPointIndex + direction),
-      );
-
-      return nextStepPointIndex !== currentStepPointIndex;
-    },
-    onStep: (direction) => {
-      const stepPoints = getProjectStepProgressPoints(projects.length, mainAnimationEnd);
-      const currentStepPointIndex = projectStepPointIndexRef.current;
-      const nextStepPointIndex = Math.max(
-        0,
-        Math.min(stepPoints.length - 1, currentStepPointIndex + direction),
-      );
-
-      if (nextStepPointIndex === currentStepPointIndex) {
-        return null;
-      }
-
-      const sectionElement = sectionRef.current;
-
-      if (!sectionElement) {
-        return null;
-      }
-
-      projectStepPointIndexRef.current = nextStepPointIndex;
-      return getProjectScrollTarget(sectionElement, stepPoints[nextStepPointIndex] ?? 0);
-    },
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (isDesktop || !isIosSafariDevice || mobileGestureLockedRef.current || mobileStepHandledRef.current) {
-      return;
-    }
-
-    projectStepPointIndexRef.current = resolveProjectStepPointIndex(
-      progress,
-      getProjectStepProgressPoints(projects.length, mainAnimationEnd),
-    );
-  });
-
-  useEffect(() => {
     const syncLayout = () => {
-      if (!shouldHandleViewportResize()) {
-        return;
-      }
-
       setMainAnimationEnd(getMainAnimationEnd());
       setStickyTopOffset(getProjectsStickyTop());
       lenis?.resize();
@@ -245,13 +112,7 @@ export function ProjectsSection() {
     return () => {
       window.removeEventListener("resize", syncLayout);
     };
-  }, [isDesktop, lenis, shouldHandleViewportResize]);
-
-  useEffect(() => {
-    return () => {
-      releaseMobileGestureLock();
-    };
-  }, [releaseMobileGestureLock]);
+  }, [lenis]);
 
   const syncCardStackHoverFromPointer = useCallback((clientX: number, clientY: number) => {
     const cardStackElement = cardStackRef.current;

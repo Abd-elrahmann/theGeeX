@@ -16,9 +16,9 @@ import {
 } from "@/lib/scroll-session";
 
 const LENIS_WHEEL_DELTA_LIMIT = 120;
-const LENIS_TOUCH_DELTA_LIMIT = 80;
+const LENIS_TOUCH_DELTA_LIMIT = 120;
 const DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.35;
-const SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.28;
+const SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.46;
 const DESKTOP_WHEEL_MULTIPLIER = 0.45;
 const DESKTOP_TOUCH_MULTIPLIER = 0.55;
 const LOW_POWER_DEVICE_MEMORY_GB = 4;
@@ -70,7 +70,7 @@ function ScrollInputNormalizer({ enabled, isSubDesktop }: ScrollInputNormalizerP
 
     const normalizer = ScrollTrigger.normalizeScroll({
       allowNestedScroll: true,
-      lockAxis: !isSubDesktop,
+      lockAxis: true,
       momentum: isSubDesktop
         ? SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM
         : DESKTOP_NORMALIZED_SCROLL_MOMENTUM,

@@ -36,7 +36,7 @@ export function ServiceImage({
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
   const imageClassName = cn(
-    isMobile ? "object-contain object-center" : "object-cover object-center",
+    "object-cover object-center",
     "rounded-(--services-image-radius)",
     isPage && "md:rounded-l-none",
     isPlaceholder && "object-contain p-8",

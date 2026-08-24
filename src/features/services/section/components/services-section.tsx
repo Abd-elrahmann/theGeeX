@@ -15,8 +15,6 @@ import { isIosSafari } from "@/lib/is-ios-safari";
 import { readRootCssNumber } from "@/lib/read-css-var";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
-import { useMobileScrollStepGuard } from "@/hooks/use-mobile-scroll-step-guard";
 
 import { services } from "@/features/services/constants/services";
 import { useActiveService } from "@/features/services/hooks/use-active-service";
@@ -37,6 +35,9 @@ const SERVICES_WHEEL_MIN_DELTA = 4;
 const SERVICES_WHEEL_STEP_DELTA = 140;
 const SERVICES_WHEEL_STEP_GUARD_MS = 240;
 const SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX = 24;
+const SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX = 2;
+const SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT = 2;
+const MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX = 1;
 
 export function ServicesSection() {
   const lenis = useLenis();
@@ -57,12 +58,17 @@ export function ServicesSection() {
   const lastWheelStepTimeRef = useRef(0);
   const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLenisScrollingRef = useRef(false);
+  const mobileViewportWidthRef = useRef(0);
   const activeIndexRef = useRef(0);
   const mobileQueuedTargetIndexRef = useRef<number | null>(null);
   const mobileStepFrameRef = useRef<number | null>(null);
-  const shouldHandleViewportResize = useMobileViewportResizeGate({
-    ignoreHeightOnlyResize: !isDesktop,
-  });
+  const mobileTouchStartYRef = useRef<number | null>(null);
+  const mobileTouchStepHandledRef = useRef(false);
+  const mobileGestureLockedRef = useRef(false);
+  const mobileGestureTargetIndexRef = useRef<number | null>(null);
+  const mobileGestureTargetScrollYRef = useRef<number | null>(null);
+  const mobileGestureUnlockFrameRef = useRef<number | null>(null);
+  const mobileGestureSettledFramesRef = useRef(0);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -213,6 +219,63 @@ export function ServicesSection() {
     [getMobileScrollStepMetrics],
   );
 
+  const releaseMobileGestureLock = useCallback(() => {
+    mobileGestureLockedRef.current = false;
+    mobileGestureTargetIndexRef.current = null;
+    mobileGestureTargetScrollYRef.current = null;
+    mobileGestureSettledFramesRef.current = 0;
+
+    if (mobileGestureUnlockFrameRef.current !== null) {
+      window.cancelAnimationFrame(mobileGestureUnlockFrameRef.current);
+      mobileGestureUnlockFrameRef.current = null;
+    }
+  }, []);
+
+  const lockMobileGestureUntilScrollSettles = useCallback(
+    (targetIndex: number, targetScrollY: number | null) => {
+      if (targetScrollY === null) {
+        releaseMobileGestureLock();
+        return;
+      }
+
+      mobileGestureLockedRef.current = true;
+      mobileGestureTargetIndexRef.current = targetIndex;
+      mobileGestureTargetScrollYRef.current = targetScrollY;
+      mobileGestureSettledFramesRef.current = 0;
+
+      if (mobileGestureUnlockFrameRef.current !== null) {
+        window.cancelAnimationFrame(mobileGestureUnlockFrameRef.current);
+      }
+
+      const waitForScrollToSettle = () => {
+        const lockedTargetScrollY = mobileGestureTargetScrollYRef.current;
+
+        if (lockedTargetScrollY === null) {
+          releaseMobileGestureLock();
+          return;
+        }
+
+        if (
+          Math.abs(window.scrollY - lockedTargetScrollY) <= SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX
+        ) {
+          mobileGestureSettledFramesRef.current += 1;
+        } else {
+          mobileGestureSettledFramesRef.current = 0;
+        }
+
+        if (mobileGestureSettledFramesRef.current >= SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT) {
+          releaseMobileGestureLock();
+          return;
+        }
+
+        mobileGestureUnlockFrameRef.current = window.requestAnimationFrame(waitForScrollToSettle);
+      };
+
+      mobileGestureUnlockFrameRef.current = window.requestAnimationFrame(waitForScrollToSettle);
+    },
+    [releaseMobileGestureLock],
+  );
+
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
       setHasHydrated(true);
@@ -257,7 +320,7 @@ export function ServicesSection() {
       return;
     }
 
-    if (isIosSafariDevice && (mobileStepHandledRef.current || mobileGestureLockedRef.current)) {
+    if (isIosSafariDevice && (mobileTouchStepHandledRef.current || mobileGestureLockedRef.current)) {
       return;
     }
 
@@ -267,35 +330,6 @@ export function ServicesSection() {
         : progress;
 
     syncMobileServiceProgress(normalizedProgress);
-  });
-
-  const {
-    isGestureLockedRef: mobileGestureLockedRef,
-    isStepHandledRef: mobileStepHandledRef,
-    releaseGestureLock: releaseMobileGestureLock,
-  } = useMobileScrollStepGuard({
-    enabled: !isDesktop && isIosSafariDevice && canSyncMobileServices,
-    elementRef: mobileScrollRef,
-    canHandleStep: (direction) => {
-      const currentIndex = activeIndexRef.current;
-      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
-
-      return nextIndex !== currentIndex;
-    },
-    onStep: (direction) => {
-      const currentIndex = activeIndexRef.current;
-      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
-
-      if (nextIndex === currentIndex) {
-        return null;
-      }
-
-      mobileQueuedTargetIndexRef.current = nextIndex;
-      activeIndexRef.current = nextIndex;
-      setActiveIndex(nextIndex);
-      return scrollMobileToIndex(nextIndex);
-    },
-    swipeThresholdPx: SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX,
   });
 
   useEffect(() => {
@@ -314,6 +348,97 @@ export function ServicesSection() {
 
     setActiveIndex(0);
   }, [isDesktop, releaseMobileGestureLock, setActiveIndex, shouldTrackMobileScroll]);
+
+  useEffect(() => {
+    if (isDesktop || isTablet || !isIosSafariDevice || !canSyncMobileServices) {
+      mobileTouchStartYRef.current = null;
+      mobileTouchStepHandledRef.current = false;
+      return;
+    }
+
+    const sectionElement = mobileScrollRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1) {
+        mobileTouchStartYRef.current = null;
+        mobileTouchStepHandledRef.current = false;
+        return;
+      }
+
+      mobileTouchStartYRef.current = event.touches[0]?.clientY ?? null;
+      mobileTouchStepHandledRef.current = false;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const touchStartY = mobileTouchStartYRef.current;
+
+      if (
+        touchStartY === null ||
+        mobileGestureLockedRef.current ||
+        mobileTouchStepHandledRef.current ||
+        event.touches.length !== 1
+      ) {
+        return;
+      }
+
+      const currentY = event.touches[0]?.clientY;
+
+      if (typeof currentY !== "number") {
+        return;
+      }
+
+      const deltaY = touchStartY - currentY;
+
+      if (Math.abs(deltaY) < SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX) {
+        return;
+      }
+
+      const direction = deltaY > 0 ? 1 : -1;
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
+
+      if (nextIndex === currentIndex) {
+        return;
+      }
+
+      event.preventDefault();
+      mobileTouchStepHandledRef.current = true;
+      mobileQueuedTargetIndexRef.current = nextIndex;
+      mobileGestureTargetIndexRef.current = nextIndex;
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+      lockMobileGestureUntilScrollSettles(nextIndex, scrollMobileToIndex(nextIndex));
+    };
+
+    const handleTouchEnd = () => {
+      mobileTouchStartYRef.current = null;
+      mobileTouchStepHandledRef.current = false;
+    };
+
+    sectionElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+    sectionElement.addEventListener("touchmove", handleTouchMove, { passive: false });
+    sectionElement.addEventListener("touchend", handleTouchEnd);
+    sectionElement.addEventListener("touchcancel", handleTouchEnd);
+
+    return () => {
+      sectionElement.removeEventListener("touchstart", handleTouchStart);
+      sectionElement.removeEventListener("touchmove", handleTouchMove);
+      sectionElement.removeEventListener("touchend", handleTouchEnd);
+      sectionElement.removeEventListener("touchcancel", handleTouchEnd);
+    };
+  }, [
+    canSyncMobileServices,
+    isDesktop,
+    isIosSafariDevice,
+    isTablet,
+    lockMobileGestureUntilScrollSettles,
+    scrollMobileToIndex,
+    setActiveIndex,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -480,15 +605,11 @@ export function ServicesSection() {
         ...mobileImageMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
       );
       const tabletStageHeight =
-        titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX + stageBottomPadding;
+        titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX * 2 + columnsGap + stageBottomPadding + pinClearance;
       const stageHeight = isTablet
         ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
         : titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance;
-      const centeringStageHeight = isTablet
-        ? Math.max(stageHeight - stageBottomPadding, 0)
-        : stageHeight;
-      const centeredStickyTop = Math.max((viewportHeight - centeringStageHeight) / 2, 0);
-      const stickyTop = Math.max(navbarHeight, centeredStickyTop);
+      const stickyTop = navbarHeight;
       const stepScrollDistance =
         Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100);
       const tailScrollDistance = viewportHeight * (mobileScrollTailVh / 100);
@@ -516,6 +637,18 @@ export function ServicesSection() {
       });
     };
 
+    const shouldHandleViewportResize = () => {
+      const nextViewportWidth = window.innerWidth;
+      const previousViewportWidth = mobileViewportWidthRef.current;
+
+      mobileViewportWidthRef.current = nextViewportWidth;
+
+      return (
+        previousViewportWidth === 0 ||
+        Math.abs(nextViewportWidth - previousViewportWidth) > MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX
+      );
+    };
+
     const handleViewportResize = () => {
       if (!shouldHandleViewportResize()) {
         return;
@@ -525,6 +658,7 @@ export function ServicesSection() {
     };
 
     measureMobileStage();
+    mobileViewportWidthRef.current = window.innerWidth;
 
     const resizeObserver =
       typeof ResizeObserver !== "undefined" && mobileMeasureRef.current
@@ -543,7 +677,7 @@ export function ServicesSection() {
       resizeObserver?.disconnect();
       window.removeEventListener("resize", handleViewportResize);
     };
-  }, [isDesktop, isTablet, shouldHandleViewportResize]);
+  }, [isDesktop, isTablet]);
 
   const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
   const desktopScrollStepCount = Math.max(services.length, 1);
@@ -564,7 +698,7 @@ export function ServicesSection() {
     !isTablet && mobileStageMetrics.imageHeight > 0
       ? Math.min(
           mobileStageMetrics.imageHeight,
-          Math.max(mobileVisiblePanelBudget - mobileContentHeight, 260),
+          Math.max(mobileVisiblePanelBudget - mobileContentHeight, 0),
         )
       : mobileStageMetrics.imageHeight;
 
@@ -705,7 +839,6 @@ export function ServicesSection() {
             ref={mobileScrollRef}
             className="relative"
             style={{
-              touchAction: "pan-y",
               minHeight:
                 mobileStageMetrics.scrollHeight > 0
                   ? `${mobileStageMetrics.scrollHeight}px`
@@ -742,7 +875,7 @@ export function ServicesSection() {
                   aria-label={`Open ${activeService.navTitle} service page`}
                   className={cn(
                     "grid w-full content-start gap-(--services-columns-gap) md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-stretch",
-                    "pb-(--services-stage-bottom-padding)",
+                    "pb-0 md:pb-(--services-stage-bottom-padding)",
                     "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",
                   )}
                   style={{
@@ -812,7 +945,7 @@ export function ServicesSection() {
             aria-hidden
             className="pointer-events-none invisible absolute inset-x-0 top-0 -z-10"
           >
-            <div className="grid w-full content-start gap-(--services-columns-gap) py-(--services-stage-bottom-padding)">
+            <div className="grid w-full content-start gap-(--services-columns-gap) py-0 md:py-(--services-stage-bottom-padding)">
               {services.map((service, index) => (
                 <div key={service.id} className="grid w-full content-start gap-(--services-columns-gap)">
                   <div

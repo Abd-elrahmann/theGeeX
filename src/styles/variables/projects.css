@@ -247,6 +247,9 @@
 
 @media (max-width: 799.98px) {
   :root {
+    --projects-title-size: 72px;
+    --projects-title-line-height: 1;
+    --projects-title-box-height: 72px;
     --projects-card-mobile-shadow: none;
     --projects-section-exit-vh: 4;
     --projects-detail-breadcrumb-size: 12px;
