@@ -17,7 +17,6 @@ import {
 
 const LENIS_WHEEL_DELTA_LIMIT = 120;
 const LENIS_TOUCH_DELTA_LIMIT = 120;
-const DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.35;
 const SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM = 0.46;
 const DESKTOP_WHEEL_MULTIPLIER = 0.45;
 const DESKTOP_TOUCH_MULTIPLIER = 0.55;
@@ -71,10 +70,8 @@ function ScrollInputNormalizer({ enabled, isSubDesktop }: ScrollInputNormalizerP
     const normalizer = ScrollTrigger.normalizeScroll({
       allowNestedScroll: true,
       lockAxis: true,
-      momentum: isSubDesktop
-        ? SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM
-        : DESKTOP_NORMALIZED_SCROLL_MOMENTUM,
-      type: isSubDesktop ? "touch" : "touch,wheel,pointer",
+      momentum: SUB_DESKTOP_NORMALIZED_SCROLL_MOMENTUM,
+      type: "touch",
     });
 
     return () => {
@@ -148,7 +145,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       isLowPowerMobileDevice() ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const shouldEnableInputNormalization =
-    pathname !== "/book-a-meeting" && (!isSubDesktop || !shouldAvoidMobileInputNormalization);
+    pathname !== "/book-a-meeting" && isSubDesktop && !shouldAvoidMobileInputNormalization;
 
   const normalizeLenisInput: NonNullable<LenisOptions["virtualScroll"]> = (data) => {
     const isTouchEvent = isTouchLikeEvent(data.event);
