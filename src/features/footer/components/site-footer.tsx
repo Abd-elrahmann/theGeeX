@@ -388,7 +388,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
           </div>
 
-          <div className="order-3 relative mt-auto h-(--footer-logo-height) w-full pt-(--footer-logo-margin-top) md:-mb-(--footer-logo-bottom-inset) md:block md:h-(--footer-logo-height) md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
+          <div className="order-3 relative mt-auto h-(--footer-logo-height) w-full px-3 pt-(--footer-logo-margin-top) md:-mb-(--footer-logo-bottom-inset) md:block md:h-(--footer-logo-height) md:px-0 md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
             <div
               className="absolute inset-x-0 top-(--footer-logo-margin-top)"
               style={{ bottom: "0px" }}

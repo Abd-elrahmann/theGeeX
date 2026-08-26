@@ -30,7 +30,9 @@
   --process-card-height: 340px;
   --process-card-gap: 8px;
   --process-cards-bottom-padding: var(--process-padding-y);
-  --process-cards-tail-height: 0px;
+  --process-cards-tail-height: calc(
+    var(--process-card-sticky-top-5) - var(--process-card-sticky-top-1)
+  );
   --process-card-radius: 16px;
   --process-card-padding-x: 40px;
   --process-card-padding-y: 36px;
@@ -136,7 +138,9 @@
     --process-card-index-padding-y: 24px;
     --process-card-description-margin-top: 24px;
     --process-cards-bottom-padding: var(--process-padding-y);
-    --process-cards-tail-height: 0px;
+    --process-cards-tail-height: calc(
+      var(--process-card-sticky-top-5) - var(--process-card-sticky-top-1)
+    );
     --process-card-reveal-height: 84px;
     --process-card-sticky-top-1: 150px;
     --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));

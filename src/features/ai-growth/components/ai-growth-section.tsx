@@ -9,7 +9,6 @@ import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useMobileViewportResizeGate } from "@/hooks/use-mobile-viewport-resize-gate";
 import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
-import { syncActiveIndexFromProgress } from "@/lib/sync-active-index-from-progress";
 
 import {
   aiGrowthCompactTitleAccent,
@@ -30,6 +29,7 @@ const aiGrowthRowTransition = {
 
 const aiGrowthActiveTriggerDelay = 0.18;
 const AI_GROWTH_MOBILE_STEP_GUARD_MS = 220;
+const AI_GROWTH_ROW_SWITCH_THRESHOLD = 0.72;
 
 function splitFirstWord(text: string): { firstWord: string; rest: string } {
   const [firstWord = "", ...restWords] = text.split(" ");
@@ -38,6 +38,35 @@ function splitFirstWord(text: string): { firstWord: string; rest: string } {
     firstWord,
     rest: restWords.length > 0 ? ` ${restWords.join(" ")}` : "",
   };
+}
+
+function resolveAiGrowthActiveIndex(
+  progress: number,
+  currentIndex: number,
+  itemCount: number,
+): number {
+  const clampedProgress = Math.max(0, Math.min(progress, 1));
+  const lastIndex = Math.max(itemCount - 1, 0);
+
+  if (lastIndex === 0) {
+    return 0;
+  }
+
+  const segmentSize = 1 / lastIndex;
+  const clampedCurrentIndex = clampActiveIndex(currentIndex, itemCount);
+  const directionalProgress = clampedProgress / segmentSize;
+  const forwardThreshold = clampedCurrentIndex + AI_GROWTH_ROW_SWITCH_THRESHOLD;
+  const backwardThreshold = clampedCurrentIndex - AI_GROWTH_ROW_SWITCH_THRESHOLD;
+
+  if (directionalProgress >= forwardThreshold) {
+    return clampActiveIndex(Math.floor(directionalProgress), itemCount);
+  }
+
+  if (directionalProgress <= backwardThreshold) {
+    return clampActiveIndex(Math.ceil(directionalProgress), itemCount);
+  }
+
+  return clampedCurrentIndex;
 }
 
 function AiGrowthRowItem({ row, isActive }: { row: AiGrowthRow; isActive: boolean }) {
@@ -250,11 +279,13 @@ export function AiGrowthSection() {
     const normalizedProgress = delayedProgress / (1 - aiGrowthActiveTriggerDelay);
     const clampedProgress = Math.max(0, Math.min(normalizedProgress, 1));
 
-    syncActiveIndexFromProgress(
+    const nextIndex = resolveAiGrowthActiveIndex(
       clampedProgress,
+      activeIndexRef.current,
       aiGrowthRows.length,
-      isDesktop ? setActiveIndexSequentially : syncMobileIndexSequentially,
     );
+
+    (isDesktop ? setActiveIndexSequentially : syncMobileIndexSequentially)(nextIndex);
   });
 
   useEffect(() => {
