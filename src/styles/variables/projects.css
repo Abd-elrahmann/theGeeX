@@ -260,9 +260,11 @@
     --projects-detail-title-line-height: 1.12;
     --projects-detail-title-stack-gap: 18px;
     --projects-detail-chip-width: 118px;
+    --projects-detail-chip-height: 29px;
     --projects-detail-chip-padding-x: 14px;
     --projects-detail-chip-text-size: 12px;
-    --projects-detail-cover-height: clamp(320px, 95vw, 460px);
+    --projects-detail-year-chip-height: 29px;
+    --projects-detail-cover-height: 600px;
     --projects-detail-image-radius: 18px;
     --projects-detail-description-section-margin-top: 24px;
     --projects-detail-description-section-height: 140vh;

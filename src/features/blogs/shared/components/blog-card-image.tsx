@@ -16,8 +16,7 @@ export function BlogCardImage({
   return (
     <div
       className={cn(
-        "relative order-2 w-full overflow-hidden rounded-(--blogs-card-image-radius) md:order-0",
-        "h-(--blogs-card-image-height) md:w-(--blogs-card-image-width)",
+        "relative order-0 h-full min-w-0 flex-[1_0_0] overflow-hidden rounded-(--blogs-card-radius) md:order-0 md:h-(--blogs-card-image-height) md:w-(--blogs-card-image-width) md:flex-none md:rounded-(--blogs-card-image-radius)",
         imageClassName,
       )}
     >

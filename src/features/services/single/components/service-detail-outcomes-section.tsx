@@ -140,7 +140,7 @@ export function ServiceDetailOutcomesSection({
           title={outcomes.title}
           containerClassName="relative z-1 flex h-(--service-detail-outcomes-title-box-height) w-full flex-col flex-nowrap content-start items-start justify-center gap-(--service-detail-outcomes-title-gap) overflow-clip rounded-none p-0 md:sticky md:top-(--service-detail-outcomes-title-sticky-top)"
           labelClassName="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-outcomes-label-size) leading-(--service-detail-outcomes-label-line-height) font-medium tracking-[-0.02em] text-(--color-service-detail-accent)"
-          titleClassName="m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--service-detail-outcomes-title-size) leading-(--service-detail-outcomes-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) [font-synthesis:weight] [-webkit-text-stroke:0.1px_currentColor] [text-shadow:0_0_0.15px_currentColor] font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]"
+          titleClassName="m-0 w-full whitespace-nowrap font-poppins text-[22px] leading-(--service-detail-outcomes-title-line-height) font-semibold tracking-normal text-(--color-service-detail-text) [font-synthesis:weight] [-webkit-text-stroke:0.1px_currentColor] [text-shadow:0_0_0.15px_currentColor] font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on] md:text-(length:--service-detail-outcomes-title-size) md:whitespace-pre-wrap md:wrap-break-word"
         />
 
         <div className="min-w-0">

@@ -34,6 +34,9 @@ const servicesTabletPanelHeightClassName = "md:max-lg:!h-[346px]";
 const SERVICES_WHEEL_MIN_DELTA = 4;
 const SERVICES_WHEEL_STEP_DELTA = 140;
 const SERVICES_WHEEL_STEP_GUARD_MS = 240;
+const SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX = 24;
+const SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX = 2;
+const SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT = 2;
 const MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX = 1;
 
 export function ServicesSection() {
@@ -59,6 +62,13 @@ export function ServicesSection() {
   const activeIndexRef = useRef(0);
   const mobileQueuedTargetIndexRef = useRef<number | null>(null);
   const mobileStepFrameRef = useRef<number | null>(null);
+  const mobileTouchStartYRef = useRef<number | null>(null);
+  const mobileTouchStepHandledRef = useRef(false);
+  const mobileGestureLockedRef = useRef(false);
+  const mobileGestureTargetIndexRef = useRef<number | null>(null);
+  const mobileGestureTargetScrollYRef = useRef<number | null>(null);
+  const mobileGestureUnlockFrameRef = useRef<number | null>(null);
+  const mobileGestureSettledFramesRef = useRef(0);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -172,6 +182,100 @@ export function ServicesSection() {
     [getDesktopScrollStepMetrics],
   );
 
+  const getMobileScrollStepMetrics = useCallback(() => {
+    const sectionElement = mobileScrollRef.current;
+
+    if (!sectionElement) {
+      return null;
+    }
+
+    const scrollStepVh = readRootCssNumber(
+      "--services-scroll-step-vh",
+      services.length > 1 ? 100 : 0,
+    );
+    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
+    const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
+
+    return {
+      stepDistance,
+      sectionTop,
+      stickyTop: mobileStageMetrics.stickyTop,
+    };
+  }, [mobileStageMetrics.stickyTop]);
+
+  const scrollMobileToIndex = useCallback(
+    (index: number) => {
+      const metrics = getMobileScrollStepMetrics();
+
+      if (!metrics) {
+        return null;
+      }
+
+      const nextPosition = metrics.sectionTop - metrics.stickyTop + index * metrics.stepDistance;
+
+      window.scrollTo({ top: nextPosition, behavior: "auto" });
+      return nextPosition;
+    },
+    [getMobileScrollStepMetrics],
+  );
+
+  const releaseMobileGestureLock = useCallback(() => {
+    mobileGestureLockedRef.current = false;
+    mobileGestureTargetIndexRef.current = null;
+    mobileGestureTargetScrollYRef.current = null;
+    mobileGestureSettledFramesRef.current = 0;
+
+    if (mobileGestureUnlockFrameRef.current !== null) {
+      window.cancelAnimationFrame(mobileGestureUnlockFrameRef.current);
+      mobileGestureUnlockFrameRef.current = null;
+    }
+  }, []);
+
+  const lockMobileGestureUntilScrollSettles = useCallback(
+    (targetIndex: number, targetScrollY: number | null) => {
+      if (targetScrollY === null) {
+        releaseMobileGestureLock();
+        return;
+      }
+
+      mobileGestureLockedRef.current = true;
+      mobileGestureTargetIndexRef.current = targetIndex;
+      mobileGestureTargetScrollYRef.current = targetScrollY;
+      mobileGestureSettledFramesRef.current = 0;
+
+      if (mobileGestureUnlockFrameRef.current !== null) {
+        window.cancelAnimationFrame(mobileGestureUnlockFrameRef.current);
+      }
+
+      const waitForScrollToSettle = () => {
+        const lockedTargetScrollY = mobileGestureTargetScrollYRef.current;
+
+        if (lockedTargetScrollY === null) {
+          releaseMobileGestureLock();
+          return;
+        }
+
+        if (
+          Math.abs(window.scrollY - lockedTargetScrollY) <= SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX
+        ) {
+          mobileGestureSettledFramesRef.current += 1;
+        } else {
+          mobileGestureSettledFramesRef.current = 0;
+        }
+
+        if (mobileGestureSettledFramesRef.current >= SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT) {
+          releaseMobileGestureLock();
+          return;
+        }
+
+        mobileGestureUnlockFrameRef.current = window.requestAnimationFrame(waitForScrollToSettle);
+      };
+
+      mobileGestureUnlockFrameRef.current = window.requestAnimationFrame(waitForScrollToSettle);
+    },
+    [releaseMobileGestureLock],
+  );
+
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
       setHasHydrated(true);
@@ -216,6 +320,10 @@ export function ServicesSection() {
       return;
     }
 
+    if (isIosSafariDevice && (mobileTouchStepHandledRef.current || mobileGestureLockedRef.current)) {
+      return;
+    }
+
     const normalizedProgress =
       mobileStageMetrics.activationProgressEnd < 1
         ? Math.min(progress / mobileStageMetrics.activationProgressEnd, 1)
@@ -231,6 +339,7 @@ export function ServicesSection() {
 
     mobileQueuedTargetIndexRef.current = 0;
     activeIndexRef.current = 0;
+    releaseMobileGestureLock();
 
     if (mobileStepFrameRef.current !== null) {
       window.cancelAnimationFrame(mobileStepFrameRef.current);
@@ -238,15 +347,108 @@ export function ServicesSection() {
     }
 
     setActiveIndex(0);
-  }, [isDesktop, setActiveIndex, shouldTrackMobileScroll]);
+  }, [isDesktop, releaseMobileGestureLock, setActiveIndex, shouldTrackMobileScroll]);
+
+  useEffect(() => {
+    if (isDesktop || isTablet || !isIosSafariDevice || !canSyncMobileServices) {
+      mobileTouchStartYRef.current = null;
+      mobileTouchStepHandledRef.current = false;
+      return;
+    }
+
+    const sectionElement = mobileScrollRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1) {
+        mobileTouchStartYRef.current = null;
+        mobileTouchStepHandledRef.current = false;
+        return;
+      }
+
+      mobileTouchStartYRef.current = event.touches[0]?.clientY ?? null;
+      mobileTouchStepHandledRef.current = false;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const touchStartY = mobileTouchStartYRef.current;
+
+      if (
+        touchStartY === null ||
+        mobileGestureLockedRef.current ||
+        mobileTouchStepHandledRef.current ||
+        event.touches.length !== 1
+      ) {
+        return;
+      }
+
+      const currentY = event.touches[0]?.clientY;
+
+      if (typeof currentY !== "number") {
+        return;
+      }
+
+      const deltaY = touchStartY - currentY;
+
+      if (Math.abs(deltaY) < SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX) {
+        return;
+      }
+
+      const direction = deltaY > 0 ? 1 : -1;
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
+
+      if (nextIndex === currentIndex) {
+        return;
+      }
+
+      event.preventDefault();
+      mobileTouchStepHandledRef.current = true;
+      mobileQueuedTargetIndexRef.current = nextIndex;
+      mobileGestureTargetIndexRef.current = nextIndex;
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+      lockMobileGestureUntilScrollSettles(nextIndex, scrollMobileToIndex(nextIndex));
+    };
+
+    const handleTouchEnd = () => {
+      mobileTouchStartYRef.current = null;
+      mobileTouchStepHandledRef.current = false;
+    };
+
+    sectionElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+    sectionElement.addEventListener("touchmove", handleTouchMove, { passive: false });
+    sectionElement.addEventListener("touchend", handleTouchEnd);
+    sectionElement.addEventListener("touchcancel", handleTouchEnd);
+
+    return () => {
+      sectionElement.removeEventListener("touchstart", handleTouchStart);
+      sectionElement.removeEventListener("touchmove", handleTouchMove);
+      sectionElement.removeEventListener("touchend", handleTouchEnd);
+      sectionElement.removeEventListener("touchcancel", handleTouchEnd);
+    };
+  }, [
+    canSyncMobileServices,
+    isDesktop,
+    isIosSafariDevice,
+    isTablet,
+    lockMobileGestureUntilScrollSettles,
+    scrollMobileToIndex,
+    setActiveIndex,
+  ]);
 
   useEffect(() => {
     return () => {
       if (mobileStepFrameRef.current !== null) {
         window.cancelAnimationFrame(mobileStepFrameRef.current);
       }
+
+      releaseMobileGestureLock();
     };
-  }, []);
+  }, [releaseMobileGestureLock]);
 
   useEffect(() => {
     if (!isDesktop) {

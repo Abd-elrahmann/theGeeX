@@ -18,35 +18,37 @@ interface BlogCardProps {
   typeChipClassName?: string;
   titleClassName?: string;
   maxTypes?: number;
+  typeStartIndex?: number;
   dateClassName?: string;
   authorImageAfterText?: boolean;
 }
 
-export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, typeChipClassName, titleClassName, maxTypes, authorImageAfterText = false }: BlogCardProps) {
-  const visibleTypes = typeof maxTypes === "number" ? blog.types.slice(0, maxTypes) : blog.types;
+export function BlogCard({ blog, articleClassName, dateClassName, footerClassName, imageClassName, metaContainerClassName, typesClassName, typeChipClassName, titleClassName, maxTypes, typeStartIndex = 0, authorImageAfterText = false }: BlogCardProps) {
+  const visibleTypes = typeof maxTypes === "number"
+    ? blog.types.slice(typeStartIndex, typeStartIndex + maxTypes)
+    : blog.types;
 
   return (
     <Link
       href={`/blogs/${blog.slug}`}
       aria-label={`Open ${blog.title}`}
       className={cn(
-        "mx-auto box-border grid w-full max-w-(--blogs-card-max-width) grid-cols-1 justify-items-center gap-(--blogs-card-gap) md:mx-0 md:justify-items-start",
+        "mx-auto box-border flex h-(--blogs-card-mobile-height) w-full max-w-(--blogs-card-max-width) items-stretch gap-(--blogs-card-gap) md:mx-0 md:grid md:h-auto md:grid-cols-[var(--blogs-card-image-width)_minmax(0,1fr)] md:justify-items-start",
         "rounded-(--blogs-card-radius) border border-(--color-blogs-card-border) bg-(--color-blogs-card-bg)",
         "p-(--blogs-card-padding) shadow-(--blogs-card-shadow)",
         "md:border-transparent md:bg-transparent md:shadow-none",
-        "md:grid-cols-[var(--blogs-card-image-width)_minmax(0,1fr)]",
         articleClassName,
       )}
       data-blog-cursor-zone
     >
       <BlogCardImage imageSrc={blog.imageSrc} imageAlt={blog.imageAlt} imageClassName={imageClassName} />
 
-      <div className="order-1 flex min-w-0 flex-col items-center md:order-0 md:min-h-(--blogs-card-image-height) md:items-start">
+      <div className="order-1 flex min-w-0 flex-[1.4_0_0] flex-col items-start justify-start gap-(--blogs-card-content-gap) pb-(--blogs-card-content-padding-bottom) text-left md:order-0 md:min-h-(--blogs-card-image-height) md:flex-auto md:justify-start md:gap-0 md:pb-0">
         <BlogCardTypes types={visibleTypes} typesClassName={typesClassName} typeChipClassName={typeChipClassName} />
 
         <h3
           className={cn(
-            "order-1 mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-center md:order-0 md:text-left",
+            "order-1 mt-(--blogs-card-title-margin-top) w-full whitespace-pre-wrap wrap-break-word text-left md:order-0",
             "font-cal-sans text-(length:--blogs-card-title-size)",
             "leading-(--blogs-card-title-line-height) font-black tracking-normal",
             "text-(--color-blogs-card-title)",

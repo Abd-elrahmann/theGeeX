@@ -93,7 +93,7 @@ const serviceBaseItems: ServiceBase[] = [
     id: 2,
     slug: "ui-ux-product-design",
     navTitle: "UI/UX & Product Design",
-    contentTitle: "Designed to Be Effortless. Built to Perform.",
+    contentTitle: "Digital Experiences Engineered with Intent.",
     description: [
       "User Research",
       "Wireframes & User Flows",
@@ -110,7 +110,7 @@ const serviceBaseItems: ServiceBase[] = [
     id: 3,
     slug: "backend-cloud-engineering",
     navTitle: "Backend & Cloud Engineering",
-    contentTitle: "The Foundation Behind Every Great Product",
+    contentTitle: "Heavy-Duty Infrastructure Built for Infinite Scale.",
     description: [
       "Backend Development",
       "Cloud Infrastructure",
@@ -127,7 +127,7 @@ const serviceBaseItems: ServiceBase[] = [
     id: 4,
     slug: "frontend-mobile-app-development",
     navTitle: "Frontend & Mobile App Development",
-    contentTitle: "Digital Experiences Users Love to Use",
+    contentTitle: "Blazing-Fast Frontend. Seamless Mobile Execution.",
     description: [
       "Web Application Development",
       "Mobile App Development",
@@ -144,7 +144,7 @@ const serviceBaseItems: ServiceBase[] = [
     id: 5,
     slug: "api-design-ecosystem-integration",
     navTitle: "API Design & Ecosystem Integration",
-    contentTitle: "Where Systems Connect and Businesses Scale",
+    contentTitle: "Connect Your Software to the World. Seamlessly.",
     description: [
       "Custom API Development",
       "Third-Party Integrations",

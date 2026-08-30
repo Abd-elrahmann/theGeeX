@@ -1,5 +1,5 @@
 :root {
-  --footer-reveal-gap: 180px;
+  --footer-reveal-gap: 550px;
   --footer-reveal-bottom-gap: 0px;
   --footer-container-max-width: 100%;
   --footer-margin-top: calc(var(--section-stack-gap) + 40px);
@@ -12,11 +12,11 @@
   --footer-card-radius: 34px;
   --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
   --footer-reveal-cover-height: var(--footer-overlap-bleed-height);
-  --footer-card-padding-x: 28px;
+  --footer-card-padding-x: 24px;
   --footer-card-padding-top: 0px;
   --footer-card-padding-bottom: 0px;
   --footer-standalone-card-padding-top: 24px;
-  --footer-top-row-gap: 24px;
+  --footer-top-row-gap: 14px;
   --footer-top-row-desktop-gap: 8px;
   --footer-nav-edge-padding: 0px;
   --footer-link-column-gap: 12px;
@@ -48,9 +48,9 @@
   --footer-subscribe-spinner-size: 18px;
   --footer-subscribe-error-size: 13px;
   --footer-subscribe-error-line-height: 1.4;
-  --footer-rights-margin-top: 64px;
-  --footer-rights-padding-top: 28px;
-  --footer-rights-padding-bottom: 64px;
+  --footer-rights-margin-top: 24px;
+  --footer-rights-padding-top: 18px;
+  --footer-rights-padding-bottom: 24px;
   --footer-rights-max-width: 1066px;
   --footer-rights-line-gap: 4px;
   --footer-rights-line-width: 112px;
@@ -58,8 +58,8 @@
   --footer-rights-mobile-row-gap: 6px;
   --footer-rights-size: 14px;
   --footer-rights-line-height: 1.4;
-  --footer-logo-margin-top: 44px;
-  --footer-logo-height: 120px;
+  --footer-logo-margin-top: 4px;
+  --footer-logo-height: 200px;
   --footer-logo-bottom-inset: 10px;
   --footer-success-overlay-max-width: 360px;
   --footer-success-overlay-gap: 12px;
@@ -94,6 +94,7 @@
 @media (min-width: 800px) and (max-width: 1023.98px) {
   :root {
     --footer-reveal-gap: 32px;
+    --footer-reveal-bottom-gap: 24px;
     --footer-container-max-width: 1648px;
     --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;

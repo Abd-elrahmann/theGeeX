@@ -22,6 +22,7 @@ export function ProjectDetailHeroSection({
   primaryCategory,
 }: ProjectDetailHeroSectionProps) {
   const detailImageScale = project.detailImageScale;
+  const detailImagePosition = project.imagePosition ?? "center center";
   const chipStyle: ProjectDetailChipStyle = {
     "--project-detail-chip-background":
       project.detailChipBackground ?? "var(--projects-detail-chip-background)",
@@ -43,15 +44,15 @@ export function ProjectDetailHeroSection({
         currentClassName="text-(--projects-detail-text-color)"
       />
 
-      <div className="flex flex-col gap-(--projects-detail-title-stack-gap)">
+      <div className="relative flex min-h-[112px] flex-col gap-(--projects-detail-title-stack-gap) md:min-h-0">
         <h1
           id="project-detail-title"
-          className="m-0 h-auto w-full max-w-(--projects-detail-title-max-width) whitespace-nowrap text-left font-cal-sans text-(length:--projects-detail-title-size) leading-(--projects-detail-title-line-height) font-semibold tracking-normal text-(--projects-detail-text-color) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on]"
+          className="absolute left-0 top-0 m-0 h-auto w-auto max-w-[600px] whitespace-pre-wrap [overflow-wrap:break-word] [word-break:break-word] text-left font-cal-sans text-[40px] leading-[1.4] font-semibold tracking-[0em] text-(--projects-detail-text-color) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on] md:static md:w-full md:max-w-(--projects-detail-title-max-width) md:whitespace-nowrap md:text-(length:--projects-detail-title-size) md:leading-(--projects-detail-title-line-height)"
         >
           {projectTitle}
         </h1>
 
-        <div className="flex flex-row flex-wrap items-center gap-(--projects-detail-chip-gap)" style={chipStyle}>
+        <div className="mt-[72px] flex flex-row flex-wrap items-center gap-(--projects-detail-chip-gap) md:mt-0" style={chipStyle}>
           <div className="box-border flex h-(--projects-detail-year-chip-height) w-(--projects-detail-year-chip-width) flex-row flex-nowrap content-center items-center justify-center gap-(--projects-detail-chip-inner-gap) overflow-(--overflow-clip-fallback) rounded-(--projects-detail-chip-radius) bg-(--project-detail-chip-background) px-(--projects-detail-year-chip-padding-x) py-(--projects-detail-year-chip-padding-y) whitespace-nowrap text-(--projects-detail-chip-color)">
             <p className="m-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">Year :</p>
             <p className="m-0 font-poppins text-(length:--projects-detail-chip-text-size) leading-(--projects-detail-chip-line-height) font-medium">{project.year}</p>
@@ -70,10 +71,13 @@ export function ProjectDetailHeroSection({
           fill
           priority
           sizes="(min-width: 1440px) 1440px, 100vw"
-          className="block"
+          className="block md:[object-position:var(--projects-detail-image-position,center_center)]"
           style={{
             objectFit: "cover",
-            objectPosition: project.imagePosition ?? "center center",
+            objectPosition: "center center",
+            ...(detailImagePosition !== "center center"
+              ? ({ ["--projects-detail-image-position" as const]: detailImagePosition } as CSSProperties)
+              : {}),
             ...(detailImageScale ? { transform: `scale(${detailImageScale})` } : {}),
           }}
           unoptimized

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { motion, useInView, useMotionValueEvent, useScroll } from "framer-motion";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/cn";
@@ -15,8 +15,6 @@ import {
   aiGrowthCompactTitlePrefix,
   aiGrowthDescription,
   aiGrowthRows,
-  aiGrowthTitleAccent,
-  aiGrowthTitlePrefix,
   type AiGrowthRow,
 } from "@/features/ai-growth/constants/ai-growth";
 
@@ -30,6 +28,29 @@ const aiGrowthRowTransition = {
 const aiGrowthActiveTriggerDelay = 0.18;
 const AI_GROWTH_MOBILE_STEP_GUARD_MS = 220;
 const AI_GROWTH_ROW_SWITCH_THRESHOLD = 0.72;
+const aiGrowthTitleRevealInitial = {
+  opacity: 0,
+  scale: 1,
+  x: 0,
+  y: 40,
+  skewX: 0,
+  skewY: 0,
+} as const;
+const aiGrowthTitleRevealAnimate = {
+  opacity: 1,
+  scale: 1,
+  x: 0,
+  y: 0,
+  skewX: 0,
+  skewY: 0,
+} as const;
+const aiGrowthTitleRevealTransition = {
+  type: "spring",
+  duration: 1,
+  bounce: 0,
+  delay: 0.2,
+} as const;
+const AI_GROWTH_TITLE_REVEAL_STAGGER = 0.075;
 
 function splitFirstWord(text: string): { firstWord: string; rest: string } {
   const [firstWord = "", ...restWords] = text.split(" ");
@@ -38,6 +59,80 @@ function splitFirstWord(text: string): { firstWord: string; rest: string } {
     firstWord,
     rest: restWords.length > 0 ? ` ${restWords.join(" ")}` : "",
   };
+}
+
+function AiGrowthTitle({ isTablet }: { isTablet: boolean }) {
+  const titleRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(titleRef, {
+    once: true,
+    amount: 0,
+  });
+
+  const desktopLines = [
+    { text: "Beyond The", colorClassName: "text-(--color-ai-growth-title-muted)" },
+    { text: "Hype,", colorClassName: "text-(--color-ai-growth-title-muted)" },
+    { text: "AI for real growth.", colorClassName: "text-(--color-ai-growth-accent)" },
+  ] as const;
+  const mobileLines = [aiGrowthCompactTitlePrefix, aiGrowthCompactTitleAccent];
+
+  const renderLine = (
+    line: string,
+    index: number,
+    colorClassName: string,
+    keyPrefix: string,
+  ) => (
+    <span key={`${keyPrefix}-${index}`} className="block overflow-hidden">
+      <motion.span
+        className={cn("block whitespace-pre-wrap wrap-break-word", colorClassName)}
+        initial={aiGrowthTitleRevealInitial}
+        animate={isInView ? aiGrowthTitleRevealAnimate : aiGrowthTitleRevealInitial}
+        transition={{
+          ...aiGrowthTitleRevealTransition,
+          delay: aiGrowthTitleRevealTransition.delay + index * AI_GROWTH_TITLE_REVEAL_STAGGER,
+        }}
+      >
+        {line}
+      </motion.span>
+    </span>
+  );
+
+  return (
+    <div ref={titleRef} className="w-full">
+      <h2
+        className={cn(
+          "m-0 hidden w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:block",
+          isTablet && "text-center",
+        )}
+      >
+        {desktopLines.map((line, index) =>
+          renderLine(
+            line.text,
+            index,
+            line.colorClassName,
+            "desktop",
+          ),
+        )}
+      </h2>
+
+      <h2
+        className={cn(
+          "m-0 block w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal lg:hidden",
+          "max-md:absolute max-md:left-0 max-md:top-0 max-md:z-1 max-md:text-left",
+          "max-md:font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+          isTablet ? "whitespace-nowrap text-center font-features-normal" : "font-features-normal",
+        )}
+      >
+        {mobileLines.map((line, index) =>
+          renderLine(
+            line,
+            index,
+            index === 0 ? "text-(--color-ai-growth-title-muted)" : "text-(--color-ai-growth-accent)",
+            "mobile",
+          ),
+        )}
+      </h2>
+    </div>
+  );
 }
 
 function resolveAiGrowthActiveIndex(
@@ -74,11 +169,14 @@ function AiGrowthRowItem({ row, isActive }: { row: AiGrowthRow; isActive: boolea
 
   return (
     <motion.article
-      className="grid w-full grid-cols-1 gap-(--ai-growth-row-mobile-gap) md:grid-cols-[var(--ai-growth-row-title-width)_minmax(0,1fr)] md:gap-(--ai-growth-row-column-gap)"
+      className="flex w-full flex-col gap-(--ai-growth-row-mobile-gap) md:grid md:grid-cols-[var(--ai-growth-row-title-width)_minmax(0,1fr)] md:gap-(--ai-growth-row-column-gap)"
       animate={{ opacity: isActive ? 1 : 0.34 }}
       transition={aiGrowthRowTransition}
     >
-      <h3 className="m-0 w-auto whitespace-nowrap font-cal-sans text-(length:--ai-growth-row-title-size) leading-(--ai-growth-row-line-height) font-semibold tracking-normal text-(--color-ai-growth-row-title) font-features-normal">
+      <motion.h3
+        className="m-0 h-auto w-(--ai-growth-row-title-width) whitespace-pre-wrap wrap-break-word [word-break:break-word] font-cal-sans text-(length:--ai-growth-row-title-size) leading-(--ai-growth-row-line-height) font-semibold tracking-normal text-(--color-ai-growth-row-title) font-features-normal"
+        transition={aiGrowthRowTransition}
+      >
         <motion.span
           animate={{ color: isActive ? "var(--color-ai-growth-accent)" : "var(--color-ai-growth-text)" }}
           transition={aiGrowthRowTransition}
@@ -91,10 +189,10 @@ function AiGrowthRowItem({ row, isActive }: { row: AiGrowthRow; isActive: boolea
         >
           {rest}
         </motion.span>
-      </h3>
+      </motion.h3>
 
       <motion.p
-        className="m-0 min-w-0 flex-1 whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-row-description-size) leading-(--ai-growth-row-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal"
+        className="m-0 h-auto w-full min-w-0 whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-row-description-size) leading-(--ai-growth-row-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal"
         animate={{ color: "var(--color-ai-growth-text)" }}
         transition={aiGrowthRowTransition}
       >
@@ -207,11 +305,8 @@ export function AiGrowthSection() {
     isTablet && mobileStageMetrics.stageHeight > 0
       ? `max(0px, calc((100svh - ${mobileStageMetrics.stageHeight}px) / 2))`
       : undefined;
-  const mobileStickyTop = !isTablet ? "var(--ai-growth-mobile-rows-sticky-top)" : undefined;
-  const mobileSectionPaddingTop =
-    !isDesktop && !isTablet
-      ? "calc(var(--ai-growth-padding-y) + var(--ai-growth-mobile-rows-sticky-top))"
-      : undefined;
+  const mobileStickyTop = !isTablet ? "0px" : undefined;
+  const mobileSectionPaddingTop = undefined;
   const mobileRowsOffset = !isDesktop && !isTablet ? "-6px" : undefined;
 
   const setActiveIndexSequentially = useCallback(
@@ -336,27 +431,14 @@ export function AiGrowthSection() {
             )}
           >
             <div className={cn(
-              "flex h-min w-full min-w-0 flex-1 flex-col content-start justify-center gap-(--ai-growth-intro-gap) overflow-clip rounded-none p-0 lg:min-w-(--ai-growth-grid-one-min-width)",
+              "flex h-min w-full min-w-0 flex-1 flex-col content-start justify-center gap-(--ai-growth-intro-gap) overflow-clip rounded-none p-0 max-lg:relative max-lg:min-h-(--ai-growth-mobile-intro-height) max-lg:pt-(--ai-growth-mobile-title-space) lg:min-w-(--ai-growth-grid-one-min-width)",
               isTablet ? "items-center text-center" : "items-start",
             )}>
-              <h2 className={cn(
-                "m-0 hidden w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:block",
-                isTablet && "text-center",
-              )}>
-                <span className="text-(--color-ai-growth-title-muted)">{aiGrowthTitlePrefix} </span>
-                <span className="text-(--color-ai-growth-accent)">{aiGrowthTitleAccent}</span>
-              </h2>
-
-              <h2 className={cn(
-                "m-0 block w-full whitespace-pre-wrap wrap-break-word font-cal-sans text-(length:--ai-growth-title-size) leading-(--ai-growth-title-line-height) font-semibold tracking-normal font-features-normal lg:hidden",
-                isTablet && "whitespace-nowrap text-center",
-              )}>
-                <span className="text-(--color-ai-growth-title-muted)">{aiGrowthCompactTitlePrefix}</span>
-                <span className="text-(--color-ai-growth-accent)">{isTablet ? ` ${aiGrowthCompactTitleAccent}` : `\n${aiGrowthCompactTitleAccent}`}</span>
-              </h2>
+              <AiGrowthTitle isTablet={isTablet} />
 
               <p className={cn(
-                "m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-description-size) leading-(--ai-growth-description-line-height) font-normal tracking-normal text-(--color-ai-growth-text) font-features-normal",
+                "m-0 w-full whitespace-pre-wrap wrap-break-word font-poppins text-(length:--ai-growth-description-size) leading-(--ai-growth-description-line-height) font-normal tracking-normal text-(--color-ai-growth-text)",
+                "max-md:absolute max-md:left-0 max-md:top-(--ai-growth-mobile-description-top) max-md:text-left max-md:font-features-normal",
                 isTablet && "mx-auto max-w-(--ai-growth-tablet-intro-max-width) whitespace-nowrap text-center",
               )}>
                 {isTablet ? aiGrowthDescription.replace(/\n/g, " ") : aiGrowthDescription}

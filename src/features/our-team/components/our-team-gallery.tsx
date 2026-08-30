@@ -265,7 +265,17 @@ function OurTeamMobileCollapsedCard() {
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
-      <OurTeamMobileCard card={primaryCard} isActive={false} />
+      <figure
+        className="relative isolate m-0 w-full overflow-hidden rounded-(--team-card-radius)"
+        style={{
+          width: "min(100%, 170px)",
+          maxWidth: "170px",
+          aspectRatio: `${ourTeamMobileCardSize.width} / ${ourTeamMobileCardSize.height}`,
+        }}
+        aria-label={`${primaryCard.name}, ${primaryCard.role}`}
+      >
+        <TeamCollapsedPrimaryArtwork />
+      </figure>
     </motion.div>
   );
 }

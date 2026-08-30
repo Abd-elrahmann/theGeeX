@@ -16,6 +16,7 @@ export function ServiceDetailOverviewSection({
       <ServiceDetailSectionHeading
         label="Overview"
         title={service.page.overviewTitle}
+        align="center"
         titleClassName="text-[calc(var(--service-detail-section-title-size)-2px)]"
       />
 

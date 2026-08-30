@@ -15,13 +15,14 @@ const servicesTitleTextClassName = cn(
   "services-title-text font-cal-sans not-italic",
   "font-(--services-title-font-weight)",
   "text-[length:var(--services-title-size)] leading-(--services-title-line-height)",
-  "tracking-[0px] text-center whitespace-nowrap",
-  "[font-feature-settings:normal]",
+  "absolute z-(--services-title-text-z-index) h-auto w-auto max-w-(--services-container-max-width)",
+  "whitespace-pre-wrap wrap-break-word [word-break:break-word]",
+  "tracking-[0px] text-center [font-feature-settings:normal]",
 );
 
 function ServicesTitleContent() {
   return (
-    <span className="services-title-box">
+    <span className="services-title-box relative flex-1 overflow-visible">
       <span className={servicesTitleTextClassName}>{servicesSectionTitle}</span>
     </span>
   );

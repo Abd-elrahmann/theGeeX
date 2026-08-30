@@ -12,7 +12,7 @@ export function BlogCardTypes({
   typeChipClassName,
 }: BlogCardTypesProps) {
   return (
-    <div className={cn("order-2 mt-3 flex flex-wrap items-center justify-center gap-(--blogs-card-types-gap) md:order-0 md:mt-0 md:justify-start", typesClassName)}>
+    <div className={cn("order-0 mt-0 flex flex-wrap items-center justify-start gap-(--blogs-card-types-gap) md:order-0 md:mt-0 md:justify-start", typesClassName)}>
       {types.map((type) => (
         <span
           key={type}

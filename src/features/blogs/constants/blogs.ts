@@ -102,7 +102,7 @@ export const blogItems: BlogItem[] = [
   {
     id: 5,
     slug: "the-instapay-effect",
-    types: ["Digital transformation", "Mobile apps design and development"],
+    types: ["Mobile apps design and development", "Digital transformation"],
     title: "The InstaPay Effect: Integrating Next-Gen Payment Gateways into Egypt’s E-Commerce Platforms",
     date: "Feb 12, 2026",
     imageSrc: "/images/blogs/Blog5.webp",

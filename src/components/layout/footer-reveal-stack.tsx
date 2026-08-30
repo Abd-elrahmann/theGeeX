@@ -8,7 +8,7 @@ type FooterRevealStackProps = {
 export function FooterRevealStack({ marginTop }: FooterRevealStackProps) {
   return (
     <div
-      className={marginTop ? "relative md:mt-0" : "relative mt-(--lets-talk-margin-top) md:mt-0"}
+      className={marginTop ? "relative" : "relative mt-(--lets-talk-margin-top)"}
       style={{
         marginTop,
         minHeight: "var(--lets-talk-footer-reveal-height)",

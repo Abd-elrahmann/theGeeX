@@ -91,7 +91,7 @@ export function PackageCard({ item, index }: PackageCardProps) {
 
       <div
         aria-hidden="true"
-        className="mt-(--packages-card-divider-margin-top) h-px w-full bg-(--color-packages-card-divider)"
+        className="mt-(--packages-card-divider-margin-top) hidden h-px w-full bg-(--color-packages-card-divider) md:block"
       />
 
       <PackageCardFeatures features={item.features} itemId={item.id} />

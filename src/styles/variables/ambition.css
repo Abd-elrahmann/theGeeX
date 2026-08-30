@@ -2,16 +2,12 @@
   --ambition-path-gap: var(--early-section-gap);
   --color-ambition-primary: #0c0c0c;
   --ambition-text-width: 100%;
-  --ambition-text-height: auto;
+  --ambition-text-height: calc(2 * var(--ambition-font-size) * var(--ambition-line-height) + var(--ambition-text-gap));
   --ambition-container-gap: 16px;
   --ambition-text-gap: 10px;
   --ambition-line-height: 1.2;
   --ambition-font-size: var(--ambition-font-size-mobile);
-  --ambition-font-size-mobile: clamp(
-    22px,
-    calc((100vw - 2 * var(--ambition-padding-x)) / 12.8),
-    28px
-  );
+  --ambition-font-size-mobile: 28px;
   --ambition-min-height: 70svh;
   --ambition-padding-x: 24px;
   --ambition-padding-bottom: 40px;

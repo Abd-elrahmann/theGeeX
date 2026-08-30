@@ -127,9 +127,17 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
         revealFromPreviousSection || compactSpacing ? "relative mt-0" : "relative mt-(--footer-margin-top)",
         "px-(--footer-padding-x) pt-(--footer-padding-top)",
         "lg:[--footer-card-radius:40px] lg:[--footer-rights-margin-top:32px] lg:[--footer-rights-padding-bottom:24px] lg:[--footer-logo-height:240px] lg:[--footer-logo-margin-top:24px]",
-        revealFromPreviousSection || compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
+        revealFromPreviousSection ? "pb-(--footer-reveal-bottom-gap) md:pb-0" : compactSpacing ? "pb-0" : "pb-(--footer-padding-bottom)",
       )}
     >
+      {revealFromPreviousSection ? (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-(--footer-padding-x) bottom-0 z-0 bg-(--color-footer-surface) md:hidden"
+          style={{ height: "var(--footer-reveal-bottom-gap)" }}
+        />
+      ) : null}
+
       <div className="relative mx-auto w-full max-w-(--footer-container-max-width)">
         {revealFromPreviousSection ? (
           <div
@@ -144,19 +152,16 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
 
         <div
           className={cn(
-            "relative z-10 flex min-h-(--footer-card-min-height) w-full flex-col rounded-(--footer-card-radius)",
+            "relative z-10 flex w-full flex-col rounded-(--footer-card-radius)",
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
             !revealFromPreviousSection && "pt-(--footer-standalone-card-padding-top)",
+            !revealFromPreviousSection && "min-h-(--footer-card-min-height)",
+            revealFromPreviousSection && "min-h-[calc(100svh-var(--lets-talk-reveal-sticky-top)-var(--footer-reveal-bottom-gap))] md:min-h-(--footer-card-min-height)",
             "md:items-center md:pb-0",
             compactSpacing && "lg:min-h-0",
             !compactSpacing && "lg:pb-6",
             "overflow-visible",
           )}
-          style={{
-            minHeight: revealFromPreviousSection
-              ? "var(--footer-reveal-card-min-height)"
-              : undefined,
-          }}
         >
           {showSuccessOverlay ? (
             <div className="absolute inset-0 z-30 flex items-center justify-center bg-(--color-footer-success-overlay) px-6 text-center backdrop-blur-sm">
@@ -388,16 +393,22 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             <span className="hidden h-px w-(--footer-rights-line-width) shrink-0 bg-(--color-footer-rights-line) md:block" />
           </div>
 
-          <div className="order-3 relative mt-auto h-(--footer-logo-height) w-full px-3 pt-(--footer-logo-margin-top) md:-mb-(--footer-logo-bottom-inset) md:block md:h-(--footer-logo-height) md:px-0 md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
+          <div className="order-3 relative mt-auto h-[107px] w-full pt-(--footer-logo-margin-top) md:-mb-(--footer-logo-bottom-inset) md:h-(--footer-logo-height) md:px-0 md:overflow-visible md:max-lg:aspect-[3.5513513513513515/1] lg:aspect-[4.427745664739884/1]">
             <div
-              className="absolute inset-x-0 top-(--footer-logo-margin-top)"
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 block h-[107px] flex-1 overflow-visible bg-contain bg-center bg-no-repeat rounded-[0px] md:hidden"
+              style={{ backgroundImage: `url(${footerContent.logoSrc})` }}
+            />
+
+            <div
+              className="absolute inset-x-0 top-(--footer-logo-margin-top) hidden md:block"
               style={{ bottom: "0px" }}
             >
               <Image
                 src={footerContent.logoSrc}
                 alt="theGeeX logo"
                 fill
-                className="object-contain object-center"
+                className="object-contain object-bottom"
                 sizes="(min-width: 1440px) 1440px, 100vw"
               />
             </div>

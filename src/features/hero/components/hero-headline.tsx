@@ -55,13 +55,13 @@ function QuotedHeadline({ lines, keyPrefix, isInView }: QuotedHeadlineProps) {
 }
 
 export function HeroHeadline() {
-  const { lines } = heroConfig.headline;
+  const { lines, compactLines } = heroConfig.headline;
   const { viewport } = heroConfig.reveal;
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isInView = useInView(headingRef, viewport);
 
   const headingClassName = cn(
-    "h-auto w-full max-w-(--hero-headline-max-width) font-poppins text-center font-bold not-italic tracking-normal",
+    "h-auto w-full max-w-(--hero-headline-max-width) max-md:max-w-none font-poppins text-center font-bold not-italic tracking-normal",
     "whitespace-pre-wrap break-words [word-break:break-word]",
     "text-[length:var(--hero-headline-size)] leading-(--hero-headline-line-height)",
     "text-primary [font-feature-settings:normal]",
@@ -72,13 +72,14 @@ export function HeroHeadline() {
     <div
       className={cn(
         "mx-auto flex h-auto w-full max-w-(--hero-headline-max-width) justify-center",
+        "max-md:-mx-[calc(var(--hero-padding-x)/2)] max-md:w-[calc(100%+var(--hero-padding-x))] max-md:max-w-none",
         "max-md:absolute max-md:inset-x-0 max-md:top-1/2 max-md:-translate-y-1/2",
         "md:relative md:translate-x-0 md:translate-y-0",
       )}
     >
       <h1 ref={headingRef} className={headingClassName}>
         <span className="md:hidden">
-          <QuotedHeadline lines={lines} keyPrefix="compact" isInView={isInView} />
+          <QuotedHeadline lines={compactLines} keyPrefix="compact" isInView={isInView} />
         </span>
         <span className="hidden md:block">
           <QuotedHeadline lines={lines} keyPrefix="desktop" isInView={isInView} />

@@ -10,7 +10,7 @@ export const BlogsSectionCards = forwardRef<HTMLDivElement>(function BlogsSectio
   return (
     <div ref={ref} className="flex flex-col gap-(--blogs-cards-gap)">
       {blogItems.map((blog) => (
-        <BlogCard key={blog.id} blog={blog} authorImageAfterText />
+        <BlogCard key={blog.id} blog={blog} maxTypes={1} typeStartIndex={1} authorImageAfterText />
       ))}
     </div>
   );

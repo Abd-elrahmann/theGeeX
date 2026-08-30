@@ -14,11 +14,11 @@ export function ProjectDetailRelatedProjectsSection({
       aria-labelledby="project-detail-related-title"
     >
       <div className="mx-auto flex w-full flex-col items-center gap-(--service-detail-projects-section-gap)">
-        <header className="flex w-full max-w-(--service-detail-projects-title-max-width) flex-col items-center gap-(--service-detail-projects-title-gap) text-center">
-          <p className="m-0 w-auto whitespace-pre font-poppins text-(length:--service-detail-projects-label-size) leading-(--service-detail-projects-label-line-height) font-bold tracking-[-0.02em] text-(--color-service-detail-accent)">
+        <header className="relative flex min-h-[118px] w-full max-w-(--service-detail-projects-title-max-width) flex-col items-center gap-(--service-detail-projects-title-gap) text-center md:min-h-0">
+          <p className="absolute top-0 m-0 h-auto w-auto whitespace-pre font-poppins text-[15px] leading-[1.4] font-medium tracking-[-0.02em] text-(--color-service-detail-accent) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on] md:static md:text-(length:--service-detail-projects-label-size) md:leading-(--service-detail-projects-label-line-height) md:font-bold">
             Projects
           </p>
-          <h2 id="project-detail-related-title" className="m-0 w-full max-w-full whitespace-normal wrap-break-word text-center font-cal-sans text-(length:--service-detail-projects-title-size) leading-(--service-detail-projects-title-line-height) font-bold tracking-normal text-(--color-service-detail-text) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on] md:whitespace-nowrap lg:text-[40px]">
+          <h2 id="project-detail-related-title" className="absolute top-[29px] m-0 h-auto w-full max-w-full whitespace-pre-wrap [overflow-wrap:break-word] [word-break:break-word] text-center font-cal-sans text-[40px] leading-[1.2] font-semibold tracking-[0em] text-(--color-service-detail-text) font-features-['blwf'_on,'cv03'_on,'cv04'_on,'cv09'_on,'cv11'_on] md:static md:whitespace-nowrap md:text-(length:--service-detail-projects-title-size) md:leading-(--service-detail-projects-title-line-height) md:font-bold lg:text-[40px]">
             Real Solutions. Proven Impact.
           </h2>
         </header>

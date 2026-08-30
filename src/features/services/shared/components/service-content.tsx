@@ -51,7 +51,7 @@ export function ServiceContent({
 
   if (variant === "page") {
     return (
-      <article className={cn(servicesContentContainerClassName, "md:rounded-r-none")}>
+      <article className={cn(servicesContentContainerClassName, "rounded-none md:rounded-r-none md:rounded-l-(--services-content-radius)")}>
         {headerContent ? (
           <div className={cn("w-full shrink-0", !showContentTitle && "mb-(--services-content-header-desc-gap)")}>
             {headerContent}
@@ -69,7 +69,7 @@ export function ServiceContent({
             className={cn(
               "service-content-description-list static space-y-0 md:space-y-1",
               "m-0 h-auto w-full min-w-0 p-0",
-              "font-poppins text-[14px] leading-[1.32] md:text-[16px] md:leading-(--services-description-line-height) font-normal not-italic tracking-normal",
+              "font-poppins text-[14px] leading-[1.5] md:text-[16px] md:leading-(--services-description-line-height) font-normal not-italic tracking-normal",
               "text-(--Text_Color,#2c3134)",
               "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
             )}

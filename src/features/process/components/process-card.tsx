@@ -20,6 +20,7 @@ interface ProcessCardProps {
 export function ProcessCard({ card, index }: ProcessCardProps) {
   const cardRef = useRef<HTMLElement | null>(null);
   const isDesktop = useDesktopBreakpoint();
+  const isMobile = !isDesktop;
   const shouldHandleViewportResize = useMobileViewportResizeGate({
     ignoreHeightOnlyResize: !isDesktop,
   });
@@ -93,7 +94,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         }
       }}
       className={cn(
-        "flex h-(--process-card-height) w-full overflow-hidden rounded-(--process-card-radius)",
+        "relative flex h-(--process-card-height) w-full overflow-hidden rounded-(--process-card-radius) p-0",
         "border border-(--color-process-card-border)",
         isFinalCard
           ? "border-transparent bg-(--color-process-card-final-bg)"
@@ -102,52 +103,87 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
     >
       <div
         className={cn(
-          "flex h-full w-full items-stretch md:h-auto lg:h-full",
-          isFinalCard ? "flex-col md:flex-row" : "flex-row",
+          "absolute inset-0 box-border flex h-min w-full flex-col items-start justify-center gap-8 overflow-hidden p-0",
         )}
       >
-        <div
-          className="box-border relative flex h-auto w-auto flex-none items-start justify-start self-stretch overflow-hidden md:h-auto lg:h-full lg:min-w-px"
-          style={{
-            maxWidth: "var(--process-card-index-max-width)",
-            padding: "var(--process-card-index-padding-y) var(--process-card-index-padding-x)",
-            gap: "var(--process-card-index-gap)",
-          }}
-        >
-          {isFinalCard ? (
-            <Image
-              src="/images/processLogo.webp"
-              alt="GeeX logo"
-              width={104}
-              height={53}
-              className="block overflow-visible object-cover object-center"
-              priority={false}
-            />
-          ) : (
-            <span
-              className={cn(
-                "block whitespace-pre font-cal-sans text-(length:--process-card-index-size) leading-(--process-card-index-line-height)",
-                "font-(--process-card-index-weight) tracking-(--process-card-index-letter-spacing)",
-                "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on]",
-                "text-(--color-process-card-index)",
-              )}
+        {isMobile ? (
+          <div
+            className="box-border relative flex w-full min-w-0 flex-col items-start justify-start gap-2 overflow-hidden"
+            style={{ padding: "var(--process-card-padding-y) var(--process-card-padding-x)" }}
+          >
+            <div
+              className="box-border relative flex h-auto w-full flex-none flex-nowrap content-start items-start justify-start overflow-hidden"
+              style={{ gap: "var(--process-card-index-gap)" }}
             >
-              {formatIndex(index)}
-            </span>
-          )}
-        </div>
+              {isFinalCard ? (
+                <Image
+                  src="/images/processLogo.webp"
+                  alt="GeeX logo"
+                  width={104}
+                  height={53}
+                  className="block overflow-visible object-cover object-center"
+                  priority={false}
+                />
+              ) : (
+                <span
+                  className={cn(
+                    "block w-full whitespace-pre font-cal-sans text-(length:--process-card-index-size) leading-(--process-card-index-line-height)",
+                    "font-(--process-card-index-weight) tracking-(--process-card-index-letter-spacing)",
+                    "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on]",
+                    "text-(--color-process-card-index)",
+                  )}
+                >
+                  {formatIndex(index)}
+                </span>
+              )}
+            </div>
 
-        <div
-          className="box-border flex w-full min-w-0 flex-1 flex-col items-start md:h-auto lg:h-full"
-          style={{
-            padding: "var(--process-card-content-padding-y) var(--process-card-content-padding-x)",
-          }}
-        >
-          {shouldAnimateTitle ? (
-            <div className="grid w-full overflow-hidden">
+            {shouldAnimateTitle ? (
+              <div className="grid w-full overflow-hidden">
+                <motion.h3
+                  className={cn(
+                    "col-start-1 row-start-1 w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                    "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
+                    "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
+                    "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+                    isFinalCard
+                      ? "text-(--color-process-card-final-title)"
+                      : "text-(--color-process-card-title)",
+                  )}
+                  initial={false}
+                  animate={{
+                    y: isTitleTransitionActive ? -24 : 0,
+                    opacity: isTitleTransitionActive ? 0 : 1,
+                  }}
+                  transition={finalCardTitleTransition}
+                >
+                  {card.title}
+                </motion.h3>
+
+                <motion.h3
+                  className={cn(
+                    "col-start-1 row-start-1 w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                    "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
+                    "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
+                    "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+                    isFinalCard
+                      ? "text-(--color-process-card-final-title)"
+                      : "text-(--color-process-card-title)",
+                  )}
+                  initial={false}
+                  animate={{
+                    y: isTitleTransitionActive ? 0 : 24,
+                    opacity: isTitleTransitionActive ? 1 : 0,
+                  }}
+                  transition={finalCardTitleTransition}
+                >
+                  {card.transitionTitle}
+                </motion.h3>
+              </div>
+            ) : (
               <motion.h3
                 className={cn(
-                  "col-start-1 row-start-1 w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                  "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
                   "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
                   "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
                   "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
@@ -155,66 +191,138 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
                     ? "text-(--color-process-card-final-title)"
                     : "text-(--color-process-card-title)",
                 )}
-                initial={false}
-                animate={{
-                  y: isTitleTransitionActive ? -24 : 0,
-                  opacity: isTitleTransitionActive ? 0 : 1,
-                }}
-                transition={finalCardTitleTransition}
               >
                 {card.title}
               </motion.h3>
+            )}
 
-              <motion.h3
-                className={cn(
-                  "col-start-1 row-start-1 w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
-                  "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
-                  "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
-                  "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
-                  isFinalCard
-                    ? "text-(--color-process-card-final-title)"
-                    : "text-(--color-process-card-title)",
-                )}
-                initial={false}
-                animate={{
-                  y: isTitleTransitionActive ? 0 : 24,
-                  opacity: isTitleTransitionActive ? 1 : 0,
-                }}
-                transition={finalCardTitleTransition}
-              >
-                {card.transitionTitle}
-              </motion.h3>
-            </div>
-          ) : (
-            <h3
+            <p
               className={cn(
-                "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
-                "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
-                "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
-                "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+                "w-full whitespace-pre-wrap wrap-break-word text-left font-poppins",
+                "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
+                "font-(--process-card-description-weight) tracking-normal",
+                "font-features-['blwf'_on,'cv11'_on,'case'_on]",
                 isFinalCard
-                  ? "text-(--color-process-card-final-title)"
-                  : "text-(--color-process-card-title)",
+                  ? "text-(--color-process-card-final-description)"
+                  : "text-(--color-process-card-description)",
               )}
             >
-              {card.title}
-            </h3>
-          )}
+              {card.description}
+            </p>
+          </div>
+        ) : (
+          <>
+            <div
+              className="box-border relative flex w-full min-w-0 flex-nowrap content-center items-center justify-start gap-(--process-card-header-gap) overflow-hidden"
+              style={{ padding: "var(--process-card-padding-y) var(--process-card-padding-x) 0" }}
+            >
+              <div
+                className="box-border relative flex h-auto w-auto flex-none items-start justify-start overflow-hidden"
+                style={{
+                  maxWidth: "var(--process-card-index-max-width)",
+                  padding: "var(--process-card-index-padding-y) var(--process-card-index-padding-x)",
+                  gap: "var(--process-card-index-gap)",
+                }}
+              >
+                {isFinalCard ? (
+                  <Image
+                    src="/images/processLogo.webp"
+                    alt="GeeX logo"
+                    width={104}
+                    height={53}
+                    className="block overflow-visible object-cover object-center"
+                    priority={false}
+                  />
+                ) : (
+                  <span
+                    className={cn(
+                      "block whitespace-pre font-cal-sans text-(length:--process-card-index-size) leading-(--process-card-index-line-height)",
+                      "font-(--process-card-index-weight) tracking-(--process-card-index-letter-spacing)",
+                      "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on]",
+                      "text-(--color-process-card-index)",
+                    )}
+                  >
+                    {formatIndex(index)}
+                  </span>
+                )}
+              </div>
 
-          <p
-            className={cn(
-              "mt-(--process-card-description-margin-top) w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
-              "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
-              "font-(--process-card-description-weight) tracking-normal",
-              "font-features-['blwf'_on,'cv11'_on,'case'_on]",
-              isFinalCard
-                ? "text-(--color-process-card-final-description)"
-                : "text-(--color-process-card-description)",
-            )}
-          >
-            {card.description}
-          </p>
-        </div>
+              <div className="flex min-w-0 flex-1 flex-col items-start justify-center">
+                {shouldAnimateTitle ? (
+                  <div className="grid w-full overflow-hidden">
+                    <motion.h3
+                      className={cn(
+                        "col-start-1 row-start-1 w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                        "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
+                        "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
+                        "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+                        isFinalCard
+                          ? "text-(--color-process-card-final-title)"
+                          : "text-(--color-process-card-title)",
+                      )}
+                      initial={false}
+                      animate={{
+                        y: isTitleTransitionActive ? -24 : 0,
+                        opacity: isTitleTransitionActive ? 0 : 1,
+                      }}
+                      transition={finalCardTitleTransition}
+                    >
+                      {card.title}
+                    </motion.h3>
+
+                    <motion.h3
+                      className={cn(
+                        "col-start-1 row-start-1 w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                        "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
+                        "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
+                        "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+                        isFinalCard
+                          ? "text-(--color-process-card-final-title)"
+                          : "text-(--color-process-card-title)",
+                      )}
+                      initial={false}
+                      animate={{
+                        y: isTitleTransitionActive ? 0 : 24,
+                        opacity: isTitleTransitionActive ? 1 : 0,
+                      }}
+                      transition={finalCardTitleTransition}
+                    >
+                      {card.transitionTitle}
+                    </motion.h3>
+                  </div>
+                ) : (
+                  <motion.h3
+                    className={cn(
+                      "w-full whitespace-pre-wrap wrap-break-word font-cal-sans",
+                      "text-(length:--process-card-title-size) leading-(--process-card-title-line-height)",
+                      "font-(--process-card-title-weight) tracking-(--process-card-title-letter-spacing)",
+                      "font-features-['blwf'_on,'cv09'_on,'cv03'_on,'cv04'_on,'cv11'_on,'zero'_on]",
+                      isFinalCard
+                        ? "text-(--color-process-card-final-title)"
+                        : "text-(--color-process-card-title)",
+                    )}
+                  >
+                    {card.title}
+                  </motion.h3>
+                )}
+              </div>
+            </div>
+
+            <p
+              className={cn(
+                "w-full whitespace-pre-wrap wrap-break-word px-(--process-card-padding-x) pb-(--process-card-padding-y) text-left font-cal-sans",
+                "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
+                "font-(--process-card-description-weight) tracking-normal",
+                "font-features-['blwf'_on,'cv11'_on,'case'_on]",
+                isFinalCard
+                  ? "text-(--color-process-card-final-description)"
+                  : "text-(--color-process-card-description)",
+              )}
+            >
+              {card.description}
+            </p>
+          </>
+        )}
       </div>
     </motion.article>
   );

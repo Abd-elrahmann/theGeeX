@@ -26,15 +26,18 @@
     rgb(0 0 0 / 0) 0%,
     rgb(0 0 0 / 1) 28%
   );
-  --blogs-cards-gap: 32px;
+  --blogs-cards-gap: 16px;
   --blogs-card-max-width: 100%;
-  --blogs-card-radius: 20px;
-  --blogs-card-padding: 16px;
-  --blogs-card-shadow: 0 16px 40px 0 rgb(0 0 0 / 0.06);
-  --blogs-card-gap: 20px;
+  --blogs-card-radius: 24px;
+  --blogs-card-padding: 0px;
+  --blogs-card-shadow: none;
+  --blogs-card-gap: 16px;
+  --blogs-card-mobile-height: 260px;
   --blogs-card-image-width: 248px;
   --blogs-card-image-height: 300px;
   --blogs-card-image-radius: 16px;
+  --blogs-card-content-gap: 12px;
+  --blogs-card-content-padding-bottom: 24px;
   --blogs-card-badge-padding-x: 12px;
   --blogs-card-badge-padding-y: 4px;
   --blogs-card-badge-radius: 32px;
@@ -42,12 +45,13 @@
   --blogs-card-badge-line-height: 1.6;
   --blogs-card-badge-blur: 68px;
   --blogs-card-types-gap: 8px;
-  --blogs-card-title-margin-top: 20px;
-  --blogs-card-title-size: 24px;
+  --blogs-card-title-margin-top: 0px;
+  --blogs-card-title-size: 16px;
   --blogs-card-title-line-height: 1.4;
   --blogs-card-date-margin-top: 16px;
   --blogs-card-meta-size: 12px;
   --blogs-card-meta-line-height: 1.2;
+  --blogs-card-meta-stack-gap: 0px;
   --blogs-card-footer-gap: 12px;
   --blogs-card-footer-padding-top: 24px;
   --blogs-card-author-image-width: 24px;
@@ -55,7 +59,7 @@
   --color-blogs-title: rgb(12 12 12 / 0.82);
   --color-blogs-card-badge-bg: #ffe700;
   --color-blogs-card-bg: #ffffff;
-  --color-blogs-card-border: rgb(0 0 0 / 0.08);
+  --color-blogs-card-border: transparent;
   --color-blogs-card-badge-text: #2558b4;
   --color-blogs-detail-title: #2c3134;
   --color-blogs-card-title: #2c3134;
@@ -76,9 +80,16 @@
     --blogs-title-box-height: 72px;
     --blogs-cards-gap: 36px;
     --blogs-card-max-width: 100%;
+    --blogs-card-mobile-height: auto;
+    --blogs-card-padding: 16px;
+    --blogs-card-shadow: 0 16px 40px 0 rgb(0 0 0 / 0.06);
     --blogs-card-gap: 20px;
     --blogs-card-image-width: 220px;
     --blogs-card-image-height: 270px;
+    --blogs-card-content-gap: 0px;
+    --blogs-card-content-padding-bottom: 0px;
+    --color-blogs-card-border: rgb(0 0 0 / 0.08);
+    --blogs-card-title-margin-top: 8px;
     --blogs-card-title-size: 24px;
     --blogs-card-title-line-height: 1.4;
   }
@@ -100,8 +111,8 @@
     --blogs-card-gap: 16px;
     --blogs-card-image-width: 190px;
     --blogs-card-image-height: 238px;
-    --blogs-card-title-margin-top: 8px;
     --blogs-card-title-size: 24px;
+    --blogs-card-title-margin-top: 8px;
     --blogs-card-title-line-height: 1.4;
     --blogs-card-date-margin-top: 18px;
     --blogs-card-footer-padding-top: 18px;

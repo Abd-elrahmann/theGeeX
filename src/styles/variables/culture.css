@@ -93,6 +93,8 @@
 
     --culture-margin-top: calc(var(--section-stack-gap) - 28px);
     --culture-section-exit-vh: 8;
+    --culture-stage-height: 100svh;
+    --culture-sticky-top: 8svh;
     --culture-section-gap: 16px;
     --culture-grid-gap: 10px;
     --culture-card-radius: 24px;

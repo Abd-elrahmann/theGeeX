@@ -55,12 +55,13 @@
   --navbar-rounded-width: 864px;
   --navbar-rounded-padding-y: 16px;
   --navbar-rounded-padding-x: 32px;
-  --navbar-rounded-offset-top: 8px;
+  --navbar-rounded-offset-top: 10px;
   --navbar-rounded-radius: 99px;
   --navbar-rounded-section-gap: 10px;
+  --navbar-rounded-border-color: rgb(0 0 0 / 0.03);
   --navbar-rounded-shadow-color: rgb(0 0 0 / 0.05);
-  --navbar-rounded-shadow-x: 0;
-  --navbar-rounded-shadow-y: 0;
+  --navbar-rounded-shadow-x: 0px;
+  --navbar-rounded-shadow-y: 1px;
   --navbar-rounded-shadow-blur: 10px;
   --navbar-rounded-shadow: var(--navbar-rounded-shadow-x) var(--navbar-rounded-shadow-y) var(--navbar-rounded-shadow-blur) 0 var(--navbar-rounded-shadow-color);
   --navbar-logo-width: 66px;

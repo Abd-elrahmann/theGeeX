@@ -363,6 +363,7 @@ body::before {
   margin-inline: 0;
   padding-block: 0;
   padding-inline: var(--navbar-mobile-padding-x);
+  border: 0 solid transparent;
   border-radius: 0;
   box-shadow: none;
 }
@@ -372,8 +373,11 @@ body::before {
   max-width: calc(100% - 2rem);
   height: 100%;
   margin-inline: auto;
-  padding-block: 0;
-  padding-inline: var(--navbar-rounded-padding-x);
+  padding: var(--navbar-rounded-padding-y);
+  border: 1px solid var(--navbar-rounded-border-color);
+  background-color: var(--color-surface);
+  -webkit-backdrop-filter: blur(var(--navbar-blur));
+  backdrop-filter: blur(var(--navbar-blur));
   border-radius: var(--navbar-rounded-radius);
   box-shadow: var(--navbar-rounded-shadow);
 }

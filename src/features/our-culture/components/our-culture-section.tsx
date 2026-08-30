@@ -74,7 +74,7 @@ export function OurCultureSection() {
       >
         <MotionConfig transition={cultureAnimationTransition}>
           <div className="relative h-(--culture-section-scroll-height) w-full">
-            <div className="sticky top-0 grid h-svh min-h-svh w-full grid-rows-[auto_minmax(0,1fr)] overflow-visible">
+            <div className="sticky top-(--culture-sticky-top) grid h-(--culture-stage-height) min-h-(--culture-stage-height) w-full grid-rows-[auto_minmax(0,1fr)] overflow-visible">
               <div className="mx-auto flex w-full max-w-(--culture-container-max-width) flex-col gap-(--culture-section-gap)">
                 <OurCultureTitle />
 

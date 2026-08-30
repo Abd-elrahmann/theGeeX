@@ -14,8 +14,7 @@ export function AmbitionHeadline() {
   return (
     <div
       className={cn(
-        "mx-auto flex w-full min-w-0 max-w-(--ambition-text-width) flex-col flex-nowrap items-center text-center",
-        "gap-(--ambition-text-gap)",
+        "relative mx-auto h-(--ambition-text-height) w-full min-w-0 max-w-(--ambition-text-width) text-center",
         "lg:h-auto lg:w-fit lg:max-w-(--ambition-text-width) lg:shrink-0 lg:items-start lg:text-left",
       )}
     >
@@ -23,9 +22,10 @@ export function AmbitionHeadline() {
         className={cn(
           ambitionTextClassName,
           "text-(--color-ambition-primary)",
-          "mx-auto w-full max-w-full min-w-0 text-center whitespace-nowrap",
-          "overflow-visible md:max-lg:overflow-hidden",
-          "lg:w-auto lg:overflow-visible lg:whitespace-nowrap lg:text-left",
+          "absolute left-1/2 top-0 h-auto w-auto -translate-x-1/2 whitespace-pre text-center not-italic",
+          "overflow-visible",
+          "lg:static lg:mx-auto lg:w-full lg:max-w-full lg:min-w-0 lg:translate-x-0 lg:whitespace-nowrap lg:text-left",
+          "lg:overflow-visible",
         )}
       >
         {primaryLine}
@@ -33,9 +33,9 @@ export function AmbitionHeadline() {
       <p
         className={cn(
           ambitionTextClassName,
-          "mx-auto w-full max-w-full min-w-0 text-center whitespace-nowrap text-brand",
-          "overflow-visible md:max-lg:overflow-hidden",
-          "lg:flex lg:w-auto lg:overflow-visible lg:items-start lg:text-left",
+          "absolute bottom-0 left-1/2 flex h-auto w-auto -translate-x-1/2 items-start whitespace-pre text-center text-brand",
+          "overflow-visible italic",
+          "lg:static lg:mx-auto lg:w-auto lg:translate-x-0 lg:whitespace-nowrap lg:text-left",
         )}
       >
         <span
@@ -47,7 +47,7 @@ export function AmbitionHeadline() {
         >
           {accentAlignSpacer}
         </span>
-        <span className="italic">{accentLine}</span>
+        <span>{accentLine}</span>
       </p>
     </div>
   );

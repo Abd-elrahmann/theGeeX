@@ -1,20 +1,20 @@
 :root {
-  --color-services-title: rgb(0 0 0 / 0.12);
-  --color-services-title-gradient-start: rgb(0 0 0 / 0.48);
-  --color-services-title-gradient-mid: rgb(0 0 0 / 0.24);
-  --color-services-title-gradient-end: rgb(0 0 0 / 0);
+  --color-services-title: rgb(12 12 12 / 0.82);
+  --color-services-title-gradient-start: rgb(12 12 12 / 0.32);
+  --color-services-title-gradient-mid: rgb(12 12 12 / 0.16);
+  --color-services-title-gradient-end: rgb(12 12 12 / 0.03);
   --services-title-gradient: linear-gradient(
     180deg,
     var(--color-services-title-gradient-start) 0%,
-    var(--color-services-title-gradient-mid) 32%,
+    var(--color-services-title-gradient-mid) 48%,
     var(--color-services-title-gradient-end) 100%
   );
-  --services-title-font-weight: 600;
+  --services-title-font-weight: 400;
   --services-title-box-height: auto;
   --services-title-mask: linear-gradient(
     0deg,
     rgb(0 0 0 / 0) 0%,
-    rgb(0 0 0 / 1) 38%
+    rgb(0 0 0 / 1) 24%
   );
   --color-services-nav-active-text: #0e0e0e;
   --color-services-nav-inactive-text: rgb(14 14 14 / 0.6);
@@ -23,14 +23,13 @@
   --color-services-content-bg: var(--color-services-nav-active-bg);
   --color-services-content-accent: var(--color-brand);
   --color-services-content-text: #0e0e0e;
-  --color-services-content-arrow: var(--color-cta-text);
+  --color-services-content-arrow: #5c5c5c;
   --color-services-section-cursor-bg: #ffffff;
-  --color-services-section-cursor-text: #2c3134;
   --services-container-max-width: 1200px;
   --services-padding-x: 16px;
   --services-padding-y: 48px;
-  --services-title-size: clamp(72px, 18vw, 120px);
-  --services-title-line-height: 1;
+  --services-title-size: 72px;
+  --services-title-line-height: 1.2;
   --services-title-height: auto;
   --services-title-heading-z-index: 1;
   --services-title-text-z-index: 4;
@@ -53,7 +52,6 @@
   --services-grid-width: 100%;
   --services-grid-template-columns: minmax(0, 1fr);
   --services-nav-column-min-width: 0px;
-  --services-nav-width: 100%;
   --services-nav-list-gap: 14px;
   --services-nav-offset-top: 0px;
   --services-nav-offset-bottom: 0px;
@@ -84,10 +82,11 @@
   --services-content-gap: 8px;
   --services-content-margin: 5px;
   --services-content-radius: 16px;
-  --services-content-padding-top: 10px;
-  --services-content-padding-left: 10px;
-  --services-content-padding-right: 8px;
-  --services-content-padding-bottom: 8px;
+  --services-content-padding: 24px 16px;
+  --services-content-padding-top: 24px;
+  --services-content-padding-left: 16px;
+  --services-content-padding-right: 16px;
+  --services-content-padding-bottom: 24px;
   --services-content-header-desc-gap: 12px;
   --services-content-bullet-size: 4px;
   --services-content-header-size: 20px;
@@ -177,7 +176,7 @@
 @media (max-width: 799.98px) {
   :root {
     --services-title-size: 72px;
-    --services-title-line-height: 1;
+    --services-title-line-height: 1.2;
     --services-title-box-height: 72px;
   }
 }
@@ -220,6 +219,7 @@
     --services-page-card-header-gap: 10px;
     --services-page-service-title-row-gap: 8px;
     --services-content-header-desc-gap: 16px;
+    --services-content-padding: 16px 14px 14px 16px;
     --services-content-padding-top: 16px;
     --services-content-padding-left: 16px;
     --services-content-padding-right: 14px;
@@ -233,6 +233,7 @@
 
 @media (min-width: 1024px) {
   :root {
+    --services-title-font-weight: 600;
     --services-padding-x: 0px;
     --services-page-description-size: 16px;
     --services-page-description-line-height: 1.6;
@@ -289,6 +290,7 @@
     --services-nav-item-radius: 16px;
     --services-nav-index-size: 18px;
     --services-nav-title-size: 18px;
+    --services-content-padding: 20px 16px 16px 20px;
     --services-content-padding-top: 20px;
     --services-content-padding-left: 20px;
     --services-content-padding-right: 16px;

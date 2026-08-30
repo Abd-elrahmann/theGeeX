@@ -18,7 +18,7 @@ function subscribeToEnvironmentChange(): () => void {
 export function Navbar() {
   const { variant, isVisible } = useNavbarState();
   const isDesktop = useDesktopBreakpoint();
-  const appliedVariant = isDesktop ? variant : "primary";
+  const appliedVariant = variant;
   const isRoundedNav = appliedVariant === "rounded";
   const [isMobileMenuRequested, setIsMobileMenuRequested] = useState(false);
   const isIosSafariDevice = useSyncExternalStore(

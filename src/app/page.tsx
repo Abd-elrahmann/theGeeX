@@ -40,13 +40,13 @@ export default function Home() {
       <BlogsSection />
       <PackagesSection />
       <div className="relative mt-(--lets-talk-margin-top) min-h-(--lets-talk-footer-reveal-height) md:mt-0">
-        <div className="sticky z-10" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
-          <LetsTalkSection revealFooterOnScroll />
-        </div>
+          <div className="sticky z-10" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
+            <LetsTalkSection revealFooterOnScroll />
+          </div>
 
-        <div className="sticky z-20 mt-(--footer-reveal-gap)" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
-          <SiteFooter revealFromPreviousSection />
-        </div>
+          <div className="sticky z-20 mt-(--footer-reveal-gap)" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
+            <SiteFooter revealFromPreviousSection />
+          </div>
       </div>
     </main>
   );

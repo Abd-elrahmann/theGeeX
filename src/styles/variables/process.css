@@ -34,8 +34,8 @@
     var(--process-card-sticky-top-5) - var(--process-card-sticky-top-1)
   );
   --process-card-radius: 16px;
-  --process-card-padding-x: 40px;
-  --process-card-padding-y: 36px;
+  --process-card-padding-x: 24px;
+  --process-card-padding-y: 24px;
   --process-card-content-padding-x: 24px;
   --process-card-content-padding-y: 20px;
   --process-card-header-gap: 28px;
@@ -79,7 +79,15 @@
 
 @media (max-width: 799.98px) {
   :root {
+    --process-cards-bottom-padding: 0px;
+    --process-cards-tail-height: var(--process-card-reveal-height);
+    --process-card-index-size: 42px;
     --process-card-title-letter-spacing: 0px;
+    --process-card-title-size: 40px;
+    --process-card-title-weight: 600;
+    --process-card-description-size: 16px;
+    --process-card-description-line-height: 1.6;
+    --process-card-description-weight: 500;
   }
 }
 
@@ -94,7 +102,7 @@
     --process-card-width: min(100%, 620px);
     --process-card-height: 156px;
     --process-card-gap: 14px;
-    --process-card-radius: 18px;
+    --process-card-radius: 16px;
     --process-card-content-padding-x: 24px;
     --process-card-content-padding-y: 22px;
     --process-card-index-padding-x: 24px;
@@ -127,7 +135,7 @@
     --process-cards-column-max-width: 680px;
     --process-card-width: min(100%, 620px);
     --process-card-height: 250px;
-    --process-card-padding-x: 28px;
+    --process-card-padding-x: 24px;
     --process-card-padding-y: 24px;
     --process-card-content-padding-x: 28px;
     --process-card-content-padding-y: 24px;

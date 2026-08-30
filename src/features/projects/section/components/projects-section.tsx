@@ -17,6 +17,8 @@ import { ProjectCard } from "./project-card";
 import { ProjectsTitle } from "./projects-title";
 import {
   projects,
+  projectsCardParallaxTravel,
+  projectsCardSpeedBase,
   projectsCursorLabel,
   projectsFirstCardEnterProgress,
   projectsFirstCardLiftDistance,
@@ -90,6 +92,10 @@ export function ProjectsSection() {
 
     return -easeOutCubic(liftProgress) * liftDistance;
   });
+
+  const mobileTitleY = useTransform(animationProgress, (progress) =>
+    isDesktop ? 0 : -progress * projectsCardParallaxTravel * projectsCardSpeedBase,
+  );
 
   const exitProgress = useTransform(scrollYProgress, (progress) => {
     if (progress <= mainAnimationEnd) {
@@ -216,7 +222,9 @@ export function ProjectsSection() {
               )}
               style={{ y: sectionLiftY }}
             >
-              <ProjectsTitle />
+              <motion.div style={{ y: mobileTitleY }}>
+                <ProjectsTitle />
+              </motion.div>
 
               <div className="relative z-(--projects-card-stack-z-index) min-h-0 overflow-visible p-(--projects-card-outer-padding)">
                 <div

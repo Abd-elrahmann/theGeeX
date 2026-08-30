@@ -20,10 +20,10 @@ export function BlogCardMeta({
   authorImageAfterText = false,
 }: BlogCardMetaProps) {
   return (
-    <div className={cn("order-3 flex w-full flex-col items-center md:order-0 md:items-start", metaContainerClassName)}>
+    <div className={cn("order-3 flex w-full flex-col items-start gap-(--blogs-card-meta-stack-gap) md:order-0 md:items-start", metaContainerClassName)}>
       <p
         className={cn(
-          "mt-(--blogs-card-date-margin-top) h-auto w-auto whitespace-pre text-center font-poppins md:text-left",
+          "order-0 mt-(--blogs-card-date-margin-top) h-auto w-auto whitespace-pre text-left font-poppins",
           "text-(length:--blogs-card-meta-size) leading-(--blogs-card-meta-line-height)",
           "font-normal tracking-normal text-(--color-blogs-card-meta)",
           dateClassName,
@@ -34,13 +34,13 @@ export function BlogCardMeta({
 
       <div
         className={cn(
-          "flex w-full items-center justify-center gap-(--blogs-card-footer-gap) pt-(--blogs-card-footer-padding-top) md:justify-start",
+          "order-1 flex h-min w-fit items-center justify-center gap-2 pt-(--blogs-card-footer-padding-top)",
           footerClassName,
         )}
       >
         <BlogAuthorByline
           author={author}
-          containerClassName="flex items-center justify-center gap-(--blogs-card-footer-gap)"
+          containerClassName="flex h-min w-fit items-center justify-center gap-2"
           imageWrapperClassName="h-(--blogs-card-author-image-height) w-(--blogs-card-author-image-width)"
           textContainerClassName="contents"
           labelClassName="whitespace-pre !text-(length:--blogs-card-meta-size) !leading-(--blogs-card-meta-line-height) normal-case !tracking-normal text-(--color-blogs-card-meta)"
