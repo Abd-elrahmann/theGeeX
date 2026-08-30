@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { usePathname } from "next/navigation";
 import type { LenisOptions } from "lenis";
@@ -8,7 +8,7 @@ import type { LenisOptions } from "lenis";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { isIosSafari } from "@/lib/is-ios-safari";
+import { isIOSDevice } from "@/lib/is-ios-safari";
 import { bindLenisScrollTrigger, scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import {
   prepareFreshPageScrollSession,
@@ -22,6 +22,13 @@ const DESKTOP_WHEEL_MULTIPLIER = 0.45;
 const DESKTOP_TOUCH_MULTIPLIER = 0.55;
 const LOW_POWER_DEVICE_MEMORY_GB = 4;
 const LOW_POWER_CPU_THREADS = 4;
+const IOS_TOUCH_DELTA_LIMIT = 80;
+const IOS_WHEEL_DELTA_LIMIT = 80;
+const IOS_TOUCH_MULTIPLIER = 0.08;
+const IOS_LERP = 0.035;
+const IOS_SCROLL_UPDATE_INTERVAL_MS = 100;
+const IOS_SCROLL_UPDATE_VELOCITY = 2;
+const IOS_SCROLL_SKIP_VELOCITY = 3;
 
 function isLowPowerMobileDevice(): boolean {
   if (typeof window === "undefined") {
@@ -86,6 +93,9 @@ function ScrollInputNormalizer({ enabled, isSubDesktop }: ScrollInputNormalizerP
 function LenisScrollTriggerSync() {
   const lenis = useLenis();
   const pathname = usePathname();
+  const iosScrollVelocityRef = useRef(0);
+  const iosLastScrollTimeRef = useRef(0);
+  const isIOSWebKit = isIOSDevice();
 
   useEffect(() => {
     if (!lenis) {
@@ -101,8 +111,24 @@ function LenisScrollTriggerSync() {
       return;
     }
 
-    const handleScroll = () => {
-      ScrollTrigger.update();
+    const handleScroll = ({ velocity }: { velocity: number }) => {
+      if (!isIOSWebKit) {
+        ScrollTrigger.update();
+        return;
+      }
+
+      const now = Date.now();
+      const nextVelocity = Math.abs(velocity);
+
+      if (
+        nextVelocity <= IOS_SCROLL_UPDATE_VELOCITY ||
+        now - iosLastScrollTimeRef.current >= IOS_SCROLL_UPDATE_INTERVAL_MS
+      ) {
+        ScrollTrigger.update();
+        iosLastScrollTimeRef.current = now;
+      }
+
+      iosScrollVelocityRef.current = nextVelocity;
     };
 
     lenis.on("scroll", handleScroll);
@@ -111,6 +137,12 @@ function LenisScrollTriggerSync() {
 
     const tickerCallback = (time: number) => {
       lenis.raf(time * 1000);
+
+      if (isIOSWebKit && iosScrollVelocityRef.current > IOS_SCROLL_SKIP_VELOCITY) {
+        return;
+      }
+
+      ScrollTrigger.update();
     };
 
     gsap.ticker.add(tickerCallback);
@@ -124,7 +156,7 @@ function LenisScrollTriggerSync() {
       unbindScrollerProxy();
       gsap.ticker.remove(tickerCallback);
     };
-  }, [lenis]);
+  }, [isIOSWebKit, lenis]);
 
   return null;
 }
@@ -137,22 +169,49 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const isSubDesktop = useMediaQuery(SUB_DESKTOP_MEDIA_QUERY);
   const scrollMode = isSubDesktop ? "sub-desktop" : "desktop";
   const pathname = usePathname();
-  const shouldDisableSmoothScroll = pathname === "/book-a-meeting" || isSubDesktop;
+  const isIOSWebKit = isIOSDevice();
+  const shouldDisableSmoothScroll = pathname === "/book-a-meeting" || (isSubDesktop && !isIOSWebKit);
   const shouldAvoidMobileInputNormalization =
     isSubDesktop &&
     typeof window !== "undefined" &&
-    (isIosSafari() ||
-      isLowPowerMobileDevice() ||
+    (isLowPowerMobileDevice() ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const shouldEnableInputNormalization =
-    pathname !== "/book-a-meeting" && isSubDesktop && !shouldAvoidMobileInputNormalization;
+    pathname !== "/book-a-meeting" &&
+    isSubDesktop &&
+    (isIOSWebKit || !shouldAvoidMobileInputNormalization);
+
+  useEffect(() => {
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    return () => {
+      ScrollTrigger.config({ ignoreMobileResize: false });
+    };
+  }, []);
 
   const normalizeLenisInput: NonNullable<LenisOptions["virtualScroll"]> = (data) => {
     const isTouchEvent = isTouchLikeEvent(data.event);
-    const deltaLimit = isTouchEvent ? LENIS_TOUCH_DELTA_LIMIT : LENIS_WHEEL_DELTA_LIMIT;
+    const deltaLimit = isTouchEvent
+      ? isIOSWebKit
+        ? IOS_TOUCH_DELTA_LIMIT
+        : LENIS_TOUCH_DELTA_LIMIT
+      : isIOSWebKit
+        ? IOS_WHEEL_DELTA_LIMIT
+        : LENIS_WHEEL_DELTA_LIMIT;
 
     data.deltaX = clampGestureDelta(data.deltaX, deltaLimit);
     data.deltaY = clampGestureDelta(data.deltaY, deltaLimit);
+
+    if (isIOSWebKit) {
+      const velocity = Math.abs(data.deltaY);
+
+      if (velocity > 50) {
+        const reductionFactor = Math.max(0.5, 1 - (velocity - 50) / 200);
+
+        data.deltaX *= reductionFactor;
+        data.deltaY *= reductionFactor;
+      }
+    }
 
     return true;
   };
@@ -164,6 +223,26 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       window.scrollTo(0, 0);
     }
   }, [pathname]);
+
+  const lenisOptions: LenisOptions = isIOSWebKit && isSubDesktop
+    ? {
+        autoRaf: false,
+        syncTouch: false,
+        lerp: IOS_LERP,
+        touchMultiplier: IOS_TOUCH_MULTIPLIER,
+        wheelMultiplier: IOS_TOUCH_MULTIPLIER,
+        virtualScroll: normalizeLenisInput,
+        duration: 1.2,
+        easing: (time) => Math.min(1, 1.001 - 2 ** (-10 * time)),
+      }
+    : {
+        autoRaf: false,
+        syncTouch: false,
+        lerp: isSubDesktop ? 0.02 : 0.08,
+        touchMultiplier: isSubDesktop ? 0.12 : DESKTOP_TOUCH_MULTIPLIER,
+        wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
+        virtualScroll: normalizeLenisInput,
+      };
 
   if (shouldDisableSmoothScroll) {
     return (
@@ -181,14 +260,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     <ReactLenis
       key={scrollMode}
       root
-      options={{
-        autoRaf: false,
-        syncTouch: false,
-        lerp: isSubDesktop ? 0.02 : 0.08,
-        touchMultiplier: isSubDesktop ? 0.12 : DESKTOP_TOUCH_MULTIPLIER,
-        wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
-        virtualScroll: normalizeLenisInput,
-      }}
+      options={lenisOptions}
     >
       <ScrollInputNormalizer
         enabled={shouldEnableInputNormalization}

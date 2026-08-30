@@ -74,7 +74,7 @@ export function ServiceImageSlidePanel({
             <ServiceImage
               service={service}
               variant={imageVariant}
-              eager={isActive || isTransitioning}
+              eager
             />
           </motion.div>
         );

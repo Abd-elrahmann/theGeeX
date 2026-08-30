@@ -57,7 +57,9 @@ export function Navbar() {
       ref={headerRef}
       className={cn(
         "fixed inset-x-0 top-0 z-(--navbar-z-index) box-border h-(--navbar-height) w-full max-w-full",
-        isMobileMenuOpen ? "overflow-visible" : "overflow-hidden lg:overflow-visible",
+        isMobileMenuOpen || isRoundedNav
+          ? "overflow-visible"
+          : "overflow-hidden lg:overflow-visible",
       )}
       style={
         {
@@ -68,10 +70,11 @@ export function Navbar() {
           willChange: "transform",
           backfaceVisibility: "hidden",
           WebkitFontSmoothing: "antialiased",
-          ...(isDesktop
+          ...(isRoundedNav
             ? {
-                height:
-                  "calc(var(--navbar-height) + var(--navbar-rounded-offset-top) + 2 * var(--navbar-rounded-padding-y))",
+                height: isDesktop
+                  ? "calc(var(--navbar-height) + var(--navbar-rounded-offset-top) + 2 * var(--navbar-rounded-padding-y))"
+                  : "calc(var(--navbar-height) + var(--navbar-rounded-offset-top))",
               }
             : null),
         }
@@ -93,7 +96,7 @@ export function Navbar() {
             isIosSafariDevice ? "navbar-nav-shell--ios-safari" : "backdrop-blur-(--navbar-blur)",
             "max-lg:justify-between lg:justify-normal",
             isRoundedNav ? "max-lg:h-full lg:h-auto" : "max-lg:h-full lg:h-full",
-            isRoundedNav && "lg:mt-(--navbar-rounded-offset-top)",
+            isRoundedNav && "mt-(--navbar-rounded-offset-top)",
             isRoundedNav ? "navbar-nav-shell--rounded" : "navbar-nav-shell--primary",
           )}
         >

@@ -23,6 +23,7 @@ import { ServiceContent } from "@/features/services/shared/components/service-co
 import { ServiceImage } from "@/features/services/shared/components/service-image";
 import { ServicesSectionCursor } from "@/features/services/shared/components/services-section-cursor";
 import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
+import { useMobileScrollStepGuard } from "@/hooks/use-mobile-scroll-step-guard";
 import { ServicesGrid } from "./services-grid";
 import { ServiceImageSlidePanel } from "./service-image-slide-panel";
 import { ServiceSlidePanel } from "./service-slide-panel";
@@ -62,13 +63,6 @@ export function ServicesSection() {
   const activeIndexRef = useRef(0);
   const mobileQueuedTargetIndexRef = useRef<number | null>(null);
   const mobileStepFrameRef = useRef<number | null>(null);
-  const mobileTouchStartYRef = useRef<number | null>(null);
-  const mobileTouchStepHandledRef = useRef(false);
-  const mobileGestureLockedRef = useRef(false);
-  const mobileGestureTargetIndexRef = useRef<number | null>(null);
-  const mobileGestureTargetScrollYRef = useRef<number | null>(null);
-  const mobileGestureUnlockFrameRef = useRef<number | null>(null);
-  const mobileGestureSettledFramesRef = useRef(0);
   const [isGridHovered, setIsGridHovered] = useState(false);
   const [mobileStageMetrics, setMobileStageMetrics] = useState({
     stageHeight: 0,
@@ -111,7 +105,7 @@ export function ServicesSection() {
       );
       const currentIndex = activeIndexRef.current;
       const queuedTargetIndex =
-        isIosSafariDevice && targetIndex !== currentIndex
+        targetIndex !== currentIndex
           ? clampActiveIndex(currentIndex + Math.sign(targetIndex - currentIndex), services.length)
           : targetIndex;
 
@@ -131,19 +125,13 @@ export function ServicesSection() {
           return;
         }
 
-        const nextIndex = currentIndex + Math.sign(queuedTargetIndex - currentIndex);
-
-        activeIndexRef.current = nextIndex;
-        setActiveIndex(nextIndex);
-
-        if (nextIndex !== queuedTargetIndex) {
-          mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
-        }
+        activeIndexRef.current = queuedTargetIndex;
+        setActiveIndex(queuedTargetIndex);
       };
 
       mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
     },
-    [isIosSafariDevice, setActiveIndex],
+    [setActiveIndex],
   );
 
   const getDesktopScrollStepMetrics = useCallback(() => {
@@ -219,62 +207,37 @@ export function ServicesSection() {
     [getMobileScrollStepMetrics],
   );
 
-  const releaseMobileGestureLock = useCallback(() => {
-    mobileGestureLockedRef.current = false;
-    mobileGestureTargetIndexRef.current = null;
-    mobileGestureTargetScrollYRef.current = null;
-    mobileGestureSettledFramesRef.current = 0;
+  const {
+    isGestureLockedRef: mobileGestureLockedRef,
+    isStepHandledRef: mobileTouchStepHandledRef,
+    releaseGestureLock: releaseMobileGestureLock,
+  } = useMobileScrollStepGuard({
+    enabled: hasHydrated && !isDesktop && !isTablet && isIosSafariDevice && canSyncMobileServices,
+    elementRef: mobileScrollRef,
+    canHandleStep: (direction) => {
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
 
-    if (mobileGestureUnlockFrameRef.current !== null) {
-      window.cancelAnimationFrame(mobileGestureUnlockFrameRef.current);
-      mobileGestureUnlockFrameRef.current = null;
-    }
-  }, []);
-
-  const lockMobileGestureUntilScrollSettles = useCallback(
-    (targetIndex: number, targetScrollY: number | null) => {
-      if (targetScrollY === null) {
-        releaseMobileGestureLock();
-        return;
-      }
-
-      mobileGestureLockedRef.current = true;
-      mobileGestureTargetIndexRef.current = targetIndex;
-      mobileGestureTargetScrollYRef.current = targetScrollY;
-      mobileGestureSettledFramesRef.current = 0;
-
-      if (mobileGestureUnlockFrameRef.current !== null) {
-        window.cancelAnimationFrame(mobileGestureUnlockFrameRef.current);
-      }
-
-      const waitForScrollToSettle = () => {
-        const lockedTargetScrollY = mobileGestureTargetScrollYRef.current;
-
-        if (lockedTargetScrollY === null) {
-          releaseMobileGestureLock();
-          return;
-        }
-
-        if (
-          Math.abs(window.scrollY - lockedTargetScrollY) <= SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX
-        ) {
-          mobileGestureSettledFramesRef.current += 1;
-        } else {
-          mobileGestureSettledFramesRef.current = 0;
-        }
-
-        if (mobileGestureSettledFramesRef.current >= SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT) {
-          releaseMobileGestureLock();
-          return;
-        }
-
-        mobileGestureUnlockFrameRef.current = window.requestAnimationFrame(waitForScrollToSettle);
-      };
-
-      mobileGestureUnlockFrameRef.current = window.requestAnimationFrame(waitForScrollToSettle);
+      return nextIndex !== currentIndex;
     },
-    [releaseMobileGestureLock],
-  );
+    onStep: (direction) => {
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
+
+      if (nextIndex === currentIndex) {
+        return null;
+      }
+
+      mobileQueuedTargetIndexRef.current = nextIndex;
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+
+      return scrollMobileToIndex(nextIndex);
+    },
+    swipeThresholdPx: SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX,
+    settleEpsilonPx: SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX,
+    settledFrameCount: SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT,
+  });
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
@@ -320,7 +283,7 @@ export function ServicesSection() {
       return;
     }
 
-    if (isIosSafariDevice && (mobileTouchStepHandledRef.current || mobileGestureLockedRef.current)) {
+    if (mobileTouchStepHandledRef.current || mobileGestureLockedRef.current) {
       return;
     }
 
@@ -348,97 +311,6 @@ export function ServicesSection() {
 
     setActiveIndex(0);
   }, [isDesktop, releaseMobileGestureLock, setActiveIndex, shouldTrackMobileScroll]);
-
-  useEffect(() => {
-    if (isDesktop || isTablet || !isIosSafariDevice || !canSyncMobileServices) {
-      mobileTouchStartYRef.current = null;
-      mobileTouchStepHandledRef.current = false;
-      return;
-    }
-
-    const sectionElement = mobileScrollRef.current;
-
-    if (!sectionElement) {
-      return;
-    }
-
-    const handleTouchStart = (event: TouchEvent) => {
-      if (event.touches.length !== 1) {
-        mobileTouchStartYRef.current = null;
-        mobileTouchStepHandledRef.current = false;
-        return;
-      }
-
-      mobileTouchStartYRef.current = event.touches[0]?.clientY ?? null;
-      mobileTouchStepHandledRef.current = false;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      const touchStartY = mobileTouchStartYRef.current;
-
-      if (
-        touchStartY === null ||
-        mobileGestureLockedRef.current ||
-        mobileTouchStepHandledRef.current ||
-        event.touches.length !== 1
-      ) {
-        return;
-      }
-
-      const currentY = event.touches[0]?.clientY;
-
-      if (typeof currentY !== "number") {
-        return;
-      }
-
-      const deltaY = touchStartY - currentY;
-
-      if (Math.abs(deltaY) < SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX) {
-        return;
-      }
-
-      const direction = deltaY > 0 ? 1 : -1;
-      const currentIndex = activeIndexRef.current;
-      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
-
-      if (nextIndex === currentIndex) {
-        return;
-      }
-
-      event.preventDefault();
-      mobileTouchStepHandledRef.current = true;
-      mobileQueuedTargetIndexRef.current = nextIndex;
-      mobileGestureTargetIndexRef.current = nextIndex;
-      activeIndexRef.current = nextIndex;
-      setActiveIndex(nextIndex);
-      lockMobileGestureUntilScrollSettles(nextIndex, scrollMobileToIndex(nextIndex));
-    };
-
-    const handleTouchEnd = () => {
-      mobileTouchStartYRef.current = null;
-      mobileTouchStepHandledRef.current = false;
-    };
-
-    sectionElement.addEventListener("touchstart", handleTouchStart, { passive: true });
-    sectionElement.addEventListener("touchmove", handleTouchMove, { passive: false });
-    sectionElement.addEventListener("touchend", handleTouchEnd);
-    sectionElement.addEventListener("touchcancel", handleTouchEnd);
-
-    return () => {
-      sectionElement.removeEventListener("touchstart", handleTouchStart);
-      sectionElement.removeEventListener("touchmove", handleTouchMove);
-      sectionElement.removeEventListener("touchend", handleTouchEnd);
-      sectionElement.removeEventListener("touchcancel", handleTouchEnd);
-    };
-  }, [
-    canSyncMobileServices,
-    isDesktop,
-    isIosSafariDevice,
-    isTablet,
-    lockMobileGestureUntilScrollSettles,
-    scrollMobileToIndex,
-    setActiveIndex,
-  ]);
 
   useEffect(() => {
     return () => {

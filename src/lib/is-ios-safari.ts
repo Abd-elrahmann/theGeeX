@@ -10,3 +10,13 @@ export function isIosSafari(): boolean {
 
   return (isAppleDevice || isIpadOs) && isAppleWebKit;
 }
+
+export function isIOSDevice(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const { userAgent, platform, maxTouchPoints } = window.navigator;
+
+  return /iPad|iPhone|iPod/i.test(userAgent) || (platform === "MacIntel" && maxTouchPoints > 1);
+}
