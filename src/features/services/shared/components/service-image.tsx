@@ -36,11 +36,16 @@ export function ServiceImage({
   const resolvedImageAlt = imageAlt ?? service.imageAlt;
   const isPlaceholder = resolvedImageSrc === servicesImagePlaceholder;
   const imageClassName = cn(
-    "object-cover object-center",
+    "object-cover object-center transform-gpu backface-hidden will-change-transform",
     isPage ? "rounded-none md:rounded-l-none md:rounded-r-(--services-image-radius)" : "rounded-(--services-image-radius)",
     isPlaceholder && "object-contain p-8",
   );
   const loading = eager ? "eager" : undefined;
+  const imageStyle = {
+    transform: "translateZ(0)",
+    WebkitTransform: "translateZ(0)",
+    WebkitBackfaceVisibility: "hidden" as const,
+  };
 
   const image = (
     <Image
@@ -50,6 +55,7 @@ export function ServiceImage({
       loading={loading}
       sizes={imageSizes}
       className={imageClassName}
+      style={imageStyle}
       priority={eager || service.id === 1}
     />
   );
@@ -70,9 +76,10 @@ export function ServiceImage({
             loading={loading}
             sizes={imageSizes}
             className={cn(
-              "object-cover object-center rounded-(--services-image-radius)",
+              "object-cover object-center rounded-(--services-image-radius) transform-gpu backface-hidden will-change-transform",
               isPlaceholder && "object-contain p-8",
             )}
+            style={imageStyle}
             priority={eager || service.id === 1}
           />
         </div>

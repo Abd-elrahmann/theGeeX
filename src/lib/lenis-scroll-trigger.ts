@@ -25,12 +25,15 @@ export function bindLenisScrollTrigger(lenis: Lenis): () => void {
         height: window.innerHeight,
       };
     },
-    pinType: rootElement.style.transform ? "transform" : "fixed",
+    pinType:"fixed",
   });
 
   return () => {
     ScrollTrigger.scrollerProxy(rootElement, {});
-    activeLenis = null;
+
+    if (activeLenis === lenis) {
+      activeLenis = null;
+    }
   };
 }
 
@@ -38,9 +41,19 @@ export function resizeActiveLenis(): void {
   activeLenis?.resize();
 }
 
-export function scrollToPosition(position: number): void {
+export function getScrollPosition(): number {
+  return activeLenis?.scroll ?? window.scrollY;
+}
+
+interface ScrollToPositionOptions {
+  immediate?: boolean;
+}
+
+export function scrollToPosition(position: number, options: ScrollToPositionOptions = {}): void {
+  const { immediate = false } = options;
+
   if (activeLenis) {
-    activeLenis.scrollTo(position, { immediate: true });
+    activeLenis.scrollTo(position, { immediate });
     return;
   }
 

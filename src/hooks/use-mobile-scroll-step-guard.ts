@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, type RefObject } from "react";
 
+import { getScrollPosition, scrollToPosition } from "@/lib/lenis-scroll-trigger";
+
 interface UseMobileScrollStepGuardOptions {
   enabled: boolean;
   elementRef: RefObject<HTMLElement | null>;
@@ -15,6 +17,7 @@ interface UseMobileScrollStepGuardOptions {
 interface UseMobileScrollStepGuardResult {
   isGestureLockedRef: React.MutableRefObject<boolean>;
   isStepHandledRef: React.MutableRefObject<boolean>;
+  isTouchActiveRef: React.MutableRefObject<boolean>;
   releaseGestureLock: () => void;
 }
 
@@ -72,7 +75,7 @@ export function useMobileScrollStepGuard({
           return;
         }
 
-        if (Math.abs(window.scrollY - lockedTargetScrollY) <= settleEpsilonPx) {
+        if (Math.abs(getScrollPosition() - lockedTargetScrollY) <= settleEpsilonPx) {
           settledFramesRef.current += 1;
         } else {
           settledFramesRef.current = 0;
@@ -150,13 +153,14 @@ export function useMobileScrollStepGuard({
         return;
       }
 
+      if (Math.abs(deltaY) < swipeThresholdPx) {
+        return;
+      }
+
       if (event.cancelable) {
         event.preventDefault();
       }
 
-      if (Math.abs(deltaY) < swipeThresholdPx) {
-        return;
-      }
       const targetScrollY = onStep(direction);
 
       if (targetScrollY === null) {
@@ -165,7 +169,7 @@ export function useMobileScrollStepGuard({
 
       isStepHandledRef.current = true;
 
-      window.scrollTo({ top: targetScrollY, behavior: "auto" });
+      scrollToPosition(targetScrollY);
       lockUntilScrollSettles(targetScrollY);
     };
 
@@ -196,6 +200,7 @@ export function useMobileScrollStepGuard({
   return {
     isGestureLockedRef,
     isStepHandledRef,
+    isTouchActiveRef,
     releaseGestureLock,
   };
 }

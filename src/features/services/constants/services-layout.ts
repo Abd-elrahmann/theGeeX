@@ -8,7 +8,7 @@ export const servicesContentContainerClassName = cn(
 );
 
 export const servicesImageContainerVisualClassName = cn(
-  "block overflow-hidden bg-surface rounded-(--services-image-radius)",
+  "block isolate overflow-hidden bg-surface rounded-(--services-image-radius) contain-[paint]",
 );
 
 export const servicesImageContainerClassName = cn(

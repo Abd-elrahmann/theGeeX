@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 import { cn } from "@/lib/cn";
 
@@ -40,10 +41,36 @@ export function ServiceImageSlidePanel({
   animate = true,
   imageVariant = "desktop",
 }: ServiceImageSlidePanelProps) {
+  const activeService = services[activeIndex];
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const preloaders = services.map((service) => {
+      const image = new window.Image();
+
+      image.src = service.image;
+
+      return image;
+    });
+
+    void Promise.allSettled(
+      preloaders.map((image) =>
+        typeof image.decode === "function" ? image.decode() : Promise.resolve(),
+      ),
+    );
+  }, [services]);
+
+  if (!activeService) {
+    return null;
+  }
+
   if (!animate) {
     return (
       <div className={cn(servicesImageContainerClassName, className)}>
-        <ServiceImage service={services[activeIndex]} variant={imageVariant} eager />
+        <ServiceImage service={activeService} variant={imageVariant} eager />
       </div>
     );
   }
@@ -51,7 +78,7 @@ export function ServiceImageSlidePanel({
   return (
     <div
       className={cn(
-        "relative h-full w-full overflow-hidden rounded-(--services-image-radius) transform-gpu backface-hidden",
+        "relative isolate h-full w-full overflow-hidden rounded-(--services-image-radius) transform-gpu backface-hidden contain-[paint]",
         className,
       )}
     >
@@ -69,6 +96,7 @@ export function ServiceImageSlidePanel({
             transition={servicesImageSlideTransition}
             style={{
               zIndex: isActive ? 2 : isTransitioning ? 1 : 0,
+              WebkitBackfaceVisibility: "hidden",
             }}
           >
             <ServiceImage

@@ -4,41 +4,27 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type Mous
 import { useLenis } from "lenis/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMotionValueEvent, useScroll } from "framer-motion";
 
 import { POINTER_FINE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "@/lib/breakpoints";
 import { cn } from "@/lib/cn";
-import { setExploreCursorZone } from "@/lib/explore-cursor-state";
 import { formatIndex } from "@/lib/format-index";
-import { scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import { isIosSafari } from "@/lib/is-ios-safari";
-import { readRootCssNumber } from "@/lib/read-css-var";
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { services } from "@/features/services/constants/services";
 import { useActiveService } from "@/features/services/hooks/use-active-service";
-import { isPointInsideElement } from "@/features/services/lib/services-cursor-zone";
+import { useServicesDesktopInteractions } from "@/features/services/hooks/use-services-desktop-interactions";
+import { useServicesMobileState } from "@/features/services/hooks/use-services-mobile-state";
 import { ServiceContent } from "@/features/services/shared/components/service-content";
 import { ServiceImage } from "@/features/services/shared/components/service-image";
 import { ServicesSectionCursor } from "@/features/services/shared/components/services-section-cursor";
-import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
-import { useMobileScrollStepGuard } from "@/hooks/use-mobile-scroll-step-guard";
 import { ServicesGrid } from "./services-grid";
 import { ServiceImageSlidePanel } from "./service-image-slide-panel";
 import { ServiceSlidePanel } from "./service-slide-panel";
 import { ServicesTitle } from "./services-title";
 
-const SERVICES_TABLET_STAGE_HEIGHT_PX = 560;
-const SERVICES_TABLET_PANEL_HEIGHT_PX = 346;
 const servicesTabletPanelHeightClassName = "md:max-lg:!h-[346px]";
-const SERVICES_WHEEL_MIN_DELTA = 4;
-const SERVICES_WHEEL_STEP_DELTA = 140;
-const SERVICES_WHEEL_STEP_GUARD_MS = 240;
-const SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX = 24;
-const SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX = 2;
-const SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT = 2;
-const MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX = 1;
 
 export function ServicesSection() {
   const lenis = useLenis();
@@ -49,30 +35,6 @@ export function ServicesSection() {
   const [hasHydrated, setHasHydrated] = useState(false);
   const [isIosSafariDevice, setIsIosSafariDevice] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
-  const mobileScrollRef = useRef<HTMLDivElement>(null);
-  const mobileMeasureRef = useRef<HTMLDivElement>(null);
-  const mobileTitleRef = useRef<HTMLDivElement>(null);
-  const mobileContentMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const mobileImageMeasureRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const lastPointerRef = useRef({ x: -1, y: -1 });
-  const wheelDeltaAccumulatorRef = useRef(0);
-  const lastWheelStepTimeRef = useRef(0);
-  const hoverScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isLenisScrollingRef = useRef(false);
-  const mobileViewportWidthRef = useRef(0);
-  const activeIndexRef = useRef(0);
-  const mobileQueuedTargetIndexRef = useRef<number | null>(null);
-  const mobileStepFrameRef = useRef<number | null>(null);
-  const [isGridHovered, setIsGridHovered] = useState(false);
-  const [mobileStageMetrics, setMobileStageMetrics] = useState({
-    stageHeight: 0,
-    titleHeight: 0,
-    contentHeight: 0,
-    imageHeight: 0,
-    scrollHeight: 0,
-    stickyTop: 0,
-    activationProgressEnd: 1,
-  });
   const {
     containerRef,
     stageRef,
@@ -81,163 +43,39 @@ export function ServicesSection() {
     setActiveIndex,
   } = useActiveService({
     serviceCount: services.length,
-    enabled: false,
+    enabled: true,
   });
-  const [canSyncMobileServices, setCanSyncMobileServices] = useState(false);
-  const shouldTrackMobileScroll = hasHydrated && !isDesktop;
-  const { scrollYProgress } = useScroll({
-    target: shouldTrackMobileScroll ? mobileScrollRef : undefined,
-    offset: ["start start", "end end"],
+  const {
+    mobileScrollRef,
+    mobileMeasureRef,
+    mobileTitleRef,
+    mobileContentMeasureRefs,
+    mobileImageMeasureRefs,
+    mobileStageMetrics,
+    mobileContentHeight,
+    mobileImageHeight,
+    tabletPanelHeight,
+  } = useServicesMobileState({
+    activeIndex,
+    isDesktop,
+    isTablet,
+    hasHydrated,
+    isIosSafariDevice,
+    serviceCount: services.length,
+    containerRef,
+    setActiveIndex,
+  });
+  const { isGridHovered, handleMouseLeave, handleMouseMove } = useServicesDesktopInteractions({
+    lenis,
+    isDesktop,
+    isPointerFine,
+    containerRef,
+    gridRef,
+    activeIndex,
+    serviceCount: services.length,
   });
 
   const activeService = services[activeIndex] ?? services[0];
-  const isExploreCursorActive = isDesktop && isPointerFine && isGridHovered;
-
-  useEffect(() => {
-    activeIndexRef.current = activeIndex;
-  }, [activeIndex]);
-
-  const syncMobileServiceProgress = useCallback(
-    (progress: number) => {
-      const targetIndex = clampActiveIndex(
-        Math.round(progress * Math.max(services.length - 1, 0)),
-        services.length,
-      );
-      const currentIndex = activeIndexRef.current;
-      const queuedTargetIndex =
-        targetIndex !== currentIndex
-          ? clampActiveIndex(currentIndex + Math.sign(targetIndex - currentIndex), services.length)
-          : targetIndex;
-
-      mobileQueuedTargetIndexRef.current = queuedTargetIndex;
-
-      if (mobileStepFrameRef.current !== null) {
-        return;
-      }
-
-      const stepTowardTarget = () => {
-        mobileStepFrameRef.current = null;
-
-        const queuedTargetIndex = mobileQueuedTargetIndexRef.current;
-        const currentIndex = activeIndexRef.current;
-
-        if (queuedTargetIndex === null || queuedTargetIndex === currentIndex) {
-          return;
-        }
-
-        activeIndexRef.current = queuedTargetIndex;
-        setActiveIndex(queuedTargetIndex);
-      };
-
-      mobileStepFrameRef.current = window.requestAnimationFrame(stepTowardTarget);
-    },
-    [setActiveIndex],
-  );
-
-  const getDesktopScrollStepMetrics = useCallback(() => {
-    const sectionElement = containerRef.current;
-
-    if (!sectionElement) {
-      return null;
-    }
-
-    const scrollStepVh = readRootCssNumber(
-      "--services-scroll-step-vh",
-      services.length > 1 ? 100 : 0,
-    );
-    const stickyTop = readRootCssNumber("--services-sticky-top", 0);
-    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
-    const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-
-    return {
-      stepDistance,
-      sectionTop,
-      stickyTop,
-    };
-  }, [containerRef]);
-
-  const scrollDesktopToIndex = useCallback(
-    (index: number) => {
-      const metrics = getDesktopScrollStepMetrics();
-
-      if (!metrics) {
-        return;
-      }
-
-      const nextPosition = metrics.sectionTop - metrics.stickyTop + index * metrics.stepDistance;
-      scrollToPosition(nextPosition);
-    },
-    [getDesktopScrollStepMetrics],
-  );
-
-  const getMobileScrollStepMetrics = useCallback(() => {
-    const sectionElement = mobileScrollRef.current;
-
-    if (!sectionElement) {
-      return null;
-    }
-
-    const scrollStepVh = readRootCssNumber(
-      "--services-scroll-step-vh",
-      services.length > 1 ? 100 : 0,
-    );
-    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
-    const sectionTop = sectionElement.getBoundingClientRect().top + window.scrollY;
-
-    return {
-      stepDistance,
-      sectionTop,
-      stickyTop: mobileStageMetrics.stickyTop,
-    };
-  }, [mobileStageMetrics.stickyTop]);
-
-  const scrollMobileToIndex = useCallback(
-    (index: number) => {
-      const metrics = getMobileScrollStepMetrics();
-
-      if (!metrics) {
-        return null;
-      }
-
-      const nextPosition = metrics.sectionTop - metrics.stickyTop + index * metrics.stepDistance;
-
-      window.scrollTo({ top: nextPosition, behavior: "auto" });
-      return nextPosition;
-    },
-    [getMobileScrollStepMetrics],
-  );
-
-  const {
-    isGestureLockedRef: mobileGestureLockedRef,
-    isStepHandledRef: mobileTouchStepHandledRef,
-    releaseGestureLock: releaseMobileGestureLock,
-  } = useMobileScrollStepGuard({
-    enabled: hasHydrated && !isDesktop && !isTablet && isIosSafariDevice && canSyncMobileServices,
-    elementRef: mobileScrollRef,
-    canHandleStep: (direction) => {
-      const currentIndex = activeIndexRef.current;
-      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
-
-      return nextIndex !== currentIndex;
-    },
-    onStep: (direction) => {
-      const currentIndex = activeIndexRef.current;
-      const nextIndex = clampActiveIndex(currentIndex + direction, services.length);
-
-      if (nextIndex === currentIndex) {
-        return null;
-      }
-
-      mobileQueuedTargetIndexRef.current = nextIndex;
-      activeIndexRef.current = nextIndex;
-      setActiveIndex(nextIndex);
-
-      return scrollMobileToIndex(nextIndex);
-    },
-    swipeThresholdPx: SERVICES_MOBILE_SWIPE_STEP_THRESHOLD_PX,
-    settleEpsilonPx: SERVICES_MOBILE_SCROLL_SETTLE_EPSILON_PX,
-    settledFrameCount: SERVICES_MOBILE_SCROLL_SETTLE_FRAME_COUNT,
-  });
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
@@ -250,329 +88,7 @@ export function ServicesSection() {
     };
   }, []);
 
-  useEffect(() => {
-    if (isDesktop) {
-      return;
-    }
-
-    const sectionElement = containerRef.current;
-
-    if (!sectionElement) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setCanSyncMobileServices(entry.isIntersecting);
-      },
-      {
-        rootMargin: "-20% 0px -20% 0px",
-        threshold: 0,
-      },
-    );
-
-    observer.observe(sectionElement);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [containerRef, isDesktop]);
-
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (!shouldTrackMobileScroll || isDesktop || !canSyncMobileServices) {
-      return;
-    }
-
-    if (mobileTouchStepHandledRef.current || mobileGestureLockedRef.current) {
-      return;
-    }
-
-    const normalizedProgress =
-      mobileStageMetrics.activationProgressEnd < 1
-        ? Math.min(progress / mobileStageMetrics.activationProgressEnd, 1)
-        : progress;
-
-    syncMobileServiceProgress(normalizedProgress);
-  });
-
-  useEffect(() => {
-    if (shouldTrackMobileScroll || isDesktop) {
-      return;
-    }
-
-    mobileQueuedTargetIndexRef.current = 0;
-    activeIndexRef.current = 0;
-    releaseMobileGestureLock();
-
-    if (mobileStepFrameRef.current !== null) {
-      window.cancelAnimationFrame(mobileStepFrameRef.current);
-      mobileStepFrameRef.current = null;
-    }
-
-    setActiveIndex(0);
-  }, [isDesktop, releaseMobileGestureLock, setActiveIndex, shouldTrackMobileScroll]);
-
-  useEffect(() => {
-    return () => {
-      if (mobileStepFrameRef.current !== null) {
-        window.cancelAnimationFrame(mobileStepFrameRef.current);
-      }
-
-      releaseMobileGestureLock();
-    };
-  }, [releaseMobileGestureLock]);
-
-  useEffect(() => {
-    if (!isDesktop) {
-      wheelDeltaAccumulatorRef.current = 0;
-      lastWheelStepTimeRef.current = 0;
-      return;
-    }
-
-    const sectionElement = containerRef.current;
-
-    if (!sectionElement) {
-      return;
-    }
-
-    const handleWheel = (event: WheelEvent) => {
-      const sectionRect = sectionElement.getBoundingClientRect();
-
-      if (sectionRect.top > 0 || sectionRect.bottom < window.innerHeight) {
-        return;
-      }
-
-      if (Math.abs(event.deltaY) < SERVICES_WHEEL_MIN_DELTA) {
-        return;
-      }
-
-      const direction = event.deltaY > 0 ? 1 : -1;
-      const accumulatedDelta = wheelDeltaAccumulatorRef.current + event.deltaY;
-
-      if (accumulatedDelta === 0 || Math.sign(accumulatedDelta) !== direction) {
-        wheelDeltaAccumulatorRef.current = event.deltaY;
-      } else {
-        wheelDeltaAccumulatorRef.current = accumulatedDelta;
-      }
-
-      if (Math.abs(wheelDeltaAccumulatorRef.current) < SERVICES_WHEEL_STEP_DELTA) {
-        return;
-      }
-
-      const now = performance.now();
-
-      if (now - lastWheelStepTimeRef.current < SERVICES_WHEEL_STEP_GUARD_MS) {
-        event.preventDefault();
-        return;
-      }
-
-      const nextIndex = Math.max(0, Math.min(services.length - 1, activeIndex + direction));
-
-      if (nextIndex === activeIndex) {
-        wheelDeltaAccumulatorRef.current = 0;
-        return;
-      }
-
-      event.preventDefault();
-      wheelDeltaAccumulatorRef.current = 0;
-      lastWheelStepTimeRef.current = now;
-      setActiveIndex(nextIndex);
-      scrollDesktopToIndex(nextIndex);
-    };
-
-    sectionElement.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      sectionElement.removeEventListener("wheel", handleWheel);
-    };
-  }, [activeIndex, containerRef, isDesktop, scrollDesktopToIndex, setActiveIndex]);
-
-  const syncGridHoverFromPointer = useCallback((clientX: number, clientY: number) => {
-    const gridElement = gridRef.current;
-
-    if (!gridElement) {
-      setIsGridHovered(false);
-      return;
-    }
-
-    setIsGridHovered(isPointInsideElement(clientX, clientY, gridElement));
-  }, []);
-
-  useEffect(() => {
-    if (!isDesktop || !isPointerFine) {
-      setExploreCursorZone("none");
-      return;
-    }
-
-    setExploreCursorZone(isExploreCursorActive ? "services" : "none");
-
-    return () => {
-      setExploreCursorZone("none");
-    };
-  }, [isDesktop, isPointerFine, isExploreCursorActive]);
-
-  useEffect(() => {
-    if (!lenis || !isDesktop || !isPointerFine) {
-      return;
-    }
-
-    const handleLenisScroll = () => {
-      isLenisScrollingRef.current = true;
-      setIsGridHovered(false);
-
-      if (hoverScrollTimeoutRef.current) {
-        clearTimeout(hoverScrollTimeoutRef.current);
-      }
-
-      hoverScrollTimeoutRef.current = setTimeout(() => {
-        isLenisScrollingRef.current = false;
-        hoverScrollTimeoutRef.current = null;
-
-        const { x, y } = lastPointerRef.current;
-
-        if (x >= 0 && y >= 0) {
-          syncGridHoverFromPointer(x, y);
-        }
-      }, 100);
-    };
-
-    lenis.on("scroll", handleLenisScroll);
-
-    return () => {
-      lenis.off("scroll", handleLenisScroll);
-
-      if (hoverScrollTimeoutRef.current) {
-        clearTimeout(hoverScrollTimeoutRef.current);
-        hoverScrollTimeoutRef.current = null;
-      }
-
-      isLenisScrollingRef.current = false;
-    };
-  }, [lenis, isDesktop, isPointerFine, syncGridHoverFromPointer]);
-
-  useEffect(() => {
-    if (isDesktop) {
-      return;
-    }
-
-    const measureMobileStage = () => {
-      const rootStyles = getComputedStyle(document.documentElement);
-      const columnsGap = parseFloat(rootStyles.getPropertyValue("--services-columns-gap")) || 24;
-      const stageBottomPadding =
-        parseFloat(rootStyles.getPropertyValue("--services-stage-bottom-padding")) || 32;
-      const pinClearance =
-        parseFloat(rootStyles.getPropertyValue("--services-mobile-pin-clearance")) || 0;
-      const navbarHeight = parseFloat(rootStyles.getPropertyValue("--navbar-height")) || 0;
-      const scrollStepVh = parseFloat(rootStyles.getPropertyValue("--services-scroll-step-vh")) || 100;
-      const mobileScrollTailVh =
-        parseFloat(rootStyles.getPropertyValue("--services-mobile-scroll-tail-vh")) || 0;
-      const viewportHeight = window.innerHeight;
-      const titleHeight = mobileTitleRef.current?.offsetHeight ?? 0;
-      const contentHeight = Math.max(
-        0,
-        ...mobileContentMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
-      );
-      const imageHeight = Math.max(
-        0,
-        ...mobileImageMeasureRefs.current.map((element) => element?.offsetHeight ?? 0),
-      );
-      const tabletStageHeight =
-        titleHeight + SERVICES_TABLET_PANEL_HEIGHT_PX * 2 + columnsGap + stageBottomPadding + pinClearance;
-      const stageHeight = isTablet
-        ? Math.max(SERVICES_TABLET_STAGE_HEIGHT_PX, tabletStageHeight)
-        : titleHeight + contentHeight + imageHeight + columnsGap + stageBottomPadding + pinClearance;
-      const stickyTop = navbarHeight;
-      const stepScrollDistance =
-        Math.max(services.length - 1, 0) * viewportHeight * (scrollStepVh / 100);
-      const tailScrollDistance = viewportHeight * (mobileScrollTailVh / 100);
-      const stickyReleaseBuffer = Math.max(viewportHeight - stickyTop - stageHeight, 0);
-      const totalScrollableDistance =
-        stepScrollDistance + tailScrollDistance + stickyReleaseBuffer;
-      const activationProgressEnd =
-        totalScrollableDistance > 0
-          ? Math.min(stepScrollDistance / totalScrollableDistance, 1)
-          : 1;
-
-      setMobileStageMetrics({
-        stageHeight,
-        titleHeight,
-        contentHeight,
-        imageHeight,
-        stickyTop,
-        activationProgressEnd,
-        scrollHeight:
-          stageHeight +
-          stepScrollDistance +
-          tailScrollDistance +
-          stickyReleaseBuffer +
-          stickyTop,
-      });
-    };
-
-    const shouldHandleViewportResize = () => {
-      const nextViewportWidth = window.innerWidth;
-      const previousViewportWidth = mobileViewportWidthRef.current;
-
-      mobileViewportWidthRef.current = nextViewportWidth;
-
-      return (
-        previousViewportWidth === 0 ||
-        Math.abs(nextViewportWidth - previousViewportWidth) > MOBILE_VIEWPORT_WIDTH_RESIZE_EPSILON_PX
-      );
-    };
-
-    const handleViewportResize = () => {
-      if (!shouldHandleViewportResize()) {
-        return;
-      }
-
-      measureMobileStage();
-    };
-
-    measureMobileStage();
-    mobileViewportWidthRef.current = window.innerWidth;
-
-    const resizeObserver =
-      typeof ResizeObserver !== "undefined" && mobileMeasureRef.current
-        ? new ResizeObserver(() => {
-            measureMobileStage();
-          })
-        : null;
-
-    if (mobileMeasureRef.current && resizeObserver) {
-      resizeObserver.observe(mobileMeasureRef.current);
-    }
-
-    window.addEventListener("resize", handleViewportResize);
-
-    return () => {
-      resizeObserver?.disconnect();
-      window.removeEventListener("resize", handleViewportResize);
-    };
-  }, [isDesktop, isTablet]);
-
-  const tabletPanelHeight = SERVICES_TABLET_PANEL_HEIGHT_PX;
-  const desktopScrollStepCount = Math.max(services.length, 1);
-  const mobileAvailablePanelHeight = Math.max(
-    mobileStageMetrics.stageHeight - mobileStageMetrics.titleHeight - mobileStageMetrics.stickyTop,
-    0,
-  );
-  const mobilePanelGap = 12;
-  const mobileVisiblePanelBudget = Math.max(
-    mobileAvailablePanelHeight - mobilePanelGap - 12,
-    0,
-  );
-  const mobileContentHeight =
-    !isTablet && mobileStageMetrics.contentHeight > 0
-      ? Math.min(mobileStageMetrics.contentHeight, Math.max(mobileVisiblePanelBudget * 0.48, 220))
-      : mobileStageMetrics.contentHeight;
-  const mobileImageHeight =
-    !isTablet && mobileStageMetrics.imageHeight > 0
-      ? Math.min(
-          mobileStageMetrics.imageHeight,
-          Math.max(mobileVisiblePanelBudget - mobileContentHeight, 0),
-        )
-      : mobileStageMetrics.imageHeight;
+  const desktopScrollStepCount = Math.max(services.length - 1, 1);
 
   const renderMobileServiceHeader = (serviceIndex: number) => (
     <div
@@ -644,22 +160,14 @@ export function ServicesSection() {
       style={
         isDesktop
           ? {
-              minHeight: `calc(100svh + ${desktopScrollStepCount} * var(--services-scroll-step-vh) * 1svh)`,
+              minHeight: `calc(100svh - var(--services-sticky-top) + ${desktopScrollStepCount} * var(--services-scroll-step-vh) * 1svh)`,
             }
           : undefined
       }
       aria-label="Services"
-      onMouseLeave={() => {
-        setIsGridHovered(false);
-      }}
+      onMouseLeave={handleMouseLeave}
       onMouseMove={(event) => {
-        lastPointerRef.current = { x: event.clientX, y: event.clientY };
-
-        if (isLenisScrollingRef.current) {
-          return;
-        }
-
-        syncGridHoverFromPointer(event.clientX, event.clientY);
+        handleMouseMove(event.clientX, event.clientY);
       }}
     >
       {isDesktop ? (

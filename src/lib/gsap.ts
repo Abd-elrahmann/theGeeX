@@ -2,10 +2,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
+import { isIOSDevice } from "@/lib/is-ios-safari";
+
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 ScrollTrigger.config({
-	ignoreMobileResize: true,
+	ignoreMobileResize: typeof window !== "undefined" && isIOSDevice(),
 	limitCallbacks: true,
 });
 

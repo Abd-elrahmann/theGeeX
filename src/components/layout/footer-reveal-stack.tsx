@@ -1,14 +1,16 @@
 import { SiteFooter } from "@/features/footer";
 import { LetsTalkSection } from "@/features/lets-talk";
+import { cn } from "@/lib/cn";
 
 type FooterRevealStackProps = {
   marginTop?: string;
+  className?: string;
 };
 
-export function FooterRevealStack({ marginTop }: FooterRevealStackProps) {
+export function FooterRevealStack({ marginTop, className }: FooterRevealStackProps) {
   return (
     <div
-      className={marginTop ? "relative" : "relative mt-(--lets-talk-margin-top)"}
+      className={cn(marginTop ? "relative" : "relative mt-(--lets-talk-margin-top)", className)}
       style={{
         marginTop,
         minHeight: "var(--lets-talk-footer-reveal-height)",
@@ -18,7 +20,12 @@ export function FooterRevealStack({ marginTop }: FooterRevealStackProps) {
         <LetsTalkSection revealFooterOnScroll />
       </div>
 
-      <div className="sticky z-20 mt-(--footer-reveal-gap)" style={{ top: "var(--lets-talk-reveal-sticky-top)" }}>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-15 h-(--footer-reveal-cover-height) bg-(--color-footer-surface)"
+      />
+
+      <div className="absolute inset-x-0 bottom-(--footer-reveal-bottom-gap) z-20">
         <SiteFooter revealFromPreviousSection />
       </div>
     </div>

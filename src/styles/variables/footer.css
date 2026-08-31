@@ -1,13 +1,14 @@
 :root {
-  --footer-reveal-gap: 550px;
+  --footer-reveal-gap: 650px;
   --footer-reveal-bottom-gap: 0px;
+  --footer-reveal-sticky-top: var(--lets-talk-reveal-sticky-top);
   --footer-container-max-width: 100%;
   --footer-margin-top: calc(var(--section-stack-gap) + 40px);
   --footer-padding-x: 12px;
   --footer-padding-top: 0px;
   --footer-padding-bottom: 48px;
   --footer-card-min-height: var(--lets-talk-card-min-height);
-  --footer-reveal-card-min-height: var(--footer-card-min-height);
+  --footer-reveal-card-min-height: calc(100svh - var(--footer-reveal-sticky-top) - var(--footer-reveal-bottom-gap));
   --footer-reveal-track-height: var(--footer-reveal-card-min-height);
   --footer-card-radius: 34px;
   --footer-overlap-bleed-height: calc(var(--footer-card-radius) + 24px);
@@ -95,6 +96,7 @@
   :root {
     --footer-reveal-gap: 32px;
     --footer-reveal-bottom-gap: 24px;
+    --footer-reveal-sticky-top: var(--lets-talk-reveal-sticky-top);
     --footer-container-max-width: 1648px;
     --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;
@@ -138,6 +140,7 @@
 @media (min-width: 1024px) {
   :root {
     --footer-reveal-gap: calc(var(--footer-margin-top) + 180px);
+    --footer-reveal-sticky-top: var(--lets-talk-reveal-sticky-top);
     --footer-container-max-width: 1648px;
     --footer-padding-x: 24px;
     --footer-padding-bottom: 64px;

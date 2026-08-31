@@ -12,7 +12,6 @@ export default function SinglePageLayout({
 }>) {
   const pathname = usePathname();
   const shouldHideLetsTalk = pathname.startsWith("/packages");
-  const isServiceDetailPage = pathname.startsWith("/services/");
 
   if (shouldHideLetsTalk) {
     return (
@@ -26,13 +25,7 @@ export default function SinglePageLayout({
   return (
     <>
       {children}
-      <FooterRevealStack
-        marginTop={
-          isServiceDetailPage
-            ? "calc(var(--lets-talk-margin-top) + 120px)"
-            : "var(--lets-talk-margin-top)"
-        }
-      />
+      <FooterRevealStack marginTop="var(--lets-talk-margin-top)" />
     </>
   );
 }

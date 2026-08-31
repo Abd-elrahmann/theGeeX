@@ -27,7 +27,7 @@
   --lets-talk-button-orb-width: 360px;
   --lets-talk-button-orb-height: 360px;
   --lets-talk-reveal-sticky-top: var(--navbar-height);
-  --lets-talk-footer-scroll-tail: 48px;
+  --lets-talk-footer-scroll-tail: 240px;
   --lets-talk-footer-reveal-height: calc(
     var(--lets-talk-card-min-height) +
     var(--lets-talk-padding-y) * 2 +

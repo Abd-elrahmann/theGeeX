@@ -156,7 +156,7 @@ export function SiteFooter({ revealFromPreviousSection = false, compactSpacing =
             "bg-(--color-footer-surface) px-(--footer-card-padding-x) pt-(--footer-card-padding-top) pb-(--footer-card-padding-bottom)",
             !revealFromPreviousSection && "pt-(--footer-standalone-card-padding-top)",
             !revealFromPreviousSection && "min-h-(--footer-card-min-height)",
-            revealFromPreviousSection && "min-h-[calc(100svh-var(--lets-talk-reveal-sticky-top)-var(--footer-reveal-bottom-gap))] md:min-h-(--footer-card-min-height)",
+            revealFromPreviousSection && "min-h-[calc(100svh-var(--footer-reveal-sticky-top)-var(--footer-reveal-bottom-gap))] md:min-h-(--footer-card-min-height)",
             "md:items-center md:pb-0",
             compactSpacing && "lg:min-h-0",
             !compactSpacing && "lg:pb-6",
