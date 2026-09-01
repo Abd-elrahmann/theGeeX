@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useDesktopBreakpoint } from "@/hooks/use-desktop-breakpoint";
 import { cn } from "@/lib/cn";
+import { isIosSafari } from "@/lib/is-ios-safari";
 
 import { PackageCardButton } from "@/features/packages/shared/components/package-card-button";
 import { PackageCardChips } from "@/features/packages/shared/components/package-card-chips";
@@ -27,9 +28,20 @@ const packageEnterTransition = {
 
 export function PackageCard({ item, index }: PackageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isIosWebKit, setIsIosWebKit] = useState(false);
   const canAnimateButtonHover = useDesktopBreakpoint();
   const cardChips = item.cardChips ?? item.chips;
   const cardDescription = item.cardDescription ?? item.description;
+
+  useEffect(() => {
+    const frameId = requestAnimationFrame(() => {
+      setIsIosWebKit(isIosSafari());
+    });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
+  }, []);
 
   return (
     <motion.article
@@ -38,7 +50,8 @@ export function PackageCard({ item, index }: PackageCardProps) {
       viewport={{ once: true, amount: 0.25 }}
       transition={{ ...packageEnterTransition, delay: index * 0.1 }}
       className={cn(
-        "box-border flex h-full min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
+        "box-border flex min-h-(--packages-card-min-height) w-full max-w-(--packages-card-max-width) flex-col items-start overflow-hidden",
+        !isIosWebKit && "h-full",
         "min-[1440px]:mx-auto",
         "rounded-(--packages-card-radius) bg-(--color-packages-card-bg) md:bg-transparent",
         item.featured
@@ -48,7 +61,14 @@ export function PackageCard({ item, index }: PackageCardProps) {
         "p-0",
       )}
     >
-      <div className="flex h-(--packages-card-top-height) w-full flex-col px-(--packages-card-padding-x) pt-(--packages-card-padding-top)">
+      <div
+        className={cn(
+          "flex w-full flex-col px-(--packages-card-padding-x) pt-(--packages-card-padding-top)",
+          isIosWebKit
+            ? "pb-(--packages-card-padding-bottom)"
+            : "h-(--packages-card-top-height)",
+        )}
+      >
         <div className="w-full text-left">
           <PackageCardChips chips={cardChips} />
 

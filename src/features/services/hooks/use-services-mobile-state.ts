@@ -125,6 +125,20 @@ export function useServicesMobileState({
     [getMobileScrollStepMetrics],
   );
 
+  const isMobileStagePinned = useCallback(() => {
+    const metrics = getMobileScrollStepMetrics();
+
+    if (!metrics) {
+      return false;
+    }
+
+    const pinStart = metrics.sectionTop - metrics.stickyTop;
+    const pinEnd = pinStart + Math.max(serviceCount - 1, 0) * metrics.stepDistance;
+    const scrollPosition = getScrollPosition();
+
+    return scrollPosition >= pinStart && scrollPosition <= pinEnd;
+  }, [getMobileScrollStepMetrics, serviceCount]);
+
   const syncMobileServiceProgress = useCallback(
     (progress: number) => {
       const targetIndex = clampActiveIndex(
@@ -171,6 +185,10 @@ export function useServicesMobileState({
     enabled: hasHydrated && !isDesktop && !isTablet && isIosSafariDevice && canSyncMobileServices,
     elementRef: mobileScrollRef,
     canHandleStep: (direction) => {
+      if (!isMobileStagePinned()) {
+        return false;
+      }
+
       const currentIndex = activeIndexRef.current;
       const nextIndex = clampActiveIndex(currentIndex + direction, serviceCount);
 

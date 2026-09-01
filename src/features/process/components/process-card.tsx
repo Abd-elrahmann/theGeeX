@@ -213,7 +213,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
         ) : (
           <>
             <div
-              className="box-border relative flex w-full min-w-0 flex-nowrap content-center items-center justify-start gap-(--process-card-header-gap) overflow-hidden"
+              className="box-border relative flex w-full min-w-0 flex-nowrap content-start items-start justify-start gap-(--process-card-header-gap) overflow-hidden"
               style={{ padding: "var(--process-card-padding-y) var(--process-card-padding-x) 0" }}
             >
               <div
@@ -235,6 +235,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
                   />
                 ) : (
                   <span
+                    style={{ transform: "translateY(var(--process-card-index-offset-y, 0px))" }}
                     className={cn(
                       "block whitespace-pre font-cal-sans text-(length:--process-card-index-size) leading-(--process-card-index-line-height)",
                       "font-(--process-card-index-weight) tracking-(--process-card-index-letter-spacing)",
@@ -247,7 +248,7 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
                 )}
               </div>
 
-              <div className="flex min-w-0 flex-1 flex-col items-start justify-center">
+              <div className="flex min-w-0 flex-1 flex-col items-start justify-start">
                 {shouldAnimateTitle ? (
                   <div className="grid w-full overflow-hidden">
                     <motion.h3
@@ -305,22 +306,22 @@ export function ProcessCard({ card, index }: ProcessCardProps) {
                     {card.title}
                   </motion.h3>
                 )}
+
+                <p
+                  className={cn(
+                    "mt-(--process-card-description-margin-top) w-full h-auto whitespace-pre-wrap wrap-break-word [word-wrap:break-word] [word-break:break-word] text-left font-poppins not-italic",
+                    "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
+                    "font-(--process-card-description-weight) tracking-normal",
+                    "font-features-['blwf'_on,'cv11'_on,'case'_on]",
+                    isFinalCard
+                      ? "text-(--color-process-card-final-description)"
+                      : "text-(--color-process-card-description)",
+                  )}
+                >
+                  {card.description}
+                </p>
               </div>
             </div>
-
-            <p
-              className={cn(
-                "w-full whitespace-pre-wrap wrap-break-word px-(--process-card-padding-x) pb-(--process-card-padding-y) text-left font-cal-sans",
-                "text-(length:--process-card-description-size) leading-(--process-card-description-line-height)",
-                "font-(--process-card-description-weight) tracking-normal",
-                "font-features-['blwf'_on,'cv11'_on,'case'_on]",
-                isFinalCard
-                  ? "text-(--color-process-card-final-description)"
-                  : "text-(--color-process-card-description)",
-              )}
-            >
-              {card.description}
-            </p>
           </>
         )}
       </div>

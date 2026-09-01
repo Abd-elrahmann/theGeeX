@@ -49,6 +49,7 @@
   --process-card-index-line-height: 1.2;
   --process-card-index-weight: 600;
   --process-card-index-letter-spacing: -0.04em;
+  --process-card-index-offset-y: 0px;
   --process-card-description-margin-top: 14px;
   --process-card-copy-gap: 12px;
   --process-card-title-size: 28px;
@@ -58,6 +59,9 @@
   --process-card-description-size: 16px;
   --process-card-description-line-height: 1.6;
   --process-card-description-weight: 600;
+  --process-card-description-left: var(--process-card-padding-x);
+  --process-card-description-right: var(--process-card-padding-x);
+  --process-card-description-bottom: var(--process-card-padding-y);
   --process-card-reveal-height: 64px;
   --process-card-sticky-top-1: 56px;
   --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));
@@ -80,7 +84,9 @@
 @media (max-width: 799.98px) {
   :root {
     --process-cards-bottom-padding: 0px;
-    --process-cards-tail-height: var(--process-card-reveal-height);
+    --process-cards-tail-height: calc(
+      var(--process-card-sticky-top-5) - var(--process-card-sticky-top-1)
+    );
     --process-card-index-size: 42px;
     --process-card-title-letter-spacing: 0px;
     --process-card-title-size: 40px;
@@ -112,7 +118,6 @@
     --process-card-description-size: 14px;
     --process-card-description-line-height: 1.5;
     --process-card-description-margin-top: 10px;
-    --process-cards-bottom-padding: 24px;
     --process-card-reveal-height: 64px;
     --process-card-sticky-top-1: 160px;
     --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));
@@ -141,14 +146,17 @@
     --process-card-content-padding-y: 24px;
     --process-card-title-size: 34px;
     --process-card-header-gap: 36px;
+    --process-card-index-column-width: calc(
+      var(--process-card-index-max-width) + 2 * var(--process-card-index-padding-x)
+    );
     --process-card-index-max-width: 160px;
     --process-card-index-padding-x: 40px;
     --process-card-index-padding-y: 24px;
+    --process-card-index-offset-y: -24px;
     --process-card-description-margin-top: 24px;
-    --process-cards-bottom-padding: var(--process-padding-y);
-    --process-cards-tail-height: calc(
-      var(--process-card-sticky-top-5) - var(--process-card-sticky-top-1)
-    );
+    --process-card-description-weight: 500;
+    --process-cards-bottom-padding: 0px;
+    --process-cards-tail-height: var(--process-card-reveal-height);
     --process-card-reveal-height: 84px;
     --process-card-sticky-top-1: 150px;
     --process-card-sticky-top-2: calc(var(--process-card-sticky-top-1) + var(--process-card-reveal-height));

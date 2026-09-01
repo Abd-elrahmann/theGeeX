@@ -8,6 +8,7 @@ import type { LenisOptions } from "lenis";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { SUB_DESKTOP_MEDIA_QUERY } from "@/lib/breakpoints";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { isIosSafari } from "@/lib/is-ios-safari";
 import { bindLenisScrollTrigger, scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import {
   prepareFreshPageScrollSession,
@@ -82,7 +83,7 @@ interface ScrollInputNormalizerProps {
 
 function ScrollInputNormalizer({ enabled }: ScrollInputNormalizerProps) {
   useEffect(() => {
-    if (!enabled) {
+    if (!enabled || isIosSafari()) {
       ScrollTrigger.normalizeScroll(false);
       return;
     }

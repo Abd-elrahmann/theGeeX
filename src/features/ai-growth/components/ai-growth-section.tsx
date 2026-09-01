@@ -26,7 +26,7 @@ const aiGrowthRowTransition = {
 } as const;
 
 const aiGrowthActiveTriggerDelay = 0.18;
-const AI_GROWTH_MOBILE_STEP_GUARD_MS = 220;
+const AI_GROWTH_MOBILE_STEP_GUARD_MS = 320;
 const AI_GROWTH_ROW_SWITCH_THRESHOLD = 0.72;
 const aiGrowthTitleRevealInitial = {
   opacity: 0,
