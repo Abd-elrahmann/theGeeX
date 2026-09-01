@@ -8,6 +8,7 @@ import { getScrollPosition, scrollToPosition } from "@/lib/lenis-scroll-trigger"
 import { readRootCssNumber } from "@/lib/read-css-var";
 
 import { isPointInsideElement } from "@/features/services/lib/services-cursor-zone";
+import { getServicesStableViewportHeight } from "@/features/services/lib/services-viewport";
 
 const SERVICES_WHEEL_MIN_DELTA = 4;
 const SERVICES_WHEEL_STEP_DELTA = 140;
@@ -69,7 +70,8 @@ export function useServicesDesktopInteractions({
       serviceCount > 1 ? 100 : 0,
     );
     const stickyTop = readRootCssNumber("--services-sticky-top", 0);
-    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
+    const viewportHeight = getServicesStableViewportHeight();
+    const stepDistance = (scrollStepVh * viewportHeight) / 100;
     const sectionTop = sectionElement.getBoundingClientRect().top + getScrollPosition();
 
     return {
@@ -108,8 +110,9 @@ export function useServicesDesktopInteractions({
 
     const handleWheel = (event: WheelEvent) => {
       const sectionRect = sectionElement.getBoundingClientRect();
+      const viewportHeight = getServicesStableViewportHeight();
 
-      if (sectionRect.top > 0 || sectionRect.bottom < window.innerHeight) {
+      if (sectionRect.top > 0 || sectionRect.bottom < viewportHeight) {
         return;
       }
 

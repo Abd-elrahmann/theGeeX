@@ -1,8 +1,31 @@
 import type Lenis from "lenis";
 
 import { ScrollTrigger } from "@/lib/gsap";
+import { isIosSafari } from "@/lib/is-ios-safari";
 
 let activeLenis: Lenis | null = null;
+
+export function resolveScrollTriggerPinType(element?: Element | null): "fixed" | "transform" {
+  if (typeof window === "undefined") {
+    return "fixed";
+  }
+
+  if (isIosSafari()) {
+    return "transform";
+  }
+
+  if (!element) {
+    return "fixed";
+  }
+
+  const { transform, willChange } = window.getComputedStyle(element);
+
+  if (transform !== "none" || willChange.includes("transform")) {
+    return "transform";
+  }
+
+  return "fixed";
+}
 
 export function bindLenisScrollTrigger(lenis: Lenis): () => void {
   activeLenis = lenis;
@@ -25,7 +48,7 @@ export function bindLenisScrollTrigger(lenis: Lenis): () => void {
         height: window.innerHeight,
       };
     },
-    pinType:"fixed",
+    pinType: resolveScrollTriggerPinType(rootElement),
   });
 
   return () => {

@@ -7,6 +7,7 @@ import { useMobileScrollStepGuard } from "@/hooks/use-mobile-scroll-step-guard";
 import { getScrollPosition } from "@/lib/lenis-scroll-trigger";
 import { readRootCssNumber } from "@/lib/read-css-var";
 import { clampActiveIndex } from "@/lib/sync-active-index-from-progress";
+import { getServicesStableViewportHeight } from "@/features/services/lib/services-viewport";
 
 const SERVICES_TABLET_STAGE_HEIGHT_PX = 560;
 const SERVICES_TABLET_PANEL_HEIGHT_PX = 346;
@@ -102,7 +103,8 @@ export function useServicesMobileState({
       "--services-scroll-step-vh",
       serviceCount > 1 ? 100 : 0,
     );
-    const stepDistance = (scrollStepVh * window.innerHeight) / 100;
+    const viewportHeight = getServicesStableViewportHeight();
+    const stepDistance = (scrollStepVh * viewportHeight) / 100;
     const sectionTop = sectionElement.getBoundingClientRect().top + getScrollPosition();
 
     return {
@@ -305,7 +307,7 @@ export function useServicesMobileState({
       const scrollStepVh = parseFloat(rootStyles.getPropertyValue("--services-scroll-step-vh")) || 100;
       const mobileScrollTailVh =
         parseFloat(rootStyles.getPropertyValue("--services-mobile-scroll-tail-vh")) || 0;
-      const viewportHeight = window.innerHeight;
+      const viewportHeight = getServicesStableViewportHeight();
       const titleHeight = mobileTitleRef.current?.offsetHeight ?? 0;
       const contentHeight = Math.max(
         0,

@@ -1,6 +1,6 @@
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { readCssNumber } from "@/lib/read-css-var";
-import { scrollToPosition } from "@/lib/lenis-scroll-trigger";
+import { resolveScrollTriggerPinType, scrollToPosition } from "@/lib/lenis-scroll-trigger";
 import { prepareFreshPageScrollSession, syncScrollTriggersAfterReset } from "@/lib/scroll-session";
 import {
   isUpwardNavbarSession,
@@ -182,7 +182,7 @@ export function createHeroPathScrollDraw(
       end: `+=${totalDistance}`,
       scrub,
       pin,
-      pinType: "fixed",
+      pinType: resolveScrollTriggerPinType(trigger),
       pinSpacing: true,
       anticipatePin: 1,
       fastScrollEnd: false,

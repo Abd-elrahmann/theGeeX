@@ -12,6 +12,7 @@ import {
 } from "@/lib/sync-active-index-from-progress";
 
 import { servicesScrollHeightPerService } from "@/features/services/constants/services";
+import { getServicesStableViewportHeight } from "@/features/services/lib/services-viewport";
 
 interface UseActiveServiceOptions {
   serviceCount: number;
@@ -25,8 +26,9 @@ function getPinScrollDistance(serviceCount: number): number {
 
   const stepVh = parseFloat(stepRaw) || servicesScrollHeightPerService;
   const steps = Math.max(serviceCount - 1, 0);
+  const viewportHeight = getServicesStableViewportHeight();
 
-  return (steps * stepVh * window.innerHeight) / 100;
+  return (steps * stepVh * viewportHeight) / 100;
 }
 
 export function useActiveService({
@@ -41,6 +43,7 @@ export function useActiveService({
   const activeIndexRef = useRef(0);
   const hasResolvedInitialIndexRef = useRef(false);
   const isDesktopRef = useRef(false);
+  const desktopSyncFrameRef = useRef<number | null>(null);
 
   const applyInitialActiveIndex = useCallback(
     (index: number) => {
@@ -116,6 +119,21 @@ export function useActiveService({
     syncActiveIndexFromProgress(progress, serviceCount, setActiveIndexSafe);
   }, [applyInitialActiveIndex, enabled, resetToFirstService, serviceCount, setActiveIndexSafe]);
 
+  const scheduleDesktopProgressSync = useCallback(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (desktopSyncFrameRef.current !== null) {
+      window.cancelAnimationFrame(desktopSyncFrameRef.current);
+    }
+
+    desktopSyncFrameRef.current = window.requestAnimationFrame(() => {
+      desktopSyncFrameRef.current = null;
+      syncDesktopProgress();
+    });
+  }, [syncDesktopProgress]);
+
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
@@ -130,7 +148,7 @@ export function useActiveService({
         return;
       }
 
-      syncDesktopProgress();
+      scheduleDesktopProgressSync();
     };
 
     updateDesktopState();
@@ -139,7 +157,7 @@ export function useActiveService({
     return () => {
       mediaQuery.removeEventListener("change", updateDesktopState);
     };
-  }, [syncDesktopProgress]);
+  }, [scheduleDesktopProgressSync]);
 
   useMotionValueEvent(scrollY, "change", () => {
     syncDesktopProgress();
@@ -151,13 +169,13 @@ export function useActiveService({
     }
 
     const handleRefresh = () => {
-      syncDesktopProgress();
+      scheduleDesktopProgressSync();
     };
 
     const resizeObserver =
       typeof ResizeObserver !== "undefined" && containerRef.current
         ? new ResizeObserver(() => {
-            syncDesktopProgress();
+            scheduleDesktopProgressSync();
           })
         : null;
 
@@ -165,20 +183,21 @@ export function useActiveService({
       resizeObserver.observe(containerRef.current);
     }
 
-    if (stageRef.current && resizeObserver) {
-      resizeObserver.observe(stageRef.current);
-    }
-
     window.addEventListener("resize", handleRefresh);
     window.addEventListener("load", handleRefresh);
-    requestAnimationFrame(handleRefresh);
+    scheduleDesktopProgressSync();
 
     return () => {
       resizeObserver?.disconnect();
       window.removeEventListener("resize", handleRefresh);
       window.removeEventListener("load", handleRefresh);
+
+      if (desktopSyncFrameRef.current !== null) {
+        window.cancelAnimationFrame(desktopSyncFrameRef.current);
+        desktopSyncFrameRef.current = null;
+      }
     };
-  }, [enabled, serviceCount, syncDesktopProgress]);
+  }, [enabled, scheduleDesktopProgressSync, serviceCount]);
 
   return {
     containerRef,
